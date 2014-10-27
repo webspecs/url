@@ -1,0 +1,13 @@
+[package]
+
+name = "test_rust_url"
+version = "0.0.1"
+authors = [ "Sam Ruby <rubys@intertwingly.net>" ]
+
+[[bin]]
+
+name = "test_rust_url"
+
+[dependencies.url]
+
+git = "https://github.com/servo/rust-url"

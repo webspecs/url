@@ -1,0 +1,23 @@
+#!/usr/bin/ruby
+$:.unshift "#{ENV['HOME']}/git/ruby2js/lib"
+require 'ruby2js'
+require 'ruby2js/filter/functions'
+
+source = File.read(ARGV.first)
+
+source.gsub! /^require.*\n/, ''
+source.sub! /^(class.*\n)((  class.*\n)+)/, '\2\1'
+
+converted = Ruby2JS.convert(source)
+
+converted.gsub! '.chars.toArray()', '.split("")'
+converted.gsub! '.chars.some(', '.split("").some('
+converted.gsub! /\s\+\s(\[.*?\])/, '.concat(\1)'
+# converted.gsub! /([ (!])([A-Z_]{4})/, '\1Url.\2'
+converted.gsub! /\\\\u\{.*?\]/, '\\\\\\uD800-\\\\\\uDFFF]'
+converted.gsub! /^(\s+)send\((.*?)\);/, '\1this[\2]();'
+converted.gsub! /\.dup;$/, '.slice();'
+converted.gsub! /\.encode\(Encoding\.UTF_8\)/, ''
+converted.gsub! /Encoding\.UTF_8/, "'utf-8'"
+
+print converted

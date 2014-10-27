@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Live DOM URL Viewer</title>
+    <link rel="stylesheet" type="text/css" href="http://www.lookout.net/test/url/css/style.css"/>
+    <script src="punycode.js" lang="text/javascript"></script>
+    <script src="url.js" lang="text/javascript"></script>
+    <script src="urlparser.js" lang="text/javascript"></script>
+  </head>
+
+  <body>
+    <h2>Enter a URL to parse:</h2>
+
+    <p>The output below will display a URL's parsed components from both the browser's DOM, and from the <a href="http://intertwingly.net/projects/pegurl/">pegurl.js</a> project being done for the <a href="http://url.spec.whatwg.org/">WHATWG URL spec.</a> The output will be colored <span class="pass">dark green</span> unless a difference occurs between the two parsers in which case the affected URL component will be colored <span class="fail">red</span>.</p>
+    <input class="input" id="url" type="text" placeholder="http://example.com" onkeyup="parse(this.value)"/>
+    <a id="target" href="http://www.lookout.net/test/url/url-liveview.html"></a>
+
+    <h2>URL components from DOM properties:</h2>
+
+    <div class="output">
+      <span class="title">href</span>
+      <span class="result" id="domHref"></span>
+      <br/>
+      <span class="title">hash</span>
+      <span class="result" id="domHash"></span>
+      <br/>
+      <span class="title">hostname</span>
+      <span class="result" id="domHostname"></span>
+      <br/>
+      <span class="title">pathname</span>
+      <span class="result" id="domPathname"></span>
+      <br/>
+      <span class="title">port</span>
+      <span class="result" id="domPort"></span>
+      <br/>
+      <span class="title">protocol</span>
+      <span class="result" id="domProtocol"></span>
+      <br/>
+      <span class="title">search</span>
+      <span class="result" id="domSearch"></span>
+      <br/>
+    </div>
+
+    <h2>URL components from pegurl.js:</h2>
+
+    <div class="output">
+      <span class="title">href</span>
+      <span class="result" id="urlHref"></span>
+      <br/>
+      <span class="title">hash</span>
+      <span class="result" id="urlHash"></span>
+      <br/>
+      <span class="title">hostname</span>
+      <span class="result" id="urlHostname"></span>
+      <br/>
+      <span class="title">pathname</span>
+      <span class="result" id="urlPathname"></span>
+      <br/>
+      <span class="title">port</span>
+      <span class="result" id="urlPort"></span>
+      <br/>
+      <span class="title">protocol</span>
+      <span class="result" id="urlProtocol"></span>
+      <br/>
+      <span class="title">search</span>
+      <span class="result" id="urlSearch"></span>
+      <br/>
+    </div>
+
+    <script lang="text/javascript">
+      // Prepare the elements to output DOM properties
+      var domHref = document.getElementById("domHref");
+      var domHash = document.getElementById("domHash");
+      var domHostname = document.getElementById("domHostname");
+      var domPathname = document.getElementById("domPathname");
+      var domPort = document.getElementById("domPort");
+      var domProtocol = document.getElementById("domProtocol");
+      var domSearch = document.getElementById("domSearch");
+
+      // Prepare the elements to output URL class properties from URL.js
+      var urlHref = document.getElementById("urlHref");
+      var urlHash = document.getElementById("urlHash");
+      var urlHostname = document.getElementById("urlHostname");
+      var urlPathname = document.getElementById("urlPathname");
+      var urlPort = document.getElementById("urlPort");
+      var urlProtocol = document.getElementById("urlProtocol");
+      var urlSearch = document.getElementById("urlSearch");
+
+      function parse(input) {
+        parseDom(input);
+        parseUrl(input);
+        compare(urlHref, domHref);
+        compare(urlHash, domHash);
+        compare(urlHostname, domHostname);
+        compare(urlPathname, domPathname);
+        compare(urlPort, domPort);
+        compare(urlProtocol, domProtocol);
+        compare(urlSearch, domSearch);
+      }
+
+      function parseDom(input) {
+        var target = document.getElementById("target");
+        target.setAttribute("href", input); 
+
+        domHref.textContent = target.href;
+        domHash.textContent = target.hash;
+        domHostname.textContent = target.hostname;
+        domPathname.textContent = target.pathname;
+        domPort.textContent = target.port;
+        domProtocol.textContent = target.protocol;
+        domSearch.textContent = target.search;
+      }
+
+      function parseUrl(input) {
+        var base = document.baseURI;
+        var url = new URL(input, base);
+
+        urlHref.textContent = url.href;
+        urlHash.textContent = url.hash;
+        urlHostname.textContent = url.hostname;
+        urlPathname.textContent = url.pathname;
+        urlPort.textContent = url.port;
+        urlProtocol.textContent = url.protocol;
+        urlSearch.textContent = url.search;
+      }
+
+      function compare(x, y) {
+        if (x.textContent != y.textContent) {
+          x.className = "fail"; 
+          y.className = "fail"; 
+        }
+        else {
+          x.className = "pass"; 
+          y.className = "pass"; 
+        }
+      }
+
+      function color(element1, element2, color) {
+        element1.style.color = color;
+        element2.style.color = color;
+      }
+
+      var input = document.getElementById("url");
+      if (input.value) parse(input.value);
+    </script>
+  </body>
+</html>
