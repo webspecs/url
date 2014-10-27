@@ -63,9 +63,14 @@ public class testgalimatias {
         result.put("protocol", url.scheme() + ':');
         result.put("username", url.username());
         result.put("password", (url.password()!=null) ? url.password() : "");
-        result.put("hostname", url.host().toString());
-        result.put("port", 
-          (url.port()==DEFAULT_PORTS.get(url.scheme())) ? "" : url.port());
+        result.put("hostname", (url.host()!=null) ? url.host() : "");
+
+        if (url.port() == -1 || url.port()==DEFAULT_PORTS.get(url.scheme())) {
+          result.put("port", "");
+        } else {
+          result.put("port", url.port());
+        }
+
         result.put("pathname", url.path());
         result.put("search", (url.query()!=null) ? "?"+url.query() : "");
         result.put("hash", (url.fragment()!=null) ? "#"+url.fragment() : "");
