@@ -6,7 +6,7 @@ Contains:
    * [reference implementation](https://github.com/rubys/url/tree/peg.js/reference-implementation)
      in JavaScript.  This directory also contains a web page that demonstates
      live parsing of URLs entered in an HTML input field.
-   * [tests](https://github.com/rubys/url/tree/peg.js/test)s for the reference
+   * [tests](https://github.com/rubys/url/tree/peg.js/test) for the reference
      implementation
    * [evaluate](https://github.com/rubys/url/tree/peg.js/evaluate) programs
      and scripts which capture and compare test results against a number

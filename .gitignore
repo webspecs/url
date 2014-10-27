@@ -1,1 +1,14 @@
+evaluate/Cargo.lock
 evaluate/*.jar
+evaluate/target/
+evaluate/testgalimatias.class
+evaluate/urltestdata.json
+parser.pegjs
+reference-implementation/punycode.js
+reference-implementation/url.js
+reference-implementation/urlparser.js
+test/urltestdata.txt
+test/urltest.js
+test/urltestparser.js
+url.bs
+url.pegjson
