@@ -192,7 +192,7 @@ _html do
             end
 
             if cols.include? 'exception'
-              if data.include? 'exception'
+              if data.include? 'exception' and data['exception']
                 _td.exception data['exception']
               else
                 _td
