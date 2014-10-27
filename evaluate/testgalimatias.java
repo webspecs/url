@@ -1,9 +1,9 @@
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.util.Iterator;
 import java.util.HashMap;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONTokener;
+import org.json.JSONObject;
+import org.json.JSONArray;
 import io.mola.galimatias.URL;
 import io.mola.galimatias.URLParsingSettings;
 import io.mola.galimatias.ErrorHandler;
@@ -11,7 +11,6 @@ import io.mola.galimatias.GalimatiasParseException;
 
 public class testgalimatias {
 
-  @SuppressWarnings("unchecked")
   public static void main(String[] args) throws Exception {
     new testgalimatias().run();
   }
@@ -19,12 +18,8 @@ public class testgalimatias {
   private GalimatiasParseException errorException;
   private GalimatiasParseException fatalErrorException;
 
-  @SuppressWarnings("unchecked")
   public void run() throws Exception {
-    JSONParser parser = new JSONParser();
-    JSONArray tests = (JSONArray) parser.parse(new
-      FileReader("urltestdata.json"));
-    Iterator<?> iterator = tests.iterator();
+    JSONArray tests = new JSONArray(new JSONTokener(new FileInputStream("urltestdata.json")));
 
     HashMap<String, Integer> DEFAULT_PORTS = new HashMap<String, Integer>();
     DEFAULT_PORTS.put("ftp", 21);
@@ -49,24 +44,24 @@ public class testgalimatias {
       });
 
     JSONArray results = new JSONArray();
-    while (iterator.hasNext()) {
-      JSONObject test = (JSONObject) iterator.next();
+    for (int i=0; i<tests.length(); i++) {
+      JSONObject test = tests.getJSONObject(i);
       JSONObject result = new JSONObject();
       result.put("base", test.get("base"));
       result.put("input", test.get("input"));
       errorException = fatalErrorException = null;
 
       try {
-        URL base = URL.parse((String) test.get("base"));
-        URL url = URL.parse(settings, base, (String) test.get("input"));
+        URL base = URL.parse(test.getString("base"));
+        URL url = URL.parse(settings, base, test.getString("input"));
         result.put("href", url.toString());
         result.put("protocol", url.scheme() + ':');
         result.put("username", url.username());
-        result.put("password", (url.password()!=null) ? url.password() : "");
-        result.put("hostname", (url.host()!=null) ? url.host() : "");
+        result.put("password", url.password());
+        result.put("hostname", url.host().toHumanString());
 
         if (url.port() == -1 || url.port()==DEFAULT_PORTS.get(url.scheme())) {
-          result.put("port", "");
+          result.put("port", (String)null);
         } else {
           result.put("port", url.port());
         }
@@ -74,25 +69,27 @@ public class testgalimatias {
         result.put("pathname", url.path());
         result.put("search", (url.query()!=null) ? "?"+url.query() : "");
         result.put("hash", (url.fragment()!=null) ? "#"+url.fragment() : "");
+
         if (fatalErrorException != null) {
           result.put("exception", fatalErrorException.getMessage());
         } else if (errorException != null) {
           result.put("exception", errorException.getMessage());
         }
+
       } catch (Exception e) {
         result.put("href", test.get("input"));
         result.put("exception", 
           (e.getMessage()!=null) ? e.getMessage() : e.toString());
         result.put("protocol", ":");
         result.put("username", "");
-        result.put("password", "");
+        result.put("password", (String)null);
         result.put("hostname", "");
         result.put("port", "");
         result.put("pathname", "");
-        result.put("search", "");
-        result.put("hash", "");
+        result.put("search", (String)null);
+        result.put("hash", (String)null);
       }
-      results.add(result);
+      results.put(result);
     }
     System.out.println(results.toString());
   }

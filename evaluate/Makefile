@@ -26,14 +26,14 @@ useragent-results/urltestdata: urltestdata.json ../test/urltestdata.txt
 	cat urltestdata.json >> $@
 
 testgalimatias.class: testgalimatias.java \
-	icu4j-54.1.1.jar galimatias-0.0.4.jar json-simple-1.1.1.jar
-	export CLASSPATH=.:icu4j.1.1.jar:galimatias-0.0.4.jar:json-simple-1.1.1.jar; \
+	icu4j-54.1.1.jar galimatias-0.0.4.jar json-20140107.jar
+	export CLASSPATH=.:icu4j.1.1.jar:galimatias-0.0.4.jar:json-20140107.jar; \
 	javac testgalimatias.java
 
 useragent-results/galimatias: testgalimatias.class urltestdata.json
 	echo galimatias > $@
 	echo galimatias-0.2.0 >> $@
-	export CLASSPATH=.:icu4j.1.1.jar:galimatias-0.0.4.jar:json-simple-1.1.1.jar; \
+	export CLASSPATH=.:icu4j.1.1.jar:galimatias-0.0.4.jar:json-20140107.jar; \
 	java testgalimatias >> $@
 
 useragent-results/nodejs: testnodejs.js ../test/urltestparser.js ../test/urltestdata.txt
@@ -55,5 +55,5 @@ icu4j-54.1.1.jar:
 galimatias-0.0.4.jar:
 	wget http://central.maven.org/maven2/io/mola/galimatias/galimatias/0.0.4/galimatias-0.0.4.jar
 
-json-simple-1.1.1.jar:
-	wget http://central.maven.org/maven2/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar
+json-20140107.jar:
+	wget http://central.maven.org/maven2/org/json/json/20140107/json-20140107.jar
