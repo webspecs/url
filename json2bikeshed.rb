@@ -94,7 +94,7 @@ Todos {#todos}
 
   * define soft parse errors.  The <a href="https://url.spec.whatwg.org/">URL
     living standard</a> has a start, but based on <a
-    href="http://intertwingly.net/stories/2014/10/16/urltest-results/">test
+    href="http://intertwingly.net/projects/pegurl/urltest-results/">test
     results</a>, there clearly needs to be more.
   * make it more clear what is normative; to be honest, I'm confused on this
     point as the only real normative requirement for the parts defined by this
