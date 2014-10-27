@@ -165,7 +165,14 @@ _html do
 
       _p! do
         _b "Input"
-        _ ": #{row[:testdata]['input'].inspect}"
+        input = row[:testdata]['input'].inspect
+        _ ": #{input}"
+        if input =~ /[^\x20-\x7E]/
+          input.gsub! /[^\x20-\x7E]/  do |c| 
+            "\\u#{c.ord.to_s(16).upcase.rjust(4,'0')}"
+          end
+          _ " (#{input})"
+        end
       end
       _p! do
         _b "Base"
