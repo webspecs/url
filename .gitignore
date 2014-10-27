@@ -1,7 +1,7 @@
 evaluate/Cargo.lock
 evaluate/*.jar
 evaluate/target/
-evaluate/testgalimatias.class
+evaluate/*.class
 evaluate/urltestdata.json
 parser.pegjs
 reference-implementation/punycode.js

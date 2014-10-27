@@ -40,7 +40,6 @@ public class testgalimatias {
         @Override
         public void error(GalimatiasParseException error) throws GalimatiasParseException {
           errorException = error;
-          throw error;
         }
 
         @Override
