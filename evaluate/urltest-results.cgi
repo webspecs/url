@@ -158,7 +158,7 @@ _html do
           _a.navlink "\u2190", href: results.keys[index-1][0..9]
         end
         _ "Test #{index}"
-        if index and index<results.keys.length
+        if index and index<results.keys.length-1
           _a.navlink "\u2192", href: results.keys[index+1][0..9]
         end
       end

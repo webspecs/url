@@ -8,7 +8,6 @@ fs.readFile('../test/urltestparser.js', 'utf8', function (err,script) {
     var results = [];
 
     for (var i=0; i<tests.length; i++) {
-      console.log([i, tests.length]);
       var test = tests[i];
       var value = url.parse(url.resolve(test.base, test.input));
 

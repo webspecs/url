@@ -1,5 +1,4 @@
 #!/usr/bin/ruby
-$:.unshift "#{ENV['HOME']}/git/ruby2js/lib"
 require 'ruby2js'
 require 'ruby2js/filter/functions'
 

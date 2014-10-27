@@ -1,5 +1,6 @@
 # Prereqs:
 #    install jdk, rust, cargo
+#    gem install addressable
 #    clean make in parent directory
 
 useragent-results: \

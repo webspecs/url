@@ -65,9 +65,9 @@ H1: URL
 Shortname: url
 Status: LS
 Editor: Sam Ruby, IBM https://www.ibm.com/, rubys@intertwingly.net, http://intertwingly.net/blog/
-Abstract: This specification <a href="http://en.wikipedia.org/wiki/Sprint_%28software_development%29">sprint</a> defines parsing rules for URLs
+Abstract: This specification <a href="http://agiledictionary.com/209/spike/">spike</a> defines parsing rules for URLs
 Logo: https://resources.whatwg.org/logo-url.svg
-!Version History: TBD
+!Version History: <a href="https://github.com/rubys/url/commits/peg.js">https://github.com/rubys/url/commits/peg.js</a>
 !Participate: <a href="https://whatwg.org/mailing-list">whatwg@whatwg.org</a> (<a href="https://whatwg.org/mailing-list#specs">archives</a>)
 !Participate: <a href="http://wiki.whatwg.org/wiki/IRC">IRC: #whatwg on Freenode</a>
 </pre>
