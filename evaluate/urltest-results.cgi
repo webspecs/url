@@ -2,7 +2,8 @@
 
 require 'json'
 require 'digest/md5'
-require 'wunderbar'
+require 'wunderbar/script'
+require 'ruby2js/filter/functions'
 require 'addressable/uri'
 
 agents = {
@@ -155,11 +156,11 @@ _html do
       _h2_ do
         index = results.values.index(row)
         if index and index>0
-          _a.navlink "\u2190", href: results.keys[index-1][0..9]
+          _a.navlink.left "\u2190", href: results.keys[index-1][0..9]
         end
         _ "Test #{index}"
         if index and index<results.keys.length-1
-          _a.navlink "\u2192", href: results.keys[index+1][0..9]
+          _a.navlink.right "\u2192", href: results.keys[index+1][0..9]
         end
       end
 
@@ -242,6 +243,22 @@ _html do
           _b agent.to_s
           _ ": "
           _code info[:useragent].chomp
+        end
+      end
+
+      _script_ do
+        window.onkeyup = lambda do |event|
+          link = null
+
+          if event.keyCode == 37
+            link = document.querySelector('.navlink.left')
+          elsif event.keyCode == 38
+            window.location.href.sub! /\w+$/, ''
+          elsif event.keyCode == 39
+            link = document.querySelector('.navlink.right')
+          end
+
+          link.click() if link
         end
       end
 
