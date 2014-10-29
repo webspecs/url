@@ -192,7 +192,7 @@ FileLikeRelativeScheme
 
    <ol>
    <li>If anything other than two forward solidus characters ("//") immediately
-     follows the first colon in the input, return a <a>parse error</a>.
+     follows the first colon in the input, indicate a <a>parse error</a>.
 
      Set $result to the object returned by
      @RelativeUrl, and then modify it as follows:
