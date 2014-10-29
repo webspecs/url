@@ -68,8 +68,8 @@ public class testgalimatias {
         }
 
         result.put("pathname", url.path());
-        result.put("search", (url.query()!=null) ? "?"+url.query() : "");
-        result.put("hash", (url.fragment()!=null) ? "#"+url.fragment() : "");
+        result.put("search", (url.query()!=null && !url.query().isEmpty()) ? "?"+url.query() : "");
+        result.put("hash", (url.fragment()!=null && !url.fragment().isEmpty()) ? "#"+url.fragment() : "");
 
         if (fatalErrorException != null) {
           result.put("exception", fatalErrorException.getMessage());
