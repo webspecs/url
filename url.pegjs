@@ -327,20 +327,23 @@ AbsoluteUrl
       result.exception = 'Expected a slash ("/")';
       while (result.path[0] == '') result.path.shift();
 
-      var host = result.path.shift().split('@');
-      if (host.length > 1) {
-        var userinfo = host.shift();
-        var split = userinfo.indexOf(':');
-        if (split == -1) {
-          result.username = userinfo
-        } else {
-          result.username = userinfo.slice(0,split)
-          result.password = userinfo.slice(split+1)
-        }
+      if (result.path.length > 0) {
+        var host = result.path.shift().split('@');
+        if (host.length > 1) {
+          var userinfo = host.shift();
+          var split = userinfo.indexOf(':');
+          if (split == -1) {
+            result.username = userinfo
+          } else {
+            result.username = userinfo.slice(0,split)
+            result.password = userinfo.slice(split+1)
+          }
+        };
+
+        result.host = host.join('@')
       };
 
-      result.host = host.join('@');
-      if (result.host == '') error('Empty host');
+      if (!result.host || result.host == '') error('Empty host');
       if (result.host.indexOf(':') != -1) error('Invalid host');
     };
 

@@ -85,10 +85,10 @@ Once a new baseline has been established, evolve the standard towards greater
 web compatibility, greater interoperability, and simpler algorithms, in that
 order.
 <li>Provide a <a
-href="http://intertwingly.net/blog/2014/10/21/pegurl-js">reference
+href="https://github.com/rubys/url/tree/peg.js/reference-implementation">reference
 implementation</a>, where parts of this specification and parts of that
-reference implementation are generated from a common source.
-<li>Reference <a href="https://tools.ietf.org/html/draft-ietf-appsawg-uri-scheme-reg-04">draft-thaler-appsawg-uri-scheme-reg</a> as the scheme registration mechanism in the <a href="https://url.spec.whatwg.org/#url-writing">URL writing</a> section.
+reference implementation are generated from a <a href="https://github.com/rubys/url/blob/peg.js/url.pegjs">common source</a>.
+<li>Reference <a href="https://tools.ietf.org/html/draft-ietf-appsawg-uri-scheme-reg-04">draft-thaler-appsawg-uri-scheme-reg</a> as the scheme registration mechanism in the <a href="https://url.spec.whatwg.org/#url-writing">URL writing</a> section.  Included in the reference implementation is a <a href="http://intertwingly.net/projects/pegurl/liveview.html">Live DOM URL Viewer</a>.
 <li>Incorporate the substance of the <a href="http://www.w3.org/TR/html5/references.html#refsURL">informative note</a> that precedes the [URL] normative reference in the <a href="http://www.w3.org/TR/html5/">HTML5 Recommendation</a> into a status section or equivalent in this document.
 </ol>
 

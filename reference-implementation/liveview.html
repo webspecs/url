@@ -16,7 +16,7 @@
   <body>
     <h2>Enter a URL to parse:</h2>
 
-    <p>The output below will display a URL's parsed components from both the browser's DOM, and from the <a href="http://intertwingly.net/projects/pegurl/">pegurl.js</a> project being done for the <a href="http://url.spec.whatwg.org/">WHATWG URL spec.</a> The output will be colored <span class="pass">dark green</span> unless a difference occurs between the two parsers in which case the affected URL component will be colored <span class="fail">red</span>.</p>
+    <p>The output below will display a URL's parsed components from both the browser's DOM, and from the <a href="https://github.com/rubys/url/tree/peg.js/reference-implementation">reference implementation</a> for the <a href="http://url.spec.whatwg.org/">WHATWG Living Standard.</a> The output will be colored <span class="pass">dark green</span> unless a difference occurs between the two parsers in which case the affected URL component will be colored <span class="fail">red</span>.</p>
     <input class="input" id="url" type="text" placeholder="http://example.com" onkeyup="parse(this.value)"/>
     <a id="target" href="http://www.lookout.net/test/url/url-liveview.html"></a>
 
@@ -46,7 +46,7 @@
       <br/>
     </div>
 
-    <h2>URL components from pegurl.js:</h2>
+    <h2>URL components from the URL Reference Implementation:</h2>
 
     <div class="output">
       <span class="title">href</span>
@@ -130,7 +130,7 @@
         urlPort.textContent = url.port;
         urlProtocol.textContent = url.protocol;
         urlSearch.textContent = url.search;
-        urlException.textContent = url.exception;
+        urlException.textContent = url.exception || '';
       }
 
       function compare(x, y) {
