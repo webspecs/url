@@ -92,15 +92,15 @@ reference implementation are generated from a common source.
 Todos {#todos}
 =====
 
-  * define soft parse errors.  The <a href="https://url.spec.whatwg.org/">URL
-    living standard</a> has a start, but based on <a
-    href="http://intertwingly.net/projects/pegurl/urltest-results/">test
+  * Define more soft <a>parse errors</a>.  The 
+    <a href="https://url.spec.whatwg.org/">URL living standard</a> has a start,
+    but based on <a href="http://intertwingly.net/projects/pegurl/urltest-results/">test
     results</a>, there clearly needs to be more.
-  * make it more clear what is normative; to be honest, I'm confused on this
+  * Make it more clear what is normative; to be honest, I'm confused on this
     point as the only real normative requirement for the parts defined by this
     spec-let is "produce the same output as the algorithm defined herein".
-  * define where base URLs come from.
-  * define path concatention
+  * Define where base URLs come from.
+  * Define path concatention
 
 Other todos appear as notes.
 EOF
@@ -118,6 +118,12 @@ Each rule can be invoked individually.  Rules can also invoke one another.
 Rules when evaluated return a JSON objection, typically either a string or an
 object where all of the values are strings.  The one exception is path values,
 which are arrays of strings.
+
+Two types of <dfn>parse errors</dfn> are defined.  Hard errors (indicated in
+the spec with the following text: <em>terminate processing with a parse
+error</em>) are mandatory.  Soft errors (all other errors) are optional.  User
+agents are encouraged to expose <a
+href="https://url.spec.whatwg.org/#parse-error">parse errors</a> somehow.
 EOF
 
 grammar = File.read('url.pegjs')

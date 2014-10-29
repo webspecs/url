@@ -7,7 +7,8 @@ useragent-results: \
 	useragent-results/galimatias \
 	useragent-results/nodejs \
 	useragent-results/rusturl \
-        useragent-results/urltestdata
+	useragent-results/refimpl \
+	useragent-results/urltestdata
 
 clean:
 	rm -rf target *.class Cargo.lock urltestdata.json
@@ -17,6 +18,14 @@ clobber:
 
 urltestdata.json: urltesttojson.js ../test/urltestparser.js ../test/urltestdata.txt
 	node urltesttojson.js > $@
+
+useragent-results/refimpl: testrefimpl.js \
+	../reference-implementation/url.js \
+	../reference-implementation/urlparser.js \
+	../test/urltestdata.txt
+	echo refimpl > $@
+	date >> $@
+	node testrefimpl.js >> $@
 
 useragent-results/urltestdata: urltestdata.json ../test/urltestdata.txt
 	echo urltestdata > $@

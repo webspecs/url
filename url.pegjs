@@ -1,5 +1,31 @@
 {
   base = options.base || {scheme: 'about'}
+
+  /* This function accepts a variable number of arguments.  It copies the
+     'exception' property from the first object which defines such to
+     the first object.  It then returns the first object */
+  function copy(base) {
+    var result = base;
+    if (!result.exception) {
+      for (var i = 1; i<arguments.length; i++) {
+        if (arguments[i] && arguments[i].exception) {
+          result.exception = arguments[i].exception;
+          break;
+        }
+      }
+    };
+    return result
+  }
+
+  /* exceptions which aren't (yet?) defined in the WHATWG spec */
+  function extension_exception(value) {
+    this.value = value || '';
+    this.length = this.value.length;
+    this.extension = true;
+  };
+  extension_exception.prototype = new String;
+  extension_exception.prototype.toString = 
+    extension_exception.prototype.valueOf = function() {return this.value}
 }
 
 /*
@@ -165,8 +191,11 @@ FileLikeRelativeScheme
    Evaluation instructions for each:
 
    <ol>
-   <li>Set $result to the object returned by
-   @RelativeUrl, and then modify it as follows:
+   <li>If anything other than two forward solidus characters ("//") immediately
+     follows the first colon in the input, return a <a>parse error</a>.
+
+     Set $result to the object returned by
+     @RelativeUrl, and then modify it as follows:
 
      * If @RelativeScheme is present in the input, then
        set $result.scheme to this value, lowercased.
@@ -196,7 +225,7 @@ FileLikeRelativeScheme
      * If @UserInfo is present (or computed per above), then
        perform the following steps:
        * If $result.Host is an empty string, then terminate parsing
-           with an error.
+           with a <a>parse error</a>.
        * Set $result.username to the $username value in the @UserInfo.
        * If $password is non-null in the @UserInfo, set
            $result.password to this value.
@@ -216,6 +245,7 @@ FileLikeRelativeScheme
            $base.path and $result.path
      * If $result.scheme is not equal to $base.scheme, then perform the
        following steps:
+       * Indicate a <a>parse error</a>.
        * Remove all empty strings from the front of $result.path.
        * If the first element of $result.path does not contain an "@"
            sign, then set $result.host to this elements
@@ -233,19 +263,19 @@ FileLikeRelativeScheme
            * Set $result.host to the value starting after the first
                "@".
        * if $result.host is either an empty string or contains a
-           colon, then terminate parsing with an error.
+           colon, then terminate parsing with a <a>parse error</a>.
 
    </ol>
 */
 AbsoluteUrl
-  = scheme:(RelativeScheme ':')? [/\\] [/\\]+
+  = scheme:(RelativeScheme ':')? slash1:[/\\] slash2:[/\\]+
     userinfo:UserInfo?
     host:Host 
     port:(':' Port)?
     [/\\] ?
     remainder:RelativeUrl
   {
-    result = remainder;
+    result = copy(remainder, host);
 
     if (scheme) {
       result.scheme = scheme[0].toLowerCase()
@@ -274,6 +304,12 @@ AbsoluteUrl
       result.port = port[1]
     };
 
+    if (slash1 == '\\' || slash2.join().indexOf("\\") != -1) {
+      result.exception = 'Backslash ("\\") used as a delimiter'
+    } else if (slash2.length != 1) {
+      result.exception = 'Extraneous slashes found'
+    }
+
     return result
   }
 
@@ -288,6 +324,7 @@ AbsoluteUrl
       result.host = base.host;
       result.path = Url.path_concat(base.path, result.path)
     } else {
+      result.exception = 'Expected a slash ("/")';
       while (result.path[0] == '') result.path.shift();
 
       var host = result.path.shift().split('@');
@@ -322,14 +359,14 @@ RelativeUrl
     query:('?' Query)?
     fragment:('#' Fragment)?
   {
-    result = {path: path}
+    result = copy({path: path}, path, fragment && fragment[1]);
 
     if (query) {
       result.query = query[1]
     };
 
     if (fragment) {
-      result.fragment = fragment[1]
+      result.fragment = fragment[1].toString()
     };
 
     return result
@@ -349,14 +386,14 @@ NonRelativeUrl
     query:('?' Query)?
     fragment:('#' Fragment)?
   {
-    result = {scheme: scheme, scheme_data: data}
+    result = copy({scheme: scheme, scheme_data: data}, fragment && fragment[1]);
 
     if (query) {
       result.query = query[1]
     };
 
     if (fragment) {
-      result.fragment = fragment[1]
+      result.fragment = fragment[1].toString()
     };
 
     return result
@@ -445,20 +482,19 @@ Password
    the result returned by @IPV6Addr plus "]"  Otherwise:
 
      * If the string starts with a left square bracket (U+005B),
-       terminate parsing with an error.
-     * Remove all U+0009, U+000A,
-       U+000D, U+200B, U+2060, and
-       U+FEFF characters.
+       terminate parsing with a <a>parse error</a>.
+     * If any U+0009, U+000A,
+       U+000D, U+200B, U+2060, or U+FEFF characters are present in the input,
+       remove those characters and indicate a <a>parse error</a>.
      * <a href="https://url.spec.whatwg.org/#percent-decode">Utf8 percent
        decode</a> the result.
      * Replace all Fullwidth unicode characters (in the range of
        U+FF01 to U+FF5E )with their non-fullwidth
        equivalents.
      * If the result contains any character in the range of
-       U+FDD0 to U+FDEF, terminate paring with an
-       error.
-     * If the result contains any of the following, terminate parsing with an
-       error:
+       U+FDD0 to U+FDEF, terminate paring with a <a>parse error</a>.
+     * If the result contains any of the following, terminate parsing with a
+       <a>parse error</a>:
        number sign (U+023),
        percent (U+025),
        solidus (U+02F),
@@ -488,6 +524,8 @@ Password
             U+0020 to U+007E, replace that piece with
             the string "xn--" concatenated with the punycode
             [[!RFC3492]] encoded value of the result.
+        * If any of the pieces, other than the first one, are empty strings,
+            indicate a <a>parse error</a>.
         * Rejoin the pieces using U+002E (full stop) as the
             separator.
 
@@ -504,15 +542,16 @@ Host
 
   / host:[^:/\\?#]*
   {
+    var warn = null;
+
     if (host[0] == '[') error("invalid IPV6 address");
 
     for (var i=0; i<host.length; i++) {
       if (/^[\u0009\u000A\u000D]$/.test(host[i])) {
         host.splice(i--, 1);
-        continue
+        warn = "Tab, new line, or cariage return found in host"
       } else if (/^[\u200B\u2060\uFEFF]$/.test(host[i])) {
         host.splice(i--, 1); // TODO: verify
-        continue
       }
     }
 
@@ -540,10 +579,19 @@ Host
     for (var i=0; i<host.length; i++) {
       if (!/^[\x20-\x7e]*$/.test(host[i])) {
         host[i] = 'xn--' + punycode.encode(host[i])
+      } else if (host[i] == '' && i != 0) {
+        // Not defined here:
+        //   https://url.spec.whatwg.org/#host-state
+        // And the following only defines hard errors (e.g. step 5);
+        //   https://url.spec.whatwg.org/#concept-host-parser
+        // First implemented by galimatias 
+        warn = new extension_exception("DNS violation: Host contains empty label")
       }
     };
 
-    return host.join('.')
+    host = new String(host.join('.'));
+    if (warn) host.exception = warn;
+    return host
   }
 
 /*
@@ -599,7 +647,7 @@ LS32
 /*
   Decimal bytes are a string of up to three decimal digits.  If the results
   converted to an integer are greater than 255, terminate processing with
-  an error.
+  a <a>parse error</a>.
 */
 DECIMAL_BYTE
   = a:[0-2]? b:[0-9]? c:[0-9]
@@ -618,7 +666,7 @@ DECIMAL_BYTE
   until either the leading code point is not U+0030 or result is
   one code point. 
   If any characters that remain are not decimal digits, terminate processing
-  with an error.
+  with a <a>parse error</a>.
   Otherwise, return the result as a string.
 */
 Port
@@ -636,10 +684,16 @@ Port
   }
 
 /*
+  If any of the path separators are a reverse solidus ("\"), indicate
+  a <a>parse error</a>.
+
   Extract all the pathnames into an array.  Process each name as follows:
 
-    * Remove all U+0009, U+000A, and
-      U+000D characters.
+    * If any U+0009, U+000A, U+000D, U+200B, U+2060, or U+FEFF characters are
+      present in the name, remove those characters and indicate a <a>parse
+      error</a>.
+    * If the name includes a percent sign (U+0025) that is not immediately
+      followed by two hexadecimal characters, indicate a <a>parse error</a>.
     * <a href="https://url.spec.whatwg.org/#percent-encode">Percent encode</a>
       the result using the
       <a href="https://url.spec.whatwg.org/#default-encode-set">Default encode
@@ -663,15 +717,29 @@ Port
 Path
   = path:([^/\\?#]* [/\\])* basename:[^/\\?#]*
   {
+    var warn = null;
+
     path.push([basename]);
 
     for (var i=0; i<path.length; i++) {
-      for (var j=0; j<path[i][0].length; j++) {
-        if (/^[\u0009\u000A\u000D]$/.test(path[i][0][j])) {
-          path[i][0].splice(j--, 1)
+      var name = path[i][0];
+
+      for (var j=0; j<name.length; j++) {
+        if (/^[\u0009\u000A\u000D]$/.test(name[j])) {
+          warn = "Tab, new line, or cariage return found in host";
+          name.splice(j--, 1)
         }
-      }
-      path[i] = Url.percent_encode(path[i][0].join(''), Url.DEFAULT_ENCODE_SET)
+      };
+
+      name = name.join('');
+
+      if (/%($|[^0-9a-fA-F]|.$|.[^0-9a-fA-F])/.test(name)) {
+        warn = 'Percent sign ("%") not followed by two hexadecimal digits'
+      } else if (path[i][1] == "\\") {
+        warn = 'Backslash ("\\") used as path segment delimiter'
+      };
+
+      path[i] = Url.percent_encode(name, Url.DEFAULT_ENCODE_SET)
 
       if (/^(\.|%2e)$/i.test(path[i])) {
         if (i < path.length-1) {
@@ -689,6 +757,10 @@ Path
           path.splice(--i, 2, '')
         }
       }
+    };
+
+    if (warn) {
+      path.exception = warn
     };
 
     return path
@@ -731,6 +803,7 @@ Query
 
 /*
   Consume all remaining characters in the input.  
+  If any character is not a <a href="https://url.spec.whatwg.org/#url-code-points">URL code point</a>, indicate a parse error.
   <a href="https://url.spec.whatwg.org/#percent-encode">Percent encode</a>
   the result using the
   <a href="https://url.spec.whatwg.org/#simple-encode-set">Simple encode
@@ -739,5 +812,17 @@ Query
 Fragment 
   = fragment:.*
   {
-    return Url.percent_encode(fragment.join(''), Url.SIMPLE_ENCODE_SET)
+    var warn = null;
+    if (fragment.some(function(c) {return !Url.URL_CODE_POINTS.test(c)})) {
+      warn = "Illegal character in fragment";
+    };
+    
+    result = Url.percent_encode(fragment.join(''), Url.SIMPLE_ENCODE_SET);
+
+    if (warn) {
+      result = new String(result);
+      result.exception = warn
+    };
+
+    return result
   }

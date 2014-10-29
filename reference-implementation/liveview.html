@@ -7,6 +7,10 @@
     <script src="punycode.js" lang="text/javascript"></script>
     <script src="url.js" lang="text/javascript"></script>
     <script src="urlparser.js" lang="text/javascript"></script>
+    <style>
+      h2 {color: DarkBlue}
+      #urlException {color: Crimson}
+    </style>
   </head>
 
   <body>
@@ -66,6 +70,9 @@
       <span class="title">search</span>
       <span class="result" id="urlSearch"></span>
       <br/>
+      <span class="title">error</span>
+      <span class="result" id="urlException"></span>
+      <br/>
     </div>
 
     <script lang="text/javascript">
@@ -86,6 +93,7 @@
       var urlPort = document.getElementById("urlPort");
       var urlProtocol = document.getElementById("urlProtocol");
       var urlSearch = document.getElementById("urlSearch");
+      var urlException = document.getElementById("urlException");
 
       function parse(input) {
         parseDom(input);
@@ -114,8 +122,7 @@
 
       function parseUrl(input) {
         var base = document.baseURI;
-        var url = new URL(input, base);
-
+        var url = new Url(input, base);
         urlHref.textContent = url.href;
         urlHash.textContent = url.hash;
         urlHostname.textContent = url.hostname;
@@ -123,6 +130,7 @@
         urlPort.textContent = url.port;
         urlProtocol.textContent = url.protocol;
         urlSearch.textContent = url.search;
+        urlException.textContent = url.exception;
       }
 
       function compare(x, y) {

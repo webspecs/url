@@ -7,6 +7,7 @@ require 'ruby2js/filter/functions'
 require 'addressable/uri'
 
 agents = {
+  refimpl: {hash: 'refimpl'},
   testdata: {hash: 'urltestdata'},
   addressable: {useragent: `gem list addressable`[/addressable \([.\d]+/]+')'},
   chrome: {hash: '2f6730706a88b036565b5eca96b40729'},
@@ -65,8 +66,8 @@ end
 COLS = %w(href protocol hostname port username password pathname search hash)
 def evaluate(row)
   copy = row.dup
-# copy.delete(:testdata)
-  row.values.first.merge Hash[COLS.map { |col|
+  copy.delete(:refimpl)
+  results = row.values.first.merge Hash[COLS.map { |col|
     max = copy.map {|agent, row| row[col]}.group_by(&:to_s).values.
       max_by(&:length)
     [col, (max.length > row.length/2 ? max.first.to_s : nil)]
@@ -139,6 +140,11 @@ _html do
     if row and row[:testdata]
       _title row[:testdata]['input'].inspect
 
+      row[:testdata]['exception'] = row[:refimpl]['exception']
+      row[:testdata]['exception_extension'] = 
+        row[:refimpl]['exception_extension']
+      row.delete(:refimpl)
+
       cols = []
       row.each do |agent, data|
         data.each do |key, value| 
@@ -147,11 +153,7 @@ _html do
         end
       end
 
-      consensus = Hash[cols.map { |col|
-        max = row.map {|agent, row| row[col]}.group_by(&:to_s).values.
-          max_by(&:length)
-        [col, (max.length > row.length/2 ? max.first.to_s : nil)]
-      }]
+      consensus = evaluate(row)
 
       _h2_ do
         index = results.values.index(row)
@@ -201,7 +203,13 @@ _html do
 
             if cols.include? 'exception'
               if data.include? 'exception' and data['exception']
-                _td.exception data['exception']
+                if data['exception_extension']
+                  _td.exception title: 'not defined in WHATWG spec' do
+                    _em data['exception']
+                  end
+                else
+                  _td.exception data['exception']
+                end
               else
                 _td
               end

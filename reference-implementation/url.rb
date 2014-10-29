@@ -79,8 +79,21 @@ class Url
 
   # https://url.spec.whatwg.org/#percent-decode
   def self.percent_decode(input)
+    warn = null;
+
+    if input =~ /%($|[^0-9a-fA-F]|.$|.[^0-9a-fA-F])/
+      warn = 'Percent sign ("%") not followed by two hexadecimal digits'
+    end
+
     # collapsed steps 1..3
-    return input.gsub(/%[0-9a-fA-F]{2}/) {|c| c[1..-1].to_i(16).chr}
+    result = input.gsub(/%[0-9a-fA-F]{2}/) {|c| c[1..-1].to_i(16).chr}
+
+    if warn
+      result = String.new(result)
+      result.exception = warn
+    end
+
+    return result
   end
 
   def self.utf8_percent_decode(input)
@@ -239,7 +252,7 @@ class Url
   end
 
   attr_accessor :scheme, :scheme_data, :username, :password, :host, :port
-  attr_accessor :path, :query, :fragment
+  attr_accessor :path, :query, :fragment, :exception
 
   def initialize(input, base)
     @scheme = ''
@@ -263,7 +276,7 @@ class Url
       end
     rescue => e
       @href = input
-      @error = e.message
+      @exception = e.message
     end
   end
 
@@ -334,7 +347,7 @@ class Url
 
   # https://url.spec.whatwg.org/#dom-url-pathname
   def pathname
-    return '' if @error
+    return '' unless @scheme
     @scheme_data || ('/' + @path.join('/'))
   end
 

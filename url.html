@@ -22,13 +22,13 @@
 </p>
   <h1 class="p-name no-ref" id=title>URL</h1>
   <h2 class="no-num no-toc no-ref heading settled" id=subtitle><span class=content>Living Standard,
-    <span class=dt-updated><span class=value-title title=20141027>27 October 2014</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20141029>29 October 2014</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt>Editor:<dd><div class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://intertwingly.net/blog/>Sam Ruby</a> (<a class="p-org org" href=https://www.ibm.com/>IBM</a>) <a class="u-email email" href=mailto:rubys@intertwingly.net>rubys@intertwingly.net</a></div><dt>Version History:<dd><span><a href=https://github.com/rubys/url/commits/peg.js>https://github.com/rubys/url/commits/peg.js</a></span><dt>Participate:<dd><span><a href=https://whatwg.org/mailing-list>whatwg@whatwg.org</a> (<a href=https://whatwg.org/mailing-list#specs>archives</a>)</span><dd><span><a href=http://wiki.whatwg.org/wiki/IRC>IRC: #whatwg on Freenode</a></span></dl></div>
   <div data-fill-with=warning></div>
   <p class=copyright data-fill-with=copyright><a href=http://creativecommons.org/publicdomain/zero/1.0/ rel=license><img alt=CC0 src=https://i.creativecommons.org/p/zero/1.0/80x15.png></a>
 To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 27 October 2014,
+In addition, as of 29 October 2014,
 the editors have made this specification available under the
 <a href=http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0 rel=license>Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
@@ -44,7 +44,7 @@ Parts of this work may be from another specification document.  If so, those par
 <div data-fill-with=at-risk></div>
 
 <h2 class="no-num no-toc no-ref heading settled" id=contents><span class=content>Table of Contents</span></h2>
-<div data-fill-with=table-of-contents><ul class=toc><li><a href=#goals><span class=secno>1</span> <span class=content>Goals</span></a><li><a href=#todos><span class=secno>2</span> <span class=content>Todos</span></a><li><a href=#parsing-rules><span class=secno>3</span> <span class=content>Parsing Rules</span></a><ul class=toc><li><a href=#url><span class=secno>3.1</span> <span class=content>url</span></a><li><a href=#file-like-relative-url><span class=secno>3.2</span> <span class=content>file-like-relative-url</span></a><li><a href=#file-like-relative-scheme><span class=secno>3.3</span> <span class=content>file-like-relative-scheme</span></a><li><a href=#absolute-url><span class=secno>3.4</span> <span class=content>absolute-url</span></a><li><a href=#relative-url><span class=secno>3.5</span> <span class=content>relative-url</span></a><li><a href=#non-relative-url><span class=secno>3.6</span> <span class=content>non-relative-url</span></a><li><a href=#relative-scheme><span class=secno>3.7</span> <span class=content>relative-scheme</span></a><li><a href=#scheme><span class=secno>3.8</span> <span class=content>scheme</span></a><li><a href=#user-info><span class=secno>3.9</span> <span class=content>user-info</span></a><li><a href=#user><span class=secno>3.10</span> <span class=content>user</span></a><li><a href=#password><span class=secno>3.11</span> <span class=content>password</span></a><li><a href=#host><span class=secno>3.12</span> <span class=content>host</span></a><li><a href=#ipv6addr><span class=secno>3.13</span> <span class=content>ipv6addr</span></a><li><a href=#h16><span class=secno>3.14</span> <span class=content>h16</span></a><li><a href=#ls32><span class=secno>3.15</span> <span class=content>ls32</span></a><li><a href=#decimal_byte><span class=secno>3.16</span> <span class=content>decimal_byte</span></a><li><a href=#port><span class=secno>3.17</span> <span class=content>port</span></a><li><a href=#path><span class=secno>3.18</span> <span class=content>path</span></a><li><a href=#data><span class=secno>3.19</span> <span class=content>data</span></a><li><a href=#query><span class=secno>3.20</span> <span class=content>query</span></a><li><a href=#fragment><span class=secno>3.21</span> <span class=content>fragment</span></a></ul><li><a href=#conformance><span class=secno></span> <span class=content>Conformance</span></a><li><a href=#references><span class=secno></span> <span class=content>References</span></a><ul class=toc><li><a href=#normative><span class=secno></span> <span class=content>Normative References</span></a></ul></ul></div>
+<div data-fill-with=table-of-contents><ul class=toc><li><a href=#goals><span class=secno>1</span> <span class=content>Goals</span></a><li><a href=#todos><span class=secno>2</span> <span class=content>Todos</span></a><li><a href=#parsing-rules><span class=secno>3</span> <span class=content>Parsing Rules</span></a><ul class=toc><li><a href=#url><span class=secno>3.1</span> <span class=content>url</span></a><li><a href=#file-like-relative-url><span class=secno>3.2</span> <span class=content>file-like-relative-url</span></a><li><a href=#file-like-relative-scheme><span class=secno>3.3</span> <span class=content>file-like-relative-scheme</span></a><li><a href=#absolute-url><span class=secno>3.4</span> <span class=content>absolute-url</span></a><li><a href=#relative-url><span class=secno>3.5</span> <span class=content>relative-url</span></a><li><a href=#non-relative-url><span class=secno>3.6</span> <span class=content>non-relative-url</span></a><li><a href=#relative-scheme><span class=secno>3.7</span> <span class=content>relative-scheme</span></a><li><a href=#scheme><span class=secno>3.8</span> <span class=content>scheme</span></a><li><a href=#user-info><span class=secno>3.9</span> <span class=content>user-info</span></a><li><a href=#user><span class=secno>3.10</span> <span class=content>user</span></a><li><a href=#password><span class=secno>3.11</span> <span class=content>password</span></a><li><a href=#host><span class=secno>3.12</span> <span class=content>host</span></a><li><a href=#ipv6addr><span class=secno>3.13</span> <span class=content>ipv6addr</span></a><li><a href=#h16><span class=secno>3.14</span> <span class=content>h16</span></a><li><a href=#ls32><span class=secno>3.15</span> <span class=content>ls32</span></a><li><a href=#decimal_byte><span class=secno>3.16</span> <span class=content>decimal_byte</span></a><li><a href=#port><span class=secno>3.17</span> <span class=content>port</span></a><li><a href=#path><span class=secno>3.18</span> <span class=content>path</span></a><li><a href=#data><span class=secno>3.19</span> <span class=content>data</span></a><li><a href=#query><span class=secno>3.20</span> <span class=content>query</span></a><li><a href=#fragment><span class=secno>3.21</span> <span class=content>fragment</span></a></ul><li><a href=#conformance><span class=secno></span> <span class=content>Conformance</span></a><li><a href=#references><span class=secno></span> <span class=content>References</span></a><ul class=toc><li><a href=#normative><span class=secno></span> <span class=content>Normative References</span></a></ul><li><a href=#index><span class=secno></span> <span class=content>Index</span></a></ul></div>
 
 <h2 class="heading settled" data-level=1 id=goals><span class=secno>1. </span><span class=content>Goals</span><a class=self-link href=#goals></a></h2>
 
@@ -63,14 +63,15 @@ reference implementation are generated from a common source.
 
 <h2 class="heading settled" data-level=2 id=todos><span class=secno>2. </span><span class=content>Todos</span><a class=self-link href=#todos></a></h2>
 
-<ul><li data-md=""><p>define soft parse errors.  The <a href=https://url.spec.whatwg.org/>URL
-living standard</a> has a start, but based on <a href=http://intertwingly.net/projects/pegurl/urltest-results/>test
+<ul><li data-md=""><p>Define more soft <a data-link-type=dfn href=#parse-errors title="parse errors">parse errors</a>.  The
+<a href=https://url.spec.whatwg.org/>URL living standard</a> has a start,
+but based on <a href=http://intertwingly.net/projects/pegurl/urltest-results/>test
 results</a>, there clearly needs to be more.</p>
-<li data-md=""><p>make it more clear what is normative; to be honest, I’m confused on this
+<li data-md=""><p>Make it more clear what is normative; to be honest, I’m confused on this
 point as the only real normative requirement for the parts defined by this
 spec-let is "produce the same output as the algorithm defined herein".</p>
-<li data-md=""><p>define where base URLs come from.</p>
-<li data-md=""><p>define path concatention</p>
+<li data-md=""><p>Define where base URLs come from.</p>
+<li data-md=""><p>Define path concatention</p>
 </ul>
 <p>Other todos appear as notes.</p>
 
@@ -85,6 +86,11 @@ match against the input provided is found.</p>
 Rules when evaluated return a JSON objection, typically either a string or an
 object where all of the values are strings.  The one exception is path values,
 which are arrays of strings.</p>
+
+<p>Two types of <dfn data-dfn-type=dfn data-noexport="" id=parse-errors>parse errors<a class=self-link href=#parse-errors></a></dfn> are defined.  Hard errors (indicated in
+the spec with the following text: <em>terminate processing with a parse
+error</em>) are mandatory.  Soft errors (all other errors) are optional.  User
+agents are encouraged to expose <a href=https://url.spec.whatwg.org/#parse-error>parse errors</a> somehow.</p>
 
 <h3 class="heading settled" data-level=3.1 id=url><span class=secno>3.1. </span><span class=content>url</span><a class=self-link href=#url></a></h3>
 
@@ -641,8 +647,11 @@ bottom.</p>
 <p>Evaluation instructions for each:</p>
 
 <ol>
-<li>Set <code>result</code> to the object returned by
-<code class=grammar-rule>relative-url</code>, and then modify it as follows:
+<li>If anything other than two forward solidus characters ("<code>//</code>") immediately
+  follows the first colon in the input, return a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.
+
+<p>Set <code>result</code> to the object returned by
+  <code class=grammar-rule>relative-url</code>, and then modify it as follows:</p>
 
 <ul><li data-md=""><p>If <code class=grammar-rule>relative-scheme</code> is present in the input, then
 set <code>result.scheme</code> to this value, lowercased.</p>
@@ -672,7 +681,7 @@ the value returned by <code class=grammar-rule>host</code> with all of the
 </ul><li data-md=""><p>If <code class=grammar-rule>user-info</code> is present (or computed per above), then
 perform the following steps:</p>
 <ul><li data-md=""><p>If <code>result.Host</code> is an empty string, then terminate parsing
-with an error.</p>
+with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
 <li data-md=""><p>Set <code>result.username</code> to the <code>username</code> value in the <code class=grammar-rule>user-info</code>.</p>
 <li data-md=""><p>If <code>password</code> is non-null in the <code class=grammar-rule>user-info</code>, set
 <code>result.password</code> to this value.</p>
@@ -692,7 +701,8 @@ following steps:</p>
 <code>base.path</code> and <code>result.path</code></p>
 </ul><li data-md=""><p>If <code>result.scheme</code> is not equal to <code>base.scheme</code>, then perform the
 following steps:</p>
-<ul><li data-md=""><p>Remove all empty strings from the front of <code>result.path.</code></p>
+<ul><li data-md=""><p>Indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+<li data-md=""><p>Remove all empty strings from the front of <code>result.path.</code></p>
 <li data-md=""><p>If the first element of <code>result.path</code> does not contain an "<code>@</code>"
 sign, then set <code>result.host</code> to this elements
 value, and remove this element from <code>result.path.</code></p>
@@ -709,7 +719,7 @@ set <code>result.username</code> to this entire value.</p>
 <li data-md=""><p>Set <code>result.host</code> to the value starting after the first
 "<code>@</code>".</p>
 </ul><li data-md=""><p>if <code>result.host</code> is either an empty string or contains a
-colon, then terminate parsing with an error.</p>
+colon, then terminate parsing with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
 </ul></ul>
 </ol>
 
@@ -1180,20 +1190,19 @@ any except [:/\\?#]</text></g><path d="M262.0 71h10">
 the result returned by <code class=grammar-rule>ipv6addr</code> plus "<code>]</code>"  Otherwise:</p>
 
 <ul><li data-md=""><p>If the string starts with a left square bracket (<code>U+005B</code>),
-terminate parsing with an error.</p>
-<li data-md=""><p>Remove all <code>U+0009</code>, <code>U+000A</code>,
-<code>U+000D</code>, <code>U+200B</code>, <code>U+2060</code>, and
-<code>U+FEFF</code> characters.</p>
+terminate parsing with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+<li data-md=""><p>If any <code>U+0009</code>, <code>U+000A</code>,
+<code>U+000D</code>, <code>U+200B</code>, <code>U+2060</code>, or <code>U+FEFF</code> characters are present in the input,
+remove those characters and indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
 <li data-md=""><p><a href="<code>https://url.spec.whatwg.org/#percent-decode</code>">Utf8 percent
 decode</a> the result.</p>
 <li data-md=""><p>Replace all Fullwidth unicode characters (in the range of
 <code>U+FF01</code> to <code>U+FF5E</code> )with their non-fullwidth
 equivalents.</p>
 <li data-md=""><p>If the result contains any character in the range of
-<code>U+FDD0</code> to <code>U+FDEF</code>, terminate paring with an
-error.</p>
-<li data-md=""><p>If the result contains any of the following, terminate parsing with an
-error:
+<code>U+FDD0</code> to <code>U+FDEF</code>, terminate paring with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+<li data-md=""><p>If the result contains any of the following, terminate parsing with a
+<a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>:
 number sign (U+023),
 percent (U+025),
 solidus (U+02F),
@@ -1223,6 +1232,8 @@ ideographic space (<code>U+3000</code>),</p>
  <code>U+0020</code> to <code>U+007E</code>, replace that piece with
  the string "<code>xn--</code>" concatenated with the punycode
  <a data-biblio-type=normative data-link-type=biblio href=#biblio-rfc3492 title=RFC3492>[RFC3492]</a> encoded value of the result.</p>
+<li data-md=""><p>If any of the pieces, other than the first one, are empty strings,
+ indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
 <li data-md=""><p>Rejoin the pieces using <code>U+002E</code> (full stop) as the
  separator.</p>
 </ul></ul>
@@ -1530,7 +1541,7 @@ any of [0-9]</text></g><path d="M478.0 41h10">
 
 <p>Decimal bytes are a string of up to three decimal digits.  If the results
 converted to an integer are greater than 255, terminate processing with
-an error.</p>
+a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
 
 <h3 class="heading settled" data-level=3.17 id=port><span class=secno>3.17. </span><span class=content>port</span><a class=self-link href=#port></a></h3>
 
@@ -1573,7 +1584,7 @@ characters.  Remove leading <code>U+0030</code> code points from result
 until either the leading code point is not <code>U+0030</code> or result is
 one code point. 
 If any characters that remain are not decimal digits, terminate processing
-with an error.
+with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.
 Otherwise, return the result as a string.</p>
 
 <h3 class="heading settled" data-level=3.18 id=path><span class=secno>3.18. </span><span class=content>path</span><a class=self-link href=#path></a></h3>
@@ -1661,10 +1672,16 @@ any except [/\\?#]</text></g><path d="M654.0 51h10">
 </path></g></g><path d="M 684 51 h 20 m -10 -10 v 20 m 10 -20 v 20">
 </path></g></svg></div>
 
+<p>If any of the path separators are a reverse solidus ("<code>\</code>"), indicate
+a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+
 <p>Extract all the pathnames into an array.  Process each name as follows:</p>
 
-<ul><li data-md=""><p>Remove all <code>U+0009</code>, <code>U+000A</code>, and
-<code>U+000D</code> characters.</p>
+<ul><li data-md=""><p>If any <code>U+0009</code>, <code>U+000A</code>, <code>U+000D</code>, <code>U+200B</code>, <code>U+2060</code>, or <code>U+FEFF</code> characters are
+present in the name, remove those characters and indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse
+error</a>.</p>
+<li data-md=""><p>If the name includes a percent sign (<code>U+0025</code>) that is not immediately
+followed by two hexadecimal characters, indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
 <li data-md=""><p><a href="<code>https://url.spec.whatwg.org/#percent-encode</code>">Percent encode</a>
 the result using the
 <a href="<code>https://url.spec.whatwg.org/#default-encode-set</code>">Default encode
@@ -1794,6 +1811,7 @@ any</text></g><path d="M114.0 41h10">
 </path></g></svg></div>
 
 <p>Consume all remaining characters in the input.
+If any character is not a <a href="<code>https://url.spec.whatwg.org/#url-code-points</code>">URL code point</a>, indicate a parse error.
 <a href="<code>https://url.spec.whatwg.org/#percent-encode</code>">Percent encode</a>
 the result using the
 <a href="<code>https://url.spec.whatwg.org/#simple-encode-set</code>">Simple encode
@@ -1810,4 +1828,4 @@ readability, these words do not appear in all uppercase letters in this specific
 
 <p>Conformance requirements phrased as algorithms or specific steps may be implemented in any manner, so long as the end
 result is equivalent.
-<h2 class="no-num heading settled" id=references><span class=content>References</span><a class=self-link href=#references></a></h2><h3 class="no-num heading settled" id=normative><span class=content>Normative References</span><a class=self-link href=#normative></a></h3><dl><dt id=biblio-rfc2119 title=rfc2119><a class=self-link href=#biblio-rfc2119></a>[rfc2119]<dd>S. Bradner. <a href=http://www.ietf.org/rfc/rfc2119.txt>Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href=http://www.ietf.org/rfc/rfc2119.txt>http://www.ietf.org/rfc/rfc2119.txt</a><dt id=biblio-rfc3492 title=rfc3492><a class=self-link href=#biblio-rfc3492></a>[rfc3492]<dd>A. Costello. <a href=http://www.ietf.org/rfc/rfc3492.txt>Punycode: A Bootstring encoding of Unicode for Internationalized Domain Names in Applications (IDNA)</a>. March 2003. Proposed Standard. URL: <a href=http://www.ietf.org/rfc/rfc3492.txt>http://www.ietf.org/rfc/rfc3492.txt</a></dl>
+<h2 class="no-num heading settled" id=references><span class=content>References</span><a class=self-link href=#references></a></h2><h3 class="no-num heading settled" id=normative><span class=content>Normative References</span><a class=self-link href=#normative></a></h3><dl><dt id=biblio-rfc2119 title=rfc2119><a class=self-link href=#biblio-rfc2119></a>[rfc2119]<dd>S. Bradner. <a href=http://www.ietf.org/rfc/rfc2119.txt>Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href=http://www.ietf.org/rfc/rfc2119.txt>http://www.ietf.org/rfc/rfc2119.txt</a><dt id=biblio-rfc3492 title=rfc3492><a class=self-link href=#biblio-rfc3492></a>[rfc3492]<dd>A. Costello. <a href=http://www.ietf.org/rfc/rfc3492.txt>Punycode: A Bootstring encoding of Unicode for Internationalized Domain Names in Applications (IDNA)</a>. March 2003. Proposed Standard. URL: <a href=http://www.ietf.org/rfc/rfc3492.txt>http://www.ietf.org/rfc/rfc3492.txt</a></dl><h2 class="no-num heading settled" id=index><span class=content>Index</span><a class=self-link href=#index></a></h2><ul class=indexlist><li>parse errors, <a href=#parse-errors title="section 3">3</a></ul>

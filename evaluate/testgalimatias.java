@@ -58,7 +58,8 @@ public class testgalimatias {
         result.put("protocol", url.scheme() + ':');
         result.put("username", url.username());
         result.put("password", url.password());
-        result.put("hostname", url.host().toHumanString());
+        result.put("hostname", 
+          (url.host()!=null ? url.host().toHumanString() : null));
 
         if (url.port() == -1 || url.port()==DEFAULT_PORTS.get(url.scheme())) {
           result.put("port", (String)null);
