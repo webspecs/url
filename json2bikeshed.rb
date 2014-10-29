@@ -68,6 +68,7 @@ Editor: Sam Ruby, IBM https://www.ibm.com/, rubys@intertwingly.net, http://inter
 Abstract: This specification <a href="http://agiledictionary.com/209/spike/">spike</a> defines parsing rules for URLs
 Logo: https://resources.whatwg.org/logo-url.svg
 !Version History: <a href="https://github.com/rubys/url/commits/peg.js">https://github.com/rubys/url/commits/peg.js</a>
+!Participate: <a href="mailto:public-webapps@w3.org">public-webapps@w3.org</a> (<a href="http://lists.w3.org/Archives/Public/public-webapps/">archives</a>)
 !Participate: <a href="https://whatwg.org/mailing-list">whatwg@whatwg.org</a> (<a href="https://whatwg.org/mailing-list#specs">archives</a>)
 !Participate: <a href="http://wiki.whatwg.org/wiki/IRC">IRC: #whatwg on Freenode</a>
 </pre>
@@ -87,6 +88,8 @@ order.
 href="http://intertwingly.net/blog/2014/10/21/pegurl-js">reference
 implementation</a>, where parts of this specification and parts of that
 reference implementation are generated from a common source.
+<li>Reference <a href="https://tools.ietf.org/html/draft-ietf-appsawg-uri-scheme-reg-04">draft-thaler-appsawg-uri-scheme-reg</a> as the scheme registration mechanism in the <a href="https://url.spec.whatwg.org/#url-writing">URL writing</a> section.
+<li>Incorporate the substance of the <a href="http://www.w3.org/TR/html5/references.html#refsURL">informative note</a> that precedes the [URL] normative reference in the <a href="http://www.w3.org/TR/html5/">HTML5 Recommendation</a> into a status section or equivalent in this document.
 </ol>
 
 Todos {#todos}
@@ -100,7 +103,7 @@ Todos {#todos}
     point as the only real normative requirement for the parts defined by this
     spec-let is "produce the same output as the algorithm defined herein".
   * Define where base URLs come from.
-  * Define path concatention
+  * Define <dfn>path concatenation</dfn>.
 
 Other todos appear as notes.
 EOF

@@ -47,7 +47,7 @@
    follows before being returned:
      * Set $result.scheme to $base.scheme.
      * Set $result.host to $base.host.
-     * Replace $result.path by the URL concatenation of $base.path and
+     * Replace $result.path by the <a>path concatenation</a> of $base.path and
        $result.Path.
 
    In all other cases, the value returned by the called production is returned
@@ -241,7 +241,7 @@ FileLikeRelativeScheme
      * If $result.scheme is equal to $base.scheme, then perform the
        following steps:
        * Set $result.host to $base.host
-       * Replace $result.path by the URL concatenation of 
+       * Replace $result.path by the <a>path concatenation</a> of 
            $base.path and $result.path
      * If $result.scheme is not equal to $base.scheme, then perform the
        following steps:
@@ -544,7 +544,7 @@ Host
   {
     var warn = null;
 
-    if (host[0] == '[') error("invalid IPV6 address");
+    if (host[0] == '[') error("Invalid IPV6 address");
 
     for (var i=0; i<host.length; i++) {
       if (/^[\u0009\u000A\u000D]$/.test(host[i])) {
@@ -679,7 +679,7 @@ Port
     }
 
     port = port.join('').replace(/^0+(\d)/, '$1');
-    if (!/^\d*$/.test(port)) error('invalid port number');
+    if (!/^\d*$/.test(port)) error('Invalid port number');
     return port
   }
 
