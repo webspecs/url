@@ -41,10 +41,11 @@
     if (string.some(function(c) {
       return c != '%' && !Url.URL_CODE_POINTS.test(c)
     })) {
-      warn = "Illegal character in " + component;
+      warn = "Illegal character in " + component
     };
 
-    string = Url.percent_encode(string.join(''), encode_set)
+    string = string.join('');
+    if (encode_set) string = Url.percent_encode(string, encode_set);
 
     if (warn) {
       string = new String(string);
@@ -701,9 +702,8 @@ DECIMAL_BYTE
   a reverse solidus (U+005C),
   a question mark (U+003F),
   or the end of string is encountered.
-  If any U+0009, U+000A, U+000D, U+200B, U+2060, or U+FEFF characters are
-  present in the result, remove those characters and indicate a
-  <a>parse error</a>.
+  <a title=cleanse>Cleansed</a> result using <var>null</var> as
+  the encode set.
   Remove leading U+0030 code points from result
   until either the leading code point is not U+0030 or result is
   one code point. 
@@ -714,16 +714,10 @@ DECIMAL_BYTE
 Port
   = port:[^/\\?#]*
   {
-    var warn = null;
+    port = cleanse(port, null, 'port');
+    var warn = port.exception;
 
-    for (var i=0; i<port.length; i++) {
-      if (/^[\u0009\u000A\u000D]$/.test(port[i])) {
-        port.splice(i--, 1);
-        warn = "Tab, new line, or cariage return found in port";
-      }
-    }
-
-    port = port.join('').replace(/^0+(\d)/, '$1');
+    port = port.replace(/^0+(\d)/, '$1');
     if (!/^\d*$/.test(port)) error('Invalid port number');
 
     if (warn) {
@@ -827,35 +821,14 @@ Path
 /*
   Consume all characters until either a question mark (U+003F), a
   number sign (U+0023), or the end of string is encountered.
-  If any U+0009, U+000A, U+000D, U+200B, U+2060, or U+FEFF characters are
-  present in the result, remove those characters and indicate a
-  <a>parse error</a>.
-  If any character in the result is not a
-  <a href="https://url.spec.whatwg.org/#url-code-points">URL code point</a> or
-  a percent sign ("%"), indicate a parse error.
+  <a title=cleanse>Cleansed</a> result using <var>null</var> as
+  the encode set.
   Return the result as a string.
 */
 Data
   = data:[^?#]*
   {
-    var warn = null;
-
-    for (var i=0; i<data.length; i++) {
-      if (/^[\u0009\u000A\u000D]$/.test(data[i])) {
-        warn = "Tab, new line, or cariage return found in scheme data"
-        data.splice(i--, 1)
-      }
-    }
-
-    if (data.some(function(c) {
-      return c != '%' && !Url.URL_CODE_POINTS.test(c)
-    })) {
-      warn = "Illegal character in scheme data";
-    };
-
-    data = new String(data.join(''));
-    if (warn) data.exception = warn;
-    return data
+    return cleanse(data, null, 'scheme data');
   }
 
 /*

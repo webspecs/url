@@ -179,14 +179,15 @@ Common Functions {#common-functions}
 To <dfn>cleanse</dfn> a string, using an <var>encode set</var>, run these steps:
 
  * If any character in the string not a
-    <a href="https://url.spec.whatwg.org/#url-code-points">URL code point</a>
+     <a href="https://url.spec.whatwg.org/#url-code-points">URL code point</a>
      or a percent sign ("%"), indicate a parse error.
 
  * If any U+0009, U+000A, U+000D, U+200B, U+2060, or U+FEFF characters are
     present in the string, remove those characters and indicate a
     <a>parse error</a>.
 
- * <a href="https://url.spec.whatwg.org/#percent-encode">Percent encode</a>
+ * if the <var>encode set</var> is non-null,
+    <a href="https://url.spec.whatwg.org/#percent-encode">Percent encode</a>
     the result using the provided <var>encode set</var>.
 
  * Return the result as a string.

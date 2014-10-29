@@ -1586,9 +1586,8 @@ a solidus (<code>U+002F</code>),
 a reverse solidus (<code>U+005C</code>),
 a question mark (<code>U+003F</code>),
 or the end of string is encountered.
-If any <code>U+0009</code>, <code>U+000A</code>, <code>U+000D</code>, <code>U+200B</code>, <code>U+2060</code>, or <code>U+FEFF</code> characters are
-present in the result, remove those characters and indicate a
-<a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.
+<a data-link-type=dfn href=#cleanse title=cleanse>Cleansed</a> result using <var>null</var> as
+the encode set.
 Remove leading <code>U+0030</code> code points from result
 until either the leading code point is not <code>U+0030</code> or result is
 one code point. 
@@ -1745,12 +1744,8 @@ any except [?#]</text></g><path d="M210.0 41h10">
 
 <p>Consume all characters until either a question mark (<code>U+003F</code>), a
 number sign (<code>U+0023</code>), or the end of string is encountered.
-If any <code>U+0009</code>, <code>U+000A</code>, <code>U+000D</code>, <code>U+200B</code>, <code>U+2060</code>, or <code>U+FEFF</code> characters are
-present in the result, remove those characters and indicate a
-<a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.
-If any character in the result is not a
-<a href="<code>https://url.spec.whatwg.org/#url-code-points</code>">URL code point</a> or
-a percent sign ("<code>%</code>"), indicate a parse error.
+<a data-link-type=dfn href=#cleanse title=cleanse>Cleansed</a> result using <var>null</var> as
+the encode set.
 Return the result as a string.</p>
 
 <h3 class="heading settled" data-level=3.20 id=query><span class=secno>3.20. </span><span class=content>query</span><a class=self-link href=#query></a></h3>
@@ -1835,14 +1830,15 @@ Return the <a data-link-type=dfn href=#cleanse title=cleanse>cleansed</a> result
 <p>To <dfn data-dfn-type=dfn data-noexport="" id=cleanse>cleanse<a class=self-link href=#cleanse></a></dfn> a string, using an <var>encode set</var>, run these steps:</p>
 
 <ul><li data-md=""><p>If any character in the string not a
-<a href=https://url.spec.whatwg.org/#url-code-points>URL code point</a>
+ <a href=https://url.spec.whatwg.org/#url-code-points>URL code point</a>
  or a percent sign ("%"), indicate a parse error.</p>
 
 <li data-md=""><p>If any U+0009, U+000A, U+000D, U+200B, U+2060, or U+FEFF characters are
 present in the string, remove those characters and indicate a
 <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
 
-<li data-md=""><p><a href=https://url.spec.whatwg.org/#percent-encode>Percent encode</a>
+<li data-md=""><p>if the <var>encode set</var> is non-null,
+<a href=https://url.spec.whatwg.org/#percent-encode>Percent encode</a>
 the result using the provided <var>encode set</var>.</p>
 
 <li data-md=""><p>Return the result as a string.</p>
