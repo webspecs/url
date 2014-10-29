@@ -26,6 +26,33 @@
   extension_exception.prototype = new String;
   extension_exception.prototype.toString = 
     extension_exception.prototype.valueOf = function() {return this.value}
+
+  /* cleanse a url component given a encode set */
+  function cleanse(string, encode_set, component) {
+    warn = null;
+
+    for (var i=0; i<string.length; i++) {
+      if (/^[\u0009\u000A\u000D]$/.test(string[i])) {
+        warn = "Tab, new line, or cariage return found in " + component
+        string.splice(i--, 1)
+      }
+    }
+
+    if (string.some(function(c) {
+      return c != '%' && !Url.URL_CODE_POINTS.test(c)
+    })) {
+      warn = "Illegal character in " + component;
+    };
+
+    string = Url.percent_encode(string.join(''), encode_set)
+
+    if (warn) {
+      string = new String(string);
+      string.exception = warn;
+    };
+
+    return string
+  }
 }
 
 /*
@@ -459,32 +486,14 @@ UserInfo
   a commercial at (U+0040), 
   a colon (U+003A), 
   or the end of string is encountered.
-  If the result includes a character is not a 
-  <a href="https://url.spec.whatwg.org/#url-code-points">URL code point</a> or
-  a percent sign ("%"), indicate a parse error.
-  Return the result as a string.
-
-  Note: percent encoding logic needs to be added.
+  Return the <a title=cleanse>cleansed</a> result using the
+  <a href="https://url.spec.whatwg.org/#default-encode-set">default encode
+   set</a>.
 */
 User
   = user:[^/\\?#@:]*
   {
-    warn = null;
-
-    if (user.some(function(c) {
-      return c != '%' && !Url.URL_CODE_POINTS.test(c)
-    })) {
-      warn = "Illegal character in user";
-    };
-
-    user = user.join('');
-
-    if (warn) {
-      user = new String(user);
-      user.exception = warn;
-    };
-
-    return user
+    return cleanse(user, Url.DEFAULT_ENCODE_SET, 'user')
   }
 
 /*
@@ -495,32 +504,14 @@ User
   a number sign (U+0023), 
   a commercial at (U+0040), 
   or the end of string is encountered.
-  If the result includes a character is not a 
-  <a href="https://url.spec.whatwg.org/#url-code-points">URL code point</a> or
-  a percent sign ("%"), indicate a parse error.
-  Return the result as a string.
-
-  Note: percent encoding logic needs to be added.
+  Return the <a title=cleanse>cleansed</a> result using the
+  <a href="https://url.spec.whatwg.org/#default-encode-set">default encode
+   set</a>.
 */
 Password
   = password:[^/\\?#@]*
   {
-    warn = null;
-
-    if (password.some(function(c) {
-      return c != '%' && !Url.URL_CODE_POINTS.test(c)
-    })) {
-      warn = "Illegal character in password";
-    };
-
-    password = password.join('');
-
-    if (warn) {
-      password = new String(password);
-      password.exception = warn;
-    };
-
-    return password
+    return cleanse(password, Url.DEFAULT_ENCODE_SET, 'password')
   }
 
 /*
@@ -883,28 +874,12 @@ Query
 
 /*
   Consume all remaining characters in the input.  
-  If any character is not a <a href="https://url.spec.whatwg.org/#url-code-points">URL code point</a> or a percent sign ("%"), indicate a parse error.
-  <a href="https://url.spec.whatwg.org/#percent-encode">Percent encode</a>
-  the result using the
-  <a href="https://url.spec.whatwg.org/#simple-encode-set">Simple encode
-  set</a>.  Return the result as a string.
+  Return the <a title=cleanse>cleansed</a> result using the
+  <a href="https://url.spec.whatwg.org/#default-encode-set">simple encode
+   set</a>.
 */
 Fragment 
   = fragment:.*
   {
-    var warn = null;
-    if (fragment.some(function(c) {
-      return c != '%' && !Url.URL_CODE_POINTS.test(c)
-    })) {
-      warn = "Illegal character in fragment";
-    };
-    
-    result = Url.percent_encode(fragment.join(''), Url.SIMPLE_ENCODE_SET);
-
-    if (warn) {
-      result = new String(result);
-      result.exception = warn
-    };
-
-    return result
+    return cleanse(fragment, Url.SIMPLE_ENCODE_SET, 'fragment')
   }
