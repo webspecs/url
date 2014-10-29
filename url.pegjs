@@ -208,6 +208,7 @@ FileLikeRelativeScheme
        entire value.
      * If one or more "@" signs are present in the value returned
        by the @Host production, then perform the following steps:
+       * Indicate a <a>parse error</a>.
        * If the @UserInfo is not present in the input, then substitute
            `{"username": ""}` for the return value of
            @UserInfo in the remainder of this step.
@@ -234,8 +235,10 @@ FileLikeRelativeScheme
        that corresponds to the $response.scheme, then set 
        $result.port to this value.
          
-   <li>The value object to be returned is initialized to the value returned by
-   @RelativeUrl, and then modify it as follows:
+   <li>Indicate a <a>parse error</a>.
+
+    Initialize $result to be the value returned by @RelativeUrl, and then
+    modify it as follows:
 
      * Set $result.scheme to value returned by @RelativeScheme, lowercased
      * If $result.scheme is equal to $base.scheme, then perform the
@@ -245,7 +248,6 @@ FileLikeRelativeScheme
            $base.path and $result.path
      * If $result.scheme is not equal to $base.scheme, then perform the
        following steps:
-       * Indicate a <a>parse error</a>.
        * Remove all empty strings from the front of $result.path.
        * If the first element of $result.path does not contain an "@"
            sign, then set $result.host to this elements
@@ -275,7 +277,7 @@ AbsoluteUrl
     [/\\] ?
     remainder:RelativeUrl
   {
-    result = copy(remainder, host);
+    result = copy(remainder, userinfo, host, port && port[1]);
 
     if (scheme) {
       result.scheme = scheme[0].toLowerCase()
@@ -286,6 +288,8 @@ AbsoluteUrl
     host = host.split('@');
     result.host = host.pop();
     if (host.length > 0) {
+      result.exception = 
+        'At sign ("@") in user or password needs to be percent encoded';
       if (!userinfo) userinfo = {username: ''}
       if (userinfo.password != null) {
         userinfo.password += Array(host.length+1).join("%40")+host.join('')
@@ -318,13 +322,13 @@ AbsoluteUrl
     remainder:RelativeUrl
   {
     result = remainder;
+    result.exception = 'Expected a slash ("/")';
     result.scheme = scheme.toLowerCase();
 
     if (base.scheme == result.scheme) {
       result.host = base.host;
       result.path = Url.path_concat(base.path, result.path)
     } else {
-      result.exception = 'Expected a slash ("/")';
       while (result.path[0] == '') result.path.shift();
 
       if (result.path.length > 0) {
@@ -389,7 +393,7 @@ NonRelativeUrl
     query:('?' Query)?
     fragment:('#' Fragment)?
   {
-    result = copy({scheme: scheme, scheme_data: data}, fragment && fragment[1]);
+    result = copy({scheme: scheme, scheme_data: data}, data, fragment && fragment[1]);
 
     if (query) {
       result.query = query[1]
@@ -436,11 +440,14 @@ Scheme
 UserInfo
   = user:User password:(':' Password)? '@'
   {
+    var result = copy({username: user}, user);
+
     if (password) {
-      return {username: user, password: password[1]}
-    } else {
-      return {username: user}
-    }
+      result['password'] = password[1];
+      if (password[1].exception) result.exception = password[1].exception
+    };
+
+    return result
   }
 
 /*
@@ -452,6 +459,9 @@ UserInfo
   a commercial at (U+0040), 
   a colon (U+003A), 
   or the end of string is encountered.
+  If the result includes a character is not a 
+  <a href="https://url.spec.whatwg.org/#url-code-points">URL code point</a> or
+  a percent sign ("%"), indicate a parse error.
   Return the result as a string.
 
   Note: percent encoding logic needs to be added.
@@ -459,7 +469,22 @@ UserInfo
 User
   = user:[^/\\?#@:]*
   {
-    return user.join('')
+    warn = null;
+
+    if (user.some(function(c) {
+      return c != '%' && !Url.URL_CODE_POINTS.test(c)
+    })) {
+      warn = "Illegal character in user";
+    };
+
+    user = user.join('');
+
+    if (warn) {
+      user = new String(user);
+      user.exception = warn;
+    };
+
+    return user
   }
 
 /*
@@ -470,6 +495,9 @@ User
   a number sign (U+0023), 
   a commercial at (U+0040), 
   or the end of string is encountered.
+  If the result includes a character is not a 
+  <a href="https://url.spec.whatwg.org/#url-code-points">URL code point</a> or
+  a percent sign ("%"), indicate a parse error.
   Return the result as a string.
 
   Note: percent encoding logic needs to be added.
@@ -477,7 +505,22 @@ User
 Password
   = password:[^/\\?#@]*
   {
-    return password.join('')
+    warn = null;
+
+    if (password.some(function(c) {
+      return c != '%' && !Url.URL_CODE_POINTS.test(c)
+    })) {
+      warn = "Illegal character in password";
+    };
+
+    password = password.join('');
+
+    if (warn) {
+      password = new String(password);
+      password.exception = warn;
+    };
+
+    return password
   }
 
 /*
@@ -664,8 +707,10 @@ DECIMAL_BYTE
   a reverse solidus (U+005C),
   a question mark (U+003F),
   or the end of string is encountered.
-  Remove all U+0009, U+000A, and U+000D
-  characters.  Remove leading U+0030 code points from result
+  If any U+0009, U+000A, U+000D, U+200B, U+2060, or U+FEFF characters are
+  present in the result, remove those characters and indicate a
+  <a>parse error</a>.
+  Remove leading U+0030 code points from result
   until either the leading code point is not U+0030 or result is
   one code point. 
   If any characters that remain are not decimal digits, terminate processing
@@ -675,14 +720,23 @@ DECIMAL_BYTE
 Port
   = port:[^/\\?#]*
   {
+    var warn = null;
+
     for (var i=0; i<port.length; i++) {
       if (/^[\u0009\u000A\u000D]$/.test(port[i])) {
-        port.splice(i--, 1)
+        port.splice(i--, 1);
+        warn = "Tab, new line, or cariage return found in port";
       }
     }
 
     port = port.join('').replace(/^0+(\d)/, '$1');
     if (!/^\d*$/.test(port)) error('Invalid port number');
+
+    if (warn) {
+      port = new String(port);
+      port.exception = warn
+    };
+
     return port
   }
 
@@ -697,6 +751,7 @@ Port
       error</a>.
     * If the name includes a percent sign (U+0025) that is not immediately
       followed by two hexadecimal characters, indicate a <a>parse error</a>.
+    * If the name includes a character is not a <a href="https://url.spec.whatwg.org/#url-code-points">URL code point</a> or a percent sign ("%"), indicate a parse error.
     * <a href="https://url.spec.whatwg.org/#percent-encode">Percent encode</a>
       the result using the
       <a href="https://url.spec.whatwg.org/#default-encode-set">Default encode
@@ -729,9 +784,15 @@ Path
 
       for (var j=0; j<name.length; j++) {
         if (/^[\u0009\u000A\u000D]$/.test(name[j])) {
-          warn = "Tab, new line, or cariage return found in host";
+          warn = "Tab, new line, or cariage return found in path";
           name.splice(j--, 1)
         }
+      };
+
+      if (name.some(function(c) {
+        return c != '%' && !Url.URL_CODE_POINTS.test(c)
+      })) {
+        warn = "Illegal character in path";
       };
 
       name = name.join('');
@@ -772,19 +833,35 @@ Path
 /*
   Consume all characters until either a question mark (U+003F), a
   number sign (U+0023), or the end of string is encountered.
-  Remove all U+0009, U+000A, and U+000D
-  characters.  Return the result as a string.
+  If any U+0009, U+000A, U+000D, U+200B, U+2060, or U+FEFF characters are
+  present in the result, remove those characters and indicate a
+  <a>parse error</a>.
+  If any character in the result is not a
+  <a href="https://url.spec.whatwg.org/#url-code-points">URL code point</a> or
+  a percent sign ("%"), indicate a parse error.
+  Return the result as a string.
 */
 Data
   = data:[^?#]*
   {
+    var warn = null;
+
     for (var i=0; i<data.length; i++) {
       if (/^[\u0009\u000A\u000D]$/.test(data[i])) {
+        warn = "Tab, new line, or cariage return found in scheme data"
         data.splice(i--, 1)
       }
     }
 
-    return data.join('')
+    if (data.some(function(c) {
+      return c != '%' && !Url.URL_CODE_POINTS.test(c)
+    })) {
+      warn = "Illegal character in scheme data";
+    };
+
+    data = new String(data.join(''));
+    if (warn) data.exception = warn;
+    return data
   }
 
 /*
@@ -806,7 +883,7 @@ Query
 
 /*
   Consume all remaining characters in the input.  
-  If any character is not a <a href="https://url.spec.whatwg.org/#url-code-points">URL code point</a>, indicate a parse error.
+  If any character is not a <a href="https://url.spec.whatwg.org/#url-code-points">URL code point</a> or a percent sign ("%"), indicate a parse error.
   <a href="https://url.spec.whatwg.org/#percent-encode">Percent encode</a>
   the result using the
   <a href="https://url.spec.whatwg.org/#simple-encode-set">Simple encode
@@ -816,7 +893,9 @@ Fragment
   = fragment:.*
   {
     var warn = null;
-    if (fragment.some(function(c) {return !Url.URL_CODE_POINTS.test(c)})) {
+    if (fragment.some(function(c) {
+      return c != '%' && !Url.URL_CODE_POINTS.test(c)
+    })) {
       warn = "Illegal character in fragment";
     };
     

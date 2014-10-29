@@ -666,7 +666,8 @@ set <code>result.scheme</code> to the value of <code>base.scheme.</code></p>
 entire value.</p>
 <li data-md=""><p>If one or more "<code>@</code>" signs are present in the value returned
 by the <code class=grammar-rule>host</code> production, then perform the following steps:</p>
-<ul><li data-md=""><p>If the <code class=grammar-rule>user-info</code> is not present in the input, then substitute
+<ul><li data-md=""><p>Indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+<li data-md=""><p>If the <code class=grammar-rule>user-info</code> is not present in the input, then substitute
 <code>{"username": ""}</code> for the return value of
 <code class=grammar-rule>user-info</code> in the remainder of this step.</p>
 <li data-md=""><p>If <code>password</code> is present in the value for <code class=grammar-rule>user-info</code>,
@@ -692,8 +693,10 @@ with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error<
 that corresponds to the <code>response.scheme</code>, then set 
 <code>result.port</code> to this value.</p>
 </ul>
-<li>The value object to be returned is initialized to the value returned by
-<code class=grammar-rule>relative-url</code>, and then modify it as follows:
+<li>Indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.
+
+<p>Initialize <code>result</code> to be the value returned by <code class=grammar-rule>relative-url</code>, and then
+ modify it as follows:</p>
 
 <ul><li data-md=""><p>Set <code>result.scheme</code> to value returned by <code class=grammar-rule>relative-scheme</code>, lowercased</p>
 <li data-md=""><p>If <code>result.scheme</code> is equal to <code>base.scheme</code>, then perform the
@@ -703,8 +706,7 @@ following steps:</p>
 <code>base.path</code> and <code>result.path</code></p>
 </ul><li data-md=""><p>If <code>result.scheme</code> is not equal to <code>base.scheme</code>, then perform the
 following steps:</p>
-<ul><li data-md=""><p>Indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
-<li data-md=""><p>Remove all empty strings from the front of <code>result.path.</code></p>
+<ul><li data-md=""><p>Remove all empty strings from the front of <code>result.path.</code></p>
 <li data-md=""><p>If the first element of <code>result.path</code> does not contain an "<code>@</code>"
 sign, then set <code>result.host</code> to this elements
 value, and remove this element from <code>result.path.</code></p>
@@ -1080,6 +1082,9 @@ a number sign (<code>U+0023</code>),
 a commercial at (<code>U+0040</code>), 
 a colon (<code>U+003A</code>), 
 or the end of string is encountered.
+If the result includes a character is not a 
+<a href="<code>https://url.spec.whatwg.org/#url-code-points</code>">URL code point</a> or
+a percent sign ("<code>%</code>"), indicate a parse error.
 Return the result as a string.</p>
 
 <p class=note>Note: percent encoding logic needs to be added.</p>
@@ -1122,6 +1127,9 @@ a question mark (<code>U+003F</code>),
 a number sign (<code>U+0023</code>), 
 a commercial at (<code>U+0040</code>), 
 or the end of string is encountered.
+If the result includes a character is not a 
+<a href="<code>https://url.spec.whatwg.org/#url-code-points</code>">URL code point</a> or
+a percent sign ("<code>%</code>"), indicate a parse error.
 Return the result as a string.</p>
 
 <p class=note>Note: percent encoding logic needs to be added.</p>
@@ -1581,8 +1589,10 @@ a solidus (<code>U+002F</code>),
 a reverse solidus (<code>U+005C</code>),
 a question mark (<code>U+003F</code>),
 or the end of string is encountered.
-Remove all <code>U+0009</code>, <code>U+000A</code>, and <code>U+000D</code>
-characters.  Remove leading <code>U+0030</code> code points from result
+If any <code>U+0009</code>, <code>U+000A</code>, <code>U+000D</code>, <code>U+200B</code>, <code>U+2060</code>, or <code>U+FEFF</code> characters are
+present in the result, remove those characters and indicate a
+<a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.
+Remove leading <code>U+0030</code> code points from result
 until either the leading code point is not <code>U+0030</code> or result is
 one code point. 
 If any characters that remain are not decimal digits, terminate processing
@@ -1684,6 +1694,7 @@ present in the name, remove those characters and indicate a <a data-link-type=df
 error</a>.</p>
 <li data-md=""><p>If the name includes a percent sign (<code>U+0025</code>) that is not immediately
 followed by two hexadecimal characters, indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+<li data-md=""><p>If the name includes a character is not a <a href="<code>https://url.spec.whatwg.org/#url-code-points</code>">URL code point</a> or a percent sign ("<code>%</code>"), indicate a parse error.</p>
 <li data-md=""><p><a href="<code>https://url.spec.whatwg.org/#percent-encode</code>">Percent encode</a>
 the result using the
 <a href="<code>https://url.spec.whatwg.org/#default-encode-set</code>">Default encode
@@ -1737,8 +1748,13 @@ any except [?#]</text></g><path d="M210.0 41h10">
 
 <p>Consume all characters until either a question mark (<code>U+003F</code>), a
 number sign (<code>U+0023</code>), or the end of string is encountered.
-Remove all <code>U+0009</code>, <code>U+000A</code>, and <code>U+000D</code>
-characters.  Return the result as a string.</p>
+If any <code>U+0009</code>, <code>U+000A</code>, <code>U+000D</code>, <code>U+200B</code>, <code>U+2060</code>, or <code>U+FEFF</code> characters are
+present in the result, remove those characters and indicate a
+<a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.
+If any character in the result is not a
+<a href="<code>https://url.spec.whatwg.org/#url-code-points</code>">URL code point</a> or
+a percent sign ("<code>%</code>"), indicate a parse error.
+Return the result as a string.</p>
 
 <h3 class="heading settled" data-level=3.20 id=query><span class=secno>3.20. </span><span class=content>query</span><a class=self-link href=#query></a></h3>
 
@@ -1813,7 +1829,7 @@ any</text></g><path d="M114.0 41h10">
 </path></g></svg></div>
 
 <p>Consume all remaining characters in the input.
-If any character is not a <a href="<code>https://url.spec.whatwg.org/#url-code-points</code>">URL code point</a>, indicate a parse error.
+If any character is not a <a href="<code>https://url.spec.whatwg.org/#url-code-points</code>">URL code point</a> or a percent sign ("<code>%</code>"), indicate a parse error.
 <a href="<code>https://url.spec.whatwg.org/#percent-encode</code>">Percent encode</a>
 the result using the
 <a href="<code>https://url.spec.whatwg.org/#simple-encode-set</code>">Simple encode
