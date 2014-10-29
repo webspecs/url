@@ -112,7 +112,9 @@ Url
        concatenated with a ":".  Prepend this string to 
        $result.path.
 
-   <li>Set $result to the object returned by
+   <li>Indicate a <a>parse error</a>.
+
+   Set $result to the object returned by
    @RelativeUrl, and then modify it as follows:
 
      * Set $result.scheme to "file".
@@ -170,6 +172,7 @@ FileLikeRelativeUrl
     '/'? remainder:RelativeUrl
   {
     var result = remainder;
+    result.exception = 'Legacy compatibility issue';
     result.scheme = 'file';
     if (result.path[0] == '' && result.path[1] != '') result.path.shift();
     result.path.unshift(drive+':');

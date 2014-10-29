@@ -425,8 +425,10 @@ relative-url</text></g><path d="M800.0 160h10">
  concatenated with a "<code>:</code>".  Prepend this string to 
  <code>result.path.</code></p>
 </ul>
- <li>Set <code>result</code> to the object returned by
- <code class=grammar-rule>relative-url</code>, and then modify it as follows:
+ <li>Indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.
+
+<p>Set <code>result</code> to the object returned by
+ <code class=grammar-rule>relative-url</code>, and then modify it as follows:</p>
 
 <ul><li data-md=""><p>Set <code>result.scheme</code> to "<code>file</code>".</p>
 <li data-md=""><p>Remove the first element from <code>result.path</code> if it is an empty
