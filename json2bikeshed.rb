@@ -106,6 +106,7 @@ These are items that should be done before the proposed merge.
   * Make it more clear what is normative; to be honest, I'm confused on this
     point as the only real normative requirement for the parts defined by this
     spec-let is "produce the same output as the algorithm defined herein".
+  * Implement Url property setters
 
 Other todos appear as notes.
 EOF
