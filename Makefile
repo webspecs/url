@@ -23,7 +23,7 @@ spec: url.html
 url.html: url.bs
 	bikeshed spec
 
-url.bs: json2bikeshed.rb url.pegjson url.pegjs
+url.bs: json2bikeshed.rb url.pegjson url.pegjs header.in footer.in
 	ruby json2bikeshed.rb > $@
 
 url.pegjson: peg2json.js parser.pegjs url.pegjs
