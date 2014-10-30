@@ -168,7 +168,7 @@ class Url
   end
 
   def self.path_concat(base, path)
-    base ||= [];
+    base = (base ? base.slice(0) : [])
 
     if path[0] == '.'
       path.shift()
@@ -180,7 +180,6 @@ class Url
     elsif path.length > 1 and path[0] == ''
       path.shift()
     else
-      base = base.slice(0)
       base.pop()
       path = base.concat(path)
     end

@@ -89,12 +89,15 @@ href="https://github.com/rubys/url/tree/peg.js/reference-implementation">referen
 implementation</a>, where parts of this specification and parts of that
 reference implementation are generated from a <a href="https://github.com/rubys/url/blob/peg.js/url.pegjs">common source</a>.
 Included in the reference implementation is a <a href="http://intertwingly.net/projects/pegurl/liveview.html">Live DOM URL Viewer</a>.
+<li>Integrate with <a href="https://travis-ci.org/">Travis</a> and activate the <a href="http://docs.travis-ci.com/user/getting-started/#Step-two%3A-Activate-GitHub-Webhook">GitHub WebHook</a> so that proposed changes are verified to build correctly and pass the relevant tests.</a>
 <li>Reference <a href="https://tools.ietf.org/html/draft-ietf-appsawg-uri-scheme-reg-04">draft-thaler-appsawg-uri-scheme-reg</a> as the scheme registration mechanism in the <a href="https://url.spec.whatwg.org/#url-writing">URL writing</a> section.
 <li>Incorporate the substance of the <a href="http://www.w3.org/TR/html5/references.html#refsURL">informative note</a> that precedes the [URL] normative reference in the <a href="http://www.w3.org/TR/html5/">HTML5 Recommendation</a> into a status section or equivalent in this document.
 </ol>
 
 Todos {#todos}
 =====
+
+These are items that should be done before the proposed merge.
 
   * Define more soft <a>parse errors</a>.  The 
     <a href="https://url.spec.whatwg.org/">URL living standard</a> has a start,
@@ -103,8 +106,6 @@ Todos {#todos}
   * Make it more clear what is normative; to be honest, I'm confused on this
     point as the only real normative requirement for the parts defined by this
     spec-let is "produce the same output as the algorithm defined herein".
-  * Define where base URLs come from.
-  * Define <dfn>path concatenation</dfn>.
 
 Other todos appear as notes.
 EOF
@@ -128,6 +129,11 @@ the spec with the following text: <em>terminate processing with a parse
 error</em>) are mandatory.  Soft errors (all other errors) are optional.  User
 agents are encouraged to expose <a
 href="https://url.spec.whatwg.org/#parse-error">parse errors</a> somehow.
+
+Note: the following subsections are intended to replace steps 5-8 in the 
+<a href="https://url.spec.whatwg.org/#concept-basic-url-parser">basic url parser</a>.  It also works out better if step 3 were to default <var>base</var> to a
+non-null value, ideally one with a non-relative scheme, for example:
+<code>{'scheme': 'about'}</code>.
 EOF
 
 grammar = File.read('url.pegjs')
@@ -176,7 +182,7 @@ puts "\n" + <<-EOF
 Common Functions {#common-functions}
 =====
 
-To <dfn>cleanse</dfn> a string, using an <var>encode set</var>, run these steps:
+To <dfn>cleanse</dfn> a string given an <var>encode set</var>, run these steps:
 
  * If any character in the string not a
      <a href="https://url.spec.whatwg.org/#url-code-points">URL code point</a>
@@ -191,4 +197,26 @@ To <dfn>cleanse</dfn> a string, using an <var>encode set</var>, run these steps:
     the result using the provided <var>encode set</var>.
 
  * Return the result as a string.
+
+To do <dfn>path concatenation</dfn> given a <var>base</var> array of path
+names, and a <var>path<path> array of names, perform the following steps:
+
+ * If <var>base</var> is null, set <var>base</var> to an empty array.  Otherwise
+     make a local copy of the <var>base</var> array.
+
+ * If the first element on <var>path</var> is ".", remove this first element
+     from <var>path</var> as well as the last element (if any) of
+     <var>base</var>.
+
+ * If <var>path.length</var> is one, and the first and only element on the
+     <var>path</var> is an empty string, set <var>path</var> to the value of
+     <var>base</var>.
+
+ * Otherwise if <var>path.length</var> is greater than one, and the first
+     element on the <var>path</var> is the empty string, remove the first
+     element from the <var>path</var>.
+
+ * Otherwise, remove the last element (if any) of <var>base</var> and then
+     prepend the values of the <var>base</var> array to the <var>path</var>
+     array.
 EOF

@@ -636,15 +636,23 @@ Host
   }
 
 /*
-  In addition to parsing a series of zero or more H16 values separated by a
+  In addition to parsing a series of zero or more @H16 values separated by a
    colon, optionally followed by a double colon and a series of zero or more
-   H16 values, optionally followed by a colon and a LS32 value; there are
-   further restrictions on the number of H16 values that can be present
-   in each series, as documented in 
-   <a href="https://www.iana.org/assignments/svrloc-templates/iscsi_target.1.0.en">ipv6-number</a>
-   production rule.  Return the result as a string.
+   #H16 values, optionally followed by a colon and a @LS32 value.  
+   
+   Perform the following validation checks:
+   * If there are no consecutive colon characters in the input string, indicate
+       a <a>parse error</a> and terminate processing unless there are exactly
+       six @H16 values and one @LS32 value.
+   * If there are consecutive colon characters present in the input, indicate a
+       <a>parse error</a> and terminate processing if the total number of values
+       (@H16 or @LS32) is more than six.
+   * Unless there is a @LS32 value present, indicate a <a>parse error</a> and
+       terminate processing if consecutive colon characters are present in the
+       input or if there are more than one @LS32 value after the consecutive
+       colons.
 
-   Note: the further restrictions need to be enumerated and inlined.
+   Return the result as a string.
 */
 IPV6Addr
   = addr:(((H16 ':')* ':')? (H16 ':')* (H16 / LS32))
@@ -656,6 +664,14 @@ IPV6Addr
         result += addr[0][0][i][0] + ':'
       };
       result += ':'
+
+      if (addr[0][0].length + addr[1].length + 1 > 6) {
+        error('malformed IPV6 Address')
+      }
+    } else {
+      if (addr[1].length != 6 || addr[2].indexOf('.')==-1) {
+        error('malformed IPV6 Address')
+      }
     };
 
     for (var i=0; i<addr[1].length; i++) {
@@ -663,6 +679,9 @@ IPV6Addr
     };
 
     result += addr[2];
+    if (addr[2].indexOf('.')==-1 && addr[1].length > 1) {
+      error('malformed IPV6 Address')
+    }
 
     return result
   }
@@ -682,7 +701,7 @@ H16
 LS32
   = a:DECIMAL_BYTE '.' b:DECIMAL_BYTE '.' d:DECIMAL_BYTE '.' d:DECIMAL_BYTE
   {
-    return a.join('') + b.join('') + c.join('') + d.join('')
+    return a.join('') + '.' + b.join('') + '.' + c.join('') + '.' + d.join('')
   }
 
 /*

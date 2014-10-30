@@ -22,13 +22,13 @@
 </p>
   <h1 class="p-name no-ref" id=title>URL</h1>
   <h2 class="no-num no-toc no-ref heading settled" id=subtitle><span class=content>Living Standard,
-    <span class=dt-updated><span class=value-title title=20141029>29 October 2014</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20141030>30 October 2014</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt>Editor:<dd><div class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://intertwingly.net/blog/>Sam Ruby</a> (<a class="p-org org" href=https://www.ibm.com/>IBM</a>) <a class="u-email email" href=mailto:rubys@intertwingly.net>rubys@intertwingly.net</a></div><dt>Version History:<dd><span><a href=https://github.com/rubys/url/commits/peg.js>https://github.com/rubys/url/commits/peg.js</a></span><dt>Participate:<dd><span><a href=mailto:public-webapps@w3.org>public-webapps@w3.org</a> (<a href=http://lists.w3.org/Archives/Public/public-webapps/>archives</a>)</span><dd><span><a href=https://whatwg.org/mailing-list>whatwg@whatwg.org</a> (<a href=https://whatwg.org/mailing-list#specs>archives</a>)</span><dd><span><a href=http://wiki.whatwg.org/wiki/IRC>IRC: #whatwg on Freenode</a></span></dl></div>
   <div data-fill-with=warning></div>
   <p class=copyright data-fill-with=copyright><a href=http://creativecommons.org/publicdomain/zero/1.0/ rel=license><img alt=CC0 src=https://i.creativecommons.org/p/zero/1.0/80x15.png></a>
 To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 29 October 2014,
+In addition, as of 30 October 2014,
 the editors have made this specification available under the
 <a href=http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0 rel=license>Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
@@ -60,11 +60,14 @@ order.
 implementation</a>, where parts of this specification and parts of that
 reference implementation are generated from a <a href=https://github.com/rubys/url/blob/peg.js/url.pegjs>common source</a>.
 Included in the reference implementation is a <a href=http://intertwingly.net/projects/pegurl/liveview.html>Live DOM URL Viewer</a>.
+<li>Integrate with <a href=https://travis-ci.org/>Travis</a> and activate the <a href=http://docs.travis-ci.com/user/getting-started/#Step-two%3A-Activate-GitHub-Webhook>GitHub WebHook</a> so that proposed changes are verified to build correctly and pass the relevant tests.
 <li>Reference <a href=https://tools.ietf.org/html/draft-ietf-appsawg-uri-scheme-reg-04>draft-thaler-appsawg-uri-scheme-reg</a> as the scheme registration mechanism in the <a href=https://url.spec.whatwg.org/#url-writing>URL writing</a> section.
 <li>Incorporate the substance of the <a href=http://www.w3.org/TR/html5/references.html#refsURL>informative note</a> that precedes the [URL] normative reference in the <a href=http://www.w3.org/TR/html5/>HTML5 Recommendation</a> into a status section or equivalent in this document.
 </ol>
 
 <h2 class="heading settled" data-level=2 id=todos><span class=secno>2. </span><span class=content>Todos</span><a class=self-link href=#todos></a></h2>
+
+<p>These are items that should be done before the proposed merge.</p>
 
 <ul><li data-md=""><p>Define more soft <a data-link-type=dfn href=#parse-errors title="parse errors">parse errors</a>.  The
 <a href=https://url.spec.whatwg.org/>URL living standard</a> has a start,
@@ -73,8 +76,6 @@ results</a>, there clearly needs to be more.</p>
 <li data-md=""><p>Make it more clear what is normative; to be honest, I’m confused on this
 point as the only real normative requirement for the parts defined by this
 spec-let is "produce the same output as the algorithm defined herein".</p>
-<li data-md=""><p>Define where base URLs come from.</p>
-<li data-md=""><p>Define <dfn data-dfn-type=dfn data-noexport="" id=path-concatenation>path concatenation<a class=self-link href=#path-concatenation></a></dfn>.</p>
 </ul>
 <p>Other todos appear as notes.</p>
 
@@ -94,6 +95,11 @@ which are arrays of strings.</p>
 the spec with the following text: <em>terminate processing with a parse
 error</em>) are mandatory.  Soft errors (all other errors) are optional.  User
 agents are encouraged to expose <a href=https://url.spec.whatwg.org/#parse-error>parse errors</a> somehow.</p>
+
+<p class=note>Note: the following subsections are intended to replace steps 5-8 in the
+<a href=https://url.spec.whatwg.org/#concept-basic-url-parser>basic url parser</a>.  It also works out better if step 3 were to default <var>base</var> to a
+non-null value, ideally one with a non-relative scheme, for example:
+<code>{'scheme': 'about'}</code>.</p>
 
 <h3 class="heading settled" data-level=3.1 id=url><span class=secno>3.1. </span><span class=content>url</span><a class=self-link href=#url></a></h3>
 
@@ -1366,15 +1372,23 @@ ls32</text></g><path d="M544.0 81a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10">
 </path></g></g><path d="M 564 51 h 20 m -10 -10 v 20 m 10 -20 v 20">
 </path></g></svg></div>
 
-<p>In addition to parsing a series of zero or more H16 values separated by a
+<p>In addition to parsing a series of zero or more <code class=grammar-rule>h16</code> values separated by a
  colon, optionally followed by a double colon and a series of zero or more
- H16 values, optionally followed by a colon and a LS32 value; there are
- further restrictions on the number of H16 values that can be present
- in each series, as documented in 
- <a href="<code>https://www.iana.org/assignments/svrloc-templates/iscsi_target.1.0.en</code>">ipv6-number</a>
- production rule.  Return the result as a string.</p>
+ #H16 values, optionally followed by a colon and a <code class=grammar-rule>ls32</code> value.</p>
 
-<p class=note>Note: the further restrictions need to be enumerated and inlined.</p>
+<p>Perform the following validation checks:</p>
+<ul><li data-md=""><p>If there are no consecutive colon characters in the input string, indicate
+ a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a> and terminate processing unless there are exactly
+ six <code class=grammar-rule>h16</code> values and one <code class=grammar-rule>ls32</code> value.</p>
+<li data-md=""><p>If there are consecutive colon characters present in the input, indicate a
+ <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a> and terminate processing if the total number of values
+ (<code class=grammar-rule>h16</code> or <code class=grammar-rule>ls32</code>) is more than six.</p>
+<li data-md=""><p>Unless there is a <code class=grammar-rule>ls32</code> value present, indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a> and
+ terminate processing if consecutive colon characters are present in the
+ input or if there are more than one <code class=grammar-rule>ls32</code> value after the consecutive
+ colons.</p>
+</ul>
+<p>Return the result as a string.</p>
 
 <h3 class="heading settled" data-level=3.14 id=h16><span class=secno>3.14. </span><span class=content>h16</span><a class=self-link href=#h16></a></h3>
 
@@ -1827,7 +1841,7 @@ Return the <a data-link-type=dfn href=#cleanse title=cleanse>cleansed</a> result
 
 <h2 class="heading settled" data-level=4 id=common-functions><span class=secno>4. </span><span class=content>Common Functions</span><a class=self-link href=#common-functions></a></h2>
 
-<p>To <dfn data-dfn-type=dfn data-noexport="" id=cleanse>cleanse<a class=self-link href=#cleanse></a></dfn> a string, using an <var>encode set</var>, run these steps:</p>
+<p>To <dfn data-dfn-type=dfn data-noexport="" id=cleanse>cleanse<a class=self-link href=#cleanse></a></dfn> a string given an <var>encode set</var>, run these steps:</p>
 
 <ul><li data-md=""><p>If any character in the string not a
  <a href=https://url.spec.whatwg.org/#url-code-points>URL code point</a>
@@ -1843,6 +1857,28 @@ the result using the provided <var>encode set</var>.</p>
 
 <li data-md=""><p>Return the result as a string.</p>
 </ul>
+<p>To do <dfn data-dfn-type=dfn data-noexport="" id=path-concatenation>path concatenation<a class=self-link href=#path-concatenation></a></dfn> given a <var>base</var> array of path
+names, and a <var>path<path> array of names, perform the following steps:</path></var></p>
+
+<ul><li data-md=""><p>If <var>base</var> is null, set <var>base</var> to an empty array.  Otherwise
+ make a local copy of the <var>base</var> array.</p>
+
+<li data-md=""><p>If the first element on <var>path</var> is ".", remove this first element
+ from <var>path</var> as well as the last element (if any) of
+ <var>base</var>.</p>
+
+<li data-md=""><p>If <var>path.length</var> is one, and the first and only element on the
+ <var>path</var> is an empty string, set <var>path</var> to the value of
+ <var>base</var>.</p>
+
+<li data-md=""><p>Otherwise if <var>path.length</var> is greater than one, and the first
+ element on the <var>path</var> is the empty string, remove the first
+ element from the <var>path</var>.</p>
+
+<li data-md=""><p>Otherwise, remove the last element (if any) of <var>base</var> and then
+ prepend the values of the <var>base</var> array to the <var>path</var>
+ array.</p>
+</ul>
 <h2 class="no-num no-ref heading settled" id=conformance><span class=content>Conformance</span><a class=self-link href=#conformance></a></h2>
 
 <p>All diagrams, examples, and notes in this specification are non-normative, as are all sections explicitly marked
@@ -1854,4 +1890,4 @@ readability, these words do not appear in all uppercase letters in this specific
 
 <p>Conformance requirements phrased as algorithms or specific steps may be implemented in any manner, so long as the end
 result is equivalent.
-<h2 class="no-num heading settled" id=references><span class=content>References</span><a class=self-link href=#references></a></h2><h3 class="no-num heading settled" id=normative><span class=content>Normative References</span><a class=self-link href=#normative></a></h3><dl><dt id=biblio-rfc2119 title=rfc2119><a class=self-link href=#biblio-rfc2119></a>[rfc2119]<dd>S. Bradner. <a href=http://www.ietf.org/rfc/rfc2119.txt>Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href=http://www.ietf.org/rfc/rfc2119.txt>http://www.ietf.org/rfc/rfc2119.txt</a><dt id=biblio-rfc3492 title=rfc3492><a class=self-link href=#biblio-rfc3492></a>[rfc3492]<dd>A. Costello. <a href=http://www.ietf.org/rfc/rfc3492.txt>Punycode: A Bootstring encoding of Unicode for Internationalized Domain Names in Applications (IDNA)</a>. March 2003. Proposed Standard. URL: <a href=http://www.ietf.org/rfc/rfc3492.txt>http://www.ietf.org/rfc/rfc3492.txt</a></dl><h2 class="no-num heading settled" id=index><span class=content>Index</span><a class=self-link href=#index></a></h2><ul class=indexlist><li>cleanse, <a href=#cleanse title="section 4">4</a><li>parse errors, <a href=#parse-errors title="section 3">3</a><li>path concatenation, <a href=#path-concatenation title="section 2">2</a></ul>
+<h2 class="no-num heading settled" id=references><span class=content>References</span><a class=self-link href=#references></a></h2><h3 class="no-num heading settled" id=normative><span class=content>Normative References</span><a class=self-link href=#normative></a></h3><dl><dt id=biblio-rfc2119 title=rfc2119><a class=self-link href=#biblio-rfc2119></a>[rfc2119]<dd>S. Bradner. <a href=http://www.ietf.org/rfc/rfc2119.txt>Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href=http://www.ietf.org/rfc/rfc2119.txt>http://www.ietf.org/rfc/rfc2119.txt</a><dt id=biblio-rfc3492 title=rfc3492><a class=self-link href=#biblio-rfc3492></a>[rfc3492]<dd>A. Costello. <a href=http://www.ietf.org/rfc/rfc3492.txt>Punycode: A Bootstring encoding of Unicode for Internationalized Domain Names in Applications (IDNA)</a>. March 2003. Proposed Standard. URL: <a href=http://www.ietf.org/rfc/rfc3492.txt>http://www.ietf.org/rfc/rfc3492.txt</a></dl><h2 class="no-num heading settled" id=index><span class=content>Index</span><a class=self-link href=#index></a></h2><ul class=indexlist><li>cleanse, <a href=#cleanse title="section 4">4</a><li>parse errors, <a href=#parse-errors title="section 3">3</a><li>path concatenation, <a href=#path-concatenation title="section 4">4</a></ul>
