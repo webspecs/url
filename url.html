@@ -44,42 +44,64 @@ Parts of this work may be from another specification document.  If so, those par
 <div data-fill-with=at-risk></div>
 
 <h2 class="no-num no-toc no-ref heading settled" id=contents><span class=content>Table of Contents</span></h2>
-<div data-fill-with=table-of-contents><ul class=toc><li><a href=#goals><span class=secno>1</span> <span class=content>Goals</span></a><li><a href=#todos><span class=secno>2</span> <span class=content>Todos</span></a><li><a href=#parsing-rules><span class=secno>3</span> <span class=content>Parsing Rules</span></a><ul class=toc><li><a href=#url><span class=secno>3.1</span> <span class=content>url</span></a><li><a href=#file-like-relative-url><span class=secno>3.2</span> <span class=content>file-like-relative-url</span></a><li><a href=#file-like-relative-scheme><span class=secno>3.3</span> <span class=content>file-like-relative-scheme</span></a><li><a href=#absolute-url><span class=secno>3.4</span> <span class=content>absolute-url</span></a><li><a href=#relative-url><span class=secno>3.5</span> <span class=content>relative-url</span></a><li><a href=#non-relative-url><span class=secno>3.6</span> <span class=content>non-relative-url</span></a><li><a href=#relative-scheme><span class=secno>3.7</span> <span class=content>relative-scheme</span></a><li><a href=#scheme><span class=secno>3.8</span> <span class=content>scheme</span></a><li><a href=#user-info><span class=secno>3.9</span> <span class=content>user-info</span></a><li><a href=#user><span class=secno>3.10</span> <span class=content>user</span></a><li><a href=#password><span class=secno>3.11</span> <span class=content>password</span></a><li><a href=#host><span class=secno>3.12</span> <span class=content>host</span></a><li><a href=#ipv6addr><span class=secno>3.13</span> <span class=content>ipv6addr</span></a><li><a href=#h16><span class=secno>3.14</span> <span class=content>h16</span></a><li><a href=#ls32><span class=secno>3.15</span> <span class=content>ls32</span></a><li><a href=#decimal_byte><span class=secno>3.16</span> <span class=content>decimal_byte</span></a><li><a href=#port><span class=secno>3.17</span> <span class=content>port</span></a><li><a href=#path><span class=secno>3.18</span> <span class=content>path</span></a><li><a href=#data><span class=secno>3.19</span> <span class=content>data</span></a><li><a href=#query><span class=secno>3.20</span> <span class=content>query</span></a><li><a href=#fragment><span class=secno>3.21</span> <span class=content>fragment</span></a></ul><li><a href=#common-functions><span class=secno>4</span> <span class=content>Common Functions</span></a><li><a href=#conformance><span class=secno></span> <span class=content>Conformance</span></a><li><a href=#references><span class=secno></span> <span class=content>References</span></a><ul class=toc><li><a href=#normative><span class=secno></span> <span class=content>Normative References</span></a></ul><li><a href=#index><span class=secno></span> <span class=content>Index</span></a></ul></div>
+<div data-fill-with=table-of-contents><ul class=toc><li><a href=#goals><span class=secno>1</span> <span class=content>Goals</span></a><li><a href=#todos><span class=secno>2</span> <span class=content>Todos</span></a><li><a href=#parsing-rules><span class=secno>3</span> <span class=content>Parsing Rules</span></a><ul class=toc><li><a href=#url><span class=secno>3.1</span> <span class=content>url</span></a><li><a href=#file-like-relative-url><span class=secno>3.2</span> <span class=content>file-like-relative-url</span></a><li><a href=#file-like-relative-scheme><span class=secno>3.3</span> <span class=content>file-like-relative-scheme</span></a><li><a href=#absolute-url><span class=secno>3.4</span> <span class=content>absolute-url</span></a><li><a href=#relative-url><span class=secno>3.5</span> <span class=content>relative-url</span></a><li><a href=#non-relative-url><span class=secno>3.6</span> <span class=content>non-relative-url</span></a><li><a href=#relative-scheme><span class=secno>3.7</span> <span class=content>relative-scheme</span></a><li><a href=#scheme><span class=secno>3.8</span> <span class=content>scheme</span></a><li><a href=#user-info><span class=secno>3.9</span> <span class=content>user-info</span></a><li><a href=#user><span class=secno>3.10</span> <span class=content>user</span></a><li><a href=#password><span class=secno>3.11</span> <span class=content>password</span></a><li><a href=#host><span class=secno>3.12</span> <span class=content>host</span></a><li><a href=#ipv6addr><span class=secno>3.13</span> <span class=content>ipv6addr</span></a><li><a href=#h16><span class=secno>3.14</span> <span class=content>h16</span></a><li><a href=#ls32><span class=secno>3.15</span> <span class=content>ls32</span></a><li><a href=#decimal_byte><span class=secno>3.16</span> <span class=content>decimal_byte</span></a><li><a href=#port><span class=secno>3.17</span> <span class=content>port</span></a><li><a href=#path><span class=secno>3.18</span> <span class=content>path</span></a><li><a href=#data><span class=secno>3.19</span> <span class=content>data</span></a><li><a href=#query><span class=secno>3.20</span> <span class=content>query</span></a><li><a href=#fragment><span class=secno>3.21</span> <span class=content>fragment</span></a></ul><li><a href=#common-functions><span class=secno>4</span> <span class=content>Common Functions</span></a><li><a href=#conformance><span class=secno></span> <span class=content>Conformance</span></a><li><a href=#references><span class=secno></span> <span class=content>References</span></a><ul class=toc><li><a href=#normative><span class=secno></span> <span class=content>Normative References</span></a><li><a href=#informative><span class=secno></span> <span class=content>Informative References</span></a></ul><li><a href=#index><span class=secno></span> <span class=content>Index</span></a></ul></div>
 
 <h2 class="heading settled" data-level=1 id=goals><span class=secno>1. </span><span class=content>Goals</span><a class=self-link href=#goals></a></h2>
 
-<ol>
-<li>Resolve 
-<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25946">bug 25946</a>
-by merging this specification with the
-<a href=https://url.spec.whatwg.org/>URL Living Standard</a>.
-Once a new baseline has been established, evolve the standard towards greater
-web compatibility, greater interoperability, and simpler algorithms, in that
-order.
-<li>Provide a <a href=https://github.com/rubys/url/tree/peg.js/reference-implementation>reference
+<ul><li data-md=""><p>Resolve
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25946">bug
+25946</a> by merging this specification with the <a href=https://url.spec.whatwg.org/>URL Living Standard</a>.  Once a new
+baseline has been established, evolve the standard towards greater web
+compatibility, greater interoperability, and simpler algorithms, in that
+order.</p>
+<li data-md=""><p>Provide a
+<a href=https://github.com/rubys/url/tree/peg.js/reference-implementation>reference
 implementation</a>, where parts of this specification and parts of that
-reference implementation are generated from a <a href=https://github.com/rubys/url/blob/peg.js/url.pegjs>common source</a>.
-Included in the reference implementation is a <a href=http://intertwingly.net/projects/pegurl/liveview.html>Live DOM URL Viewer</a>.
-<li>Integrate with <a href=https://travis-ci.org/>Travis</a> and activate the <a href=http://docs.travis-ci.com/user/getting-started/#Step-two%3A-Activate-GitHub-Webhook>GitHub WebHook</a> so that proposed changes are verified to build correctly and pass the relevant tests.
-<li>Reference <a href=https://tools.ietf.org/html/draft-ietf-appsawg-uri-scheme-reg-04>draft-thaler-appsawg-uri-scheme-reg</a> as the scheme registration mechanism in the <a href=https://url.spec.whatwg.org/#url-writing>URL writing</a> section.
-<li>Incorporate the substance of the <a href=http://www.w3.org/TR/html5/references.html#refsURL>informative note</a> that precedes the [URL] normative reference in the <a href=http://www.w3.org/TR/html5/>HTML5 Recommendation</a> into a status section or equivalent in this document.
-</ol>
-
-<h2 class="heading settled" data-level=2 id=todos><span class=secno>2. </span><span class=content>Todos</span><a class=self-link href=#todos></a></h2>
-
-<p>These are items that should be done before the proposed merge.</p>
-
-<ul><li data-md=""><p>Define more soft <a data-link-type=dfn href=#parse-errors title="parse errors">parse errors</a>.  The
+reference implementation are generated from a
+<a href=https://github.com/rubys/url/blob/peg.js/url.pegjs>common
+source</a>.  Included in the reference implementation is a
+<a href=http://intertwingly.net/projects/pegurl/liveview.html>Live DOM URL
+Viewer</a>.</p>
+<li data-md=""><p>Integrate with <a href=https://travis-ci.org/>Travis</a> and activate the
+<a href=http://docs.travis-ci.com/user/getting-started/#Step-two%3A-Activate-GitHub-Webhook>GitHub
+WebHook</a> so that proposed changes are verified to build correctly and
+pass the relevant tests.</p>
+<li data-md=""><p>Evaluate
+<a href=https://tools.ietf.org/html/draft-ietf-appsawg-uri-scheme-reg-04>draft-thaler-appsawg-uri-scheme-reg</a>
+for the scheme registration mechanism in the
+<a href=https://url.spec.whatwg.org/#url-writing>URL writing</a> section.</p>
+<li data-md=""><p>Explore the idea of obsoleting <em>only</em> <a data-biblio-type=informative data-link-type=biblio href=#biblio-rfc3987 title=rfc3987>[rfc3987]</a> and not
+<a data-biblio-type=informative data-link-type=biblio href=#biblio-rfc3986 title=rfc3986>[rfc3986]</a> too.  Consider explicitly adopt the following constraints on the
+  canonicalized output of URL parsing:</p>
+<ul><li data-md=""><p>URL parsing of canonicalized outputs roundtrip (i.e., this the
+URL parser is an identity transform for such inputs).</p>
+<li data-md=""><p>All canonicalized output are valid URIs (and, if necessary, submit
+errata and/or identify specific
+<a href=https://html.spec.whatwg.org/multipage/introduction.html#compliance-with-other-specifications>willful violations</a>).</p>
+</ul><li data-md=""><p>Incorporate the substance of the
+<a href=http://www.w3.org/TR/html5/references.html#refsURL>informative
+note</a> that precedes the [URL] normative reference in the
+<a href=http://www.w3.org/TR/html5/>HTML5 Recommendation</a> into a
+status section or equivalent in this document.</p>
+<li data-md=""><p>Define more soft <a data-link-type=dfn href=#parse-errors title="parse errors">parse errors</a>.  The
 <a href=https://url.spec.whatwg.org/>URL living standard</a> has a start,
 but based on <a href=http://intertwingly.net/projects/pegurl/urltest-results/>test
 results</a>, there clearly needs to be more.</p>
-<li data-md=""><p>Make it more clear what is normative; to be honest, I’m confused on this
+</ul>
+<h2 class="heading settled" data-level=2 id=todos><span class=secno>2. </span><span class=content>Todos</span><a class=self-link href=#todos></a></h2>
+
+<p>These are items that should be done before the proposed merge:</p>
+
+<ul><li data-md=""><p>Make it more clear what is normative; to be honest, I’m confused on this
 point as the only real normative requirement for the parts defined by this
 spec-let is "produce the same output as the algorithm defined herein".</p>
-<li data-md=""><p>Implement Url property setters</p>
+<li data-md=""><p>Implement <a href=https://url.spec.whatwg.org/#urlutils-and-urlutilsreadonly-members>Url
+property getters and setters</a>.</p>
+<li data-md=""><p>Implement <a href=https://url.spec.whatwg.org/#concept-basic-url-parser>Encoding
+Override</a>.</p>
+<li data-md=""><p>Reconcile the <a data-section="" href=#host>§3.12 host</a> parsing rules with the Encoding Living Standard
+<a data-biblio-type=normative data-link-type=biblio href=#biblio-encoding title=encoding>[encoding]</a> and <a href=https://url.spec.whatwg.org/#idna>IDNA</a>.</p>
 </ul>
-<p>Other todos appear as notes.</p>
-
 <h2 class="heading settled" data-level=3 id=parsing-rules><span class=secno>3. </span><span class=content>Parsing Rules</span><a class=self-link href=#parsing-rules></a></h2>
 
 <p>These railroad diagrams, as modified by the accompanying text, define grammar
@@ -1252,7 +1274,7 @@ ideographic space (<code>U+3000</code>),</p>
  separator.</p>
 </ul></ul>
 <p class=note>Note: this description above needs to be reconciled with, and defer to,
-the <a href="<code>https://encoding.spec.whatwg.org/</code>">Encoding
+the <a href=https://encoding.spec.whatwg.org/>Encoding
 Living Standard</a>.  For example, full Unicode normalization is more than
 simply converting full-width characters to their normal width equivalents.</p>
 
@@ -1887,4 +1909,4 @@ readability, these words do not appear in all uppercase letters in this specific
 
 <p>Conformance requirements phrased as algorithms or specific steps may be implemented in any manner, so long as the end
 result is equivalent.
-<h2 class="no-num heading settled" id=references><span class=content>References</span><a class=self-link href=#references></a></h2><h3 class="no-num heading settled" id=normative><span class=content>Normative References</span><a class=self-link href=#normative></a></h3><dl><dt id=biblio-rfc2119 title=rfc2119><a class=self-link href=#biblio-rfc2119></a>[rfc2119]<dd>S. Bradner. <a href=http://www.ietf.org/rfc/rfc2119.txt>Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href=http://www.ietf.org/rfc/rfc2119.txt>http://www.ietf.org/rfc/rfc2119.txt</a><dt id=biblio-rfc3492 title=rfc3492><a class=self-link href=#biblio-rfc3492></a>[rfc3492]<dd>A. Costello. <a href=http://www.ietf.org/rfc/rfc3492.txt>Punycode: A Bootstring encoding of Unicode for Internationalized Domain Names in Applications (IDNA)</a>. March 2003. Proposed Standard. URL: <a href=http://www.ietf.org/rfc/rfc3492.txt>http://www.ietf.org/rfc/rfc3492.txt</a></dl><h2 class="no-num heading settled" id=index><span class=content>Index</span><a class=self-link href=#index></a></h2><ul class=indexlist><li>cleanse, <a href=#cleanse title="section 4">4</a><li>parse errors, <a href=#parse-errors title="section 3">3</a><li>path concatenation, <a href=#path-concatenation title="section 4">4</a><li>query encode set, <a href=#query-encode-set title="section 3.20">3.20</a></ul>
+<h2 class="no-num heading settled" id=references><span class=content>References</span><a class=self-link href=#references></a></h2><h3 class="no-num heading settled" id=normative><span class=content>Normative References</span><a class=self-link href=#normative></a></h3><dl><dt id=biblio-encoding title=encoding><a class=self-link href=#biblio-encoding></a>[encoding]<dd>Anne van Kesteren; Joshua Bell; Addison Phillips. <a href=http://www.w3.org/TR/encoding/>Encoding</a>. 16 September 2014. CR. URL: <a href=http://www.w3.org/TR/encoding/>http://www.w3.org/TR/encoding/</a><dt id=biblio-rfc2119 title=rfc2119><a class=self-link href=#biblio-rfc2119></a>[rfc2119]<dd>S. Bradner. <a href=http://www.ietf.org/rfc/rfc2119.txt>Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href=http://www.ietf.org/rfc/rfc2119.txt>http://www.ietf.org/rfc/rfc2119.txt</a><dt id=biblio-rfc3492 title=rfc3492><a class=self-link href=#biblio-rfc3492></a>[rfc3492]<dd>A. Costello. <a href=http://www.ietf.org/rfc/rfc3492.txt>Punycode: A Bootstring encoding of Unicode for Internationalized Domain Names in Applications (IDNA)</a>. March 2003. Proposed Standard. URL: <a href=http://www.ietf.org/rfc/rfc3492.txt>http://www.ietf.org/rfc/rfc3492.txt</a></dl><h3 class="no-num heading settled" id=informative><span class=content>Informative References</span><a class=self-link href=#informative></a></h3><dl><dt id=biblio-rfc3986 title=rfc3986><a class=self-link href=#biblio-rfc3986></a>[rfc3986]<dd>T. Berners-Lee; R. Fielding; L. Masinter. <a href=http://www.ietf.org/rfc/rfc3986.txt>Uniform Resource Identifier (URI): Generic Syntax</a>. January 2005. Internet Standard. URL: <a href=http://www.ietf.org/rfc/rfc3986.txt>http://www.ietf.org/rfc/rfc3986.txt</a><dt id=biblio-rfc3987 title=rfc3987><a class=self-link href=#biblio-rfc3987></a>[rfc3987]<dd>M. Duerst; M. Suignard. <a href=http://www.ietf.org/rfc/rfc3987.txt>Internationalized Resource Identifiers (IRIs)</a>. January 2005. Proposed Standard. URL: <a href=http://www.ietf.org/rfc/rfc3987.txt>http://www.ietf.org/rfc/rfc3987.txt</a></dl><h2 class="no-num heading settled" id=index><span class=content>Index</span><a class=self-link href=#index></a></h2><ul class=indexlist><li>cleanse, <a href=#cleanse title="section 4">4</a><li>parse errors, <a href=#parse-errors title="section 3">3</a><li>path concatenation, <a href=#path-concatenation title="section 4">4</a><li>query encode set, <a href=#query-encode-set title="section 3.20">3.20</a></ul>

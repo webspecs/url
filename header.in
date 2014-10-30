@@ -26,39 +26,61 @@ Logo: https://resources.whatwg.org/logo-url.svg
 Goals {#goals}
 =====
 
-<ol>
-<li>Resolve 
-<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25946">bug 25946</a>
-by merging this specification with the
-<a href="https://url.spec.whatwg.org/">URL Living Standard</a>.
-Once a new baseline has been established, evolve the standard towards greater
-web compatibility, greater interoperability, and simpler algorithms, in that
-order.
-<li>Provide a <a
-href="https://github.com/rubys/url/tree/peg.js/reference-implementation">reference
-implementation</a>, where parts of this specification and parts of that
-reference implementation are generated from a <a href="https://github.com/rubys/url/blob/peg.js/url.pegjs">common source</a>.
-Included in the reference implementation is a <a href="http://intertwingly.net/projects/pegurl/liveview.html">Live DOM URL Viewer</a>.
-<li>Integrate with <a href="https://travis-ci.org/">Travis</a> and activate the <a href="http://docs.travis-ci.com/user/getting-started/#Step-two%3A-Activate-GitHub-Webhook">GitHub WebHook</a> so that proposed changes are verified to build correctly and pass the relevant tests.</a>
-<li>Reference <a href="https://tools.ietf.org/html/draft-ietf-appsawg-uri-scheme-reg-04">draft-thaler-appsawg-uri-scheme-reg</a> as the scheme registration mechanism in the <a href="https://url.spec.whatwg.org/#url-writing">URL writing</a> section.
-<li>Incorporate the substance of the <a href="http://www.w3.org/TR/html5/references.html#refsURL">informative note</a> that precedes the [URL] normative reference in the <a href="http://www.w3.org/TR/html5/">HTML5 Recommendation</a> into a status section or equivalent in this document.
-</ol>
-
-Todos {#todos}
-=====
-
-These are items that should be done before the proposed merge.
-
+  * Resolve 
+    <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25946">bug
+    25946</a> by merging this specification with the <a
+    href="https://url.spec.whatwg.org/">URL Living Standard</a>.  Once a new
+    baseline has been established, evolve the standard towards greater web
+    compatibility, greater interoperability, and simpler algorithms, in that
+    order.
+  * Provide a
+    <a href="https://github.com/rubys/url/tree/peg.js/reference-implementation">reference
+    implementation</a>, where parts of this specification and parts of that
+    reference implementation are generated from a
+    <a href="https://github.com/rubys/url/blob/peg.js/url.pegjs">common
+    source</a>.  Included in the reference implementation is a
+    <a href="http://intertwingly.net/projects/pegurl/liveview.html">Live DOM URL
+    Viewer</a>.
+  * Integrate with <a href="https://travis-ci.org/">Travis</a> and activate the
+    <a href="http://docs.travis-ci.com/user/getting-started/#Step-two%3A-Activate-GitHub-Webhook">GitHub
+    WebHook</a> so that proposed changes are verified to build correctly and
+    pass the relevant tests.</a>
+  * Evaluate
+    <a href="https://tools.ietf.org/html/draft-ietf-appsawg-uri-scheme-reg-04">draft-thaler-appsawg-uri-scheme-reg</a>
+    for the scheme registration mechanism in the
+    <a href="https://url.spec.whatwg.org/#url-writing">URL writing</a> section.
+  * Explore the idea of obsoleting <em>only</em> [[rfc3987]] and not
+    [[rfc3986]] too.  Consider explicitly adopt the following constraints on the
+      canonicalized output of URL parsing:
+      * URL parsing of canonicalized outputs roundtrip (i.e., this the
+        URL parser is an identity transform for such inputs).
+      * All canonicalized output are valid URIs (and, if necessary, submit
+        errata and/or identify specific
+        <a href="https://html.spec.whatwg.org/multipage/introduction.html#compliance-with-other-specifications">willful violations</a>).
+  * Incorporate the substance of the
+    <a href="http://www.w3.org/TR/html5/references.html#refsURL">informative
+    note</a> that precedes the [URL] normative reference in the
+    <a href="http://www.w3.org/TR/html5/">HTML5 Recommendation</a> into a
+    status section or equivalent in this document.
   * Define more soft <a>parse errors</a>.  The 
     <a href="https://url.spec.whatwg.org/">URL living standard</a> has a start,
     but based on <a href="http://intertwingly.net/projects/pegurl/urltest-results/">test
     results</a>, there clearly needs to be more.
+
+Todos {#todos}
+=====
+
+These are items that should be done before the proposed merge:
+
   * Make it more clear what is normative; to be honest, I'm confused on this
     point as the only real normative requirement for the parts defined by this
     spec-let is "produce the same output as the algorithm defined herein".
-  * Implement Url property setters
-
-Other todos appear as notes.
+  * Implement <a href="https://url.spec.whatwg.org/#urlutils-and-urlutilsreadonly-members">Url
+    property getters and setters</a>.
+  * Implement <a href="https://url.spec.whatwg.org/#concept-basic-url-parser">Encoding
+    Override</a>.
+  * Reconcile the [[#host]] parsing rules with the Encoding Living Standard
+    [[!encoding]] and <a href="https://url.spec.whatwg.org/#idna">IDNA</a>.
 
 Parsing Rules {#parsing-rules}
 =============

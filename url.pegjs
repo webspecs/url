@@ -577,7 +577,7 @@ Password
             separator.
 
    Note: this description above needs to be reconciled with, and defer to,
-   the <a href="https://encoding.spec.whatwg.org/">Encoding
+   the <a href=https://encoding.spec.whatwg.org/>Encoding
    Living Standard</a>.  For example, full Unicode normalization is more than
    simply converting full-width characters to their normal width equivalents.
 */
