@@ -759,16 +759,9 @@ Port
 
   Extract all the pathnames into an array.  Process each name as follows:
 
-    * If any U+0009, U+000A, U+000D, U+200B, U+2060, or U+FEFF characters are
-      present in the name, remove those characters and indicate a <a>parse
-      error</a>.
-    * If the name includes a percent sign (U+0025) that is not immediately
-      followed by two hexadecimal characters, indicate a <a>parse error</a>.
-    * If the name includes a character is not a <a href="https://url.spec.whatwg.org/#url-code-points">URL code point</a> or a percent sign ("%"), indicate a parse error.
-    * <a href="https://url.spec.whatwg.org/#percent-encode">Percent encode</a>
-      the result using the
-      <a href="https://url.spec.whatwg.org/#default-encode-set">Default encode
-      set</a>.
+    * <a title=cleanse>Cleanse</a> the name using the
+      <a href="https://url.spec.whatwg.org/#default-encode-set">default encode
+      set</a> as the encode set.
     * If the name is "." or "%2e" (case insensitive),
       then process this name based on the position in the array:
         * If the position is other than the last, remove the name from the list.
@@ -793,30 +786,12 @@ Path
     path.push([basename]);
 
     for (var i=0; i<path.length; i++) {
-      var name = path[i][0];
-
-      for (var j=0; j<name.length; j++) {
-        if (/^[\u0009\u000A\u000D]$/.test(name[j])) {
-          warn = "Tab, new line, or cariage return found in path";
-          name.splice(j--, 1)
-        }
-      };
-
-      if (name.some(function(c) {
-        return c != '%' && !Url.URL_CODE_POINTS.test(c)
-      })) {
-        warn = "Illegal character in path";
-      };
-
-      name = name.join('');
-
-      if (/%($|[^0-9a-fA-F]|.$|.[^0-9a-fA-F])/.test(name)) {
-        warn = 'Percent sign ("%") not followed by two hexadecimal digits'
-      } else if (path[i][1] == "\\") {
+      if (path[i][1] == "\\") {
         warn = 'Backslash ("\\") used as path segment delimiter'
       };
 
-      path[i] = Url.percent_encode(name, Url.DEFAULT_ENCODE_SET)
+      path[i] = cleanse(path[i][0], Url.DEFAULT_ENCODE_SET, 'path');
+      if (!warn && path[i].exception) warn = path[i].exception;
 
       if (/^(\.|%2e)$/i.test(path[i])) {
         if (i < path.length-1) {

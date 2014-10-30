@@ -1700,16 +1700,9 @@ a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.<
 
 <p>Extract all the pathnames into an array.  Process each name as follows:</p>
 
-<ul><li data-md=""><p>If any <code>U+0009</code>, <code>U+000A</code>, <code>U+000D</code>, <code>U+200B</code>, <code>U+2060</code>, or <code>U+FEFF</code> characters are
-present in the name, remove those characters and indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse
-error</a>.</p>
-<li data-md=""><p>If the name includes a percent sign (<code>U+0025</code>) that is not immediately
-followed by two hexadecimal characters, indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
-<li data-md=""><p>If the name includes a character is not a <a href="<code>https://url.spec.whatwg.org/#url-code-points</code>">URL code point</a> or a percent sign ("<code>%</code>"), indicate a parse error.</p>
-<li data-md=""><p><a href="<code>https://url.spec.whatwg.org/#percent-encode</code>">Percent encode</a>
-the result using the
-<a href="<code>https://url.spec.whatwg.org/#default-encode-set</code>">Default encode
-set</a>.</p>
+<ul><li data-md=""><p><a data-link-type=dfn href=#cleanse title=cleanse>Cleanse</a> the name using the
+<a href="<code>https://url.spec.whatwg.org/#default-encode-set</code>">default encode
+set</a> as the encode set.</p>
 <li data-md=""><p>If the name is "<code>.</code>" or "<code>%2e</code>" (case insensitive),
 then process this name based on the position in the array:</p>
 <ul><li data-md=""><p>If the position is other than the last, remove the name from the list.</p>
@@ -1845,14 +1838,15 @@ Return the <a data-link-type=dfn href=#cleanse title=cleanse>cleansed</a> result
 
 <ul><li data-md=""><p>If any character in the string not a
  <a href=https://url.spec.whatwg.org/#url-code-points>URL code point</a>
- or a percent sign (U+0025), indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+ or a percent sign (<code>U+0025</code>), indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
 
-<li data-md=""><p>If the name includes a percent sign (U+0025) that is not immediately
- followed by two hexadecimal characters, indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+<li data-md=""><p>If the name includes a percent sign (<code>U+0025</code>) that is not
+ immediately followed by two hexadecimal characters, indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse
+ error</a>.</p>
 
-<li data-md=""><p>If any U+0009, U+000A, U+000D, U+200B, U+2060, or U+FEFF characters are
-present in the string, remove those characters and indicate a
-<a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+<li data-md=""><p>If any <code>U+0009</code>, <code>U+000A</code> or <code>U+000D</code>
+ characters are present in the string, remove those characters and indicate
+ a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
 
 <li data-md=""><p>if the <var>encode set</var> is non-null,
 <a href=https://url.spec.whatwg.org/#percent-encode>Percent encode</a>
