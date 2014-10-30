@@ -45,6 +45,12 @@
     };
 
     string = string.join('');
+
+    if (/%($|[^0-9a-fA-F]|.$|.[^0-9a-fA-F])/.test(string)) {
+      warn = 'Percent sign ("%") not followed by two hexadecimal digits in ' +
+       component
+    }
+
     if (encode_set) string = Url.percent_encode(string, encode_set);
 
     if (warn) {
@@ -721,7 +727,7 @@ DECIMAL_BYTE
   a reverse solidus (U+005C),
   a question mark (U+003F),
   or the end of string is encountered.
-  <a title=cleanse>Cleansed</a> result using <var>null</var> as
+  <a title=cleanse>Cleanse</a> result using <var>null</var> as
   the encode set.
   Remove leading U+0030 code points from result
   until either the leading code point is not U+0030 or result is
@@ -840,9 +846,8 @@ Path
 /*
   Consume all characters until either a question mark (U+003F), a
   number sign (U+0023), or the end of string is encountered.
-  <a title=cleanse>Cleansed</a> result using <var>null</var> as
+  Return the <a title=cleanse>cleansed</a> result using <var>null</var> as
   the encode set.
-  Return the result as a string.
 */
 Data
   = data:[^?#]*
@@ -853,18 +858,18 @@ Data
 /*
   Consume all characters until either a 
   number sign (U+0023) or the end of string is encountered.
-  <a href="https://url.spec.whatwg.org/#percent-encode">Percent encode</a>
-  the result using the Query encode set.  Return the result as a string.
+  Return the <a title=cleanse>cleansed</a> result using the
+  the result using the <a>query encode set</a>.
 
-  Note: Query encode set is defined to be bytes that are less than 0x21,
-  greater than 0x7E, or one of 0x22, 0x23, 0x3C, 0x3E, and 0x60.
+  The <dfn>query encode set</dfn> is defined to be bytes that are less than
+  0x21, greater than 0x7E, or one of 0x22, 0x23, 0x3C, 0x3E, and 0x60.
 
   Note: encoding override logic needs to be added.
 */
 Query 
   = query:[^#]*
   {
-    return Url.percent_encode(query.join(''), Url.QUERY_ENCODE_SET)
+    return cleanse(query, Url.QUERY_ENCODE_SET, 'query')
   }
 
 /*

@@ -187,7 +187,10 @@ To <dfn>cleanse</dfn> a string given an <var>encode set</var>, run these steps:
 
  * If any character in the string not a
      <a href="https://url.spec.whatwg.org/#url-code-points">URL code point</a>
-     or a percent sign ("%"), indicate a parse error.
+     or a percent sign (U+0025), indicate a <a>parse error</a>.
+
+ * If the name includes a percent sign (U+0025) that is not immediately
+     followed by two hexadecimal characters, indicate a <a>parse error</a>.
 
  * If any U+0009, U+000A, U+000D, U+200B, U+2060, or U+FEFF characters are
     present in the string, remove those characters and indicate a

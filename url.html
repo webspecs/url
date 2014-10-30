@@ -1601,7 +1601,7 @@ a solidus (<code>U+002F</code>),
 a reverse solidus (<code>U+005C</code>),
 a question mark (<code>U+003F</code>),
 or the end of string is encountered.
-<a data-link-type=dfn href=#cleanse title=cleanse>Cleansed</a> result using <var>null</var> as
+<a data-link-type=dfn href=#cleanse title=cleanse>Cleanse</a> result using <var>null</var> as
 the encode set.
 Remove leading <code>U+0030</code> code points from result
 until either the leading code point is not <code>U+0030</code> or result is
@@ -1759,9 +1759,8 @@ any except [?#]</text></g><path d="M210.0 41h10">
 
 <p>Consume all characters until either a question mark (<code>U+003F</code>), a
 number sign (<code>U+0023</code>), or the end of string is encountered.
-<a data-link-type=dfn href=#cleanse title=cleanse>Cleansed</a> result using <var>null</var> as
-the encode set.
-Return the result as a string.</p>
+Return the <a data-link-type=dfn href=#cleanse title=cleanse>cleansed</a> result using <var>null</var> as
+the encode set.</p>
 
 <h3 class="heading settled" data-level=3.20 id=query><span class=secno>3.20. </span><span class=content>query</span><a class=self-link href=#query></a></h3>
 
@@ -1796,11 +1795,11 @@ any except [#]</text></g><path d="M202.0 41h10">
 
 <p>Consume all characters until either a
 number sign (<code>U+0023</code>) or the end of string is encountered.
-<a href="<code>https://url.spec.whatwg.org/#percent-encode</code>">Percent encode</a>
-the result using the Query encode set.  Return the result as a string.</p>
+Return the <a data-link-type=dfn href=#cleanse title=cleanse>cleansed</a> result using the
+the result using the <a data-link-type=dfn href=#query-encode-set title="query encode set">query encode set</a>.</p>
 
-<p class=note>Note: Query encode set is defined to be bytes that are less than <code>0x21</code>,
-greater than <code>0x7E</code>, or one of <code>0x22</code>, <code>0x23</code>, <code>0x3C</code>, <code>0x3E</code>, and <code>0x60</code>.</p>
+<p>The <dfn data-dfn-type=dfn data-noexport="" id=query-encode-set>query encode set<a class=self-link href=#query-encode-set></a></dfn> is defined to be bytes that are less than
+<code>0x21</code>, greater than <code>0x7E</code>, or one of <code>0x22</code>, <code>0x23</code>, <code>0x3C</code>, <code>0x3E</code>, and <code>0x60</code>.</p>
 
 <p class=note>Note: encoding override logic needs to be added.</p>
 
@@ -1846,7 +1845,10 @@ Return the <a data-link-type=dfn href=#cleanse title=cleanse>cleansed</a> result
 
 <ul><li data-md=""><p>If any character in the string not a
  <a href=https://url.spec.whatwg.org/#url-code-points>URL code point</a>
- or a percent sign ("%"), indicate a parse error.</p>
+ or a percent sign (U+0025), indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+
+<li data-md=""><p>If the name includes a percent sign (U+0025) that is not immediately
+ followed by two hexadecimal characters, indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
 
 <li data-md=""><p>If any U+0009, U+000A, U+000D, U+200B, U+2060, or U+FEFF characters are
 present in the string, remove those characters and indicate a
@@ -1891,4 +1893,4 @@ readability, these words do not appear in all uppercase letters in this specific
 
 <p>Conformance requirements phrased as algorithms or specific steps may be implemented in any manner, so long as the end
 result is equivalent.
-<h2 class="no-num heading settled" id=references><span class=content>References</span><a class=self-link href=#references></a></h2><h3 class="no-num heading settled" id=normative><span class=content>Normative References</span><a class=self-link href=#normative></a></h3><dl><dt id=biblio-rfc2119 title=rfc2119><a class=self-link href=#biblio-rfc2119></a>[rfc2119]<dd>S. Bradner. <a href=http://www.ietf.org/rfc/rfc2119.txt>Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href=http://www.ietf.org/rfc/rfc2119.txt>http://www.ietf.org/rfc/rfc2119.txt</a><dt id=biblio-rfc3492 title=rfc3492><a class=self-link href=#biblio-rfc3492></a>[rfc3492]<dd>A. Costello. <a href=http://www.ietf.org/rfc/rfc3492.txt>Punycode: A Bootstring encoding of Unicode for Internationalized Domain Names in Applications (IDNA)</a>. March 2003. Proposed Standard. URL: <a href=http://www.ietf.org/rfc/rfc3492.txt>http://www.ietf.org/rfc/rfc3492.txt</a></dl><h2 class="no-num heading settled" id=index><span class=content>Index</span><a class=self-link href=#index></a></h2><ul class=indexlist><li>cleanse, <a href=#cleanse title="section 4">4</a><li>parse errors, <a href=#parse-errors title="section 3">3</a><li>path concatenation, <a href=#path-concatenation title="section 4">4</a></ul>
+<h2 class="no-num heading settled" id=references><span class=content>References</span><a class=self-link href=#references></a></h2><h3 class="no-num heading settled" id=normative><span class=content>Normative References</span><a class=self-link href=#normative></a></h3><dl><dt id=biblio-rfc2119 title=rfc2119><a class=self-link href=#biblio-rfc2119></a>[rfc2119]<dd>S. Bradner. <a href=http://www.ietf.org/rfc/rfc2119.txt>Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href=http://www.ietf.org/rfc/rfc2119.txt>http://www.ietf.org/rfc/rfc2119.txt</a><dt id=biblio-rfc3492 title=rfc3492><a class=self-link href=#biblio-rfc3492></a>[rfc3492]<dd>A. Costello. <a href=http://www.ietf.org/rfc/rfc3492.txt>Punycode: A Bootstring encoding of Unicode for Internationalized Domain Names in Applications (IDNA)</a>. March 2003. Proposed Standard. URL: <a href=http://www.ietf.org/rfc/rfc3492.txt>http://www.ietf.org/rfc/rfc3492.txt</a></dl><h2 class="no-num heading settled" id=index><span class=content>Index</span><a class=self-link href=#index></a></h2><ul class=indexlist><li>cleanse, <a href=#cleanse title="section 4">4</a><li>parse errors, <a href=#parse-errors title="section 3">3</a><li>path concatenation, <a href=#path-concatenation title="section 4">4</a><li>query encode set, <a href=#query-encode-set title="section 3.20">3.20</a></ul>
