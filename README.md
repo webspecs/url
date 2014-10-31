@@ -3,7 +3,7 @@ based description and implementation of
 [URL parsing](https://url.spec.whatwg.org/#url-parsing URL parsing).
 
 Contains:
-   * [reference implementation](https://github.com/rubys/url/tree/peg.js/reference-implementation)
+   * [reference implementation](https://github.com/rubys/url/tree/peg.js/reference-implementation#readme)
      in JavaScript.  This directory also contains a web page that demonstates
      live parsing of URLs entered in an HTML input field.
    * [tests](https://github.com/rubys/url/tree/peg.js/test) for the reference

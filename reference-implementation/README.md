@@ -6,7 +6,7 @@ It also contains a test suite inside `test/`.
 ## Reference Implementation
 
 `urlparse.js` is generated from a common source as the specification, namely
-[url.pegjs](https://github.com/rubys/url/blob/peg.js/url.pegjs].
+[url.pegjs](https://github.com/rubys/url/blob/peg.js/url.pegjs).
 
 The reference implementation also contains a Live DOM URL Viewer which is
 deployed [online](http://intertwingly.net/projects/pegurl/liveview.html).
@@ -14,7 +14,7 @@ deployed [online](http://intertwingly.net/projects/pegurl/liveview.html).
 ## Historical notes
 
 I started this effort by attempting to create a 
-[faithful implmentation](http://intertwingly.net/stories/2014/10/13/url_rb.html)
+[faithful implementation](http://intertwingly.net/stories/2014/10/13/url_rb.html)
 of the URL Standard.
 [Like others who attempted to do so](http://lists.w3.org/Archives/Public/www-archive/2014Oct/0021.html),
 I found the current description to appear to be easy to follow yet when I
@@ -30,7 +30,7 @@ grammar, I used a path of least resistance:
 [a tool to convert Ruby to JS](https://github.com/rubys/ruby2js#readme).  
 
 Had I started from scratch, I likely would have followed the lead of the
-[streams reference implementation](https://github.com/whatwg/streams/blob/master/reference-implementation/README.md_
+[streams reference implementation](https://github.com/whatwg/streams/blob/master/reference-implementation/README.md)
  and used ES6 and [traceur](https://github.com/google/traceur-compiler).
 
 ## Plans / Todos
