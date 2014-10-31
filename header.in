@@ -79,6 +79,8 @@ These are items that should be done before the proposed merge:
     property getters and setters</a>.
   * Implement <a href="https://url.spec.whatwg.org/#concept-basic-url-parser">Encoding
     Override</a>.
+  * Canonicalize ipv6addrs.  Example: <code>https://[12:0::1]/</code> -> 
+    <code>https://[12::1]/</code>
   * Reconcile the [[#host]] parsing rules with the Encoding Living Standard
     [[!encoding]] and <a href="https://url.spec.whatwg.org/#idna">IDNA</a>.
 
