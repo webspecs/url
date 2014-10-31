@@ -1,3 +1,8 @@
+// This file contains JavaScript code inside { curly braces }.
+// This file contains Bikeshed markup inside /* comments */.
+// This file contains PEG.js grammar rules which are converted to
+//   railroad diagrams in the spec and executable JavaScript.
+
 {
   base = options.base || {scheme: 'about'}
 
