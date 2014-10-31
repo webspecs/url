@@ -150,7 +150,9 @@
       }
 
       var input = document.getElementById("url");
-      if (input.value) parse(input.value);
+      input.value = location.hash.substring(1);
+      parse(input.value);
+      input.focus();
     </script>
   </body>
 </html>

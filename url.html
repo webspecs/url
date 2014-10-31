@@ -99,6 +99,8 @@ spec-let is "produce the same output as the algorithm defined herein".</p>
 property getters and setters</a>.</p>
 <li data-md=""><p>Implement <a href=https://url.spec.whatwg.org/#concept-basic-url-parser>Encoding
 Override</a>.</p>
+<li data-md=""><p>Canonicalize ipv6addrs.  Example: <code>https://[12:0::1]/</code> -&gt;
+<code>https://[12::1]/</code></p>
 <li data-md=""><p>Reconcile the <a data-section="" href=#host>§3.12 host</a> parsing rules with the Encoding Living Standard
 <a data-biblio-type=normative data-link-type=biblio href=#biblio-encoding title=encoding>[encoding]</a> and <a href=https://url.spec.whatwg.org/#idna>IDNA</a>.</p>
 </ul>
