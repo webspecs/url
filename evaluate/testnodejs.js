@@ -1,9 +1,9 @@
 fs = require('fs');
 url = require('url');
 
-fs.readFile('../test/urltestparser.js', 'utf8', function (err,script) {
+fs.readFile('../reference-implementation/test/urltestparser.js', 'utf8', function (err,script) {
   eval(script);
-  fs.readFile('../test/urltestdata.txt', 'utf8', function (err,data) {
+  fs.readFile('../reference-implementation/test/urltestdata.txt', 'utf8', function (err,data) {
     var tests = URLTestParser(data);
     var results = [];
 

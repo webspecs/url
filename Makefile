@@ -13,7 +13,7 @@ all: spec test
 
 clean:
 	rm -f url.html url.bs url.pegjson reference-implementation/url.js \
-	reference-implementation/urlparser.js test/urltest.js
+	reference-implementation/urlparser.js
 
 #
 ### specification
@@ -33,11 +33,11 @@ url.pegjson: peg2json.js parser.pegjs url.pegjs
 ### test reference implementation
 #
 test: reference-implementation/punycode.js reference-implementation/url.js \
-	reference-implementation/urlparser.js test/urltest.js test/urltestparser.js test/urltestdata.txt
-	node test/urltest.js
-
-test/urltest.js: reference-implementation/ruby2js test/urltest.rb
-	ruby reference-implementation/ruby2js test/urltest.rb > $@
+	reference-implementation/urlparser.js \
+	reference-implementation/test/urltest.js \
+	reference-implementation/test/urltestparser.js \
+	reference-implementation/test/urltestdata.txt
+	node reference-implementation/test/urltest.js
 
 reference-implementation/url.js: reference-implementation/ruby2js reference-implementation/url.rb
 	ruby reference-implementation/ruby2js reference-implementation/url.rb > $@
@@ -55,11 +55,11 @@ clobber:
 fetch: clobber test/urltestdata.txt test/urltestparser.js parser.pegjs \
 	reference-implementation/punycode.js
 
-test/urltestdata.txt:
+reference-implementation/test/urltestdata.txt:
 	cd test; \
 	wget https://raw.githubusercontent.com/w3c/web-platform-tests/master/url/urltestdata.txt
 
-test/urltestparser.js:
+reference-implementation/test/urltestparser.js:
 	cd test; \
 	wget https://raw.githubusercontent.com/w3c/web-platform-tests/master/url/urltestparser.js
 

@@ -11,26 +11,34 @@ useragent-results: \
 	useragent-results/urltestdata
 
 clean:
-	rm -rf target *.class Cargo.lock urltestdata.json
+	rm -rf target *.class Cargo.lock urltestdata.json \
+	useragent-results/galimatias \
+	useragent-results/nodejs \
+	useragent-results/rusturl \
+	useragent-results/refimpl \
+	useragent-results/urltestdata
 
 clobber:
 	rm -f *.jar
 
-urltestdata.json: urltesttojson.js ../test/urltestparser.js ../test/urltestdata.txt
+urltestdata.json: urltesttojson.js \
+	../reference-implementation/test/urltestparser.js \
+	../reference-implementation/test/urltestdata.txt
 	node urltesttojson.js > $@
 
 useragent-results/refimpl: testrefimpl.js \
 	../reference-implementation/url.js \
 	../reference-implementation/urlparser.js \
-	../test/urltestdata.txt
+	../reference-implementation/test/urltestdata.txt
 	echo refimpl > $@
 	date >> $@
 	node testrefimpl.js >> $@
 
-useragent-results/urltestdata: urltestdata.json ../test/urltestdata.txt
+useragent-results/urltestdata: urltestdata.json \
+	../reference-implementation/test/urltestdata.txt
 	echo urltestdata > $@
 	/bin/echo -n "Fetched " >> $@ 
-	node -e "require('fs').stat('../test/urltestdata.txt', \
+	node -e "require('fs').stat('../reference-implementation/test/urltestdata.txt', \
 		function(err,stats) {console.log(stats.mtime)})" >> $@
 	cat urltestdata.json >> $@
 
@@ -45,12 +53,15 @@ useragent-results/galimatias: testgalimatias.class urltestdata.json
 	export CLASSPATH=.:icu4j.1.1.jar:galimatias-0.0.4.jar:json-20140107.jar; \
 	java testgalimatias >> $@
 
-useragent-results/nodejs: testnodejs.js ../test/urltestparser.js ../test/urltestdata.txt
+useragent-results/nodejs: testnodejs.js \
+	../reference-implementation/test/urltestparser.js \
+	../reference-implementation/test/urltestdata.txt
 	echo nodejs > $@
 	echo 'node.js' $(nodejs -v) >> $@
 	node testnodejs.js >> $@
 
-target/test_rust_url: Cargo.toml src/main.rs ../test/urltestdata.txt
+target/test_rust_url: Cargo.toml src/main.rs \
+	../reference-implementation/test/urltestdata.txt
 	cargo build
 
 useragent-results/rusturl: target/test_rust_url

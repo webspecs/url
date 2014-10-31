@@ -7,8 +7,7 @@ parser.pegjs
 reference-implementation/punycode.js
 reference-implementation/url.js
 reference-implementation/urlparser.js
-test/urltestdata.txt
-test/urltest.js
-test/urltestparser.js
+reference-implementation/test/urltestdata.txt
+reference-implementation/test/urltestparser.js
 url.bs
 url.pegjson

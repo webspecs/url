@@ -4,10 +4,12 @@ eval(fs.readFileSync("../reference-implementation/url.js", "utf8"));
 eval(fs.readFileSync("../reference-implementation/urlparser.js", "utf8"));
 
 eval(
-  fs.readFileSync("../test/urltestparser.js", "utf8").replace(/:\ \{\ get:/g, ": { enumerable: true, get:")
+  fs.readFileSync("../reference-implementation/test/urltestparser.js", "utf8").
+    replace(/:\ \{\ get:/g, ": { enumerable: true, get:")
 );
 
-var data = URLTestParser(fs.readFileSync("../test/urltestdata.txt", "utf8"));
+var data = URLTestParser(fs.
+  readFileSync("../reference-implementation/test/urltestdata.txt", "utf8"));
 
 properties = ['href', 'protocol', 'hostname', 'port', 'username', 'password',
   'pathname', 'search', 'hash', 'exception'];
