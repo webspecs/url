@@ -18,6 +18,7 @@ Editor: Sam Ruby, IBM https://www.ibm.com/, rubys@intertwingly.net, http://inter
 Abstract: This specification <a href="http://agiledictionary.com/209/spike/">spike</a> defines parsing rules for URLs
 Logo: https://resources.whatwg.org/logo-url.svg
 !Version History: <a href="https://github.com/rubys/url/commits/peg.js">https://github.com/rubys/url/commits/peg.js</a>
+!Participate: <a href="https://github.com/rubys/url/issues/new">File an issue</a> (<a href="https://github.com/rubys/url/issues?q=">issues</a>)
 !Participate: <a href="mailto:public-webapps@w3.org">public-webapps@w3.org</a> (<a href="http://lists.w3.org/Archives/Public/public-webapps/">archives</a>)
 !Participate: <a href="https://whatwg.org/mailing-list">whatwg@whatwg.org</a> (<a href="https://whatwg.org/mailing-list#specs">archives</a>)
 !Participate: <a href="http://wiki.whatwg.org/wiki/IRC">IRC: #whatwg on Freenode</a>
