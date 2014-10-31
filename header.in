@@ -50,10 +50,10 @@ Goals {#goals}
     for the scheme registration mechanism in the
     <a href="https://url.spec.whatwg.org/#url-writing">URL writing</a> section.
   * Explore the idea of obsoleting <em>only</em> [[rfc3987]] and not
-    [[rfc3986]] too.  Consider explicitly adopt the following constraints on the
-      canonicalized output of URL parsing:
-      * URL parsing of canonicalized outputs roundtrip (i.e., this the
-        URL parser is an identity transform for such inputs).
+    [[rfc3986]] too.  Consider explicitly adopting the following constraints on
+      the canonicalized output of URL parsing:
+      * URL parsing of canonicalized outputs roundtrip (i.e., the URL parser is
+        an identity transform for such inputs).
       * All canonicalized output are valid URIs (and, if necessary, submit
         errata and/or identify specific
         <a href="https://html.spec.whatwg.org/multipage/introduction.html#compliance-with-other-specifications">willful violations</a>).
