@@ -32,7 +32,7 @@ struct Result {
 
 fn main() {
     let mut results : Vec<Result> = Vec::new();
-    for test in parse_test_data(include_str!("../../test/urltestdata.txt")).into_iter() {
+    for test in parse_test_data(include_str!("../../reference-implementation/test/urltestdata.txt")).into_iter() {
       let base = Url::parse(test.base.as_slice()).unwrap();
 
       let result = 
@@ -147,7 +147,7 @@ fn parse_test_data(input: &str) -> Vec<Test> {
                 "p" => test.path = Some(value),
                 "q" => test.query = Some(value),
                 "f" => test.fragment = Some(value),
-                _ => fail!("Invalid token")
+                _ => panic!("Invalid token")
             }
         }
         tests.push(test)
@@ -179,7 +179,7 @@ fn unescape(input: &str) -> String {
                             u32::parse_bytes(hex.as_bytes(), 16)
                                 .and_then(char::from_u32).unwrap()
                         }
-                        _ => fail!("Invalid test data input"),
+                        _ => panic!("Invalid test data input"),
                     }
                 } else {
                     c
