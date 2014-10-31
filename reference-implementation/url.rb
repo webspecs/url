@@ -250,6 +250,38 @@ class Url
     return host
   end
 
+  # https://url.spec.whatwg.org/#concept-ipv6-serializer
+  # http://tools.ietf.org/html/rfc5952#section-4
+  def self.canonicalize_ipv6(pre, post=[], ipv4=nil)
+    slots = (ipv4 ? 6 : 8)
+    pre << '0' while pre.length + post.length < slots
+    pre = pre.concat post
+    pre.map! {|n| n.to_i(16).to_s(16).upcase()}
+
+    zero = nil
+    for i in 0 .. slots-2
+      if pre[i] == '0' and pre[i] == '0'
+	zero = i
+	break
+      end
+    end
+
+    if not zero
+      post = nil
+    else
+      post = pre[zero+1..-1]
+      pre = pre.first(zero)
+      post.shift() while post.length > 1 and post[0] == '0'
+      post = nil if ipv4 and post.length == 1 and post[0] == '0'
+    end
+
+    result = pre.join(':')
+    result += '::' + post.join(':') if post
+    result += '::' + ipv4 if ipv4
+
+    return result
+  end
+
   attr_accessor :scheme, :scheme_data, :username, :password, :host, :port
   attr_accessor :path, :query, :fragment, :exception
 

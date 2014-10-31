@@ -647,9 +647,9 @@ Host
   }
 
 /*
-  In addition to parsing a series of zero or more @H16 values separated by a
-   colon, optionally followed by a double colon and a series of zero or more
-   #H16 values, optionally followed by a colon and a @LS32 value.  
+   Let $pre, $post, and $last be the @H16 values before the double colon if
+   present,  the remaining @H16 before the last value, and the trailing
+   @H16 or @LS32 value, respectively.
    
    Perform the following validation checks:
    * If there are no consecutive colon characters in the input string, indicate
@@ -663,18 +663,27 @@ Host
        input or if there are more than one @LS32 value after the consecutive
        colons.
 
-   Return the result as a string.
+   Perform the following steps:
+   * Append "0" values to $pre while the sum of the lengths of the $pre and
+       $post arrays is less than six.
+   * Append a "0" value to $pre if no @LS32 item is present in the input and
+       the sum of the lengths of the $pre and $post array is seven.
+   * Append $last to $pre.
+
+   Return the <a href=https://url.spec.whatwg.org/#concept-ipv6-serializer>ipv6
+   serialized</a> value of $pre as a string.
 */
 IPV6Addr
   = addr:(((H16 ':')* ':')? (H16 ':')* (H16 / LS32))
   {
-    var result = '';
+    var pre = [];
+    var post = [];
+    var ipv4 =  null;
 
     if (addr[0]) {
       for (var i=0; i<addr[0][0].length; i++) {
-        result += addr[0][0][i][0] + ':'
+        pre.push(addr[0][0][i][0])
       };
-      result += ':'
 
       if (addr[0][0].length + addr[1].length + 1 > 6) {
         error('malformed IPV6 Address')
@@ -686,15 +695,20 @@ IPV6Addr
     };
 
     for (var i=0; i<addr[1].length; i++) {
-      result += addr[1][i] + ':'
+      post.push(addr[1][i] + ':')
     };
 
-    result += addr[2];
-    if (addr[2].indexOf('.')==-1 && addr[1].length > 1) {
+    if (addr[2].indexOf('.') == -1 && addr[1].length > 1) {
       error('malformed IPV6 Address')
-    }
+    };
 
-    return result
+    if (addr[2].indexOf('.') == -1) {
+      post.push(addr[2]) 
+    } else {
+      ipv4 = addr[2]
+    };
+
+    return Url.canonicalize_ipv6(pre, post, ipv4)
   }
 
 /*
