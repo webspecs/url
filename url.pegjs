@@ -4,7 +4,8 @@
 //   railroad diagrams in the spec and executable JavaScript.
 
 {
-  base = options.base || {scheme: 'about'}
+  var base = options.base || {scheme: 'about'};
+  var encoding_override = options.encoding_override || 'utf-8';
 
   /* This function accepts a variable number of arguments.  It copies the
      'exception' property from the first object which defines such to
@@ -422,6 +423,8 @@ RelativeUrl
   }
 
 /*
+  Set <code>encoding override</code> to "utf-8".
+
   Initialize $result to be a JSON object with $scheme
   set to be the result returned by @Scheme, and
   $scheme_data set to the result returned by @Data.
@@ -450,7 +453,12 @@ NonRelativeUrl
 
 /*
   Six relative schemes are defined.  They are to be matched against the input
-  in a case insensitive manner.  Return the results as a lowercased string.
+  in a case insensitive manner.
+
+  Set <code>encoding override</code> to "utf-8" if the scheme matches
+  "wss" or "ws".
+
+  Return the scheme as a lowercased string.
 */
 RelativeScheme
   = "ftp"i
@@ -857,8 +865,6 @@ Data
 
   The <dfn>query encode set</dfn> is defined to be bytes that are less than
   0x21, greater than 0x7E, or one of 0x22, 0x23, 0x3C, 0x3E, and 0x60.
-
-  Note: encoding override logic needs to be added.
 */
 Query 
   = query:[^#]*

@@ -44,4 +44,9 @@ Had I started from scratch, I likely would have followed the lead of the
    flavored syntax to be included as comments and automatically extracted
    during the build process for the purposes of spec generation.
 
+ * Find or build a compliant JavaScript implementation of the
+   <a href=https://encoding.spec.whatwg.org/>Encoding Living Standard</a>.
+   Until then, the reference implementation tracks and updates the value of
+   <var>encoding_override</var>, but doesn't use it.  Instead
+   <code>utf-8</code> is always used.
 

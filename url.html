@@ -22,13 +22,13 @@
 </p>
   <h1 class="p-name no-ref" id=title>URL</h1>
   <h2 class="no-num no-toc no-ref heading settled" id=subtitle><span class=content>Living Standard,
-    <span class=dt-updated><span class=value-title title=20141031>31 October 2014</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20141101>1 November 2014</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt>Editor:<dd><div class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://intertwingly.net/blog/>Sam Ruby</a> (<a class="p-org org" href=https://www.ibm.com/>IBM</a>) <a class="u-email email" href=mailto:rubys@intertwingly.net>rubys@intertwingly.net</a></div><dt>Version History:<dd><span><a href=https://github.com/rubys/url/commits/peg.js>https://github.com/rubys/url/commits/peg.js</a></span><dt>Participate:<dd><span><a href=https://github.com/rubys/url/issues/new>File an issue</a> (<a href="https://github.com/rubys/url/issues?q=">issues</a>)</span><dd><span><a href=mailto:public-webapps@w3.org>public-webapps@w3.org</a> (<a href=http://lists.w3.org/Archives/Public/public-webapps/>archives</a>)</span><dd><span><a href=https://whatwg.org/mailing-list>whatwg@whatwg.org</a> (<a href=https://whatwg.org/mailing-list#specs>archives</a>)</span><dd><span><a href=http://wiki.whatwg.org/wiki/IRC>IRC: #whatwg on Freenode</a></span></dl></div>
   <div data-fill-with=warning></div>
   <p class=copyright data-fill-with=copyright><a href=http://creativecommons.org/publicdomain/zero/1.0/ rel=license><img alt=CC0 src=https://i.creativecommons.org/p/zero/1.0/80x15.png></a>
 To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 31 October 2014,
+In addition, as of 1 November 2014,
 the editors have made this specification available under the
 <a href=http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0 rel=license>Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
@@ -97,8 +97,6 @@ point as the only real normative requirement for the parts defined by this
 spec-let is "produce the same output as the algorithm defined herein".</p>
 <li data-md=""><p>Implement <a href=https://url.spec.whatwg.org/#urlutils-and-urlutilsreadonly-members>Url
 property getters and setters</a>.</p>
-<li data-md=""><p>Implement <a href=https://url.spec.whatwg.org/#concept-basic-url-parser>Encoding
-Override</a>.</p>
 <li data-md=""><p>Reconcile the <a data-section="" href=#host>§3.12 host</a> parsing rules with the Encoding Living Standard
 <a data-biblio-type=normative data-link-type=biblio href=#biblio-encoding title=encoding>[encoding]</a> and <a href=https://url.spec.whatwg.org/#idna>IDNA</a>.</p>
 </ul>
@@ -926,6 +924,8 @@ fragment</text></g><path d="M578.0 41h10">
 </path></g></g><path d="M 608 41 h 20 m -10 -10 v 20 m 10 -20 v 20">
 </path></g></svg></div>
 
+<p>Set <code>encoding override</code> to "<code>utf-8</code>".</p>
+
 <p>Initialize <code>result</code> to be a JSON object with <code>scheme</code>
 set to be the result returned by <code class=grammar-rule>scheme</code>, and
 <code>scheme_data</code> set to the result returned by <code class=grammar-rule>data</code>.
@@ -987,7 +987,12 @@ ws</text></g><path d="M128.0 181a10 10 0 0 0 10 -10v-130a10 10 0 0 1 10 -10">
 </path></g></svg></div>
 
 <p>Six relative schemes are defined.  They are to be matched against the input
-in a case insensitive manner.  Return the results as a lowercased string.</p>
+in a case insensitive manner.</p>
+
+<p>Set <code>encoding override</code> to "<code>utf-8</code>" if the scheme matches
+"<code>wss</code>" or "<code>ws</code>".</p>
+
+<p>Return the scheme as a lowercased string.</p>
 
 <h3 class="heading settled" data-level=3.8 id=scheme><span class=secno>3.8. </span><span class=content>scheme</span><a class=self-link href=#scheme></a></h3>
 
@@ -1824,8 +1829,6 @@ the result using the <a data-link-type=dfn href=#query-encode-set title="query e
 <p>The <dfn data-dfn-type=dfn data-noexport="" id=query-encode-set>query encode set<a class=self-link href=#query-encode-set></a></dfn> is defined to be bytes that are less than
 <code>0x21</code>, greater than <code>0x7E</code>, or one of <code>0x22</code>, <code>0x23</code>, <code>0x3C</code>, <code>0x3E</code>, and <code>0x60</code>.</p>
 
-<p class=note>Note: encoding override logic needs to be added.</p>
-
 <h3 class="heading settled" data-level=3.21 id=fragment><span class=secno>3.21. </span><span class=content>fragment</span><a class=self-link href=#fragment></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=81 viewBox="0 0 185 81" width=185>
@@ -1879,8 +1882,10 @@ Return the <a data-link-type=dfn href=#cleanse title=cleanse>cleansed</a> result
  a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
 
 <li data-md=""><p>if the <var>encode set</var> is non-null,
-<a href=https://url.spec.whatwg.org/#percent-encode>Percent encode</a>
-the result using the provided <var>encode set</var>.</p>
+first <a href=https://encoding.spec.whatwg.org/#encode>encode</a> the
+result using the <code>encoding override</code>, then
+<a href=https://url.spec.whatwg.org/#percent-encode>percent encode</a>
+that result using the provided <var>encode set</var>.</p>
 
 <li data-md=""><p>Return the result as a string.</p>
 </ul>

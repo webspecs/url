@@ -16,8 +16,10 @@ To <dfn>cleanse</dfn> a string given an <var>encode set</var>, run these steps:
      a <a>parse error</a>.
 
  * if the <var>encode set</var> is non-null,
-    <a href="https://url.spec.whatwg.org/#percent-encode">Percent encode</a>
-    the result using the provided <var>encode set</var>.
+    first <a href="https://encoding.spec.whatwg.org/#encode">encode</a> the
+    result using the <code>encoding override</code>, then
+    <a href="https://url.spec.whatwg.org/#percent-encode">percent encode</a>
+    that result using the provided <var>encode set</var>.
 
  * Return the result as a string.
 
