@@ -1,15 +1,15 @@
 # Reference Implementation and Tests
 
 This folder contains a reference implementation of the URL standard. 
-It also contains a test suite inside `test/`.
 
-## Reference Implementation
-
-`urlparse.js` is generated from a common source as the specification, namely
+ * `urlparse.js` is generated from a common source as the specification, namely
 [url.pegjs](https://github.com/rubys/url/blob/peg.js/url.pegjs).
 
-The reference implementation also contains a Live DOM URL Viewer which is
+ * The reference implementation also contains a Live DOM URL Viewer which is
 deployed [online](http://intertwingly.net/projects/pegurl/liveview.html).
+
+ * A test suite is included inside `test`.
+
 
 ## Historical notes
 

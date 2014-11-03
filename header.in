@@ -15,7 +15,7 @@ H1: URL
 Shortname: url
 Status: LS
 Editor: Sam Ruby, IBM https://www.ibm.com/, rubys@intertwingly.net, http://intertwingly.net/blog/
-Abstract: This specification <a href="http://agiledictionary.com/209/spike/">spike</a> defines parsing rules for URLs
+Abstract: This specification <a href="http://agiledictionary.com/209/spike/">spike</a> defines parsing rules for URLs and includes a <a href="https://github.com/rubys/url/tree/peg.js/reference-implementation#readme">reference implementation</a> as well as a <a href="http://intertwingly.net/projects/pegurl/liveview.html">Live DOM URL Viewer</a>.  <a href=http://intertwingly.net/projects/pegurl/urltest-results/>Interop test results</a> are also available.
 Logo: https://resources.whatwg.org/logo-url.svg
 !Version History: <a href="https://github.com/rubys/url/commits/peg.js">https://github.com/rubys/url/commits/peg.js</a>
 !Participate: <a href="https://github.com/rubys/url/issues/new">File an issue</a> (<a href="https://github.com/rubys/url/issues?q=">issues</a>)
@@ -34,14 +34,6 @@ Goals {#goals}
     baseline has been established, evolve the standard towards greater web
     compatibility, greater interoperability, and simpler algorithms, in that
     order.
-  * Provide a
-    <a href="https://github.com/rubys/url/tree/peg.js/reference-implementation">reference
-    implementation</a>, where parts of this specification and parts of that
-    reference implementation are generated from a
-    <a href="https://github.com/rubys/url/blob/peg.js/url.pegjs">common
-    source</a>.  Included in the reference implementation is a
-    <a href="http://intertwingly.net/projects/pegurl/liveview.html">Live DOM URL
-    Viewer</a>.
   * Integrate with <a href="https://travis-ci.org/">Travis</a> and activate the
     <a href="http://docs.travis-ci.com/user/getting-started/#Step-two%3A-Activate-GitHub-Webhook">GitHub
     WebHook</a> so that proposed changes are verified to build correctly and
@@ -57,7 +49,13 @@ Goals {#goals}
         an identity transform for such inputs).
       * All canonicalized output are valid URIs (and, if necessary, submit
         errata and/or identify specific
-        <a href="https://html.spec.whatwg.org/multipage/introduction.html#compliance-with-other-specifications">willful violations</a>).
+        <a href="https://html.spec.whatwg.org/multipage/introduction.html#compliance-with-other-specifications">willful
+        violations</a>).  An example of an item needing to be worked:
+          * <code>http://example.com/?%</code> is not a valid URL or a valid
+              URI, yet it round-trips the URL parsing/serialization
+              transformation.  Are any changes needed to RFC 3986 to
+              accommodate this?
+              [<a href="http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Nov/0005.html">source</a>]
   * Incorporate the substance of the
     <a href="http://www.w3.org/TR/html5/references.html#refsURL">informative
     note</a> that precedes the [URL] normative reference in the
@@ -65,10 +63,9 @@ Goals {#goals}
     status section or equivalent in this document.
   * Define more soft <a>parse errors</a>.  The 
     <a href="https://url.spec.whatwg.org/">URL living standard</a> has a start,
-    but based on <a href="http://intertwingly.net/projects/pegurl/urltest-results/">test
-    results</a>, there clearly needs to be more.
+    but there needs to be more.
 
-Todos {#todos}
+Todos / Differences {#todos}
 =====
 
 These are items that should be done before the proposed merge:
@@ -80,6 +77,13 @@ These are items that should be done before the proposed merge:
     property getters and setters</a>.
   * Reconcile the [[#host]] parsing rules with the Encoding Living Standard
     [[!encoding]] and <a href="https://url.spec.whatwg.org/#idna">IDNA</a>.
+
+Known differences with current drafts of the WHATWG <a href="https://url.spec.whatwg.org/">URL Standard</a>:
+
+  * This draft treats URLs of the form <code>//C|/foo/bar</code> as a parse
+    error, whereas current drafts of the URL standard do not.
+    <a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
+    agrees</a> that this should be a parse error.
 
 Parsing Rules {#parsing-rules}
 =============

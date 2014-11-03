@@ -56,11 +56,11 @@ fetch: clobber test/urltestdata.txt test/urltestparser.js parser.pegjs \
 	reference-implementation/punycode.js
 
 reference-implementation/test/urltestdata.txt:
-	cd test; \
+	cd reference-implementation/test; \
 	wget https://raw.githubusercontent.com/w3c/web-platform-tests/master/url/urltestdata.txt
 
 reference-implementation/test/urltestparser.js:
-	cd test; \
+	cd reference-implementation/test; \
 	wget https://raw.githubusercontent.com/w3c/web-platform-tests/master/url/urltestparser.js
 
 parser.pegjs:
