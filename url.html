@@ -21,30 +21,20 @@
 </a>
 </p>
   <h1 class="p-name no-ref" id=title>URL</h1>
-  <h2 class="no-num no-toc no-ref heading settled" id=subtitle><span class=content>Living Standard,
-    <span class=dt-updated><span class=value-title title=20141101>1 November 2014</span></span></span></h2>
-  <div data-fill-with=spec-metadata><dl><dt>Editor:<dd><div class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://intertwingly.net/blog/>Sam Ruby</a> (<a class="p-org org" href=https://www.ibm.com/>IBM</a>) <a class="u-email email" href=mailto:rubys@intertwingly.net>rubys@intertwingly.net</a></div><dt>Version History:<dd><span><a href=https://github.com/rubys/url/commits/peg.js>https://github.com/rubys/url/commits/peg.js</a></span><dt>Participate:<dd><span><a href=https://github.com/rubys/url/issues/new>File an issue</a> (<a href="https://github.com/rubys/url/issues?q=">issues</a>)</span><dd><span><a href=mailto:public-webapps@w3.org>public-webapps@w3.org</a> (<a href=http://lists.w3.org/Archives/Public/public-webapps/>archives</a>)</span><dd><span><a href=https://whatwg.org/mailing-list>whatwg@whatwg.org</a> (<a href=https://whatwg.org/mailing-list#specs>archives</a>)</span><dd><span><a href=http://wiki.whatwg.org/wiki/IRC>IRC: #whatwg on Freenode</a></span></dl></div>
+  <h2 class="no-num no-toc no-ref heading settled" id=subtitle><span class=content>Living Standard — Last Updated
+    <span class=dt-updated><span class=value-title title=20141103>3 November 2014</span></span></span></h2>
+  <div data-fill-with=spec-metadata><dl><dt class=editor>Editor:<dd class=editor><div class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://intertwingly.net/blog/>Sam Ruby</a> (<a class="p-org org" href=https://www.ibm.com/>IBM</a>) <a class="u-email email" href=mailto:rubys@intertwingly.net>rubys@intertwingly.net</a></div><dt>Version History:<dd><span><a href=https://github.com/rubys/url/commits/peg.js>https://github.com/rubys/url/commits/peg.js</a></span><dt>Participate:<dd><span><a href=https://github.com/rubys/url/issues/new>File an issue</a> (<a href="https://github.com/rubys/url/issues?q=">issues</a>)</span><dd><span><a href=mailto:public-webapps@w3.org>public-webapps@w3.org</a> (<a href=http://lists.w3.org/Archives/Public/public-webapps/>archives</a>)</span><dd><span><a href=https://whatwg.org/mailing-list>whatwg@whatwg.org</a> (<a href=https://whatwg.org/mailing-list#specs>archives</a>)</span><dd><span><a href=http://wiki.whatwg.org/wiki/IRC>IRC: #whatwg on Freenode</a></span></dl></div>
   <div data-fill-with=warning></div>
-  <p class=copyright data-fill-with=copyright><a href=http://creativecommons.org/publicdomain/zero/1.0/ rel=license><img alt=CC0 src=https://i.creativecommons.org/p/zero/1.0/80x15.png></a>
-To the extent possible under law, the editors have waived all copyright
-and related or neighboring rights to this work.
-In addition, as of 1 November 2014,
-the editors have made this specification available under the
-<a href=http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0 rel=license>Open Web Foundation Agreement Version 1.0</a>,
-which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
-Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document.
-</p>
-  <hr title="Separator for header">
 </div>
 
 <h2 class="no-num no-toc no-ref heading settled" id=abstract><span class=content>Abstract</span></h2>
-<div class=p-summary data-fill-with=abstract><p>This specification <a href=http://agiledictionary.com/209/spike/>spike</a> defines parsing rules for URLs</p>
+<div class=p-summary data-fill-with=abstract><p>This specification <a href=http://agiledictionary.com/209/spike/>spike</a> defines parsing rules for URLs and includes a <a href=https://github.com/rubys/url/tree/peg.js/reference-implementation#readme>reference implementation</a> as well as a <a href=http://intertwingly.net/projects/pegurl/liveview.html>Live DOM URL Viewer</a>.  <a href=http://intertwingly.net/projects/pegurl/urltest-results/>Interop test results</a> are also available.</p>
 
 </div>
 <div data-fill-with=at-risk></div>
 
 <h2 class="no-num no-toc no-ref heading settled" id=contents><span class=content>Table of Contents</span></h2>
-<div data-fill-with=table-of-contents><ul class=toc><li><a href=#goals><span class=secno>1</span> <span class=content>Goals</span></a><li><a href=#todos><span class=secno>2</span> <span class=content>Todos</span></a><li><a href=#parsing-rules><span class=secno>3</span> <span class=content>Parsing Rules</span></a><ul class=toc><li><a href=#url><span class=secno>3.1</span> <span class=content>url</span></a><li><a href=#file-like-relative-url><span class=secno>3.2</span> <span class=content>file-like-relative-url</span></a><li><a href=#file-like-relative-scheme><span class=secno>3.3</span> <span class=content>file-like-relative-scheme</span></a><li><a href=#absolute-url><span class=secno>3.4</span> <span class=content>absolute-url</span></a><li><a href=#relative-url><span class=secno>3.5</span> <span class=content>relative-url</span></a><li><a href=#non-relative-url><span class=secno>3.6</span> <span class=content>non-relative-url</span></a><li><a href=#relative-scheme><span class=secno>3.7</span> <span class=content>relative-scheme</span></a><li><a href=#scheme><span class=secno>3.8</span> <span class=content>scheme</span></a><li><a href=#user-info><span class=secno>3.9</span> <span class=content>user-info</span></a><li><a href=#user><span class=secno>3.10</span> <span class=content>user</span></a><li><a href=#password><span class=secno>3.11</span> <span class=content>password</span></a><li><a href=#host><span class=secno>3.12</span> <span class=content>host</span></a><li><a href=#ipv6addr><span class=secno>3.13</span> <span class=content>ipv6addr</span></a><li><a href=#h16><span class=secno>3.14</span> <span class=content>h16</span></a><li><a href=#ls32><span class=secno>3.15</span> <span class=content>ls32</span></a><li><a href=#decimal_byte><span class=secno>3.16</span> <span class=content>decimal_byte</span></a><li><a href=#port><span class=secno>3.17</span> <span class=content>port</span></a><li><a href=#path><span class=secno>3.18</span> <span class=content>path</span></a><li><a href=#data><span class=secno>3.19</span> <span class=content>data</span></a><li><a href=#query><span class=secno>3.20</span> <span class=content>query</span></a><li><a href=#fragment><span class=secno>3.21</span> <span class=content>fragment</span></a></ul><li><a href=#common-functions><span class=secno>4</span> <span class=content>Common Functions</span></a><li><a href=#conformance><span class=secno></span> <span class=content>Conformance</span></a><li><a href=#references><span class=secno></span> <span class=content>References</span></a><ul class=toc><li><a href=#normative><span class=secno></span> <span class=content>Normative References</span></a><li><a href=#informative><span class=secno></span> <span class=content>Informative References</span></a></ul><li><a href=#index><span class=secno></span> <span class=content>Index</span></a></ul></div>
+<div data-fill-with=table-of-contents><ul class=toc><li><a href=#goals><span class=secno>1</span> <span class=content>Goals</span></a><li><a href=#todos><span class=secno>2</span> <span class=content>Todos / Differences</span></a><li><a href=#parsing-rules><span class=secno>3</span> <span class=content>Parsing Rules</span></a><ul class=toc><li><a href=#url><span class=secno>3.1</span> <span class=content>url</span></a><li><a href=#file-like-relative-url><span class=secno>3.2</span> <span class=content>file-like-relative-url</span></a><li><a href=#file-like-relative-scheme><span class=secno>3.3</span> <span class=content>file-like-relative-scheme</span></a><li><a href=#absolute-url><span class=secno>3.4</span> <span class=content>absolute-url</span></a><li><a href=#relative-url><span class=secno>3.5</span> <span class=content>relative-url</span></a><li><a href=#non-relative-url><span class=secno>3.6</span> <span class=content>non-relative-url</span></a><li><a href=#relative-scheme><span class=secno>3.7</span> <span class=content>relative-scheme</span></a><li><a href=#scheme><span class=secno>3.8</span> <span class=content>scheme</span></a><li><a href=#user-info><span class=secno>3.9</span> <span class=content>user-info</span></a><li><a href=#user><span class=secno>3.10</span> <span class=content>user</span></a><li><a href=#password><span class=secno>3.11</span> <span class=content>password</span></a><li><a href=#host><span class=secno>3.12</span> <span class=content>host</span></a><li><a href=#ipv6addr><span class=secno>3.13</span> <span class=content>ipv6addr</span></a><li><a href=#h16><span class=secno>3.14</span> <span class=content>h16</span></a><li><a href=#ls32><span class=secno>3.15</span> <span class=content>ls32</span></a><li><a href=#decimal-byte><span class=secno>3.16</span> <span class=content>decimal-byte</span></a><li><a href=#port><span class=secno>3.17</span> <span class=content>port</span></a><li><a href=#path><span class=secno>3.18</span> <span class=content>path</span></a><li><a href=#data><span class=secno>3.19</span> <span class=content>data</span></a><li><a href=#query><span class=secno>3.20</span> <span class=content>query</span></a><li><a href=#fragment><span class=secno>3.21</span> <span class=content>fragment</span></a></ul><li><a href=#common-functions><span class=secno>4</span> <span class=content>Common Functions</span></a><li><a href=#conformance><span class=secno></span> <span class=content>Conformance</span></a><li><a href=#references><span class=secno></span> <span class=content>References</span></a><ul class=toc><li><a href=#normative><span class=secno></span> <span class=content>Normative References</span></a><li><a href=#informative><span class=secno></span> <span class=content>Informative References</span></a></ul><li><a href=#index><span class=secno></span> <span class=content>Index</span></a></ul></div>
 
 <h2 class="heading settled" data-level=1 id=goals><span class=secno>1. </span><span class=content>Goals</span><a class=self-link href=#goals></a></h2>
 
@@ -54,14 +44,6 @@ Parts of this work may be from another specification document.  If so, those par
 baseline has been established, evolve the standard towards greater web
 compatibility, greater interoperability, and simpler algorithms, in that
 order.</p>
-<li data-md=""><p>Provide a
-<a href=https://github.com/rubys/url/tree/peg.js/reference-implementation>reference
-implementation</a>, where parts of this specification and parts of that
-reference implementation are generated from a
-<a href=https://github.com/rubys/url/blob/peg.js/url.pegjs>common
-source</a>.  Included in the reference implementation is a
-<a href=http://intertwingly.net/projects/pegurl/liveview.html>Live DOM URL
-Viewer</a>.</p>
 <li data-md=""><p>Integrate with <a href=https://travis-ci.org/>Travis</a> and activate the
 <a href=http://docs.travis-ci.com/user/getting-started/#Step-two%3A-Activate-GitHub-Webhook>GitHub
 WebHook</a> so that proposed changes are verified to build correctly and
@@ -77,18 +59,23 @@ for the scheme registration mechanism in the
 an identity transform for such inputs).</p>
 <li data-md=""><p>All canonicalized output are valid URIs (and, if necessary, submit
 errata and/or identify specific
-<a href=https://html.spec.whatwg.org/multipage/introduction.html#compliance-with-other-specifications>willful violations</a>).</p>
-</ul><li data-md=""><p>Incorporate the substance of the
+<a href=https://html.spec.whatwg.org/multipage/introduction.html#compliance-with-other-specifications>willful
+violations</a>).  An example of an item needing to be worked:</p>
+<ul><li data-md=""><p><code>http://example.com/?%</code> is not a valid URL or a valid
+  URI, yet it round-trips the URL parsing/serialization
+  transformation.  Are any changes needed to RFC 3986 to
+  accommodate this?
+  [<a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Nov/0005.html>source</a>]</p>
+</ul></ul><li data-md=""><p>Incorporate the substance of the
 <a href=http://www.w3.org/TR/html5/references.html#refsURL>informative
 note</a> that precedes the [URL] normative reference in the
 <a href=http://www.w3.org/TR/html5/>HTML5 Recommendation</a> into a
 status section or equivalent in this document.</p>
 <li data-md=""><p>Define more soft <a data-link-type=dfn href=#parse-errors title="parse errors">parse errors</a>.  The
 <a href=https://url.spec.whatwg.org/>URL living standard</a> has a start,
-but based on <a href=http://intertwingly.net/projects/pegurl/urltest-results/>test
-results</a>, there clearly needs to be more.</p>
+but there needs to be more.</p>
 </ul>
-<h2 class="heading settled" data-level=2 id=todos><span class=secno>2. </span><span class=content>Todos</span><a class=self-link href=#todos></a></h2>
+<h2 class="heading settled" data-level=2 id=todos><span class=secno>2. </span><span class=content>Todos / Differences</span><a class=self-link href=#todos></a></h2>
 
 <p>These are items that should be done before the proposed merge:</p>
 
@@ -99,6 +86,13 @@ spec-let is "produce the same output as the algorithm defined herein".</p>
 property getters and setters</a>.</p>
 <li data-md=""><p>Reconcile the <a data-section="" href=#host>§3.12 host</a> parsing rules with the Encoding Living Standard
 <a data-biblio-type=normative data-link-type=biblio href=#biblio-encoding title=encoding>[encoding]</a> and <a href=https://url.spec.whatwg.org/#idna>IDNA</a>.</p>
+</ul>
+<p>Known differences with current drafts of the WHATWG <a href=https://url.spec.whatwg.org/>URL Standard</a>:</p>
+
+<ul><li data-md=""><p>This draft treats URLs of the form <code>//C|/foo/bar</code> as a parse
+error, whereas current drafts of the URL standard do not.
+<a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
+agrees</a> that this should be a parse error.</p>
 </ul>
 <h2 class="heading settled" data-level=3 id=parsing-rules><span class=secno>3. </span><span class=content>Parsing Rules</span><a class=self-link href=#parsing-rules></a></h2>
 
@@ -165,7 +159,7 @@ relative-url</text></g><path d="M256.0 121a10 10 0 0 0 10 -10v-70a10 10 0 0 1 10
 <a href="<code>https://url.spec.whatwg.org/#concept-url</code>">URL</a>s,
 each returning a set of components, namely one or more of the following:
 <a href="<code>https://url.spec.whatwg.org/#concept-url-scheme</code>">scheme</a>,
-<a href="<code>https://url.spec.whatwg.org/#concept-url-scheme-data</code>">scheme_data</a>,
+<a href="<code>https://url.spec.whatwg.org/#concept-url-scheme-data</code>">scheme-data</a>,
 <a href="<code>https://url.spec.whatwg.org/#concept-url-username</code>">username</a>,
 <a href="<code>https://url.spec.whatwg.org/#concept-url-password</code>">password</a>,
 <a href="<code>https://url.spec.whatwg.org/#concept-url-host</code>">host</a>,
@@ -928,7 +922,7 @@ fragment</text></g><path d="M578.0 41h10">
 
 <p>Initialize <code>result</code> to be a JSON object with <code>scheme</code>
 set to be the result returned by <code class=grammar-rule>scheme</code>, and
-<code>scheme_data</code> set to the result returned by <code class=grammar-rule>data</code>.
+<code>schemeData</code> set to the result returned by <code class=grammar-rule>data</code>.
 If <code class=grammar-rule>query</code> is present in the input, set <code>result.query</code> to this value.
 If <code class=grammar-rule>fragment</code> is present in the input, set <code>result.fragment</code> to this value.
 Return <code>result.</code></p>
@@ -1502,7 +1496,7 @@ any of [0-9A-Fa-f]</text></g><path d="M816.0 41h20">
 </path><path d="M166.0 31h0.0">
 </path><rect height=22 width=116 x=50.0 y=20>
 </rect><text x=108.0 y=35>
-decimal_byte</text></g><path d="M166.0 31h10">
+decimal-byte</text></g><path d="M166.0 31h10">
 </path><path d="M176.0 31h10">
 </path><g>
 <path d="M186.0 31h0.0">
@@ -1516,7 +1510,7 @@ decimal_byte</text></g><path d="M166.0 31h10">
 </path><path d="M350.0 31h0.0">
 </path><rect height=22 width=116 x=234.0 y=20>
 </rect><text x=292.0 y=35>
-decimal_byte</text></g><path d="M350.0 31h10">
+decimal-byte</text></g><path d="M350.0 31h10">
 </path><path d="M360.0 31h10">
 </path><g>
 <path d="M370.0 31h0.0">
@@ -1530,7 +1524,7 @@ decimal_byte</text></g><path d="M350.0 31h10">
 </path><path d="M534.0 31h0.0">
 </path><rect height=22 width=116 x=418.0 y=20>
 </rect><text x=476.0 y=35>
-decimal_byte</text></g><path d="M534.0 31h10">
+decimal-byte</text></g><path d="M534.0 31h10">
 </path><path d="M544.0 31h10">
 </path><g>
 <path d="M554.0 31h0.0">
@@ -1544,13 +1538,13 @@ decimal_byte</text></g><path d="M534.0 31h10">
 </path><path d="M718.0 31h0.0">
 </path><rect height=22 width=116 x=602.0 y=20>
 </rect><text x=660.0 y=35>
-decimal_byte</text></g><path d="M718.0 31h10">
+decimal-byte</text></g><path d="M718.0 31h10">
 </path></g><path d="M 728 31 h 20 m -10 -10 v 20 m 10 -20 v 20">
 </path></g></svg></div>
 
 <p>Return four decimal bytes separated by full stop characters as a string.</p>
 
-<h3 class="heading settled" data-level=3.16 id=decimal_byte><span class=secno>3.16. </span><span class=content>decimal_byte</span><a class=self-link href=#decimal_byte></a></h3>
+<h3 class="heading settled" data-level=3.16 id=decimal-byte><span class=secno>3.16. </span><span class=content>decimal-byte</span><a class=self-link href=#decimal-byte></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=72 viewBox="0 0 529 72" width=529>
 <g transform="translate(.5 .5)">

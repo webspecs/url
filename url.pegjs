@@ -5,7 +5,7 @@
 
 {
   var base = options.base || {scheme: 'about'};
-  var encoding_override = options.encoding_override || 'utf-8';
+  var encodingOverride = options.encodingOverride || 'utf-8';
 
   /* This function accepts a variable number of arguments.  It copies the
      'exception' property from the first object which defines such to
@@ -24,17 +24,17 @@
   }
 
   /* exceptions which aren't (yet?) defined in the WHATWG spec */
-  function extension_exception(value) {
+  function extensionException(value) {
     this.value = value || '';
     this.length = this.value.length;
     this.extension = true;
   };
-  extension_exception.prototype = new String;
-  extension_exception.prototype.toString = 
-    extension_exception.prototype.valueOf = function() {return this.value}
+  extensionException.prototype = new String;
+  extensionException.prototype.toString = 
+    extensionException.prototype.valueOf = function() {return this.value}
 
   /* cleanse a url component given a encode set */
-  function cleanse(string, encode_set, component) {
+  function cleanse(string, encodeSet, component) {
     warn = null;
 
     for (var i=0; i<string.length; i++) {
@@ -57,7 +57,7 @@
        component
     }
 
-    if (encode_set) string = Url.percent_encode(string, encode_set);
+    if (encodeSet) string = Url.percentEncode(string, encodeSet);
 
     if (warn) {
       string = new String(string);
@@ -73,7 +73,7 @@
    <a href="https://url.spec.whatwg.org/#concept-url">URL</a>s,
    each returning a set of components, namely one or more of the following:
    <a href="https://url.spec.whatwg.org/#concept-url-scheme">scheme</a>,
-   <a href="https://url.spec.whatwg.org/#concept-url-scheme-data">scheme_data</a>,
+   <a href="https://url.spec.whatwg.org/#concept-url-scheme-data">scheme-data</a>,
    <a href="https://url.spec.whatwg.org/#concept-url-username">username</a>,
    <a href="https://url.spec.whatwg.org/#concept-url-password">password</a>,
    <a href="https://url.spec.whatwg.org/#concept-url-host">host</a>,
@@ -101,7 +101,7 @@ Url
   {
     result.scheme = base.scheme;
     result.host = base.host; 
-    result.path = Url.path_concat(base.path, result.path)
+    result.path = Url.pathConcat(base.path, result.path)
 
     return result
   }
@@ -370,7 +370,7 @@ AbsoluteUrl
 
     if (base.scheme == result.scheme) {
       result.host = base.host;
-      result.path = Url.path_concat(base.path, result.path)
+      result.path = Url.pathConcat(base.path, result.path)
     } else {
       while (result.path[0] == '') result.path.shift();
 
@@ -427,7 +427,7 @@ RelativeUrl
 
   Initialize $result to be a JSON object with $scheme
   set to be the result returned by @Scheme, and
-  $scheme_data set to the result returned by @Data.
+  $schemeData set to the result returned by @Data.
   If @Query is present in the input, set $result.query to this value.
   If @Fragment is present in the input, set $result.fragment to this value.
   Return $result.
@@ -438,6 +438,8 @@ NonRelativeUrl
     query:('?' Query)?
     fragment:('#' Fragment)?
   {
+    encodingOverride = 'utf-8';
+
     result = copy({scheme: scheme, scheme_data: data}, data, fragment && fragment[1]);
 
     if (query) {
@@ -465,8 +467,16 @@ RelativeScheme
   / "gopher"i
   / "https"i
   / "http"i
-  / "wss"i
-  / "ws"i
+  / rs:"wss"i
+{
+  encodingOverride = 'utf-8';
+  return rs
+}
+  / rs:"ws"i
+{
+  encodingOverride = 'utf-8';
+  return rs
+}
 
 /*
   Schemes consist of one or more the letters "a" through
@@ -616,7 +626,7 @@ Host
     }
 
     host = host.join('').toLowerCase();
-    if (/%/.test(host)) host = Url.utf8_percent_decode(host)
+    if (/%/.test(host)) host = Url.utf8PercentDecode(host)
 
     for (var i=0; i<host.length; i++) {
       var c = host.charAt(i);
@@ -645,7 +655,7 @@ Host
         // And the following only defines hard errors (e.g. step 5);
         //   https://url.spec.whatwg.org/#concept-host-parser
         // First implemented by galimatias 
-        warn = new extension_exception("DNS violation: Host contains empty label")
+        warn = new extensionException("DNS violation: Host contains empty label")
       }
     };
 
@@ -716,7 +726,7 @@ IPV6Addr
       ipv4 = addr[2]
     };
 
-    return Url.canonicalize_ipv6(pre, post, ipv4)
+    return Url.canonicalizeIpv6(pre, post, ipv4)
   }
 
 /*
@@ -732,7 +742,7 @@ H16
   Return four decimal bytes separated by full stop characters as a string.
 */
 LS32
-  = a:DECIMAL_BYTE '.' b:DECIMAL_BYTE '.' d:DECIMAL_BYTE '.' d:DECIMAL_BYTE
+  = a:DecimalByte '.' b:DecimalByte '.' d:DecimalByte '.' d:DecimalByte
   {
     return a.join('') + '.' + b.join('') + '.' + c.join('') + '.' + d.join('')
   }
@@ -742,7 +752,7 @@ LS32
   converted to an integer are greater than 255, terminate processing with
   a <a>parse error</a>.
 */
-DECIMAL_BYTE
+DecimalByte
   = a:[0-2]? b:[0-9]? c:[0-9]
   {
     return (a ? a : '') + (b ? b : '') + c

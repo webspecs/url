@@ -19,6 +19,7 @@
 #!/usr/bin/ruby
 require 'ruby2js'
 require 'ruby2js/filter/functions'
+require 'ruby2js/filter/camelCase'
 
 source = File.read(ARGV.first)
 
