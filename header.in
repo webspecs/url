@@ -50,12 +50,22 @@ Goals {#goals}
       * All canonicalized output are valid URIs (and, if necessary, submit
         errata and/or identify specific
         <a href="https://html.spec.whatwg.org/multipage/introduction.html#compliance-with-other-specifications">willful
-        violations</a>).  An example of an item needing to be worked:
+        violations</a>).  Examples of an items needing to be worked:
           * <code>http://example.com/?%</code> is not a valid URL or a valid
               URI, yet it round-trips the URL parsing/serialization
               transformation.  Are any changes needed to RFC 3986 to
               accommodate this?
               [<a href="http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Nov/0005.html">source</a>]
+          * Parsing <code>../test</code> against a base of
+            <code>foobar://test/x</code> as a URL results in different
+            results with different user agents and different standards.
+              [<a href="http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Nov/0019.html">source</a>]
+          * Other differences may be found in the
+            <a href=http://intertwingly.net/projects/pegurl/urltest-results/>interop
+            test results</a> or using the
+            <a href="http://intertwingly.net/projects/pegurl/liveview2.html">Live
+            DOM URL Viewer</a>.
+
   * Incorporate the substance of the
     <a href="http://www.w3.org/TR/html5/references.html#refsURL">informative
     note</a> that precedes the [URL] normative reference in the
