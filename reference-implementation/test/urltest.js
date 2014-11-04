@@ -20,8 +20,9 @@ var properties = [
   "hash"
 ];
 
-var data = URLTestParser(fs.
-  readFileSync("reference-implementation/test/urltestdata.txt", "utf8"));
+var data = URLTestParser(
+  fs.readFileSync("reference-implementation/test/urltestdata.txt", "utf8") +
+  fs.readFileSync("reference-implementation/test/moretestdata.txt", "utf8"));
 
 for (var i = 0; i < data.length; i++) {
   var test = data[i];

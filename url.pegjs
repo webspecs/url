@@ -82,9 +82,11 @@
    <a href="https://url.spec.whatwg.org/#concept-url-query">query</a>, and
    <a href="https://url.spec.whatwg.org/#concept-url-fragment">fragment</a>.
 
-   In the case of a @RelativeUrl, the $result object to be returned is
-   initialized to the value returned by @RelativeUrl, and then modify it as
-   follows before being returned:
+   In the case of a @RelativeUrl, terminate parsing with a <a>parse error</a>
+   if $base.scheme is not a
+   <a href="https://url.spec.whatwg.org/#relative-scheme">relative scheme</a>.
+   Otherwise initialize a $result to the value returned by @RelativeUrl, and
+   then modify it as follows before returning the result:
      * Set $result.scheme to $base.scheme.
      * Set $result.host to $base.host.
      * Replace $result.path by the <a>path concatenation</a> of $base.path and
@@ -99,6 +101,10 @@ Url
   / NonRelativeUrl
   / result:RelativeUrl
   {
+    if (Url.RELATIVE_SCHEME.indexOf(base.scheme) == -1) {
+      error("relative URL provided with a non-relative base")
+    };
+
     result.scheme = base.scheme;
     result.host = base.host; 
     result.path = Url.pathConcat(base.path, result.path)

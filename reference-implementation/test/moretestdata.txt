@@ -1,0 +1,4 @@
+# FORMAT NOT DOCUMENTED YET (parser is urltestparser.js)
+
+# Based on http://trac.webkit.org/browser/trunk/LayoutTests/fast/url/script-tests/segments.js
+x test:test
