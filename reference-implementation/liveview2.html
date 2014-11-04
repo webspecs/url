@@ -163,8 +163,7 @@
       var fragment = location.hash.substring(1);
       var space = fragment.indexOf(' ');
       if (space == -1) {
-        if (base.value == '') base.value = document.baseURI;
-        input.value = fragment.substr(0, space);
+        base.value = fragment;
       } else {
         base.value = fragment.substr(0, space);
         input.value = fragment.substr(space+1);
