@@ -1,3 +1,11 @@
+# corrections to urltestdata.txt
+
+##########################################################
+# Define IPv4 parsing
+# https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431
+
+http://192.0x00A80001  s:http h:192.168.0.1 p:/
+http://192.168.0.257
 
 ##########################################################
 # Incorrect test results

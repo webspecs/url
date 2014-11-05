@@ -243,8 +243,9 @@ FileLikeRelativeScheme
    <li>If anything other than two forward solidus characters ("//") immediately
      follows the first colon in the input, indicate a <a>parse error</a>.
 
-     Set $result to the object returned by
-     @RelativeUrl, and then modify it as follows:
+     Set $result to the object returned by @RelativeUrl if present in the
+     input otherwise initialize $result to be an empty object.  Modify $result
+     as follows:
 
      * If @RelativeScheme is present in the input, then
        set $result.scheme to this value, lowercased.
@@ -323,9 +324,9 @@ AbsoluteUrl
     userinfo:UserInfo?
     host:Host 
     port:(':' Port)?
-    [/\\] ?
-    remainder:RelativeUrl
+    remainder:([/\\] RelativeUrl)?
   {
+    remainder = (remainder ? remainder[1] : {});
     result = copy(remainder, userinfo, host, port && port[1]);
 
     if (scheme) {
@@ -616,6 +617,8 @@ Host
     return '[' + addr + ']'
   }
 
+  / addr:IPV4Addr
+
   / host:[^:/\\?#]*
   {
     var warn = null;
@@ -734,6 +737,84 @@ IPV6Addr
 
     return Url.canonicalizeIpv6(pre, post, ipv4)
   }
+
+/*
+  If any but the first @Number is greater or equal to 256, terminate processing
+  with a <a>parse error</a>.
+
+  If the last @Number is greater than or equal to 256 to the power of (5 minus
+  the number of @Number's present in the input), terminate processing with a
+  <a>parse error</a>.
+
+  Initialize $n to the last @Number.
+
+  If the first @Number is present, add it's value times 256**3 to $n.
+
+  If the second @Number is present, add it's value times 256**2 to $n.
+
+  If the third @Number is present, add it's value times 256 to $n.
+
+  Initialize $result to an empty array.
+
+  Four times do the following:
+    * Prepend the value of $n modulo 256 to $result.
+    * Set $n to the value of the integer quotient of $n divided by 256.
+
+  Join the values in $result with a Full Stop (U+002E) character, and
+  return the results as a string.
+*/
+IPV4Addr
+  = addr:((Number '.' (Number '.' (Number '.')?)?)? Number)
+{
+  var n = addr[1]
+
+  if (addr[0]) {
+    if (addr[0][0] >= 256) error('IPV4 address component out of range');
+    n += addr[0][0]*256*256*256;
+    if (addr[0][2]) {
+      if (addr[0][2][0] >= 256) error('IPV4 address component out of range');
+      n += addr[0][2][0]*256*256;
+      if (addr[0][2][2]) {
+        if (addr[0][2][2][0] >= 256) error('IPV4 address component out of range');
+        n += addr[0][2][2][0]*256;
+        if (addr[1] >= 256) error('IPV4 address component out of range');
+      } else {
+        if (addr[1] >= 256*256) error('IPV4 address component out of range');
+      }
+    } else {
+      if (addr[1] >= 256*256*256) error('IPV4 address component out of range');
+    }
+  } else {
+    if (addr[1] >= 256*256*256*256) error('IPV4 address component out of range');
+  }
+
+  addr = []
+  for (var i=0; i<4; i++) {
+    addr.unshift(n % 256); n = Math.floor(n/256)
+  };
+  return addr.join('.')
+}
+
+/*
+   Three production rules are defined for numbers.  Parse the values as
+   hexadecimal, octal, and decimal integers respectively.  Return the
+   result as an integer.
+*/
+Number
+  = '0' 'x' digits:([0-9a-fA-F])+
+{
+  return parseInt(digits.join(''), 16)
+}
+
+ / '0' digits:([0-7])+
+{
+  return parseInt(digits.join(''), 8)
+}
+
+ / digits:([0-9])+
+{
+  return parseInt(digits.join(''))
+}
 
 /*
   Return up to four hexadecimal characters as a string.

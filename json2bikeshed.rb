@@ -53,10 +53,10 @@ grammar = File.read('url.pegjs')
 
 prose = Hash[grammar.scan(/^\/\*\n?(.*?)\*\/\s*(\w+)/m).map { |text, name|
   indent = text.split("\n").map {|line| line[/^ */]}.reject(&:empty?).min
-  text.gsub!(/@([A-Z][-\w]+)/) do
+  text.gsub!(/@([A-Z][-\w]+)'?/) do
     "<code class=grammar-rule>#{hyphenate $1}</code>"
   end
-  text.gsub!(/\$([a-z][.\w]+)/) do
+  text.gsub!(/\$([a-z](\.\w|\w)*)/) do
     "<code>#{$1}</code>"
   end
   text.gsub!(/"( |\S+)"/) do
@@ -67,6 +67,9 @@ prose = Hash[grammar.scan(/^\/\*\n?(.*?)\*\/\s*(\w+)/m).map { |text, name|
   end
   text.gsub!(/(0x[0-9a-fA-F]{2}+)/) do
     "<code>#{$1.upcase.sub('0X', '0x')}</code>"
+  end
+  text.gsub!(/\b(\d+)\b/) do
+    "<code>#{$1}</code>"
   end
   text.gsub!(/`(.*?)`/) do
     "<code>#{$1.gsub(/<\/?code>/, '')}</code>"
