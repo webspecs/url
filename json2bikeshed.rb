@@ -54,7 +54,7 @@ grammar = File.read('url.pegjs')
 prose = Hash[grammar.scan(/^\/\*\n?(.*?)\*\/\s*(\w+)/m).map { |text, name|
   indent = text.split("\n").map {|line| line[/^ */]}.reject(&:empty?).min
   text.gsub!(/@([A-Z][-\w]+)'?/) do
-    "<code class=grammar-rule>#{hyphenate $1}</code>"
+    "<code class=grammar-rule><a href=##{hyphenate $1}>#{hyphenate $1}</a></code>"
   end
   text.gsub!(/\$([a-z](\.\w|\w)*)/) do
     "<code>#{$1}</code>"

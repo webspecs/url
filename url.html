@@ -4,7 +4,7 @@
   <link href=https://resources.whatwg.org/logo-url.svg rel=icon>
 <script async src=//resources.whatwg.org/file-bug.js></script>
   <style>
-  .grammar-rule {
+  .grammar-rule a {
     color: black;
     background-color: hsl(120, 100%, 90%);
     font-weight: bold;
@@ -185,10 +185,10 @@ each returning a set of components, namely one or more of the following:
 <a href="<code>https://url.spec.whatwg.org/#concept-url-query</code>">query</a>, and
 <a href="<code>https://url.spec.whatwg.org/#concept-url-fragment</code>">fragment</a>.</p>
 
-<p>In the case of a <code class=grammar-rule>relative-url</code>, terminate parsing with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>
+<p>In the case of a <code class=grammar-rule><a href=#relative-url>relative-url</a></code>, terminate parsing with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>
 if <code>base.scheme</code> is not a
 <a href="<code>https://url.spec.whatwg.org/#relative-scheme</code>">relative scheme</a>.
-Otherwise initialize a <code>result</code> to the value returned by <code class=grammar-rule>relative-url</code>, and
+Otherwise initialize a <code>result</code> to the value returned by <code class=grammar-rule><a href=#relative-url>relative-url</a></code>, and
 then modify it as follows before returning the result:</p>
 <ul><li data-md=""><p>Set <code>result.scheme</code> to <code>base.scheme</code>.</p>
 <li data-md=""><p>Set <code>result.host</code> to <code>base.host</code>.</p>
@@ -454,10 +454,10 @@ relative-url</text></g><path d="M800.0 160h10">
 
  <ol>
  <li>Set <code>result</code> to the object returned by
- <code class=grammar-rule>relative-url</code>, and then modify it as follows:
+ <code class=grammar-rule><a href=#relative-url>relative-url</a></code>, and then modify it as follows:
 
 <ul><li data-md=""><p>Set <code>result.scheme</code> to the value returned by
- <code class=grammar-rule>file-like-relative-scheme</code>.</p>
+ <code class=grammar-rule><a href=#file-like-relative-scheme>file-like-relative-scheme</a></code>.</p>
 <li data-md=""><p>Remove the first element from <code>result.path</code> if it is an empty
  string and if there is a second element which has a non-empty value.</p>
 <li data-md=""><p>Construct a string using the alphabetic
@@ -468,7 +468,7 @@ relative-url</text></g><path d="M800.0 160h10">
  <li>Indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.
 
 <p>Set <code>result</code> to the object returned by
- <code class=grammar-rule>relative-url</code>, and then modify it as follows:</p>
+ <code class=grammar-rule><a href=#relative-url>relative-url</a></code>, and then modify it as follows:</p>
 
 <ul><li data-md=""><p>Set <code>result.scheme</code> to "<code>file</code>".</p>
 <li data-md=""><p>Remove the first element from <code>result.path</code> if it is an empty
@@ -479,23 +479,23 @@ relative-url</text></g><path d="M800.0 160h10">
 </ul>
  <li><em>This rule is only to be evaluated if the value of
  <code>base.scheme</code> is "<code>file</code>"</em>.  Set <code>result</code> to the object returned by
- <code class=grammar-rule>relative-url</code>, and then modify it as follows:
+ <code class=grammar-rule><a href=#relative-url>relative-url</a></code>, and then modify it as follows:
 
 <ul><li data-md=""><p>Set <code>result.scheme</code> to "<code>file</code>".</p>
 <li data-md=""><p>Set <code>result.host</code> to the value returned by the
- <code class=grammar-rule>host</code> production rule.</p>
+ <code class=grammar-rule><a href=#host>host</a></code> production rule.</p>
 <li data-md=""><p>Remove the first element of the path if it is an empty string and
  there is a second element which has a non-empty value.</p>
 </ul>
  <li>Set <code>result</code> to the object returned by
- <code class=grammar-rule>relative-url</code>, and then modify it as follows:
+ <code class=grammar-rule><a href=#relative-url>relative-url</a></code>, and then modify it as follows:
 
 <ul><li data-md=""><p>Set <code>result.scheme</code> to the value returned by
- <code class=grammar-rule>file-like-relative-scheme</code></p>
-<li data-md=""><p>If the <code class=grammar-rule>host</code> is present in the input, set <code>result.host</code>
- to the value returned by the <code class=grammar-rule>host</code> production rule</p>
-<li data-md=""><p>If the <code class=grammar-rule>host</code> is not present and no slashes precede the
- <code class=grammar-rule>relative-url</code> in the input, then the <code>base.path</code>
+ <code class=grammar-rule><a href=#file-like-relative-scheme>file-like-relative-scheme</a></code></p>
+<li data-md=""><p>If the <code class=grammar-rule><a href=#host>host</a></code> is present in the input, set <code>result.host</code>
+ to the value returned by the <code class=grammar-rule><a href=#host>host</a></code> production rule</p>
+<li data-md=""><p>If the <code class=grammar-rule><a href=#host>host</a></code> is not present and no slashes precede the
+ <code class=grammar-rule><a href=#relative-url>relative-url</a></code> in the input, then the <code>base.path</code>
  minus the last element is prepended to the <code>result.path</code>.</p>
 </ul>
  </ol>
@@ -700,54 +700,54 @@ bottom.</p>
 <li>If anything other than two forward solidus characters ("<code>//</code>") immediately
   follows the first colon in the input, indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.
 
-<p>Set <code>result</code> to the object returned by <code class=grammar-rule>relative-url</code> if present in the
+<p>Set <code>result</code> to the object returned by <code class=grammar-rule><a href=#relative-url>relative-url</a></code> if present in the
   input otherwise initialize <code>result</code> to be an empty object.  Modify <code>result</code>
   as follows:</p>
 
-<ul><li data-md=""><p>If <code class=grammar-rule>relative-scheme</code> is present in the input, then
+<ul><li data-md=""><p>If <code class=grammar-rule><a href=#relative-scheme>relative-scheme</a></code> is present in the input, then
 set <code>result.scheme</code> to this value, lowercased.</p>
-<li data-md=""><p>If <code class=grammar-rule>relative-scheme</code> is not present in the input, then
+<li data-md=""><p>If <code class=grammar-rule><a href=#relative-scheme>relative-scheme</a></code> is not present in the input, then
 set <code>result.scheme</code> to the value of <code>base.scheme</code>.</p>
 <li data-md=""><p>Set <code>result.host</code> to the value returned by
-<code class=grammar-rule>host</code> up to the first "<code>@</code>" sign, if any.  If no
+<code class=grammar-rule><a href=#host>host</a></code> up to the first "<code>@</code>" sign, if any.  If no
 "<code>@</code>" signs are present in the return value from the
-<code class=grammar-rule>host</code> production, then set <code>result.host</code> to the
+<code class=grammar-rule><a href=#host>host</a></code> production, then set <code>result.host</code> to the
 entire value.</p>
 <li data-md=""><p>If one or more "<code>@</code>" signs are present in the value returned
-by the <code class=grammar-rule>host</code> production, then perform the following steps:</p>
+by the <code class=grammar-rule><a href=#host>host</a></code> production, then perform the following steps:</p>
 <ul><li data-md=""><p>Indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
-<li data-md=""><p>If the <code class=grammar-rule>user-info</code> is not present in the input, then substitute
+<li data-md=""><p>If the <code class=grammar-rule><a href=#user-info>user-info</a></code> is not present in the input, then substitute
 <code>{"username": ""}</code> for the return value of
-<code class=grammar-rule>user-info</code> in the remainder of this step.</p>
-<li data-md=""><p>If <code>password</code> is present in the value for <code class=grammar-rule>user-info</code>,
+<code class=grammar-rule><a href=#user-info>user-info</a></code> in the remainder of this step.</p>
+<li data-md=""><p>If <code>password</code> is present in the value for <code class=grammar-rule><a href=#user-info>user-info</a></code>,
 replace it with "<code>%<code>40</code></code>" repeated as many times as there are
-"<code>@</code>" signs in the value returned by <code class=grammar-rule>host</code>,
-concatenated with the value returned by <code class=grammar-rule>host</code> with
+"<code>@</code>" signs in the value returned by <code class=grammar-rule><a href=#host>host</a></code>,
+concatenated with the value returned by <code class=grammar-rule><a href=#host>host</a></code> with
 all of the "<code>@</code>" signs removed.</p>
-<li data-md=""><p>If <code>password</code> is not present in the <code class=grammar-rule>user-info</code>,
-replace the <code>user</code> in the <code class=grammar-rule>user-info</code> with
+<li data-md=""><p>If <code>password</code> is not present in the <code class=grammar-rule><a href=#user-info>user-info</a></code>,
+replace the <code>user</code> in the <code class=grammar-rule><a href=#user-info>user-info</a></code> with
 "<code>%<code>40</code></code>" repeated as many times as there are "<code>@</code>"
-signs in the value returned by <code class=grammar-rule>host</code>, concatenated with
-the value returned by <code class=grammar-rule>host</code> with all of the
+signs in the value returned by <code class=grammar-rule><a href=#host>host</a></code>, concatenated with
+the value returned by <code class=grammar-rule><a href=#host>host</a></code> with all of the
 "<code>@</code>" signs removed.</p>
-</ul><li data-md=""><p>If <code class=grammar-rule>user-info</code> is present (or computed per above), then
+</ul><li data-md=""><p>If <code class=grammar-rule><a href=#user-info>user-info</a></code> is present (or computed per above), then
 perform the following steps:</p>
 <ul><li data-md=""><p>If <code>result.Host</code> is an empty string, then terminate parsing
 with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
-<li data-md=""><p>Set <code>result.username</code> to the <code>username</code> value in the <code class=grammar-rule>user-info</code>.</p>
-<li data-md=""><p>If <code>password</code> is non-null in the <code class=grammar-rule>user-info</code>, set
+<li data-md=""><p>Set <code>result.username</code> to the <code>username</code> value in the <code class=grammar-rule><a href=#user-info>user-info</a></code>.</p>
+<li data-md=""><p>If <code>password</code> is non-null in the <code class=grammar-rule><a href=#user-info>user-info</a></code>, set
 <code>result.password</code> to this value.</p>
-</ul><li data-md=""><p>If the <code class=grammar-rule>port</code> is present and not equal to the
+</ul><li data-md=""><p>If the <code class=grammar-rule><a href=#port>port</a></code> is present and not equal to the
 <a href="<code>https://url.spec.whatwg.org/#default-port</code>">default port</a>
 that corresponds to the <code>response.scheme</code>, then set 
 <code>result.port</code> to this value.</p>
 </ul>
 <li>Indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.
 
-<p>Initialize <code>result</code> to be the value returned by <code class=grammar-rule>relative-url</code>, and then
+<p>Initialize <code>result</code> to be the value returned by <code class=grammar-rule><a href=#relative-url>relative-url</a></code>, and then
  modify it as follows:</p>
 
-<ul><li data-md=""><p>Set <code>result.scheme</code> to value returned by <code class=grammar-rule>relative-scheme</code>, lowercased</p>
+<ul><li data-md=""><p>Set <code>result.scheme</code> to value returned by <code class=grammar-rule><a href=#relative-scheme>relative-scheme</a></code>, lowercased</p>
 <li data-md=""><p>If <code>result.scheme</code> is equal to <code>base.scheme</code>, then perform the
 following steps:</p>
 <ul><li data-md=""><p>Set <code>result.host</code> to <code>base.host</code></p>
@@ -763,7 +763,7 @@ value, and remove this element from <code>result.path</code>.</p>
 sign, then remove this element from the path and 
 perform the following steps with this value:</p>
 <ul><li data-md=""><p>The part of this value that precedes the first "<code>@</code>"
-is to be treated as an <code class=grammar-rule>user-info</code> value.  If it
+is to be treated as an <code class=grammar-rule><a href=#user-info>user-info</a></code> value.  If it
 contains a "<code>:</code>", set <code>result.username</code> to the value
 up to the position of the first "<code>:</code>" and set
 <code>result.password</code> to the value starting with the position
@@ -854,9 +854,9 @@ fragment</text></g><path d="M462.0 41h10">
 </path></g></svg></div>
 
 <p>Initialize <code>result</code> to be empty object.
-If <code class=grammar-rule>path</code> is present in the input, set <code>result.path</code> to this value.
-If <code class=grammar-rule>query</code> is present in the input, set <code>result.query</code> to this value.
-If <code class=grammar-rule>fragment</code> is present in the input, set <code>result.fragment</code> to this value.
+If <code class=grammar-rule><a href=#path>path</a></code> is present in the input, set <code>result.path</code> to this value.
+If <code class=grammar-rule><a href=#query>query</a></code> is present in the input, set <code>result.query</code> to this value.
+If <code class=grammar-rule><a href=#fragment>fragment</a></code> is present in the input, set <code>result.fragment</code> to this value.
 Return <code>result</code>.</p>
 
 <h3 class="heading settled" data-level=3.6 id=non-relative-url><span class=secno>3.6. </span><span class=content>non-relative-url</span><a class=self-link href=#non-relative-url></a></h3>
@@ -946,10 +946,10 @@ fragment</text></g><path d="M578.0 41h10">
 <p>Set <code>encoding override</code> to "<code>utf-<code>8</code></code>".</p>
 
 <p>Initialize <code>result</code> to be a JSON object with <code>scheme</code>
-set to be the result returned by <code class=grammar-rule>scheme</code>, and
-<code>schemeData</code> set to the result returned by <code class=grammar-rule>data</code>.
-If <code class=grammar-rule>query</code> is present in the input, set <code>result.query</code> to this value.
-If <code class=grammar-rule>fragment</code> is present in the input, set <code>result.fragment</code> to this value.
+set to be the result returned by <code class=grammar-rule><a href=#scheme>scheme</a></code>, and
+<code>schemeData</code> set to the result returned by <code class=grammar-rule><a href=#data>data</a></code>.
+If <code class=grammar-rule><a href=#query>query</a></code> is present in the input, set <code>result.query</code> to this value.
+If <code class=grammar-rule><a href=#fragment>fragment</a></code> is present in the input, set <code>result.fragment</code> to this value.
 Return <code>result</code>.</p>
 
 <h3 class="heading settled" data-level=3.7 id=relative-scheme><span class=secno>3.7. </span><span class=content>relative-scheme</span><a class=self-link href=#relative-scheme></a></h3>
@@ -1095,8 +1095,8 @@ password</text></g><path d="M274.0 41h10">
 </path></g></svg></div>
 
 <p>Initialize <code>result</code> to be a JSON object with <code>user</code>
-set to be the result returned by <code class=grammar-rule>user</code>.  If
-<code class=grammar-rule>password</code> is present in the input, set <code>result.password</code>
+set to be the result returned by <code class=grammar-rule><a href=#user>user</a></code>.  If
+<code class=grammar-rule><a href=#password>password</a></code> is present in the input, set <code>result.password</code>
 to this value.  Return <code>result</code>.</p>
 
 <h3 class="heading settled" data-level=3.10 id=user><span class=secno>3.10. </span><span class=content>user</span><a class=self-link href=#user></a></h3>
@@ -1253,8 +1253,8 @@ any except [:/\\?#]</text></g><path d="M262.0 91h10">
 </path></g><path d="M 312 31 h 20 m -10 -10 v 20 m 10 -20 v 20">
 </path></g></svg></div>
 
-<p>If the input contains an <code class=grammar-rule>ipv6addr</code>, return "<code>[</code>" plus
-the result returned by <code class=grammar-rule>ipv6addr</code> plus "<code>]</code>"  Otherwise:</p>
+<p>If the input contains an <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code>, return "<code>[</code>" plus
+the result returned by <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code> plus "<code>]</code>"  Otherwise:</p>
 
 <ul><li data-md=""><p>If the string starts with a left square bracket (<code>U+005B</code>),
 terminate parsing with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
@@ -1426,26 +1426,26 @@ ls32</text></g><path d="M544.0 81a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10">
 </path></g></g><path d="M 564 51 h 20 m -10 -10 v 20 m 10 -20 v 20">
 </path></g></svg></div>
 
-<p>Let <code>pre</code>, <code>post</code>, and <code>last</code> be the <code class=grammar-rule>h16</code> values before the double colon if
-present,  the remaining <code class=grammar-rule>h16</code> before the last value, and the trailing
-<code class=grammar-rule>h16</code> or <code class=grammar-rule>ls32</code> value, respectively.</p>
+<p>Let <code>pre</code>, <code>post</code>, and <code>last</code> be the <code class=grammar-rule><a href=#h16>h16</a></code> values before the double colon if
+present,  the remaining <code class=grammar-rule><a href=#h16>h16</a></code> before the last value, and the trailing
+<code class=grammar-rule><a href=#h16>h16</a></code> or <code class=grammar-rule><a href=#ls32>ls32</a></code> value, respectively.</p>
 
 <p>Perform the following validation checks:</p>
 <ul><li data-md=""><p>If there are no consecutive colon characters in the input string, indicate
 a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a> and terminate processing unless there are exactly
-six <code class=grammar-rule>h16</code> values and one <code class=grammar-rule>ls32</code> value.</p>
+six <code class=grammar-rule><a href=#h16>h16</a></code> values and one <code class=grammar-rule><a href=#ls32>ls32</a></code> value.</p>
 <li data-md=""><p>If there are consecutive colon characters present in the input, indicate a
 <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a> and terminate processing if the total number of values
-(<code class=grammar-rule>h16</code> or <code class=grammar-rule>ls32</code>) is more than six.</p>
-<li data-md=""><p>Unless there is a <code class=grammar-rule>ls32</code> value present, indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a> and
+(<code class=grammar-rule><a href=#h16>h16</a></code> or <code class=grammar-rule><a href=#ls32>ls32</a></code>) is more than six.</p>
+<li data-md=""><p>Unless there is a <code class=grammar-rule><a href=#ls32>ls32</a></code> value present, indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a> and
 terminate processing if consecutive colon characters are present in the
-input or if there are more than one <code class=grammar-rule>ls32</code> value after the consecutive
+input or if there are more than one <code class=grammar-rule><a href=#ls32>ls32</a></code> value after the consecutive
 colons.</p>
 </ul>
 <p>Perform the following steps:</p>
 <ul><li data-md=""><p>Append "<code><code>0</code></code>" values to <code>pre</code> while the sum of the lengths of the <code>pre</code> and
 <code>post</code> arrays is less than six.</p>
-<li data-md=""><p>Append a "<code><code>0</code></code>" value to <code>pre</code> if no <code class=grammar-rule>ls32</code> item is present in the input and
+<li data-md=""><p>Append a "<code><code>0</code></code>" value to <code>pre</code> if no <code class=grammar-rule><a href=#ls32>ls32</a></code> item is present in the input and
 the sum of the lengths of the <code>pre</code> and <code>post</code> array is seven.</p>
 <li data-md=""><p>Append <code>last</code> to <code>pre</code>.</p>
 </ul>
@@ -1548,20 +1548,20 @@ number</text></g><path d="M646.0 61h10">
 </path></g><path d="M 656 61 h 20 m -10 -10 v 20 m 10 -20 v 20">
 </path></g></svg></div>
 
-<p>If any but the first <code class=grammar-rule>number</code> is greater or equal to <code>256</code>, terminate processing
+<p>If any but the first <code class=grammar-rule><a href=#number>number</a></code> is greater or equal to <code>256</code>, terminate processing
 with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
 
-<p>If the last <code class=grammar-rule>number</code> is greater than or equal to <code>256</code> to the power of (<code>5</code> minus
-the number of <code class=grammar-rule>number</code>s present in the input), terminate processing with a
+<p>If the last <code class=grammar-rule><a href=#number>number</a></code> is greater than or equal to <code>256</code> to the power of (<code>5</code> minus
+the number of <code class=grammar-rule><a href=#number>number</a></code>s present in the input), terminate processing with a
 <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
 
-<p>Initialize <code>n</code> to the last <code class=grammar-rule>number</code>.</p>
+<p>Initialize <code>n</code> to the last <code class=grammar-rule><a href=#number>number</a></code>.</p>
 
-<p>If the first <code class=grammar-rule>number</code> is present, add it’s value times <code>256</code>**<code>3</code> to <code>n</code>.</p>
+<p>If the first <code class=grammar-rule><a href=#number>number</a></code> is present, add it’s value times <code>256</code>**<code>3</code> to <code>n</code>.</p>
 
-<p>If the second <code class=grammar-rule>number</code> is present, add it’s value times <code>256</code>**<code>2</code> to <code>n</code>.</p>
+<p>If the second <code class=grammar-rule><a href=#number>number</a></code> is present, add it’s value times <code>256</code>**<code>2</code> to <code>n</code>.</p>
 
-<p>If the third <code class=grammar-rule>number</code> is present, add it’s value times <code>256</code> to <code>n</code>.</p>
+<p>If the third <code class=grammar-rule><a href=#number>number</a></code> is present, add it’s value times <code>256</code> to <code>n</code>.</p>
 
 <p>Initialize <code>result</code> to an empty array.</p>
 

@@ -1,5 +1,5 @@
 <style>
-  .grammar-rule {
+  .grammar-rule a {
     color: black;
     background-color: hsl(120, 100%, 90%);
     font-weight: bold;
