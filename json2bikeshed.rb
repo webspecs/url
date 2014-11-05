@@ -74,6 +74,9 @@ prose = Hash[grammar.scan(/^\/\*\n?(.*?)\*\/\s*(\w+)/m).map { |text, name|
   text.gsub!(/`(.*?)`/) do
     "<code>#{$1.gsub(/<\/?code>/, '')}</code>"
   end
+  text.gsub!(/href="(.*?)"/) do
+    "href=\"#{$1.gsub(/<\/?code>/, '')}\""
+  end
   [name, text.gsub(/^#{indent}/, '')]
 }]
 

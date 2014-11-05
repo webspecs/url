@@ -173,21 +173,21 @@ relative-url</text></g><path d="M256.0 121a10 10 0 0 0 10 -10v-70a10 10 0 0 1 10
 </path></g></svg></div>
 
 <p>There are four unique syntaxes for
-<a href="<code>https://url.spec.whatwg.org/#concept-url</code>">URL</a>s,
+<a href=https://url.spec.whatwg.org/#concept-url>URL</a>s,
 each returning a set of components, namely one or more of the following:
-<a href="<code>https://url.spec.whatwg.org/#concept-url-scheme</code>">scheme</a>,
-<a href="<code>https://url.spec.whatwg.org/#concept-url-scheme-data</code>">scheme-data</a>,
-<a href="<code>https://url.spec.whatwg.org/#concept-url-username</code>">username</a>,
-<a href="<code>https://url.spec.whatwg.org/#concept-url-password</code>">password</a>,
-<a href="<code>https://url.spec.whatwg.org/#concept-url-host</code>">host</a>,
-<a href="<code>https://url.spec.whatwg.org/#concept-url-port</code>">port</a>,
-<a href="<code>https://url.spec.whatwg.org/#concept-url-path</code>">path</a>,
-<a href="<code>https://url.spec.whatwg.org/#concept-url-query</code>">query</a>, and
-<a href="<code>https://url.spec.whatwg.org/#concept-url-fragment</code>">fragment</a>.</p>
+<a href=https://url.spec.whatwg.org/#concept-url-scheme>scheme</a>,
+<a href=https://url.spec.whatwg.org/#concept-url-scheme-data>scheme-data</a>,
+<a href=https://url.spec.whatwg.org/#concept-url-username>username</a>,
+<a href=https://url.spec.whatwg.org/#concept-url-password>password</a>,
+<a href=https://url.spec.whatwg.org/#concept-url-host>host</a>,
+<a href=https://url.spec.whatwg.org/#concept-url-port>port</a>,
+<a href=https://url.spec.whatwg.org/#concept-url-path>path</a>,
+<a href=https://url.spec.whatwg.org/#concept-url-query>query</a>, and
+<a href=https://url.spec.whatwg.org/#concept-url-fragment>fragment</a>.</p>
 
 <p>In the case of a <code class=grammar-rule><a href=#relative-url>relative-url</a></code>, terminate parsing with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>
 if <code>base.scheme</code> is not a
-<a href="<code>https://url.spec.whatwg.org/#relative-scheme</code>">relative scheme</a>.
+<a href=https://url.spec.whatwg.org/#relative-scheme>relative scheme</a>.
 Otherwise initialize a <code>result</code> to the value returned by <code class=grammar-rule><a href=#relative-url>relative-url</a></code>, and
 then modify it as follows before returning the result:</p>
 <ul><li data-md=""><p>Set <code>result.scheme</code> to <code>base.scheme</code>.</p>
@@ -199,7 +199,7 @@ then modify it as follows before returning the result:</p>
 unmodified.</p>
 
 <p class=note>Note: the resolution of
-<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>27233</code></code>">bug <code>27233</code></a>
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27233">bug <code>27233</code></a>
 may add support for relative URLs for unknown schemes.</p>
 
 <h3 class="heading settled" data-level=3.2 id=file-like-relative-url><span class=secno>3.2. </span><span class=content>file-like-relative-url</span><a class=self-link href=#file-like-relative-url></a></h3>
@@ -512,7 +512,7 @@ Furthermore, the parsing rules in this section have not enjoyed wide review,
 and therefore are more likely to be subject to change than other parts of this
 specification.  People with input on this matter are encourage to add
 comments to
-<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>27233</code></code>">bug <code>27233</code></a>.</p>
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27233">bug <code>27233</code></a>.</p>
 
 <h3 class="heading settled" data-level=3.3 id=file-like-relative-scheme><span class=secno>3.3. </span><span class=content>file-like-relative-scheme</span><a class=self-link href=#file-like-relative-scheme></a></h3>
 
@@ -744,7 +744,7 @@ with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error<
 <li data-md=""><p>If <code>password</code> is non-null in the <code class=grammar-rule><a href=#user-info>user-info</a></code>, set
 <code>result.password</code> to this value.</p>
 </ul><li data-md=""><p>If the <code class=grammar-rule><a href=#port>port</a></code> is present and not equal to the
-<a href="<code>https://url.spec.whatwg.org/#default-port</code>">default port</a>
+<a href=https://url.spec.whatwg.org/#default-port>default port</a>
 that corresponds to the <code>response.scheme</code>, then set 
 <code>result.port</code> to this value.</p>
 </ul>
@@ -959,7 +959,7 @@ If <code class=grammar-rule><a href=#fragment>fragment</a></code> is present in 
 Return <code>result</code>.</p>
 
 <p class=note>Note: the resolution of
-<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>26338</code></code>">bug <code>26338</code></a>
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug <code>26338</code></a>
 may change how encoding override is handled.</p>
 
 <h3 class="heading settled" data-level=3.7 id=relative-scheme><span class=secno>3.7. </span><span class=content>relative-scheme</span><a class=self-link href=#relative-scheme></a></h3>
@@ -1024,7 +1024,7 @@ in a case insensitive manner.</p>
 <p>Return the scheme as a lowercased string.</p>
 
 <p class=note>Note: the resolution of
-<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>26338</code></code>">bug <code>26338</code></a>
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug <code>26338</code></a>
 may change how encoding override is handled.</p>
 
 <h3 class="heading settled" data-level=3.8 id=scheme><span class=secno>3.8. </span><span class=content>scheme</span><a class=self-link href=#scheme></a></h3>
@@ -1153,7 +1153,7 @@ a commercial at (<code>U+<code>0040</code></code>),
 a colon (<code>U+003A</code>), 
 or the end of string is encountered.
 Return the <a data-link-type=dfn href=#cleanse title=cleanse>cleansed</a> result using the
-<a href="<code>https://url.spec.whatwg.org/#default-encode-set</code>">default encode
+<a href=https://url.spec.whatwg.org/#default-encode-set>default encode
  set</a>.</p>
 
 <h3 class="heading settled" data-level=3.11 id=password><span class=secno>3.11. </span><span class=content>password</span><a class=self-link href=#password></a></h3>
@@ -1195,7 +1195,7 @@ a number sign (<code>U+<code>0023</code></code>),
 a commercial at (<code>U+<code>0040</code></code>), 
 or the end of string is encountered.
 Return the <a data-link-type=dfn href=#cleanse title=cleanse>cleansed</a> result using the
-<a href="<code>https://url.spec.whatwg.org/#default-encode-set</code>">default encode
+<a href=https://url.spec.whatwg.org/#default-encode-set>default encode
  set</a>.</p>
 
 <h3 class="heading settled" data-level=3.12 id=host><span class=secno>3.12. </span><span class=content>host</span><a class=self-link href=#host></a></h3>
@@ -1275,7 +1275,7 @@ terminate parsing with a <a data-link-type=dfn href=#parse-errors title="parse e
 <li data-md=""><p>If any <code>U+<code>0009</code></code>, <code>U+000A</code>,
 <code>U+000D</code>, <code>U+200B</code>, <code>U+<code>2060</code></code>, or <code>U+FEFF</code> characters are present in the input,
 remove those characters and indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
-<li data-md=""><p><a href="<code>https://url.spec.whatwg.org/#percent-decode</code>">Utf8 percent
+<li data-md=""><p><a href=https://url.spec.whatwg.org/#percent-decode>Utf8 percent
 decode</a> the result.</p>
 <li data-md=""><p>Replace all Fullwidth unicode characters (in the range of
 <code>U+FF01</code> to <code>U+FF5E</code> )with their non-fullwidth
@@ -1324,7 +1324,7 @@ Living Standard</a>.  For example, full Unicode normalization is more than
 simply converting full-width characters to their normal width equivalents.</p>
 
 <p class=note>Note: the resolution of
-<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>25334</code></code>">bug <code>25334</code></a>
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25334">bug <code>25334</code></a>
 may change what codepoints are allowed in a domain.</p>
 
 <h3 class="heading settled" data-level=3.13 id=ipv6addr><span class=secno>3.13. </span><span class=content>ipv6addr</span><a class=self-link href=#ipv6addr></a></h3>
@@ -1471,7 +1471,7 @@ ls32</text></g><path d="M544.0 81a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10">
  serialized</a> value of <code>pre</code> as a string.</p>
 
 <p class=note>Note: the resolution of
-<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>27234</code></code>">bug <code>27234</code></a>
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27234">bug <code>27234</code></a>
 may add support for link-local addresses.</p>
 
 <h3 class="heading settled" data-level=3.14 id=ipv4addr><span class=secno>3.14. </span><span class=content>ipv4addr</span><a class=self-link href=#ipv4addr></a></h3>
@@ -1595,7 +1595,7 @@ the number of <code class=grammar-rule><a href=#number>number</a></code>s presen
 return the results as a string.</p>
 
 <p class=note>Note: the resolution of
-<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>26431</code></code>">bug <code>26431</code></a>
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug <code>26431</code></a>
 may change this definition.</p>
 
 <h3 class="heading settled" data-level=3.15 id=number><span class=secno>3.15. </span><span class=content>number</span><a class=self-link href=#number></a></h3>
@@ -1912,7 +1912,7 @@ with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error<
 Otherwise, return the result as a string.</p>
 
 <p class=note>Note: the resolution of
-<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>26446</code></code>">bug <code>26446</code></a>
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26446">bug <code>26446</code></a>
 may change port from a string to a number.</p>
 
 <h3 class="heading settled" data-level=3.20 id=path><span class=secno>3.20. </span><span class=content>path</span><a class=self-link href=#path></a></h3>
@@ -2006,7 +2006,7 @@ a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.<
 <p>Extract all the pathnames into an array.  Process each name as follows:</p>
 
 <ul><li data-md=""><p><a data-link-type=dfn href=#cleanse title=cleanse>Cleanse</a> the name using the
-<a href="<code>https://url.spec.whatwg.org/#default-encode-set</code>">default encode
+<a href=https://url.spec.whatwg.org/#default-encode-set>default encode
 set</a> as the encode set.</p>
 <li data-md=""><p>If the name is "<code>.</code>" or "<code>%2e</code>" (case insensitive),
 then process this name based on the position in the array:</p>
@@ -2025,7 +2025,7 @@ then process this name based on the position in the array:</p>
 <p>Return the array.</p>
 
 <p class=note>Note: the resolution of
-<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>24163</code></code>">bug <code>24163</code></a>
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=24163">bug <code>24163</code></a>
 may change what characters to escape in the path.</p>
 
 <h3 class="heading settled" data-level=3.21 id=data><span class=secno>3.21. </span><span class=content>data</span><a class=self-link href=#data></a></h3>
@@ -2065,7 +2065,7 @@ Return the <a data-link-type=dfn href=#cleanse title=cleanse>cleansed</a> result
 the encode set.</p>
 
 <p class=note>Note: the resolution of
-<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>24246</code></code>">bug <code>24246</code></a>
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=24246">bug <code>24246</code></a>
 may change what characters to escape in the scheme data.</p>
 
 <h3 class="heading settled" data-level=3.22 id=query><span class=secno>3.22. </span><span class=content>query</span><a class=self-link href=#query></a></h3>
@@ -2140,15 +2140,15 @@ any</text></g><path d="M114.0 41h10">
 
 <p>Consume all remaining characters in the input.
 Return the <a data-link-type=dfn href=#cleanse title=cleanse>cleansed</a> result using the
-<a href="<code>https://url.spec.whatwg.org/#default-encode-set</code>">simple encode
+<a href=https://url.spec.whatwg.org/#default-encode-set>simple encode
  set</a>.</p>
 
 <p class=note>Note: the resolution of
-<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>27252</code></code>">bug <code>27252</code></a>
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27252">bug <code>27252</code></a>
 may change what characters to escape in the fragment.</p>
 
 <p class=note>Note: the resolution of
-<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>26988</code></code>">bug <code>26988</code></a>
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26988">bug <code>26988</code></a>
 may add support for parsing URLs without decoding the fragment identifier.</p>
 
 <h2 class="heading settled" data-level=4 id=common-functions><span class=secno>4. </span><span class=content>Common Functions</span><a class=self-link href=#common-functions></a></h2>
