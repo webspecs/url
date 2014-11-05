@@ -60,6 +60,7 @@ Goals {#goals}
             <code>foobar://test/x</code> as a URL results in different
             results with different user agents and different standards.
               [<a href="http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Nov/0019.html">source</a>]
+              [<a href="http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Nov/0047.html">update</a>]
           * Other differences may be found in the
             <a href=http://intertwingly.net/projects/pegurl/urltest-results/>interop
             test results</a> or using the

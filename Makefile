@@ -36,7 +36,9 @@ test: reference-implementation/punycode.js reference-implementation/url.js \
 	reference-implementation/urlparser.js \
 	reference-implementation/test/urltest.js \
 	reference-implementation/test/urltestparser.js \
-	reference-implementation/test/urltestdata.txt
+	reference-implementation/test/urltestdata.txt \
+	reference-implementation/test/moretestdata.txt \
+	reference-implementation/test/patchtestdata.txt
 	node reference-implementation/test/urltest.js
 
 reference-implementation/url.js: reference-implementation/ruby2js reference-implementation/url.rb

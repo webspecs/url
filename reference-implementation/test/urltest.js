@@ -22,7 +22,23 @@ var properties = [
 
 var data = URLTestParser(
   fs.readFileSync("reference-implementation/test/urltestdata.txt", "utf8") +
-  fs.readFileSync("reference-implementation/test/moretestdata.txt", "utf8"));
+  fs.readFileSync("reference-implementation/test/moretestdata.txt", "utf8") +
+  fs.readFileSync("reference-implementation/test/patchtestdata.txt", "utf8"));
+
+// apparently URLTestParser can only be run once.  Identify replacement
+// tests from the bottom and replace the original test in the data.
+for (var i = data.length-1; i > 0; i--) {
+  for (var j = 0; j < i; j++) {
+    if (data[i].input==data[j].input) {
+      if (data[i].base == 'test:test' || data[j].base == data[i].base) {
+        data[i].base = data[j].base;
+        data[j] = data.pop();
+        break;
+      }
+    }
+  }
+  if (i != data.length) break;
+}
 
 for (var i = 0; i < data.length; i++) {
   var test = data[i];

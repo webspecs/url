@@ -22,7 +22,7 @@
 </p>
   <h1 class="p-name no-ref" id=title>URL</h1>
   <h2 class="no-num no-toc no-ref heading settled" id=subtitle><span class=content>Living Standard — Last Updated
-    <span class=dt-updated><span class=value-title title=20141104>4 November 2014</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20141105>5 November 2014</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt class=editor>Editor:<dd class=editor><div class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://intertwingly.net/blog/>Sam Ruby</a> (<a class="p-org org" href=https://www.ibm.com/>IBM</a>) <a class="u-email email" href=mailto:rubys@intertwingly.net>rubys@intertwingly.net</a></div><dt>Version History:<dd><span><a href=https://github.com/rubys/url/commits/peg.js>https://github.com/rubys/url/commits/peg.js</a></span><dt>Participate:<dd><span><a href=https://github.com/rubys/url/issues/new>File an issue</a> (<a href="https://github.com/rubys/url/issues?q=">issues</a>)</span><dd><span><a href=mailto:public-webapps@w3.org>public-webapps@w3.org</a> (<a href=http://lists.w3.org/Archives/Public/public-webapps/>archives</a>)</span><dd><span><a href=https://whatwg.org/mailing-list>whatwg@whatwg.org</a> (<a href=https://whatwg.org/mailing-list#specs>archives</a>)</span><dd><span><a href=http://wiki.whatwg.org/wiki/IRC>IRC: #whatwg on Freenode</a></span></dl></div>
   <div data-fill-with=warning></div>
 </div>
@@ -69,7 +69,8 @@ violations</a>).  Examples of an items needing to be worked:</p>
 <li data-md=""><p>Parsing <code>../test</code> against a base of
 <code>foobar://test/x</code> as a URL results in different
 results with different user agents and different standards.
-  [<a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Nov/0019.html>source</a>]</p>
+  [<a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Nov/0019.html>source</a>]
+  [<a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Nov/0047.html>update</a>]</p>
 <li data-md=""><p>Other differences may be found in the
 <a href=http://intertwingly.net/projects/pegurl/urltest-results/>interop
 test results</a> or using the
@@ -179,7 +180,7 @@ each returning a set of components, namely one or more of the following:
 <a href="<code>https://url.spec.whatwg.org/#concept-url-fragment</code>">fragment</a>.</p>
 
 <p>In the case of a <code class=grammar-rule>relative-url</code>, terminate parsing with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>
-if <code>base.scheme</code> is not a 
+if <code>base.scheme</code> is not a
 <a href="<code>https://url.spec.whatwg.org/#relative-scheme</code>">relative scheme</a>.
 Otherwise initialize a <code>result</code> to the value returned by <code class=grammar-rule>relative-url</code>, and
 then modify it as follows before returning the result:</p>
