@@ -94,6 +94,10 @@
 
    In all other cases, the value returned by the called production is returned
    unmodified.
+
+   Note: the resolution of
+   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27233">bug 27233</a>
+   may add support for relative URLs for unknown schemes.
 */
 Url
   = FileLikeRelativeUrl
@@ -172,7 +176,9 @@ Url
   interoperable, and therefore are effectively implementation defined.
   Furthermore, the parsing rules in this section have not enjoyed wide review,
   and therefore are more likely to be subject to change than other parts of this
-  specification.
+  specification.  People with input on this matter are encourage to add
+  comments to
+  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27233">bug 27233</a>.  
 */
 FileLikeRelativeUrl
   = scheme:FileLikeRelativeScheme ':' 
@@ -438,6 +444,10 @@ RelativeUrl
   If @Query is present in the input, set $result.query to this value.
   If @Fragment is present in the input, set $result.fragment to this value.
   Return $result.
+
+  Note: the resolution of
+  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug 26338</a>
+  may change how encoding override is handled.
 */
 NonRelativeUrl
   = scheme:Scheme ':'
@@ -468,6 +478,10 @@ NonRelativeUrl
   "wss" or "ws".
 
   Return the scheme as a lowercased string.
+
+  Note: the resolution of
+  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug 26338</a>
+  may change how encoding override is handled.
 */
 RelativeScheme
   = "ftp"i
@@ -610,6 +624,10 @@ Password
    the <a href=https://encoding.spec.whatwg.org/>Encoding
    Living Standard</a>.  For example, full Unicode normalization is more than
    simply converting full-width characters to their normal width equivalents.
+
+   Note: the resolution of
+   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25334">bug 25334</a>
+   may change what codepoints are allowed in a domain.
 */
 Host
   = '[' addr:IPV6Addr ']'
@@ -699,6 +717,10 @@ Host
 
    Return the <a href=https://url.spec.whatwg.org/#concept-ipv6-serializer>ipv6
    serialized</a> value of $pre as a string.
+
+  Note: the resolution of
+  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27234">bug 27234</a>
+  may add support for link-local addresses.
 */
 IPV6Addr
   = addr:(((H16 ':')* ':')? (H16 ':')* (H16 / LS32))
@@ -762,6 +784,10 @@ IPV6Addr
 
   Join the values in $result with a Full Stop (U+002E) character, and
   return the results as a string.
+
+  Note: the resolution of
+  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug 26431</a>
+  may change this definition.
 */
 IPV4Addr
   = addr:((Number '.' (Number '.' (Number '.')?)?)? Number)
@@ -859,6 +885,10 @@ DecimalByte
   If any characters that remain are not decimal digits, terminate processing
   with a <a>parse error</a>.
   Otherwise, return the result as a string.
+
+  Note: the resolution of
+  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26446">bug 26446</a>
+  may change port from a string to a number.
 */
 Port
   = port:[^/\\?#]*
@@ -901,6 +931,10 @@ Port
             then append an empty string.
 
   Return the array.
+
+  Note: the resolution of
+  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=24163">bug 24163</a>
+  may change what characters to escape in the path.
 */
 Path
   = path:([^/\\?#]* [/\\])* basename:[^/\\?#]*
@@ -947,6 +981,10 @@ Path
   number sign (U+0023), or the end of string is encountered.
   Return the <a title=cleanse>cleansed</a> result using <var>null</var> as
   the encode set.
+
+  Note: the resolution of
+  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=24246">bug 24246</a>
+  may change what characters to escape in the scheme data.
 */
 Data
   = data:[^?#]*
@@ -974,6 +1012,14 @@ Query
   Return the <a title=cleanse>cleansed</a> result using the
   <a href="https://url.spec.whatwg.org/#default-encode-set">simple encode
    set</a>.
+
+  Note: the resolution of
+  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27252">bug 27252</a>
+  may change what characters to escape in the fragment.
+
+  Note: the resolution of
+  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26988">bug 26988</a>
+  may add support for parsing URLs without decoding the fragment identifier.
 */
 Fragment 
   = fragment:.*

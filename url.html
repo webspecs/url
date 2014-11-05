@@ -23,7 +23,7 @@
   <h1 class="p-name no-ref" id=title>URL</h1>
   <h2 class="no-num no-toc no-ref heading settled" id=subtitle><span class=content>Living Standard — Last Updated
     <span class=dt-updated><span class=value-title title=20141105>5 November 2014</span></span></span></h2>
-  <div data-fill-with=spec-metadata><dl><dt class=editor>Editor:<dd class=editor><div class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://intertwingly.net/blog/>Sam Ruby</a> (<a class="p-org org" href=https://www.ibm.com/>IBM</a>) <a class="u-email email" href=mailto:rubys@intertwingly.net>rubys@intertwingly.net</a></div><dt>Version History:<dd><span><a href=https://github.com/rubys/url/commits/peg.js>https://github.com/rubys/url/commits/peg.js</a></span><dt>Participate:<dd><span><a href=https://github.com/rubys/url/issues/new>File an issue</a> (<a href="https://github.com/rubys/url/issues?q=">issues</a>)</span><dd><span><a href=mailto:public-webapps@w3.org>public-webapps@w3.org</a> (<a href=http://lists.w3.org/Archives/Public/public-webapps/>archives</a>)</span><dd><span><a href=https://whatwg.org/mailing-list>whatwg@whatwg.org</a> (<a href=https://whatwg.org/mailing-list#specs>archives</a>)</span><dd><span><a href=http://wiki.whatwg.org/wiki/IRC>IRC: #whatwg on Freenode</a></span></dl></div>
+  <div data-fill-with=spec-metadata><dl><dt class=editor>Editor:<dd class=editor><div class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://intertwingly.net/blog/>Sam Ruby</a> (<a class="p-org org" href=https://www.ibm.com/>IBM</a>) <a class="u-email email" href=mailto:rubys@intertwingly.net>rubys@intertwingly.net</a></div><dt>Version History:<dd><span><a href=https://github.com/rubys/url/commits/peg.js>https://github.com/rubys/url/commits/peg.js</a></span><dt>Participate:<dd><span><a href="https://www.w3.org/Bugs/Public/enter_bug.cgi?product=WHATWG&amp;component=URL">File a bug</a> (<a href="https://www.w3.org/Bugs/Public/buglist.cgi?component=URL&amp;list_id=46839&amp;product=WHATWG&amp;resolution=---">open bugs</a>)</span><dd><span><a href=https://github.com/rubys/url/issues/new>File an issue</a> (<a href="https://github.com/rubys/url/issues?q=">issues</a>)</span><dd><span><a href=mailto:public-webapps@w3.org>public-webapps@w3.org</a> (<a href=http://lists.w3.org/Archives/Public/public-webapps/>archives</a>)</span><dd><span><a href=https://whatwg.org/mailing-list>whatwg@whatwg.org</a> (<a href=https://whatwg.org/mailing-list#specs>archives</a>)</span><dd><span><a href=http://wiki.whatwg.org/wiki/IRC>IRC: #whatwg on Freenode</a></span></dl></div>
   <div data-fill-with=warning></div>
 </div>
 
@@ -197,6 +197,10 @@ then modify it as follows before returning the result:</p>
 </ul>
 <p>In all other cases, the value returned by the called production is returned
 unmodified.</p>
+
+<p class=note>Note: the resolution of
+<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>27233</code></code>">bug <code>27233</code></a>
+may add support for relative URLs for unknown schemes.</p>
 
 <h3 class="heading settled" data-level=3.2 id=file-like-relative-url><span class=secno>3.2. </span><span class=content>file-like-relative-url</span><a class=self-link href=#file-like-relative-url></a></h3>
 
@@ -506,7 +510,9 @@ relative-url</text></g><path d="M800.0 160h10">
 interoperable, and therefore are effectively implementation defined.
 Furthermore, the parsing rules in this section have not enjoyed wide review,
 and therefore are more likely to be subject to change than other parts of this
-specification.</p>
+specification.  People with input on this matter are encourage to add
+comments to
+<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>27233</code></code>">bug <code>27233</code></a>.</p>
 
 <h3 class="heading settled" data-level=3.3 id=file-like-relative-scheme><span class=secno>3.3. </span><span class=content>file-like-relative-scheme</span><a class=self-link href=#file-like-relative-scheme></a></h3>
 
@@ -952,6 +958,10 @@ If <code class=grammar-rule><a href=#query>query</a></code> is present in the in
 If <code class=grammar-rule><a href=#fragment>fragment</a></code> is present in the input, set <code>result.fragment</code> to this value.
 Return <code>result</code>.</p>
 
+<p class=note>Note: the resolution of
+<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>26338</code></code>">bug <code>26338</code></a>
+may change how encoding override is handled.</p>
+
 <h3 class="heading settled" data-level=3.7 id=relative-scheme><span class=secno>3.7. </span><span class=content>relative-scheme</span><a class=self-link href=#relative-scheme></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=212 viewBox="0 0 189 212" width=189>
@@ -1012,6 +1022,10 @@ in a case insensitive manner.</p>
 "<code>wss</code>" or "<code>ws</code>".</p>
 
 <p>Return the scheme as a lowercased string.</p>
+
+<p class=note>Note: the resolution of
+<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>26338</code></code>">bug <code>26338</code></a>
+may change how encoding override is handled.</p>
 
 <h3 class="heading settled" data-level=3.8 id=scheme><span class=secno>3.8. </span><span class=content>scheme</span><a class=self-link href=#scheme></a></h3>
 
@@ -1309,6 +1323,10 @@ the <a href=https://encoding.spec.whatwg.org/>Encoding
 Living Standard</a>.  For example, full Unicode normalization is more than
 simply converting full-width characters to their normal width equivalents.</p>
 
+<p class=note>Note: the resolution of
+<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>25334</code></code>">bug <code>25334</code></a>
+may change what codepoints are allowed in a domain.</p>
+
 <h3 class="heading settled" data-level=3.13 id=ipv6addr><span class=secno>3.13. </span><span class=content>ipv6addr</span><a class=self-link href=#ipv6addr></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=112 viewBox="0 0 605 112" width=605>
@@ -1427,30 +1445,34 @@ ls32</text></g><path d="M544.0 81a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10">
 </path></g></svg></div>
 
 <p>Let <code>pre</code>, <code>post</code>, and <code>last</code> be the <code class=grammar-rule><a href=#h16>h16</a></code> values before the double colon if
-present,  the remaining <code class=grammar-rule><a href=#h16>h16</a></code> before the last value, and the trailing
-<code class=grammar-rule><a href=#h16>h16</a></code> or <code class=grammar-rule><a href=#ls32>ls32</a></code> value, respectively.</p>
+ present,  the remaining <code class=grammar-rule><a href=#h16>h16</a></code> before the last value, and the trailing
+ <code class=grammar-rule><a href=#h16>h16</a></code> or <code class=grammar-rule><a href=#ls32>ls32</a></code> value, respectively.</p>
 
 <p>Perform the following validation checks:</p>
 <ul><li data-md=""><p>If there are no consecutive colon characters in the input string, indicate
-a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a> and terminate processing unless there are exactly
-six <code class=grammar-rule><a href=#h16>h16</a></code> values and one <code class=grammar-rule><a href=#ls32>ls32</a></code> value.</p>
+ a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a> and terminate processing unless there are exactly
+ six <code class=grammar-rule><a href=#h16>h16</a></code> values and one <code class=grammar-rule><a href=#ls32>ls32</a></code> value.</p>
 <li data-md=""><p>If there are consecutive colon characters present in the input, indicate a
-<a data-link-type=dfn href=#parse-errors title="parse error">parse error</a> and terminate processing if the total number of values
-(<code class=grammar-rule><a href=#h16>h16</a></code> or <code class=grammar-rule><a href=#ls32>ls32</a></code>) is more than six.</p>
+ <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a> and terminate processing if the total number of values
+ (<code class=grammar-rule><a href=#h16>h16</a></code> or <code class=grammar-rule><a href=#ls32>ls32</a></code>) is more than six.</p>
 <li data-md=""><p>Unless there is a <code class=grammar-rule><a href=#ls32>ls32</a></code> value present, indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a> and
-terminate processing if consecutive colon characters are present in the
-input or if there are more than one <code class=grammar-rule><a href=#ls32>ls32</a></code> value after the consecutive
-colons.</p>
+ terminate processing if consecutive colon characters are present in the
+ input or if there are more than one <code class=grammar-rule><a href=#ls32>ls32</a></code> value after the consecutive
+ colons.</p>
 </ul>
 <p>Perform the following steps:</p>
 <ul><li data-md=""><p>Append "<code><code>0</code></code>" values to <code>pre</code> while the sum of the lengths of the <code>pre</code> and
-<code>post</code> arrays is less than six.</p>
+ <code>post</code> arrays is less than six.</p>
 <li data-md=""><p>Append a "<code><code>0</code></code>" value to <code>pre</code> if no <code class=grammar-rule><a href=#ls32>ls32</a></code> item is present in the input and
-the sum of the lengths of the <code>pre</code> and <code>post</code> array is seven.</p>
+ the sum of the lengths of the <code>pre</code> and <code>post</code> array is seven.</p>
 <li data-md=""><p>Append <code>last</code> to <code>pre</code>.</p>
 </ul>
 <p>Return the <a href=https://url.spec.whatwg.org/#concept-ipv6-serializer>ipv6
-serialized</a> value of <code>pre</code> as a string.</p>
+ serialized</a> value of <code>pre</code> as a string.</p>
+
+<p class=note>Note: the resolution of
+<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>27234</code></code>">bug <code>27234</code></a>
+may add support for link-local addresses.</p>
 
 <h3 class="heading settled" data-level=3.14 id=ipv4addr><span class=secno>3.14. </span><span class=content>ipv4addr</span><a class=self-link href=#ipv4addr></a></h3>
 
@@ -1571,6 +1593,10 @@ the number of <code class=grammar-rule><a href=#number>number</a></code>s presen
 </ul>
 <p>Join the values in <code>result</code> with a Full Stop (<code>U+002E</code>) character, and
 return the results as a string.</p>
+
+<p class=note>Note: the resolution of
+<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>26431</code></code>">bug <code>26431</code></a>
+may change this definition.</p>
 
 <h3 class="heading settled" data-level=3.15 id=number><span class=secno>3.15. </span><span class=content>number</span><a class=self-link href=#number></a></h3>
 
@@ -1885,6 +1911,10 @@ If any characters that remain are not decimal digits, terminate processing
 with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.
 Otherwise, return the result as a string.</p>
 
+<p class=note>Note: the resolution of
+<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>26446</code></code>">bug <code>26446</code></a>
+may change port from a string to a number.</p>
+
 <h3 class="heading settled" data-level=3.20 id=path><span class=secno>3.20. </span><span class=content>path</span><a class=self-link href=#path></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=99 viewBox="0 0 725 99" width=725>
@@ -1994,6 +2024,10 @@ then process this name based on the position in the array:</p>
 </ul></ul>
 <p>Return the array.</p>
 
+<p class=note>Note: the resolution of
+<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>24163</code></code>">bug <code>24163</code></a>
+may change what characters to escape in the path.</p>
+
 <h3 class="heading settled" data-level=3.21 id=data><span class=secno>3.21. </span><span class=content>data</span><a class=self-link href=#data></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=81 viewBox="0 0 281 81" width=281>
@@ -2029,6 +2063,10 @@ any except [?#]</text></g><path d="M210.0 41h10">
 number sign (<code>U+<code>0023</code></code>), or the end of string is encountered.
 Return the <a data-link-type=dfn href=#cleanse title=cleanse>cleansed</a> result using <var>null</var> as
 the encode set.</p>
+
+<p class=note>Note: the resolution of
+<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>24246</code></code>">bug <code>24246</code></a>
+may change what characters to escape in the scheme data.</p>
 
 <h3 class="heading settled" data-level=3.22 id=query><span class=secno>3.22. </span><span class=content>query</span><a class=self-link href=#query></a></h3>
 
@@ -2104,6 +2142,14 @@ any</text></g><path d="M114.0 41h10">
 Return the <a data-link-type=dfn href=#cleanse title=cleanse>cleansed</a> result using the
 <a href="<code>https://url.spec.whatwg.org/#default-encode-set</code>">simple encode
  set</a>.</p>
+
+<p class=note>Note: the resolution of
+<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>27252</code></code>">bug <code>27252</code></a>
+may change what characters to escape in the fragment.</p>
+
+<p class=note>Note: the resolution of
+<a href="<code>https://www.w3.org/Bugs/Public/show_bug.cgi?id=<code>26988</code></code>">bug <code>26988</code></a>
+may add support for parsing URLs without decoding the fragment identifier.</p>
 
 <h2 class="heading settled" data-level=4 id=common-functions><span class=secno>4. </span><span class=content>Common Functions</span><a class=self-link href=#common-functions></a></h2>
 
