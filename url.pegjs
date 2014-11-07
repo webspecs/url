@@ -178,7 +178,7 @@ Url
   and therefore are more likely to be subject to change than other parts of this
   specification.  People with input on this matter are encourage to add
   comments to
-  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27233">bug 27233</a>.  
+  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=23550">bug 23550</a>.  
 */
 FileLikeRelativeUrl
   = scheme:FileLikeRelativeScheme ':' 
