@@ -622,7 +622,7 @@ Host
     }
 
     host = Url.utf8PercentDecode(host.join(''));
-    host = IDNA.processing_map(host, false, true);
+    host = IDNA.processing_map(host, false, true).normalize('NFC');
 
     if (/[\u0000\u0009\u000A\u000D\u0020#%\/:?\[\\\]]/.test(host)) {
       var c = host.match(/[\u0000\u0009\u000A\u000D\u0020#%\/:?\[\\\]]/)[0];

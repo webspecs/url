@@ -6,6 +6,7 @@ evaluate/urltestdata.json
 parser.pegjs
 reference-implementation/IdnaMappingTable.txt
 reference-implementation/punycode.js
+reference-implementation/unorm.js
 reference-implementation/idna.js
 reference-implementation/url.js
 reference-implementation/urlparser.js

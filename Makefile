@@ -33,6 +33,7 @@ url.pegjson: peg2json.js parser.pegjs url.pegjs
 ### test reference implementation
 #
 test: reference-implementation/punycode.js \
+        reference-implementation/unorm.js \
         reference-implementation/idna.js \
         reference-implementation/url.js \
 	reference-implementation/urlparser.js \
@@ -78,6 +79,10 @@ parser.pegjs:
 reference-implementation/punycode.js:
 	cd reference-implementation; \
 	wget https://raw.githubusercontent.com/bestiejs/punycode.js/master/punycode.js
+
+reference-implementation/unorm.js:
+	cd reference-implementation; \
+	wget https://raw.githubusercontent.com/walling/unorm/master/lib/unorm.js
 
 reference-implementation/IdnaMappingTable.txt:
 	cd reference-implementation; \

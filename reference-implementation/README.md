@@ -18,7 +18,7 @@ I started this effort by attempting to create a
 of the URL Standard.
 [Like others who attempted to do so](http://lists.w3.org/Archives/Public/www-archive/2014Oct/0021.html),
 I found the current description to appear to be easy to follow yet when I
-attempted to do so I found I had a hard time determing what should be the
+attempted to do so I found I had a hard time determining what should be the
 parsing output for a number of cases.  I ended up reverse engineering the
 outputs, and actually reading the source code, of other implementations.
 
@@ -49,9 +49,3 @@ Had I started from scratch, I likely would have followed the lead of the
    Until then, the reference implementation tracks and updates the value of
    <var>encoding_override</var>, but doesn't use it.  Instead
    <code>utf-8</code> is always used.
-
- * Find or build Unicode Normalization logic.  Needed by Unicode
-   [processing](http://www.unicode.org/reports/tr46/#Processing) and
-   [validation](http://www.unicode.org/reports/tr46/#Validity_Criteria"),
-   both of which are used by the
-   [host parser](https://url.spec.whatwg.org/#concept-host-parser)
