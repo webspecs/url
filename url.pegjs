@@ -579,56 +579,18 @@ Password
 
      * If the string starts with a left square bracket (U+005B),
        terminate parsing with a <a>parse error</a>.
-     * If any U+0009, U+000A,
-       U+000D, U+200B, U+2060, or U+FEFF characters are present in the input,
-       remove those characters and indicate a <a>parse error</a>.
-     * <a href="https://url.spec.whatwg.org/#percent-decode">Utf8 percent
-       decode</a> the result.
-     * Replace all Fullwidth unicode characters (in the range of
-       U+FF01 to U+FF5E )with their non-fullwidth
-       equivalents.
-     * If the result contains any character in the range of
-       U+FDD0 to U+FDEF, terminate paring with a <a>parse error</a>.
-     * If the result contains any of the following, terminate parsing with a
-       <a>parse error</a>:
-       number sign (U+023),
-       percent (U+025),
-       solidus (U+02F),
-       reverse solidus (U+05C),
-       colon (U+03A),
-       question mark (U+03F),
-       left square bracket (U+05B),
-       right square bracket (U+05B),
-       null (U+0000),
-       tab (U+0009),
-       line feed (U+000A),
-       carriage return (U+000D),
-       space (U+0020),
-       no-break space (U+00A0),
-       ogham space mark (U+1680),
-       en quad (U+2000),
-       zero width space (U+200B),
-       narrow no-break space (U+202F),
-       medium mathematical space (U+205F), or
-       ideographic space (U+3000), 
-     * IDNA encode the result as follows:
-        * split the string whenever any of the following are encountered:
-            U+002E (full stop), U+3002 (ideographic
-            full stop), U+FF0E (fullwidth full stop),
-            U+FF61 (halfwidth ideographic full stop)
-        * If any of the pieces contains any character outside of the range of
-            U+0020 to U+007E, replace that piece with
-            the string "xn--" concatenated with the punycode
-            [[!RFC3492]] encoded value of the result.
+     * If any U+0009, U+000A, U+000D, U+200B, U+2060, or U+FEFF characters are
+       present in the input, remove those characters and indicate a
+       <a>parse error</a>.
+     * Let $domain be the result of
+       <a href="https://url.spec.whatwg.org/#concept-host-parser">host
+       parsing</a> the value.  If this results in a failure,
+       terminate processing with a <a>parse error</a>.
+     * Validate the $domain as follows:
+        * split the string at U+002E (full stop) characters
         * If any of the pieces, other than the first one, are empty strings,
             indicate a <a>parse error</a>.
-        * Rejoin the pieces using U+002E (full stop) as the
-            separator.
-
-   Note: this description above needs to be reconciled with, and defer to,
-   the <a href=https://encoding.spec.whatwg.org/>Encoding
-   Living Standard</a>.  For example, full Unicode normalization is more than
-   simply converting full-width characters to their normal width equivalents.
+     * Return $domain.
 
    Note: the resolution of
    <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25334">bug 25334</a>
@@ -655,33 +617,20 @@ Host
     for (var i=0; i<host.length; i++) {
       if (/^[\u0009\u000A\u000D]$/.test(host[i])) {
         host.splice(i--, 1);
-        warn = "Tab, new line, or cariage return found in host"
-      } else if (/^[\u200B\u2060\uFEFF]$/.test(host[i])) {
-        host.splice(i--, 1); // TODO: verify
+        warn = "Tab, new line, or carriage return found in host"
       }
     }
 
-    host = host.join('').toLowerCase();
-    if (/%/.test(host)) host = Url.utf8PercentDecode(host)
+    host = Url.utf8PercentDecode(host.join(''));
+    host = IDNA.processing_map(host, false, true);
 
-    for (var i=0; i<host.length; i++) {
-      var c = host.charAt(i);
+    if (/[\u0000\u0009\u000A\u000D\u0020#%\/:?\[\\\]]/.test(host)) {
+      var c = host.match(/[\u0000\u0009\u000A\u000D\u0020#%\/:?\[\\\]]/)[0];
+      error('Invalid domain character U+' +
+        ("000" + c.charCodeAt(0).toString(16)).slice(-4).toUpperCase());
+    }
 
-      if (/^[\uFF01-\uFF5E]$/.test(c)) {
-        c = String.fromCharCode(c.charCodeAt(0)-0xFF00+0x20);
-        host = host.slice(0, i) + c + host.slice(i + 1)
-      }
-
-      if (/^[\uFDD0-\uFDEF]$/.test(c)) {
-        error('Invalid domain character') // TODO: verify
-      } else if (/[\u0000\u0009\u000A\u000D\u0020#%\/:?\[\\\]]/.test(c)) {
-        error('Invalid domain character')
-      } else if (/[\u00A0\u1680\u2000-\u200B\u202F\u205F\u3000]/.test(c)) {
-        error('Invalid domain character')
-      }
-    };
-
-    host = host.split(/[\u002E\u3002\uFF0E\uFF61]/);
+    host = host.split('.');
     for (var i=0; i<host.length; i++) {
       if (!/^[\x20-\x7e]*$/.test(host[i])) {
         host[i] = 'xn--' + punycode.encode(host[i])

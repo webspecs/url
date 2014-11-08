@@ -4,7 +4,9 @@ evaluate/target/
 evaluate/*.class
 evaluate/urltestdata.json
 parser.pegjs
+reference-implementation/IdnaMappingTable.txt
 reference-implementation/punycode.js
+reference-implementation/idna.js
 reference-implementation/url.js
 reference-implementation/urlparser.js
 reference-implementation/test/urltestdata.txt

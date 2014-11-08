@@ -50,3 +50,8 @@ Had I started from scratch, I likely would have followed the lead of the
    <var>encoding_override</var>, but doesn't use it.  Instead
    <code>utf-8</code> is always used.
 
+ * Find or build Unicode Normalization logic.  Needed by Unicode
+   [processing](http://www.unicode.org/reports/tr46/#Processing) and
+   [validation](http://www.unicode.org/reports/tr46/#Validity_Criteria"),
+   both of which are used by the
+   [host parser](https://url.spec.whatwg.org/#concept-host-parser)

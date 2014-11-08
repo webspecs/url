@@ -99,8 +99,6 @@ point as the only real normative requirement for the parts defined by this
 spec-let is "produce the same output as the algorithm defined herein".</p>
 <li data-md=""><p>Implement <a href=https://url.spec.whatwg.org/#urlutils-and-urlutilsreadonly-members>Url
 property getters and setters</a>.</p>
-<li data-md=""><p>Reconcile the <a data-section="" href=#host>§3.12 host</a> parsing rules with the Encoding Living Standard
-<a data-biblio-type=normative data-link-type=biblio href=#biblio-encoding title=encoding>[encoding]</a> and <a href=https://url.spec.whatwg.org/#idna>IDNA</a>.</p>
 </ul>
 <p>Known differences with current drafts of the WHATWG <a href=https://url.spec.whatwg.org/>URL Standard</a>:</p>
 
@@ -1282,57 +1280,19 @@ the result returned by <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></
 
 <ul><li data-md=""><p>If the string starts with a left square bracket (<code>U+005B</code>),
 terminate parsing with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
-<li data-md=""><p>If any <code>U+<code>0009</code></code>, <code>U+000A</code>,
-<code>U+000D</code>, <code>U+200B</code>, <code>U+<code>2060</code></code>, or <code>U+FEFF</code> characters are present in the input,
-remove those characters and indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
-<li data-md=""><p><a href=https://url.spec.whatwg.org/#percent-decode>Utf8 percent
-decode</a> the result.</p>
-<li data-md=""><p>Replace all Fullwidth unicode characters (in the range of
-<code>U+FF01</code> to <code>U+FF5E</code> )with their non-fullwidth
-equivalents.</p>
-<li data-md=""><p>If the result contains any character in the range of
-<code>U+FDD0</code> to <code>U+FDEF</code>, terminate paring with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
-<li data-md=""><p>If the result contains any of the following, terminate parsing with a
-<a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>:
-number sign (U+<code>023</code>),
-percent (U+<code>025</code>),
-solidus (U+02F),
-reverse solidus (U+05C),
-colon (U+03A),
-question mark (U+03F),
-left square bracket (U+05B),
-right square bracket (U+05B),
-null (<code>U+<code>0000</code></code>),
-tab (<code>U+<code>0009</code></code>),
-line feed (<code>U+000A</code>),
-carriage return (<code>U+000D</code>),
-space (<code>U+<code>0020</code></code>),
-no-break space (<code>U+00A0</code>),
-ogham space mark (<code>U+<code>1680</code></code>),
-en quad (<code>U+<code>2000</code></code>),
-zero width space (<code>U+200B</code>),
-narrow no-break space (<code>U+202F</code>),
-medium mathematical space (<code>U+205F</code>), or
-ideographic space (<code>U+<code>3000</code></code>),</p>
-<li data-md=""><p>IDNA encode the result as follows:</p>
-<ul><li data-md=""><p>split the string whenever any of the following are encountered:
- <code>U+002E</code> (full stop), <code>U+<code>3002</code></code> (ideographic
- full stop), <code>U+FF0E</code> (fullwidth full stop),
- <code>U+FF61</code> (halfwidth ideographic full stop)</p>
-<li data-md=""><p>If any of the pieces contains any character outside of the range of
- <code>U+<code>0020</code></code> to <code>U+007E</code>, replace that piece with
- the string "<code>xn--</code>" concatenated with the punycode
- <a data-biblio-type=normative data-link-type=biblio href=#biblio-rfc3492 title=RFC3492>[RFC3492]</a> encoded value of the result.</p>
+<li data-md=""><p>If any <code>U+<code>0009</code></code>, <code>U+000A</code>, <code>U+000D</code>, <code>U+200B</code>, <code>U+<code>2060</code></code>, or <code>U+FEFF</code> characters are
+present in the input, remove those characters and indicate a
+<a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+<li data-md=""><p>Let <code>domain</code> be the result of
+<a href=https://url.spec.whatwg.org/#concept-host-parser>host
+parsing</a> the value.  If this results in a failure,
+terminate processing with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+<li data-md=""><p>Validate the <code>domain</code> as follows:</p>
+<ul><li data-md=""><p>split the string at <code>U+002E</code> (full stop) characters</p>
 <li data-md=""><p>If any of the pieces, other than the first one, are empty strings,
  indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
-<li data-md=""><p>Rejoin the pieces using <code>U+002E</code> (full stop) as the
- separator.</p>
-</ul></ul>
-<p class=note role=note>Note: this description above needs to be reconciled with, and defer to,
-the <a href=https://encoding.spec.whatwg.org/>Encoding
-Living Standard</a>.  For example, full Unicode normalization is more than
-simply converting full-width characters to their normal width equivalents.</p>
-
+</ul><li data-md=""><p>Return <code>domain</code>.</p>
+</ul>
 <p class=note role=note>Note: the resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25334">bug <code>25334</code></a>
 may change what codepoints are allowed in a domain.</p>
@@ -2227,4 +2187,4 @@ readability, these words do not appear in all uppercase letters in this specific
 
 <p>Conformance requirements phrased as algorithms or specific steps may be implemented in any manner, so long as the end
 result is equivalent.
-<h2 class="no-num heading settled" id=references><span class=content>References</span><a class=self-link href=#references></a></h2><h3 class="no-num heading settled" id=normative><span class=content>Normative References</span><a class=self-link href=#normative></a></h3><dl><dt id=biblio-encoding title=encoding><a class=self-link href=#biblio-encoding></a>[encoding]<dd>Anne van Kesteren; Joshua Bell; Addison Phillips. <a href=http://www.w3.org/TR/encoding/>Encoding</a>. 16 September 2014. CR. URL: <a href=http://www.w3.org/TR/encoding/>http://www.w3.org/TR/encoding/</a><dt id=biblio-rfc2119 title=rfc2119><a class=self-link href=#biblio-rfc2119></a>[rfc2119]<dd>S. Bradner. <a href=http://www.ietf.org/rfc/rfc2119.txt>Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href=http://www.ietf.org/rfc/rfc2119.txt>http://www.ietf.org/rfc/rfc2119.txt</a><dt id=biblio-rfc3492 title=rfc3492><a class=self-link href=#biblio-rfc3492></a>[rfc3492]<dd>A. Costello. <a href=http://www.ietf.org/rfc/rfc3492.txt>Punycode: A Bootstring encoding of Unicode for Internationalized Domain Names in Applications (IDNA)</a>. March 2003. Proposed Standard. URL: <a href=http://www.ietf.org/rfc/rfc3492.txt>http://www.ietf.org/rfc/rfc3492.txt</a></dl><h3 class="no-num heading settled" id=informative><span class=content>Informative References</span><a class=self-link href=#informative></a></h3><dl><dt id=biblio-rfc3986 title=rfc3986><a class=self-link href=#biblio-rfc3986></a>[rfc3986]<dd>T. Berners-Lee; R. Fielding; L. Masinter. <a href=http://www.ietf.org/rfc/rfc3986.txt>Uniform Resource Identifier (URI): Generic Syntax</a>. January 2005. Internet Standard. URL: <a href=http://www.ietf.org/rfc/rfc3986.txt>http://www.ietf.org/rfc/rfc3986.txt</a><dt id=biblio-rfc3987 title=rfc3987><a class=self-link href=#biblio-rfc3987></a>[rfc3987]<dd>M. Duerst; M. Suignard. <a href=http://www.ietf.org/rfc/rfc3987.txt>Internationalized Resource Identifiers (IRIs)</a>. January 2005. Proposed Standard. URL: <a href=http://www.ietf.org/rfc/rfc3987.txt>http://www.ietf.org/rfc/rfc3987.txt</a></dl><h2 class="no-num heading settled" id=index><span class=content>Index</span><a class=self-link href=#index></a></h2><ul class=indexlist></ul>
+<h2 class="no-num heading settled" id=references><span class=content>References</span><a class=self-link href=#references></a></h2><h3 class="no-num heading settled" id=normative><span class=content>Normative References</span><a class=self-link href=#normative></a></h3><dl><dt id=biblio-rfc2119 title=rfc2119><a class=self-link href=#biblio-rfc2119></a>[rfc2119]<dd>S. Bradner. <a href=http://www.ietf.org/rfc/rfc2119.txt>Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href=http://www.ietf.org/rfc/rfc2119.txt>http://www.ietf.org/rfc/rfc2119.txt</a></dl><h3 class="no-num heading settled" id=informative><span class=content>Informative References</span><a class=self-link href=#informative></a></h3><dl><dt id=biblio-rfc3986 title=rfc3986><a class=self-link href=#biblio-rfc3986></a>[rfc3986]<dd>T. Berners-Lee; R. Fielding; L. Masinter. <a href=http://www.ietf.org/rfc/rfc3986.txt>Uniform Resource Identifier (URI): Generic Syntax</a>. January 2005. Internet Standard. URL: <a href=http://www.ietf.org/rfc/rfc3986.txt>http://www.ietf.org/rfc/rfc3986.txt</a><dt id=biblio-rfc3987 title=rfc3987><a class=self-link href=#biblio-rfc3987></a>[rfc3987]<dd>M. Duerst; M. Suignard. <a href=http://www.ietf.org/rfc/rfc3987.txt>Internationalized Resource Identifiers (IRIs)</a>. January 2005. Proposed Standard. URL: <a href=http://www.ietf.org/rfc/rfc3987.txt>http://www.ietf.org/rfc/rfc3987.txt</a></dl><h2 class="no-num heading settled" id=index><span class=content>Index</span><a class=self-link href=#index></a></h2><ul class=indexlist><li>cleanse, <a href=#cleanse title="section 4">4</a><li>parse errors, <a href=#parse-errors title="section 3">3</a><li>path concatenation, <a href=#path-concatenation title="section 4">4</a><li>query encode set, <a href=#query-encode-set title="section 3.22">3.22</a></ul>

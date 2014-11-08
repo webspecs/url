@@ -32,7 +32,9 @@ url.pegjson: peg2json.js parser.pegjs url.pegjs
 #
 ### test reference implementation
 #
-test: reference-implementation/punycode.js reference-implementation/url.js \
+test: reference-implementation/punycode.js \
+        reference-implementation/idna.js \
+        reference-implementation/url.js \
 	reference-implementation/urlparser.js \
 	reference-implementation/test/urltest.js \
 	reference-implementation/test/urltestparser.js \
@@ -47,12 +49,17 @@ reference-implementation/url.js: reference-implementation/ruby2js reference-impl
 reference-implementation/urlparser.js: reference-implementation/pegcompile.js url.pegjs
 	node reference-implementation/pegcompile.js > $@
 
+reference-implementation/idna.js: reference-implementation/idna2js.rb \
+        reference-implementation/IdnaMappingTable.txt
+	ruby reference-implementation/idna2js.rb > $@
+
 #
 ### Fetch files from other sources
 #
 clobber:
 	rm -f test/urltestdata.txt test/urltestparser.js parser.pegjs \
-	reference-implementation/punycode.js
+	reference-implementation/punycode.js \
+	reference-implementation/IdnaMappingTable.txt
 
 fetch: clobber test/urltestdata.txt test/urltestparser.js parser.pegjs \
 	reference-implementation/punycode.js
@@ -71,3 +78,7 @@ parser.pegjs:
 reference-implementation/punycode.js:
 	cd reference-implementation; \
 	wget https://raw.githubusercontent.com/bestiejs/punycode.js/master/punycode.js
+
+reference-implementation/IdnaMappingTable.txt:
+	cd reference-implementation; \
+	wget http://www.unicode.org/Public/idna/latest/IdnaMappingTable.txt
