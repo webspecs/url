@@ -70,12 +70,9 @@ puts "];\n\n"
 puts <<-'EOF'
 IDNA.processing_map = function(domain, useSTD3ASCIIRules, transitional) {
 
-  return domain.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]|./g, function(chars) {
-    var codepoint = chars.charCodeAt(0);
-    if (chars.length == 2) {
-      codepoint = (codepoint && 0x3FF) << 10 + (chars.charCodeAt(1) && 0x3FF);
-    }
+  return punycode.ucs2.decode(domain).map(function(codepoint) {
 
+    /* binary search IDNA.MAPPING_TABLE using codepoint */
     var min = 0;
     var max = IDNA.MAPPING_TABLE.length - 1;
     while (max > min) {
@@ -89,22 +86,26 @@ IDNA.processing_map = function(domain, useSTD3ASCIIRules, transitional) {
       }
     }
 
+    /* extract row */
     var row = IDNA.MAPPING_TABLE[min];
-    var mapping = row[3];
-    if (typeof mapping == "number") {
-      mapping += codepoint - row[0];
-    }
 
+    /* interpolate mapping within range */
+    var mapping = row[3];
+    if (typeof mapping == "number") mapping += codepoint - row[0];
+
+    /* perform specified IDNA Mapping */
     var replacement = IDNA[row[2]](codepoint, mapping,
       useSTD3ASCIIRules, transitional);
 
+    /* return Basic Multilingual Plane characters; wrap rest in array */
     if (typeof replacement == "number") {
       if (replacement < 0x10000) return String.fromCharCode(replacement);
       replacement = [ replacement ];
     }
 
+    /* convert codepoints to string */
     return punycode.ucs2.encode(replacement);
-  });
+  }).join('');
 
 }
 EOF
