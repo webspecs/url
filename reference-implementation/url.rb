@@ -23,7 +23,7 @@ class Url
   # https://url.spec.whatwg.org/#url-code-points
   URL_CODE_POINTS = /[a-zA-Z0-9
     !$&'()*+,\-.\/:;=?@_~
-    \u00A0-\uD7FF \uE000-\uFDCF \uFDF0-\uFFFD 
+    \u00A0-\uD7FF \uE000-\uFDCF \uFDF0-\uFFFD
     \u{10000}-\u{1FFFD} \u{20000}-\u{2FFFD} \u{30000}-\u{3FFFD}
     \u{40000}-\u{4FFFD} \u{50000}-\u{5FFFD} \u{60000}-\u{6FFFD}
     \u{70000}-\u{7FFFD} \u{80000}-\u{8FFFD} \u{90000}-\u{9FFFD}
@@ -41,27 +41,27 @@ class Url
       enc = [c1]
     elsif c1 > 127 && c1 < 2048
       enc = [
-	(c1 >> 6) | 192, (c1 & 63) | 128
+        (c1 >> 6) | 192, (c1 & 63) | 128
       ]
     elsif (c1 & 0xF800) != 0xD800
       enc = [
-	(c1 >> 12) | 224, ((c1 >> 6) & 63) | 128, (c1 & 63) | 128
+        (c1 >> 12) | 224, ((c1 >> 6) & 63) | 128, (c1 & 63) | 128
       ]
     else
       # surrogate pairs
       if (c1 & 0xFC00) != 0xD800
-	throw new RangeError('Unmatched trail surrogate at ' + n)
+        throw new RangeError('Unmatched trail surrogate at ' + n)
       end
 
       c2 = codepoint.charCodeAt(1)
       if (c2 & 0xFC00) != 0xDC00
-	throw new RangeError('Unmatched lead surrogate at ' + (n - 1))
+        throw new RangeError('Unmatched lead surrogate at ' + (n - 1))
       end
 
       c1 = ((c1 & 0x3FF) << 10) + (c2 & 0x3FF) + 0x10000
       enc = [
-	(c1 >> 18) | 240, ((c1 >> 12) & 63) | 128,
-	((c1 >> 6) & 63) | 128, (c1 & 63) | 128
+        (c1 >> 18) | 240, ((c1 >> 12) & 63) | 128,
+        ((c1 >> 6) & 63) | 128, (c1 & 63) | 128
       ]
     end
 
@@ -69,8 +69,8 @@ class Url
 
     if enc != nil
       for i in 0...enc.length
-	result += "%" + (Math.floor(enc[i]/16)).toString(16) + 
-	  (enc[i]%16).toString(16)
+        result += "%" + (Math.floor(enc[i]/16)).toString(16) +
+          (enc[i]%16).toString(16)
       end
     end
 
@@ -101,60 +101,60 @@ class Url
     return input.gsub(/(%[0-9a-fA-F]{2})+/) do |chars|
       bytes = []
       (0...chars.length).step(3) do |i|
-	bytes << chars[i+1..i+2].to_i(16)
+              bytes << chars[i+1..i+2].to_i(16)
       end
 
       chars = ''
       while bytes.length>0
-	if bytes[0] < 0x80
-	  chars += String.fromCharCode(bytes.shift())
-	elsif bytes[0] < 0xC2
-	  chars += '%' + bytes.shift().to_s(16).upcase() # error
-	elsif bytes[0] < 0xE0
-	  if bytes.length == 1
-	    chars += '%' + bytes.shift().to_s(16).upcase() # error
-	  elsif (bytes[1] & 0xC0) != 0x80
-	    chars += '%' + bytes.shift().to_s(16).upcase() # error
-	  else
-	    chars += String.fromCharCode((bytes.shift() << 6) + 
-              bytes.shift() - 0x3080)
-	  end
-	elsif bytes[0] < 0xF0
-	  if bytes.length <= 2
-	    chars += '%' + bytes.shift().to_s(16).upcase() # error
-	  elsif (bytes[1] & 0xC0) != 0x80
-	    chars += '%' + bytes.shift().to_s(16).upcase() # error
-	  elsif (bytes[1] & 0xC0) != 0x80
-	    chars += '%' + bytes.shift().to_s(16).upcase() # error
-	  elsif bytes[0] == 0xE0 && bytes[1] < 0xA0
-	    chars += '%' + bytes.shift().to_s(16).upcase() # error
-	  elsif (bytes[2] & 0xC0) != 0x80
-	    chars += '%' + bytes.shift().to_s(16).upcase() # error
-	  else
-	    chars += String.fromCharCode((bytes.shift() << 12) +
-             (bytes.shift() << 6) + bytes.shift() - 0xE2080)
-	  end
-	elsif bytes[0] < 0xF5
-	  if bytes.length <= 3
-	    chars += '%' + bytes.shift().to_s(16).upcase() # error
-	  elsif (bytes[1] & 0xC0) != 0x80
-	    chars += '%' + bytes.shift().to_s(16).upcase() # error
-	  elsif bytes[0] == 0xF0 && bytes[1] < 0x90
-	    chars += '%' + bytes.shift().to_s(16).upcase() # error
-	  elsif bytes[0] == 0xF4 && bytes[1] >= 0x90
-	    chars += '%' + bytes.shift().to_s(16).upcase() # error
-	  elsif (bytes[2] & 0xC0) != 0x80
-	    chars += '%' + bytes.shift().to_s(16).upcase() # error
-	  elsif (bytes[3] & 0xC0) != 0x80
-	    chars += '%' + bytes.shift().to_s(16).upcase() # error
-	  else
-	    chars += String.fromCharCode((bytes.shift() << 18) + 
-              (bytes.shift() << 12) + (bytes.shift() << 6) + 
-              bytes.shift() - 0x3C82080)
-	  end
-	else
-	  chars += '%' + bytes.shift().to_s(16).upcase() # error
-	end
+        if bytes[0] < 0x80
+          chars += String.fromCharCode(bytes.shift())
+        elsif bytes[0] < 0xC2
+          chars += '%' + bytes.shift().to_s(16).upcase() # error
+        elsif bytes[0] < 0xE0
+          if bytes.length == 1
+            chars += '%' + bytes.shift().to_s(16).upcase() # error
+          elsif (bytes[1] & 0xC0) != 0x80
+            chars += '%' + bytes.shift().to_s(16).upcase() # error
+          else
+            chars += String.fromCharCode((bytes.shift() << 6) +
+                    bytes.shift() - 0x3080)
+          end
+        elsif bytes[0] < 0xF0
+          if bytes.length <= 2
+            chars += '%' + bytes.shift().to_s(16).upcase() # error
+          elsif (bytes[1] & 0xC0) != 0x80
+            chars += '%' + bytes.shift().to_s(16).upcase() # error
+          elsif (bytes[1] & 0xC0) != 0x80
+            chars += '%' + bytes.shift().to_s(16).upcase() # error
+          elsif bytes[0] == 0xE0 && bytes[1] < 0xA0
+            chars += '%' + bytes.shift().to_s(16).upcase() # error
+          elsif (bytes[2] & 0xC0) != 0x80
+            chars += '%' + bytes.shift().to_s(16).upcase() # error
+          else
+            chars += String.fromCharCode((bytes.shift() << 12) +
+                   (bytes.shift() << 6) + bytes.shift() - 0xE2080)
+          end
+        elsif bytes[0] < 0xF5
+          if bytes.length <= 3
+            chars += '%' + bytes.shift().to_s(16).upcase() # error
+          elsif (bytes[1] & 0xC0) != 0x80
+            chars += '%' + bytes.shift().to_s(16).upcase() # error
+          elsif bytes[0] == 0xF0 && bytes[1] < 0x90
+            chars += '%' + bytes.shift().to_s(16).upcase() # error
+          elsif bytes[0] == 0xF4 && bytes[1] >= 0x90
+            chars += '%' + bytes.shift().to_s(16).upcase() # error
+          elsif (bytes[2] & 0xC0) != 0x80
+            chars += '%' + bytes.shift().to_s(16).upcase() # error
+          elsif (bytes[3] & 0xC0) != 0x80
+            chars += '%' + bytes.shift().to_s(16).upcase() # error
+          else
+            chars += String.fromCharCode((bytes.shift() << 18) +
+                    (bytes.shift() << 12) + (bytes.shift() << 6) +
+                    bytes.shift() - 0x3C82080)
+          end
+        else
+          chars += '%' + bytes.shift().to_s(16).upcase() # error
+        end
       end
       chars
     end
@@ -216,12 +216,12 @@ class Url
       asciiDomain = uri.normalized_host
     rescue => e
       # 5
-      raise Failure, "invalid domain - #{e}" 
+      raise Failure, "invalid domain - #{e}"
     end
 
     # 6
-    if 
-      asciiDomain.chars.any? do |c| 
+    if
+      asciiDomain.chars.any? do |c|
         "\u0000\u0009\u000A\u0020#%/:?@[\\]".include? c
       end
     then
@@ -261,8 +261,8 @@ class Url
     zero = nil
     for i in 0 .. slots-2
       if pre[i] == '0' and pre[i] == '0'
-	zero = i
-	break
+        zero = i
+        break
       end
     end
 
