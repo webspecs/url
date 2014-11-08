@@ -1273,7 +1273,7 @@ any except [:/\\?#]</text></g><path d="M262.0 91h10">
 </path></g></svg></div>
 
 <p>If the input contains an <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code>, return "<code>[</code>" plus
-the result returned by <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code> plus "<code>]</code>"</p>
+the result returned by <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code> plus "<code>]</code>".</p>
 
 <p>If the input contains an <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>, return
 the result returned by <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>.</p>
@@ -2120,6 +2120,10 @@ the result using the <a data-link-type=dfn href=#query-encode-set title="query e
 
 <p>The <dfn data-dfn-type=dfn data-noexport="" id=query-encode-set>query encode set<a class=self-link href=#query-encode-set></a></dfn> is defined to be bytes that are less than
 <code>0x21</code>, greater than <code>0x7E</code>, or one of <code>0x22</code>, <code>0x23</code>, <code>0x3C</code>, <code>0x3E</code>, and <code>0x60</code>.</p>
+
+<p class=note role=note>Note: the resolution of
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27280">bug <code>27280</code></a>
+may change how code points &lt; <code>0x20</code> are handled.</p>
 
 <h3 class="heading settled" data-level=3.23 id=fragment><span class=secno>3.23. </span><span class=content>fragment</span><a class=self-link href=#fragment></a></h3>
 

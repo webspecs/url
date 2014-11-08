@@ -570,7 +570,7 @@ Password
 
 /*
    If the input contains an @IPV6Addr, return "[" plus
-   the result returned by @IPV6Addr plus "]"
+   the result returned by @IPV6Addr plus "]".
 
    If the input contains an @IPV4Addr, return 
    the result returned by @IPV4Addr.
@@ -1009,6 +1009,10 @@ Data
 
   The <dfn>query encode set</dfn> is defined to be bytes that are less than
   0x21, greater than 0x7E, or one of 0x22, 0x23, 0x3C, 0x3E, and 0x60.
+
+  Note: the resolution of
+  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27280">bug 27280</a>
+  may change how code points < 0x20 are handled.
 */
 Query 
   = query:[^#]*
