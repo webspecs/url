@@ -99,6 +99,10 @@ Known differences with current drafts of the WHATWG <a href="https://url.spec.wh
     error, whereas current drafts of the URL standard do not.
     <a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
     agrees</a> that this should be a parse error.
+  * This draft treats hosts which contain consecutive dot characters as a
+    parse error, whereas current drafts of the URL standard do not.
+    <a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
+    agrees</a> that this should be a parse error.
   * This draft contains a proposed implementation of 
     <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug 26431</a>
     (Define IPv4 parsing).

@@ -570,7 +570,12 @@ Password
 
 /*
    If the input contains an @IPV6Addr, return "[" plus
-   the result returned by @IPV6Addr plus "]"  Otherwise:
+   the result returned by @IPV6Addr plus "]"
+
+   If the input contains an @IPV4Addr, return 
+   the result returned by @IPV4Addr.
+
+   Otherwise:
 
      * If the string starts with a left square bracket (U+005B),
        terminate parsing with a <a>parse error</a>.
@@ -628,6 +633,10 @@ Password
    Note: the resolution of
    <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25334">bug 25334</a>
    may change what codepoints are allowed in a domain.
+
+   Note: the resolution of
+   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27266">bug 27266</a>
+   may change the way domain names and trailing dots are handled.
 */
 Host
   = '[' addr:IPV6Addr ']'
@@ -761,7 +770,7 @@ IPV6Addr
   }
 
 /*
-  If any but the first @Number is greater or equal to 256, terminate processing
+  If any but the last @Number is greater or equal to 256, terminate processing
   with a <a>parse error</a>.
 
   If the last @Number is greater than or equal to 256 to the power of (5 minus
