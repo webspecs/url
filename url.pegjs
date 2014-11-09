@@ -253,50 +253,22 @@ FileLikeRelativeScheme
      input otherwise initialize $result to be an empty object.  Modify $result
      as follows:
 
+     * Copy the values of all the properties from @Authority to $result.
      * If @RelativeScheme is present in the input, then
-       set $result.scheme to this value, lowercased.
+       set $result.scheme to this value.
      * If @RelativeScheme is not present in the input, then
        set $result.scheme to the value of $base.scheme.
-     * Set $result.host to the value returned by
-       @Host up to the first "@" sign, if any.  If no
-       "@" signs are present in the return value from the
-       @Host production, then set $result.host to the
-       entire value.
-     * If one or more "@" signs are present in the value returned
-       by the @Host production, then perform the following steps:
-       * Indicate a <a>parse error</a>.
-       * If the @UserInfo is not present in the input, then substitute
-           `{"username": ""}` for the return value of
-           @UserInfo in the remainder of this step.
-       * If $password is present in the value for @UserInfo,
-           replace it with "%40" repeated as many times as there are
-           "@" signs in the value returned by @Host,
-           concatenated with the value returned by @Host with
-           all of the "@" signs removed.
-       * If $password is not present in the @UserInfo,
-           replace the $user in the @UserInfo with
-           "%40" repeated as many times as there are "@"
-           signs in the value returned by @Host, concatenated with
-           the value returned by @Host with all of the
-           "@" signs removed.
-     * If @UserInfo is present (or computed per above), then
-       perform the following steps:
-       * If $result.Host is an empty string, then terminate parsing
-           with a <a>parse error</a>.
-       * Set $result.username to the $username value in the @UserInfo.
-       * If $password is non-null in the @UserInfo, set
-           $result.password to this value.
-     * If the @Port is present and not equal to the
+     * If $result.port is equal to the
        <a href="https://url.spec.whatwg.org/#default-port">default port</a>
-       that corresponds to the $response.scheme, then set 
-       $result.port to this value.
+       that corresponds to the $response.scheme, then delete
+       the $port property from $result.
          
    <li>Indicate a <a>parse error</a>.
 
     Initialize $result to be the value returned by @RelativeUrl, and then
     modify it as follows:
 
-     * Set $result.scheme to value returned by @RelativeScheme, lowercased
+     * Set $result.scheme to value returned by @RelativeScheme.
      * If $result.scheme is equal to $base.scheme, then perform the
        following steps:
        * Set $result.host to $base.host
@@ -311,29 +283,28 @@ FileLikeRelativeScheme
        * If the first element of the path does contain an "@"
            sign, then remove this element from the path and 
            perform the following steps with this value:
-           * The part of this value that precedes the first "@"
-               is to be treated as an @UserInfo value.  If it
-               contains a ":", set $result.username to the value
-               up to the position of the first ":" and set
-               $result.password to the value starting with the position
-               after the first ":".  If no ":" is present,
-               set $result.username to this entire value.
-           * Set $result.host to the value starting after the first
-               "@".
+           * Set $result.host to the value starting after the first "@".
+           * Initialize $info to the part of this value that precedes the
+               first "@".
+           * If $info contains a ":", set $result.username to the value up to
+               the position of the first ":" and set $result.password to the
+               value starting with the position after the first ":".
+           * If $info does not contain a ":" is present, set $result.username
+               to this value.
        * if $result.host is either an empty string or contains a
            colon, then terminate parsing with a <a>parse error</a>.
 
    </ol>
+
+   Return $result.
 */
 AbsoluteUrl
   = scheme:(RelativeScheme ':')? slash1:[/\\] slash2:[/\\]+
-    userinfo:UserInfo?
-    host:Host 
-    port:(':' Port)?
+    authority:Authority
     remainder:([/\\] RelativeUrl)?
   {
-    remainder = (remainder ? remainder[1] : {});
-    result = copy(remainder, userinfo, host, port && port[1]);
+    result = (remainder ? remainder[1] : {});
+    for (prop in authority) result[prop] = authority[prop];
 
     if (scheme) {
       result.scheme = scheme[0].toLowerCase()
@@ -341,28 +312,9 @@ AbsoluteUrl
       result.scheme = base.scheme
     }
 
-    host = host.split('@');
-    result.host = host.pop();
-    if (host.length > 0) {
-      result.exception = 
-        'At sign ("@") in user or password needs to be percent encoded';
-      if (!userinfo) userinfo = {username: ''}
-      if (userinfo.password != null) {
-        userinfo.password += Array(host.length+1).join("%40")+host.join('')
-      } else {
-        userinfo.username += Array(host.length+1).join("%40")+host.join('')
-      }
-    };
-
-    if (userinfo) {
-      if (result.host == '') error('Empty host');
-      result.username = userinfo.username;
-      if (userinfo.password != null) result.password = userinfo.password
-    };
-
-    if (port && Url.DEFAULT_PORT[result.scheme] != port[1]) {
-      result.port = port[1]
-    };
+    if (Url.DEFAULT_PORT[result.scheme] == result.port) {
+      delete result.port;
+    }
 
     if (slash1 == '\\' || slash2.join().indexOf("\\") != -1) {
       result.exception = 'Backslash ("\\") used as a delimiter'
@@ -390,13 +342,13 @@ AbsoluteUrl
       if (result.path.length > 0) {
         var host = result.path.shift().split('@');
         if (host.length > 1) {
-          var userinfo = host.shift();
-          var split = userinfo.indexOf(':');
+          var info = host.shift();
+          var split = info.indexOf(':');
           if (split == -1) {
-            result.username = userinfo
+            result.username = info
           } else {
-            result.username = userinfo.slice(0,split)
-            result.password = userinfo.slice(split+1)
+            result.username = info.slice(0,split)
+            result.password = info.slice(split+1)
           }
         };
 
@@ -513,22 +465,64 @@ Scheme
   }
 
 /*
-  Initialize $result to be a JSON object with $user
-  set to be the result returned by @User.  If
-  @Password is present in the input, set $result.password
-  to this value.  Return $result.
-*/
-UserInfo
-  = user:User password:(':' Password)? '@'
-  {
-    var result = copy({username: user}, user);
+   Initialize $result to an empty object, then modify it as follows:
 
-    if (password) {
-      result['password'] = password[1];
-      if (password[1].exception) result.exception = password[1].exception
+     * If @User is present, set $result.username to its value.
+     * If @Password is present, set $result.password to its value.
+     * Set $result.host to the value returned by
+       @Host up to the first "@" sign, if any.  If no
+       "@" signs are present in the return value from the
+       @Host production, then set $result.host to the
+       entire value.
+     * If one or more "@" signs are present in the value returned
+       by the @Host production, then perform the following steps:
+       * Indicate a <a>parse error</a>.
+       * Initialize $info to the remainder of the @Host after the
+           first "@" sign.  Remove all remaining "@" signs in $info,
+           and prepend a "%40" for every "@" removed.
+       * If @Password is present in the input, append $info to $result.password.
+       * If @Password is not present in input and @User is present,
+           append $info to $result.username.
+       * If @User is not present in input, set $result.username to $info.
+     * If @Port is present, set $result.port to its value.
+
+   Return $result.
+*/
+Authority
+  = userpass:( User (':' Password)? '@' )?
+    host:Host 
+    port:(':' Port)?
+  {
+    result = copy({}, host, userpass && userpass[0],
+      userpass && userpass[1] && userpass[1][1], port && port[1]);
+
+    if (userpass) {
+      result.username = userpass[0];
+      if (userpass[1]) result.password = userpass[1][1];
+    }
+
+    host = host.split('@');
+    result.host = host.pop();
+  
+    if (host.length > 0) {
+      result.exception = 
+        'At sign ("@") in user or password needs to be percent encoded';
+      var info = Array(host.length+1).join("%40")+host.join('');
+      if (userpass && userpass[1] != null) {
+        result.password += info
+      } else {
+        result.username = (result.username || '') + info
+      }
+    };
+  
+
+    if (result.username != null && result.host == '') {
+      error('Empty host');
     };
 
-    return result
+    if (port) result.port = port[1];
+
+    return result;
   }
 
 /*
