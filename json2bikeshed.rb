@@ -20,6 +20,10 @@ def expression(node, indent)
     text = node['rawText'].sub('[^', '[').sub(']i', ']')
     if node['inverted']
       puts ''.ljust(indent) + 'T: any except ' + text
+    elsif text =~ /^\[\\?(.)\\?(.)\]$/
+      puts ''.ljust(indent) + 'Choice:'
+      puts ''.ljust(indent) + "  T: #{$1}"
+      puts ''.ljust(indent) + "  T: #{$2}"
     else
       puts ''.ljust(indent) + 'T: any of ' + text
     end
