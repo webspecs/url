@@ -74,7 +74,7 @@ Goals {#goals}
     <a href="http://www.w3.org/TR/html5/">HTML5 Recommendation</a> into a
     status section or equivalent in this document.  Expand on that information
     with specific notes on known interop issues.  An example of this can be
-    found in [[#file-like-relative-url]].
+    found in [[#file-url]].
 
   * Define more soft <a>parse errors</a>.  The 
     <a href="https://url.spec.whatwg.org/">URL living standard</a> has a start,

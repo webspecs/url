@@ -82,17 +82,7 @@
    <a href="https://url.spec.whatwg.org/#concept-url-query">query</a>, and
    <a href="https://url.spec.whatwg.org/#concept-url-fragment">fragment</a>.
 
-   In the case of a @RelativeUrl, terminate parsing with a <a>parse error</a>
-   if $base.scheme is not a
-   <a href="https://url.spec.whatwg.org/#relative-scheme">relative scheme</a>.
-   Otherwise initialize a $result to the value returned by @RelativeUrl, and
-   then modify it as follows before returning the result:
-     * Set $result.scheme to $base.scheme.
-     * Set $result.host to $base.host.
-     * Replace $result.path by the <a>path concatenation</a> of $base.path and
-       $result.Path.
-
-   In all other cases, the value returned by the called production is returned
+   In each case, the value returned by the called production is returned
    unmodified.
 
    Note: the resolution of
@@ -100,10 +90,24 @@
    may add support for relative URLs for unknown schemes.
 */
 Url
-  = FileLikeRelativeUrl
+  = FileUrl
   / AbsoluteUrl
   / NonRelativeUrl
-  / result:RelativeUrl
+  / RelativeUrl
+
+/*
+   Terminate parsing with a <a>parse error</a> if $base.scheme is not a
+   <a href="https://url.spec.whatwg.org/#relative-scheme">relative scheme</a>.
+
+   Otherwise initialize a $result to the value returned by @RelativeReference,
+   and then modify it as follows before returning the result:
+     * Set $result.scheme to $base.scheme.
+     * Set $result.host to $base.host.
+     * Replace $result.path by the <a>path concatenation</a> of $base.path and
+       $result.Path.
+*/
+RelativeUrl
+  = result:RelativeReference
   {
     if (Url.RELATIVE_SCHEME.indexOf(base.scheme) == -1) {
       error("relative URL provided with a non-relative base")
@@ -115,7 +119,6 @@ Url
 
     return result
   }
-  // comment
 
 /*
    Four production rules are defined for files, numbered from top to bottom.
@@ -124,7 +127,7 @@ Url
 
    <ol>
    <li>Set $result to the object returned by
-   @RelativeUrl, and then modify it as follows:
+   @RelativeReference, and then modify it as follows:
 
      * Set $result.scheme to the value returned by
        @FileLikeRelativeScheme.
@@ -138,7 +141,7 @@ Url
    <li>Indicate a <a>parse error</a>.
 
    Set $result to the object returned by
-   @RelativeUrl, and then modify it as follows:
+   @RelativeReference, and then modify it as follows:
 
      * Set $result.scheme to "file".
      * Remove the first element from $result.path if it is an empty
@@ -149,7 +152,7 @@ Url
 
    <li><em>This rule is only to be evaluated if the value of
    $base.scheme is "file"</em>.  Set $result to the object returned by
-   @RelativeUrl, and then modify it as follows:
+   @RelativeReference, and then modify it as follows:
 
      * Set $result.scheme to "file".
      * Set $result.host to the value returned by the
@@ -158,14 +161,14 @@ Url
        there is a second element which has a non-empty value.
 
    <li>Set $result to the object returned by
-   @RelativeUrl, and then modify it as follows:
+   @RelativeReference, and then modify it as follows:
 
      * Set $result.scheme to the value returned by
        @FileLikeRelativeScheme
      * If the @Host is present in the input, set $result.host
        to the value returned by the @Host production rule
      * If the @Host is not present and no slashes precede the
-       @RelativeUrl in the input, then the $base.path
+       @RelativeReference in the input, then the $base.path
        minus the last element is prepended to the $result.path.
 
    </ol>
@@ -180,10 +183,10 @@ Url
   comments to
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=23550">bug 23550</a>.  
 */
-FileLikeRelativeUrl
+FileUrl
   = scheme:FileLikeRelativeScheme ':' 
     drive:[a-zA-Z] [:|]
-    '/'? remainder:RelativeUrl
+    '/'? remainder:RelativeReference
   {
     var result = remainder;
     result.scheme = scheme;
@@ -194,7 +197,7 @@ FileLikeRelativeUrl
 
   / '/'*
     drive:[a-zA-Z] '|'
-    '/'? remainder:RelativeUrl
+    '/'? remainder:RelativeReference
   {
     var result = remainder;
     result.exception = 'Legacy compatibility issue';
@@ -205,7 +208,7 @@ FileLikeRelativeUrl
   }
 
   / &{ return base.scheme == 'file' }
-    '/' '/' host:Host '/' remainder:RelativeUrl
+    '/' '/' host:Host '/' remainder:RelativeReference
   {
     var result = remainder
     result.scheme = 'file';
@@ -214,7 +217,7 @@ FileLikeRelativeUrl
     return result
   }
 
-  / scheme:FileLikeRelativeScheme ':' host:('/' '/' Host)? slash:'/'* remainder:RelativeUrl
+  / scheme:FileLikeRelativeScheme ':' host:('/' '/' Host)? slash:'/'* remainder:RelativeReference
   {
     var result = remainder;
     if (host) {
@@ -240,7 +243,7 @@ FileLikeRelativeScheme
   }
 
 /*
-   Two production rules are defined for absolute URLs, numbered from top to
+   Three production rules are defined for absolute URLs, numbered from top to
    bottom.
 
    Evaluation instructions for each:
@@ -249,7 +252,7 @@ FileLikeRelativeScheme
    <li>If anything other than two forward solidus characters ("//") immediately
      follows the first colon in the input, indicate a <a>parse error</a>.
 
-     Set $result to the object returned by @RelativeUrl if present in the
+     Set $result to the object returned by @RelativeReference if present in the
      input otherwise initialize $result to be an empty object.  Modify $result
      as follows:
 
@@ -262,54 +265,48 @@ FileLikeRelativeScheme
        <a href="https://url.spec.whatwg.org/#default-port">default port</a>
        that corresponds to the $response.scheme, then delete
        the $port property from $result.
-         
-   <li>Indicate a <a>parse error</a>.
 
-    Initialize $result to be the value returned by @RelativeUrl, and then
+   <li><em>This rule is only to be evaluated if the value of
+    @Scheme matches $base.scheme</em>.
+
+    Indicate a <a>parse error</a>.
+
+    Initialize $result to be the value returned by @RelativeReference, and then
     modify it as follows:
 
-     * Set $result.scheme to value returned by @RelativeScheme.
-     * If $result.scheme is equal to $base.scheme, then perform the
-       following steps:
-       * Set $result.host to $base.host
-       * Replace $result.path by the <a>path concatenation</a> of 
-           $base.path and $result.path
-     * If $result.scheme is not equal to $base.scheme, then perform the
-       following steps:
-       * Remove all empty strings from the front of $result.path.
-       * If the first element of $result.path does not contain an "@"
-           sign, then set $result.host to this elements
-           value, and remove this element from $result.path.
-       * If the first element of the path does contain an "@"
-           sign, then remove this element from the path and 
-           perform the following steps with this value:
-           * Set $result.host to the value starting after the first "@".
-           * Initialize $info to the part of this value that precedes the
-               first "@".
-           * If $info contains a ":", set $result.username to the value up to
-               the position of the first ":" and set $result.password to the
-               value starting with the position after the first ":".
-           * If $info does not contain a ":" is present, set $result.username
-               to this value.
-       * if $result.host is either an empty string or contains a
-           colon, then terminate parsing with a <a>parse error</a>.
+     * Set $result.scheme to the value returned by @RelativeScheme.
+     * Set $result.scheme to the value returned by @Scheme.
+     * Set $result.host to $base.host
+     * Replace $result.path by the <a>path concatenation</a> of 
+         $base.path and $result.path
+
+   <li>Indicate a <a>parse error</a>.
+
+    Initialize $result to be the value returned by @RelativeReference, and then
+    modify it as follows:
+
+     * Set $result.scheme to the value returned by @RelativeScheme.
+     * Copy the values of all the properties from @Authority to $result.
+     * if $result.host is either an empty string or contains a
+         colon, then terminate parsing with a <a>parse error</a>.
 
    </ol>
 
    Return $result.
 */
+
 AbsoluteUrl
   = scheme:(RelativeScheme ':')? slash1:[/\\] slash2:[/\\]+
     authority:Authority
-    remainder:([/\\] RelativeUrl)?
+    remainder:([/\\] RelativeReference)?
   {
     result = (remainder ? remainder[1] : {});
     for (prop in authority) result[prop] = authority[prop];
 
     if (scheme) {
-      result.scheme = scheme[0].toLowerCase()
+      result.scheme = scheme[0];
     } else {
-      result.scheme = base.scheme
+      result.scheme = base.scheme;
     }
 
     if (Url.DEFAULT_PORT[result.scheme] == result.port) {
@@ -326,38 +323,34 @@ AbsoluteUrl
   }
 
   / scheme:RelativeScheme 
+    &{ return base.scheme == scheme }
     ':'
-    remainder:RelativeUrl
+    remainder:RelativeReference
   {
     result = remainder;
     result.exception = 'Expected a slash ("/")';
+    result.scheme = scheme;
+
+    result.host = base.host;
+    result.path = Url.pathConcat(base.path, result.path)
+
+    return result
+  }
+
+  / scheme:RelativeScheme 
+    ':'
+    [\\/]?
+    authority:Authority
+    [\\/]*
+    remainder:RelativeReference
+  {
+    result = remainder;
+    for (prop in authority) result[prop] = authority[prop];
+    result.exception = 'Expected a slash ("/")';
     result.scheme = scheme.toLowerCase();
 
-    if (base.scheme == result.scheme) {
-      result.host = base.host;
-      result.path = Url.pathConcat(base.path, result.path)
-    } else {
-      while (result.path[0] == '') result.path.shift();
-
-      if (result.path.length > 0) {
-        var host = result.path.shift().split('@');
-        if (host.length > 1) {
-          var info = host.shift();
-          var split = info.indexOf(':');
-          if (split == -1) {
-            result.username = info
-          } else {
-            result.username = info.slice(0,split)
-            result.password = info.slice(split+1)
-          }
-        };
-
-        result.host = host.join('@')
-      };
-
-      if (!result.host || result.host == '') error('Empty host');
-      if (result.host.indexOf(':') != -1) error('Invalid host');
-    };
+    if (!result.host || result.host == '') error('Empty host');
+    if (result.host.indexOf(':') != -1) error('Invalid host');
 
     return result
   }
@@ -369,7 +362,7 @@ AbsoluteUrl
   If @Fragment is present in the input, set $result.fragment to this value.
   Return $result.
 */
-RelativeUrl
+RelativeReference
   = path:Path?
     query:('?' Query)?
     fragment:('#' Fragment)?
