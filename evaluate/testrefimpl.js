@@ -1,5 +1,7 @@
 var fs = require("fs");
 var punycode = require("../reference-implementation/punycode");
+eval(fs.readFileSync("../reference-implementation/idna.js", "utf8"));
+eval(fs.readFileSync("../reference-implementation/unorm.js", "utf8"));
 eval(fs.readFileSync("../reference-implementation/url.js", "utf8"));
 eval(fs.readFileSync("../reference-implementation/urlparser.js", "utf8"));
 
