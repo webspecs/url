@@ -66,6 +66,11 @@
 
     return string
   }
+
+  /* Regular expression "lookahead" on the input string */
+  function lookahead(expected) {
+    return expected.test(input.slice(offset()))
+  }
 }
 
 /*
@@ -564,12 +569,17 @@ Password
    may change the way domain names and trailing dots are handled.
 */
 Host
-  = '[' addr:IPV6Addr ']'
+  = '[' addr:IPV6Addr ']' 
+    &{ return lookahead(/^([\\\/?#:]|$)/) }
   {
     return '[' + addr + ']'
   }
 
   / addr:IPV4Addr
+    &{ return lookahead(/^([\\\/?#:]|$)/) }
+  {
+    return addr
+  }
 
   / host:[^:/\\?#]*
   {
