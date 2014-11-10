@@ -10,7 +10,7 @@
 extern crate serialize;
 extern crate url;
 use std::char;
-use std::u32;
+use std::num::from_str_radix;
 use serialize::json;
 use url::{Url, UrlParser};
 
@@ -177,7 +177,7 @@ fn unescape(input: &str) -> String {
                             hex.push(chars.next().unwrap());
                             hex.push(chars.next().unwrap());
                             hex.push(chars.next().unwrap());
-                            u32::parse_bytes(hex.as_bytes(), 16)
+                            from_str_radix(hex.as_slice(), 16)
                                 .and_then(char::from_u32).unwrap()
                         }
                         _ => panic!("Invalid test data input"),
