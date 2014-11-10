@@ -88,6 +88,10 @@
 
      * If @Query is present in the input, set $result.query to this value.
      * If @Fragment is present in the input, set $result.fragment to this value.
+     * If $result.scheme has a 
+       <a href="https://url.spec.whatwg.org/#default-port">default port</a>,
+       and if $result.port is equal to that default,
+       then delete the $port property from $result.
 
    Return $result.
 */
@@ -105,6 +109,10 @@ Url
     if (fragment) {
       result.fragment = fragment[1].toString()
     };
+
+    if (Url.DEFAULT_PORT[result.scheme] == result.port) {
+      delete result.port;
+    }
 
     return result
 }
@@ -263,10 +271,6 @@ NonRelativeUrl
        set $result.scheme to this value.
      * If @RelativeScheme is not present in the input, then
        set $result.scheme to the value of $base.scheme.
-     * If $result.port is equal to the
-       <a href="https://url.spec.whatwg.org/#default-port">default port</a>
-       that corresponds to the $response.scheme, then delete
-       the $port property from $result.
      * If @Path is present in the input, set $result.path to its value.
 
    <li><em>This rule is only to be evaluated if the value of
@@ -316,10 +320,6 @@ RelativeUrl
       result.scheme = scheme[0];
     } else {
       result.scheme = base.scheme;
-    }
-
-    if (Url.DEFAULT_PORT[result.scheme] == result.port) {
-      delete result.port;
     }
 
     if (slash1 == '\\' || slash2.join().indexOf("\\") != -1) {

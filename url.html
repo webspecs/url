@@ -245,6 +245,10 @@ each returning a set of components, namely one or more of the following:
 
 <ul><li data-md=""><p>If <code class=grammar-rule><a href=#query>query</a></code> is present in the input, set <code>result.query</code> to this value.</p>
 <li data-md=""><p>If <code class=grammar-rule><a href=#fragment>fragment</a></code> is present in the input, set <code>result.fragment</code> to this value.</p>
+<li data-md=""><p>If <code>result.scheme</code> has a
+<a href=https://url.spec.whatwg.org/#default-port>default port</a>,
+and if <code>result.port</code> is equal to that default,
+then delete the <code>port</code> property from <code>result</code>.</p>
 </ul>
 <p>Return <code>result</code>.</p>
 
@@ -890,10 +894,6 @@ bottom.</p>
 set <code>result.scheme</code> to this value.</p>
 <li data-md=""><p>If <code class=grammar-rule><a href=#relative-scheme>relative-scheme</a></code> is not present in the input, then
 set <code>result.scheme</code> to the value of <code>base.scheme</code>.</p>
-<li data-md=""><p>If <code>result.port</code> is equal to the
-<a href=https://url.spec.whatwg.org/#default-port>default port</a>
-that corresponds to the <code>response.scheme</code>, then delete
-the <code>port</code> property from <code>result</code>.</p>
 <li data-md=""><p>If <code class=grammar-rule><a href=#path>path</a></code> is present in the input, set <code>result.path</code> to its value.</p>
 </ul>
 <li><em>This rule is only to be evaluated if the value of
