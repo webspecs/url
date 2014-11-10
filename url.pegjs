@@ -92,10 +92,12 @@
    Return $result.
 */
 Url
-  = result:(FileUrl / NonRelativeUrl / RelativeUrl)
+  = base:(FileUrl / NonRelativeUrl / RelativeUrl)
     query:('?' Query)?
     fragment:('#' Fragment)?
 {
+    var result = copy(base, query && query[1], fragment && fragment[1]);
+
     if (query) {
       result.query = query[1]
     };
@@ -175,7 +177,7 @@ FileUrl
     drive:[a-zA-Z] [:|]
     '/'? path:Path
   {
-    var result = copy({path: path});
+    var result = copy({path: path}, path);
     result.scheme = scheme;
     if (result.path[0] == '' && result.path[1] != '') result.path.shift();
     result.path.unshift(drive+':');
@@ -184,7 +186,7 @@ FileUrl
 
   / scheme:FileLikeScheme ':' host:('/' '/' Host)? slash:'/'* path:Path
   {
-    var result = copy({path: path});
+    var result = copy({path: path}, path);
     if (host) {
       result.host = host[2];
     } else if (slash.length == 0) {
@@ -200,7 +202,7 @@ FileUrl
     drive:[a-zA-Z] '|'
     '/'? path:Path
   {
-    var result = copy({path: path});
+    var result = copy({path: path}, path);
     result.exception = 'Legacy compatibility issue';
     result.scheme = 'file';
     if (result.path[0] == '' && result.path[1] != '') result.path.shift();
@@ -211,7 +213,7 @@ FileUrl
   / &{ return base.scheme == 'file' }
     '/' '/' host:Host '/' path:Path
   {
-    var result = copy({path: path});
+    var result = copy({path: path}, path);
     result.scheme = 'file';
     result.host = host;
     if (result.path[0] == '' && result.path[1] != '') result.path.shift();
@@ -352,7 +354,7 @@ RelativeUrl
     ':'
     path:Path
   {
-    result = copy({path: path});
+    var result = copy({path: path}, path);
     result.exception = 'Expected a slash ("/")';
     result.scheme = scheme;
 
@@ -368,7 +370,7 @@ RelativeUrl
       error("relative URL provided with a non-relative base")
     };
 
-    var result = copy({path: path});
+    var result = copy({path: path}, path);
     result.scheme = base.scheme;
     result.host = base.host; 
     result.path = Url.pathConcat(base.path, result.path)
