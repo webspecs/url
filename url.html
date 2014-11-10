@@ -254,7 +254,7 @@ then delete the <code>port</code> property from <code>result</code>.</p>
 
 <h3 class="heading settled" data-level=3.2 id=file-url><span class=secno>3.2. </span><span class=content>file-url</span><a class=self-link href=#file-url></a></h3>
 
-<div class=railroad><svg class=railroad-diagram height=230 viewBox="0 0 705 230" width=705>
+<div class=railroad><svg class=railroad-diagram height=200 viewBox="0 0 705 200" width=705>
 <g transform="translate(.5 .5)">
 <path d="M 20 31 v 20 m 10 -20 v 20 m -10 -10 h 20.5">
 </path><g>
@@ -469,50 +469,10 @@ any of [a-zA-Z]</text></g><path d="M372.0 160h10">
 </rect><text x=534.0 y=164>
 path</text></g><path d="M560.0 160h10">
 </path></g><path d="M644.0 160a10 10 0 0 0 10 -10v-99a10 10 0 0 1 10 -10">
-</path><path d="M40.0 41a10 10 0 0 1 10 10v148a10 10 0 0 0 10 10">
-</path><g>
-<path d="M60.0 209h148.0">
-</path><path d="M496.0 209h148.0">
-</path><path d="M208.0 209h10">
-</path><g>
-<path d="M218.0 209h0.0">
-</path><path d="M246.0 209h0.0">
-</path><rect height=22 rx=10 ry=10 width=28 x=218.0 y=198>
-</rect><text x=232.0 y=213>
-/</text></g><path d="M246.0 209h10">
-</path><path d="M256.0 209h10">
-</path><g>
-<path d="M266.0 209h0.0">
-</path><path d="M294.0 209h0.0">
-</path><rect height=22 rx=10 ry=10 width=28 x=266.0 y=198>
-</rect><text x=280.0 y=213>
-/</text></g><path d="M294.0 209h10">
-</path><path d="M304.0 209h10">
-</path><g>
-<path d="M314.0 209h0.0">
-</path><path d="M366.0 209h0.0">
-</path><rect height=22 width=52 x=314.0 y=198>
-</rect><text x=340.0 y=213>
-host</text></g><path d="M366.0 209h10">
-</path><path d="M376.0 209h10">
-</path><g>
-<path d="M386.0 209h0.0">
-</path><path d="M414.0 209h0.0">
-</path><rect height=22 rx=10 ry=10 width=28 x=386.0 y=198>
-</rect><text x=400.0 y=213>
-/</text></g><path d="M414.0 209h10">
-</path><path d="M424.0 209h10">
-</path><g>
-<path d="M434.0 209h0.0">
-</path><path d="M486.0 209h0.0">
-</path><rect height=22 width=52 x=434.0 y=198>
-</rect><text x=460.0 y=213>
-path</text></g><path d="M486.0 209h10">
-</path></g><path d="M644.0 209a10 10 0 0 0 10 -10v-148a10 10 0 0 1 10 -10">
 </path></g><path d="M 664 41 h 20 m -10 -10 v 20 m 10 -20 v 20">
 </path></g></svg></div>
 
-<p>Four production rules are defined for files, numbered from top to bottom.</p>
+<p>Three production rules are defined for files, numbered from top to bottom.</p>
 
 <p>Evaluation instructions for each:</p>
 
@@ -549,18 +509,6 @@ path</text></g><path d="M486.0 209h10">
 <li data-md=""><p>Construct a string consisting of the character following
  the initial "<code>/</code>" (if any) in the production rule concatenated
  with a "<code>:</code>".  Prepend this string to the <code>result.path</code> array.</p>
-</ul>
- <li><em>This rule is only to be evaluated if the value of
- <code>base.scheme</code> is "<code>file</code>"</em>.
-
-<p>Initialize <code>result</code> to an empty object, and then modify it as follows:</p>
-
-<ul><li data-md=""><p>Set <code>result.scheme</code> to "<code>file</code>".</p>
-<li data-md=""><p>Set <code>result.host</code> to the value returned by the
- <code class=grammar-rule><a href=#host>host</a></code> production rule.</p>
-<li data-md=""><p>Set <code>result.path</code> to the value returned by <code class=grammar-rule><a href=#path>path</a></code>.</p>
-<li data-md=""><p>Remove the first element of the path if it is an empty string and
- there is a second element which has a non-empty value.</p>
 </ul>
  </ol>
 
@@ -623,16 +571,16 @@ may add support for relative URLs for unknown schemes.</p>
 
 <h3 class="heading settled" data-level=3.4 id=relative-url><span class=secno>3.4. </span><span class=content>relative-url</span><a class=self-link href=#relative-url></a></h3>
 
-<div class=railroad><svg class=railroad-diagram height=248 viewBox="0 0 837 248" width=837>
+<div class=railroad><svg class=railroad-diagram height=232 viewBox="0 0 797 232" width=797>
 <g transform="translate(.5 .5)">
 <path d="M 20 31 v 20 m 10 -20 v 20 m -10 -10 h 20.5">
 </path><g>
 <path d="M40 41h0.0">
-</path><path d="M796.0 41h0.0">
+</path><path d="M756.0 41h0.0">
 </path><path d="M40.0 41h20">
 </path><g>
 <path d="M60.0 41h0.0">
-</path><path d="M776.0 41h0.0">
+</path><path d="M736.0 41h0.0">
 </path><g>
 <path d="M60.0 41h0.0">
 </path><path d="M308.0 41h0.0">
@@ -676,206 +624,189 @@ relative-scheme</text></g><path d="M230.0 41h10">
 </path><rect height=22 rx=10 ry=10 width=28 x=328.0 y=60>
 </rect><text x=342.0 y=75>
 \</text></g><path d="M356.0 71a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10">
-</path></g><path d="M376.0 41h10">
-</path><g>
-<path d="M386.0 41h0.0">
-</path><path d="M474.0 41h0.0">
-</path><path d="M386.0 41h10">
+</path></g><g>
+<path d="M376.0 41h0.0">
+</path><path d="M444.0 41h0.0">
+</path><path d="M376.0 41h20">
 </path><g>
 <path d="M396.0 41h0.0">
-</path><path d="M464.0 41h0.0">
-</path><path d="M396.0 41h20">
+</path><path d="M424.0 41h0.0">
+</path><rect height=22 rx=10 ry=10 width=28 x=396.0 y=30>
+</rect><text x=410.0 y=45>
+/</text></g><path d="M424.0 41h20">
+</path><path d="M376.0 41a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10">
 </path><g>
-<path d="M416.0 41h0.0">
-</path><path d="M444.0 41h0.0">
-</path><rect height=22 rx=10 ry=10 width=28 x=416.0 y=30>
-</rect><text x=430.0 y=45>
-/</text></g><path d="M444.0 41h20">
-</path><path d="M396.0 41a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10">
+<path d="M396.0 71h0.0">
+</path><path d="M424.0 71h0.0">
+</path><rect height=22 rx=10 ry=10 width=28 x=396.0 y=60>
+</rect><text x=410.0 y=75>
+\</text></g><path d="M424.0 71a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10">
+</path></g><path d="M444.0 41h10">
 </path><g>
-<path d="M416.0 71h0.0">
-</path><path d="M444.0 71h0.0">
-</path><rect height=22 rx=10 ry=10 width=28 x=416.0 y=60>
-</rect><text x=430.0 y=75>
-\</text></g><path d="M444.0 71a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10">
-</path></g><path d="M464.0 41h10">
-</path><path d="M396.0 41a10 10 0 0 0 -10 10v29a10 10 0 0 0 10 10">
+<path d="M454.0 41h0.0">
+</path><path d="M546.0 41h0.0">
+</path><rect height=22 width=92 x=454.0 y=30>
+</rect><text x=500.0 y=45>
+authority</text></g><path d="M546.0 41h10">
 </path><g>
-<path d="M396.0 90h68">
-</path></g><path d="M464.0 90a10 10 0 0 0 10 -10v-29a10 10 0 0 0 -10 -10">
-</path></g><path d="M474.0 41h10">
-</path><path d="M484.0 41h10">
+<path d="M556.0 41h0.0">
+</path><path d="M736.0 41h0.0">
+</path><path d="M556.0 41a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10">
 </path><g>
-<path d="M494.0 41h0.0">
-</path><path d="M586.0 41h0.0">
-</path><rect height=22 width=92 x=494.0 y=30>
-</rect><text x=540.0 y=45>
-authority</text></g><path d="M586.0 41h10">
+<path d="M576.0 21h140">
+</path></g><path d="M716.0 21a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10">
+</path><path d="M556.0 41h20">
+</path><g>
+<path d="M576.0 41h0.0">
+</path><path d="M716.0 41h0.0">
+</path><g>
+<path d="M576.0 41h0.0">
+</path><path d="M644.0 41h0.0">
+</path><path d="M576.0 41h20">
 </path><g>
 <path d="M596.0 41h0.0">
-</path><path d="M776.0 41h0.0">
-</path><path d="M596.0 41a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10">
+</path><path d="M624.0 41h0.0">
+</path><rect height=22 rx=10 ry=10 width=28 x=596.0 y=30>
+</rect><text x=610.0 y=45>
+/</text></g><path d="M624.0 41h20">
+</path><path d="M576.0 41a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10">
 </path><g>
-<path d="M616.0 21h140">
-</path></g><path d="M756.0 21a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10">
-</path><path d="M596.0 41h20">
+<path d="M596.0 71h0.0">
+</path><path d="M624.0 71h0.0">
+</path><rect height=22 rx=10 ry=10 width=28 x=596.0 y=60>
+</rect><text x=610.0 y=75>
+\</text></g><path d="M624.0 71a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10">
+</path></g><path d="M644.0 41h10">
 </path><g>
-<path d="M616.0 41h0.0">
-</path><path d="M756.0 41h0.0">
+<path d="M654.0 41h0.0">
+</path><path d="M706.0 41h0.0">
+</path><rect height=22 width=52 x=654.0 y=30>
+</rect><text x=680.0 y=45>
+path</text></g><path d="M706.0 41h10">
+</path></g><path d="M716.0 41h20">
+</path></g></g><path d="M736.0 41h20">
+</path><path d="M40.0 41a10 10 0 0 1 10 10v50a10 10 0 0 0 10 10">
 </path><g>
-<path d="M616.0 41h0.0">
-</path><path d="M684.0 41h0.0">
-</path><path d="M616.0 41h20">
+<path d="M60.0 111h34.0">
+</path><path d="M702.0 111h34.0">
+</path><path d="M94.0 111h10">
 </path><g>
-<path d="M636.0 41h0.0">
-</path><path d="M664.0 41h0.0">
-</path><rect height=22 rx=10 ry=10 width=28 x=636.0 y=30>
-</rect><text x=650.0 y=45>
-/</text></g><path d="M664.0 41h20">
-</path><path d="M616.0 41a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10">
+<path d="M104.0 111h0.0">
+</path><path d="M244.0 111h0.0">
+</path><rect height=22 width=140 x=104.0 y=100>
+</rect><text x=174.0 y=115>
+relative-scheme</text></g><path d="M244.0 111h10">
+</path><path d="M254.0 111h10">
 </path><g>
-<path d="M636.0 71h0.0">
-</path><path d="M664.0 71h0.0">
-</path><rect height=22 rx=10 ry=10 width=28 x=636.0 y=60>
-</rect><text x=650.0 y=75>
-\</text></g><path d="M664.0 71a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10">
-</path></g><path d="M684.0 41h10">
+<path d="M264.0 111h0.0">
+</path><path d="M292.0 111h0.0">
+</path><rect height=22 rx=10 ry=10 width=28 x=264.0 y=100>
+</rect><text x=278.0 y=115>
+:</text></g><path d="M292.0 111h10">
 </path><g>
-<path d="M694.0 41h0.0">
-</path><path d="M746.0 41h0.0">
-</path><rect height=22 width=52 x=694.0 y=30>
-</rect><text x=720.0 y=45>
-path</text></g><path d="M746.0 41h10">
-</path></g><path d="M756.0 41h20">
-</path></g></g><path d="M776.0 41h20">
-</path><path d="M40.0 41a10 10 0 0 1 10 10v58a10 10 0 0 0 10 10">
+<path d="M302.0 111h0.0">
+</path><path d="M410.0 111h0.0">
+</path><path d="M302.0 111a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10">
 </path><g>
-<path d="M60.0 119h44.0">
-</path><path d="M732.0 119h44.0">
-</path><path d="M104.0 119h10">
+<path d="M322.0 91h68">
+</path></g><path d="M390.0 91a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10">
+</path><path d="M302.0 111h20">
 </path><g>
-<path d="M114.0 119h0.0">
-</path><path d="M254.0 119h0.0">
-</path><rect height=22 width=140 x=114.0 y=108>
-</rect><text x=184.0 y=123>
-relative-scheme</text></g><path d="M254.0 119h10">
-</path><path d="M264.0 119h10">
+<path d="M322.0 111h0.0">
+</path><path d="M390.0 111h0.0">
+</path><path d="M322.0 111h20">
 </path><g>
-<path d="M274.0 119h0.0">
-</path><path d="M302.0 119h0.0">
-</path><rect height=22 rx=10 ry=10 width=28 x=274.0 y=108>
-</rect><text x=288.0 y=123>
-:</text></g><path d="M302.0 119h10">
+<path d="M342.0 111h0.0">
+</path><path d="M370.0 111h0.0">
+</path><rect height=22 rx=10 ry=10 width=28 x=342.0 y=100>
+</rect><text x=356.0 y=115>
+\</text></g><path d="M370.0 111h20">
+</path><path d="M322.0 111a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10">
 </path><g>
-<path d="M312.0 119h0.0">
-</path><path d="M420.0 119h0.0">
-</path><path d="M312.0 119a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10">
+<path d="M342.0 141h0.0">
+</path><path d="M370.0 141h0.0">
+</path><rect height=22 rx=10 ry=10 width=28 x=342.0 y=130>
+</rect><text x=356.0 y=145>
+/</text></g><path d="M370.0 141a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10">
+</path></g><path d="M390.0 111h20">
+</path></g><path d="M410.0 111h10">
 </path><g>
-<path d="M332.0 99h68">
-</path></g><path d="M400.0 99a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10">
-</path><path d="M312.0 119h20">
+<path d="M420.0 111h0.0">
+</path><path d="M512.0 111h0.0">
+</path><rect height=22 width=92 x=420.0 y=100>
+</rect><text x=466.0 y=115>
+authority</text></g><path d="M512.0 111h10">
 </path><g>
-<path d="M332.0 119h0.0">
-</path><path d="M400.0 119h0.0">
-</path><path d="M332.0 119h20">
+<path d="M522.0 111h0.0">
+</path><path d="M702.0 111h0.0">
+</path><path d="M522.0 111a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10">
 </path><g>
-<path d="M352.0 119h0.0">
-</path><path d="M380.0 119h0.0">
-</path><rect height=22 rx=10 ry=10 width=28 x=352.0 y=108>
-</rect><text x=366.0 y=123>
-\</text></g><path d="M380.0 119h20">
-</path><path d="M332.0 119a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10">
+<path d="M542.0 91h140">
+</path></g><path d="M682.0 91a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10">
+</path><path d="M522.0 111h20">
 </path><g>
-<path d="M352.0 149h0.0">
-</path><path d="M380.0 149h0.0">
-</path><rect height=22 rx=10 ry=10 width=28 x=352.0 y=138>
-</rect><text x=366.0 y=153>
-/</text></g><path d="M380.0 149a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10">
-</path></g><path d="M400.0 119h20">
-</path></g><path d="M420.0 119h10">
+<path d="M542.0 111h0.0">
+</path><path d="M682.0 111h0.0">
 </path><g>
-<path d="M430.0 119h0.0">
-</path><path d="M522.0 119h0.0">
-</path><rect height=22 width=92 x=430.0 y=108>
-</rect><text x=476.0 y=123>
-authority</text></g><path d="M522.0 119h10">
+<path d="M542.0 111h0.0">
+</path><path d="M610.0 111h0.0">
+</path><path d="M542.0 111h20">
 </path><g>
-<path d="M532.0 119h0.0">
-</path><path d="M660.0 119h0.0">
-</path><path d="M532.0 119a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10">
+<path d="M562.0 111h0.0">
+</path><path d="M590.0 111h0.0">
+</path><rect height=22 rx=10 ry=10 width=28 x=562.0 y=100>
+</rect><text x=576.0 y=115>
+/</text></g><path d="M590.0 111h20">
+</path><path d="M542.0 111a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10">
 </path><g>
-<path d="M552.0 99h88">
-</path></g><path d="M640.0 99a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10">
-</path><path d="M532.0 119h20">
+<path d="M562.0 141h0.0">
+</path><path d="M590.0 141h0.0">
+</path><rect height=22 rx=10 ry=10 width=28 x=562.0 y=130>
+</rect><text x=576.0 y=145>
+\</text></g><path d="M590.0 141a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10">
+</path></g><path d="M610.0 111h10">
 </path><g>
-<path d="M552.0 119h0.0">
-</path><path d="M640.0 119h0.0">
-</path><path d="M552.0 119h10">
+<path d="M620.0 111h0.0">
+</path><path d="M672.0 111h0.0">
+</path><rect height=22 width=52 x=620.0 y=100>
+</rect><text x=646.0 y=115>
+path</text></g><path d="M672.0 111h10">
+</path></g><path d="M682.0 111h20">
+</path></g></g><path d="M736.0 111a10 10 0 0 0 10 -10v-50a10 10 0 0 1 10 -10">
+</path><path d="M40.0 41a10 10 0 0 1 10 10v120a10 10 0 0 0 10 10">
 </path><g>
-<path d="M562.0 119h0.0">
-</path><path d="M630.0 119h0.0">
-</path><path d="M562.0 119h20">
+<path d="M60.0 181h198.0">
+</path><path d="M538.0 181h198.0">
+</path><path d="M258.0 181h10">
 </path><g>
-<path d="M582.0 119h0.0">
-</path><path d="M610.0 119h0.0">
-</path><rect height=22 rx=10 ry=10 width=28 x=582.0 y=108>
-</rect><text x=596.0 y=123>
-\</text></g><path d="M610.0 119h20">
-</path><path d="M562.0 119a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10">
+<path d="M268.0 181h0.0">
+</path><path d="M408.0 181h0.0">
+</path><rect height=22 width=140 x=268.0 y=170>
+</rect><text x=338.0 y=185>
+relative-scheme</text></g><path d="M408.0 181h10">
+</path><path d="M418.0 181h10">
 </path><g>
-<path d="M582.0 149h0.0">
-</path><path d="M610.0 149h0.0">
-</path><rect height=22 rx=10 ry=10 width=28 x=582.0 y=138>
-</rect><text x=596.0 y=153>
-/</text></g><path d="M610.0 149a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10">
-</path></g><path d="M630.0 119h10">
-</path><path d="M562.0 119a10 10 0 0 0 -10 10v29a10 10 0 0 0 10 10">
+<path d="M428.0 181h0.0">
+</path><path d="M456.0 181h0.0">
+</path><rect height=22 rx=10 ry=10 width=28 x=428.0 y=170>
+</rect><text x=442.0 y=185>
+:</text></g><path d="M456.0 181h10">
+</path><path d="M466.0 181h10">
 </path><g>
-<path d="M562.0 168h68">
-</path></g><path d="M630.0 168a10 10 0 0 0 10 -10v-29a10 10 0 0 0 -10 -10">
-</path></g><path d="M640.0 119h20">
-</path></g><path d="M660.0 119h10">
+<path d="M476.0 181h0.0">
+</path><path d="M528.0 181h0.0">
+</path><rect height=22 width=52 x=476.0 y=170>
+</rect><text x=502.0 y=185>
+path</text></g><path d="M528.0 181h10">
+</path></g><path d="M736.0 181a10 10 0 0 0 10 -10v-120a10 10 0 0 1 10 -10">
+</path><path d="M40.0 41a10 10 0 0 1 10 10v150a10 10 0 0 0 10 10">
 </path><g>
-<path d="M670.0 119h0.0">
-</path><path d="M722.0 119h0.0">
-</path><rect height=22 width=52 x=670.0 y=108>
-</rect><text x=696.0 y=123>
-path</text></g><path d="M722.0 119h10">
-</path></g><path d="M776.0 119a10 10 0 0 0 10 -10v-58a10 10 0 0 1 10 -10">
-</path><path d="M40.0 41a10 10 0 0 1 10 10v136a10 10 0 0 0 10 10">
-</path><g>
-<path d="M60.0 197h218.0">
-</path><path d="M558.0 197h218.0">
-</path><path d="M278.0 197h10">
-</path><g>
-<path d="M288.0 197h0.0">
-</path><path d="M428.0 197h0.0">
-</path><rect height=22 width=140 x=288.0 y=186>
-</rect><text x=358.0 y=201>
-relative-scheme</text></g><path d="M428.0 197h10">
-</path><path d="M438.0 197h10">
-</path><g>
-<path d="M448.0 197h0.0">
-</path><path d="M476.0 197h0.0">
-</path><rect height=22 rx=10 ry=10 width=28 x=448.0 y=186>
-</rect><text x=462.0 y=201>
-:</text></g><path d="M476.0 197h10">
-</path><path d="M486.0 197h10">
-</path><g>
-<path d="M496.0 197h0.0">
-</path><path d="M548.0 197h0.0">
-</path><rect height=22 width=52 x=496.0 y=186>
-</rect><text x=522.0 y=201>
-path</text></g><path d="M548.0 197h10">
-</path></g><path d="M776.0 197a10 10 0 0 0 10 -10v-136a10 10 0 0 1 10 -10">
-</path><path d="M40.0 41a10 10 0 0 1 10 10v166a10 10 0 0 0 10 10">
-</path><g>
-<path d="M60.0 227h332.0">
-</path><path d="M444.0 227h332.0">
-</path><rect height=22 width=52 x=392.0 y=216>
-</rect><text x=418.0 y=231>
-path</text></g><path d="M776.0 227a10 10 0 0 0 10 -10v-166a10 10 0 0 1 10 -10">
-</path></g><path d="M 796 41 h 20 m -10 -10 v 20 m 10 -20 v 20">
+<path d="M60.0 211h312.0">
+</path><path d="M424.0 211h312.0">
+</path><rect height=22 width=52 x=372.0 y=200>
+</rect><text x=398.0 y=215>
+path</text></g><path d="M736.0 211a10 10 0 0 0 10 -10v-150a10 10 0 0 1 10 -10">
+</path></g><path d="M 756 41 h 20 m -10 -10 v 20 m 10 -20 v 20">
 </path></g></svg></div>
 
 <p>Four production rules are defined for absolute URLs, numbered from top to
@@ -2248,4 +2179,4 @@ readability, these words do not appear in all uppercase letters in this specific
 
 <p>Conformance requirements phrased as algorithms or specific steps may be implemented in any manner, so long as the end
 result is equivalent.
-</em><h2 class="no-num heading settled" id=references><span class=content>References</span><a class=self-link href=#references></a></h2><h3 class="no-num heading settled" id=normative><span class=content>Normative References</span><a class=self-link href=#normative></a></h3><dl><dt id=biblio-rfc2119 title=rfc2119><a class=self-link href=#biblio-rfc2119></a>[rfc2119]<dd>S. Bradner. <a href=http://www.ietf.org/rfc/rfc2119.txt>Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href=http://www.ietf.org/rfc/rfc2119.txt>http://www.ietf.org/rfc/rfc2119.txt</a></dl><h3 class="no-num heading settled" id=informative><span class=content>Informative References</span><a class=self-link href=#informative></a></h3><dl><dt id=biblio-rfc3986 title=rfc3986><a class=self-link href=#biblio-rfc3986></a>[rfc3986]<dd>T. Berners-Lee; R. Fielding; L. Masinter. <a href=http://www.ietf.org/rfc/rfc3986.txt>Uniform Resource Identifier (URI): Generic Syntax</a>. January 2005. Internet Standard. URL: <a href=http://www.ietf.org/rfc/rfc3986.txt>http://www.ietf.org/rfc/rfc3986.txt</a><dt id=biblio-rfc3987 title=rfc3987><a class=self-link href=#biblio-rfc3987></a>[rfc3987]<dd>M. Duerst; M. Suignard. <a href=http://www.ietf.org/rfc/rfc3987.txt>Internationalized Resource Identifiers (IRIs)</a>. January 2005. Proposed Standard. URL: <a href=http://www.ietf.org/rfc/rfc3987.txt>http://www.ietf.org/rfc/rfc3987.txt</a></dl><h2 class="no-num heading settled" id=index><span class=content>Index</span><a class=self-link href=#index></a></h2><ul class=indexlist><li>cleanse, <a href=#cleanse title="section 4">4</a><li>parse errors, <a href=#parse-errors title="section 3">3</a><li>path concatenation, <a href=#path-concatenation title="section 4">4</a><li>query encode set, <a href=#query-encode-set title="section 3.21">3.21</a></ul>
+</em><h2 class="no-num heading settled" id=references><span class=content>References</span><a class=self-link href=#references></a></h2><h3 class="no-num heading settled" id=normative><span class=content>Normative References</span><a class=self-link href=#normative></a></h3><dl><dt id=biblio-rfc2119 title=rfc2119><a class=self-link href=#biblio-rfc2119></a>[rfc2119]<dd>S. Bradner. <a href=https://tools.ietf.org/html/rfc2119>Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href=https://tools.ietf.org/html/rfc2119>https://tools.ietf.org/html/rfc2119</a></dl><h3 class="no-num heading settled" id=informative><span class=content>Informative References</span><a class=self-link href=#informative></a></h3><dl><dt id=biblio-rfc3986 title=rfc3986><a class=self-link href=#biblio-rfc3986></a>[rfc3986]<dd>T. Berners-Lee; R. Fielding; L. Masinter. <a href=https://tools.ietf.org/html/rfc3986>Uniform Resource Identifier (URI): Generic Syntax</a>. January 2005. Internet Standard. URL: <a href=https://tools.ietf.org/html/rfc3986>https://tools.ietf.org/html/rfc3986</a><dt id=biblio-rfc3987 title=rfc3987><a class=self-link href=#biblio-rfc3987></a>[rfc3987]<dd>M. Duerst; M. Suignard. <a href=https://tools.ietf.org/html/rfc3987>Internationalized Resource Identifiers (IRIs)</a>. January 2005. Proposed Standard. URL: <a href=https://tools.ietf.org/html/rfc3987>https://tools.ietf.org/html/rfc3987</a></dl><h2 class="no-num heading settled" id=index><span class=content>Index</span><a class=self-link href=#index></a></h2><ul class=indexlist><li>cleanse, <a href=#cleanse title="section 4">4</a><li>parse errors, <a href=#parse-errors title="section 3">3</a><li>path concatenation, <a href=#path-concatenation title="section 4">4</a><li>query encode set, <a href=#query-encode-set title="section 3.21">3.21</a></ul>

@@ -118,7 +118,7 @@ Url
 }
 
 /*
-   Four production rules are defined for files, numbered from top to bottom.
+   Three production rules are defined for files, numbered from top to bottom.
 
    Evaluation instructions for each:
 
@@ -155,18 +155,6 @@ Url
      * Construct a string consisting of the character following
        the initial "/" (if any) in the production rule concatenated
        with a ":".  Prepend this string to the $result.path array.
-
-   <li><em>This rule is only to be evaluated if the value of
-   $base.scheme is "file"</em>.
-
-   Initialize $result to an empty object, and then modify it as follows:
-
-     * Set $result.scheme to "file".
-     * Set $result.host to the value returned by the
-       @Host production rule.
-     * Set $result.path to the value returned by @Path.
-     * Remove the first element of the path if it is an empty string and
-       there is a second element which has a non-empty value.
 
    </ol>
 
@@ -215,16 +203,6 @@ FileUrl
     result.scheme = 'file';
     if (result.path[0] == '' && result.path[1] != '') result.path.shift();
     result.path.unshift(drive+':');
-    return result
-  }
-
-  / &{ return base.scheme == 'file' }
-    '/' '/' host:Host '/' path:Path
-  {
-    var result = copy({path: path}, path);
-    result.scheme = 'file';
-    result.host = host;
-    if (result.path[0] == '' && result.path[1] != '') result.path.shift();
     return result
   }
 
@@ -309,7 +287,7 @@ NonRelativeUrl
    Return $result.
 */
 RelativeUrl
-  = scheme:(RelativeScheme ':')? slash1:[/\\] slash2:[/\\]+
+  = scheme:(RelativeScheme ':')? slash1:[/\\] slash2:[/\\]
     authority:Authority
     path:([/\\] Path)?
   {
@@ -322,10 +300,10 @@ RelativeUrl
       result.scheme = base.scheme;
     }
 
-    if (slash1 == '\\' || slash2.join().indexOf("\\") != -1) {
+    if (slash1 == '\\' || slash2 == '\\') {
       result.exception = 'Backslash ("\\") used as a delimiter'
-    } else if (slash2.length != 1) {
-      result.exception = 'Extraneous slashes found'
+    } else if (path && path[0] == '\\') {
+      result.exception = 'Backslash ("\\") used as a delimiter'
     }
 
     return result
@@ -334,13 +312,12 @@ RelativeUrl
   / scheme:RelativeScheme 
     &{ return base.scheme != scheme }
     ':'
-    [\\/]?
+    slash1:[\\/]?
     authority:Authority
-    [\\/]*
-    path:Path
+    path:([/\\] Path)?
   {
-    result = copy(authority, path);
-    result.path = path;
+    result = copy(authority, path && path[1]);
+    if (path) result.path = path[1];
     result.exception = 'Expected a slash ("/")';
     result.scheme = scheme.toLowerCase();
 
