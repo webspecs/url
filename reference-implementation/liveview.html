@@ -9,6 +9,7 @@
     <script src="idna.js" lang="text/javascript"></script>
     <script src="url.js" lang="text/javascript"></script>
     <script src="urlparser.js" lang="text/javascript"></script>
+    <base id="docbase" href="about:"/>
     <style>
       h2 {color: DarkBlue}
       #urlException {color: Crimson}
@@ -22,91 +23,139 @@
     <input class="input" id="url" type="text" placeholder="http://example.com" onkeyup="parse(this.value)"/>
     <a id="target" href="http://www.lookout.net/test/url/url-liveview.html"></a>
 
+    <div>
+      <p>Specify a base URL</p>
+      <input class="input" id="base" type="text" value="about:" onkeyup="rebase(this.value)"/>
+    </div>
+
     <h2>URL components from DOM properties:</h2>
 
     <div class="output">
-      <span class="title">href</span>
-      <span class="result" id="domHref"></span>
-      <br/>
-      <span class="title">hash</span>
-      <span class="result" id="domHash"></span>
-      <br/>
-      <span class="title">hostname</span>
-      <span class="result" id="domHostname"></span>
-      <br/>
-      <span class="title">pathname</span>
-      <span class="result" id="domPathname"></span>
-      <br/>
-      <span class="title">port</span>
-      <span class="result" id="domPort"></span>
-      <br/>
-      <span class="title">protocol</span>
-      <span class="result" id="domProtocol"></span>
-      <br/>
-      <span class="title">search</span>
-      <span class="result" id="domSearch"></span>
-      <br/>
+      <div>
+        <span class="title">href</span>
+        <span class="result" id="domHref"></span>
+      </div>
+      <div>
+        <span class="title">protocol</span>
+        <span class="result" id="domProtocol"></span>
+      </div>
+      <div>
+        <span class="title">username</span>
+        <span class="result" id="domUsername"></span>
+      </div>
+      <div>
+        <span class="title">password</span>
+        <span class="result" id="domPassword"></span>
+      </div>
+      <div>
+        <span class="title">port</span>
+        <span class="result" id="domPort"></span>
+      </div>
+      <div>
+        <span class="title">hostname</span>
+        <span class="result" id="domHostname"></span>
+      </div>
+      <div>
+        <span class="title">pathname</span>
+        <span class="result" id="domPathname"></span>
+      </div>
+      <div>
+        <span class="title">search</span>
+        <span class="result" id="domSearch"></span>
+      </div>
+      <div>
+        <span class="title">hash</span>
+        <span class="result" id="domHash"></span>
+      </div>
     </div>
 
     <h2>URL components from the URL Reference Implementation:</h2>
 
     <div class="output">
-      <span class="title">href</span>
-      <span class="result" id="urlHref"></span>
-      <br/>
-      <span class="title">hash</span>
-      <span class="result" id="urlHash"></span>
-      <br/>
-      <span class="title">hostname</span>
-      <span class="result" id="urlHostname"></span>
-      <br/>
-      <span class="title">pathname</span>
-      <span class="result" id="urlPathname"></span>
-      <br/>
-      <span class="title">port</span>
-      <span class="result" id="urlPort"></span>
-      <br/>
-      <span class="title">protocol</span>
-      <span class="result" id="urlProtocol"></span>
-      <br/>
-      <span class="title">search</span>
-      <span class="result" id="urlSearch"></span>
-      <br/>
-      <span class="title">error</span>
-      <span class="result" id="urlException"></span>
-      <br/>
+      <div>
+        <span class="title">href</span>
+        <span class="result" id="urlHref"></span>
+      </div>
+      <div>
+        <span class="title">protocol</span>
+        <span class="result" id="urlProtocol"></span>
+      </div>
+      <div>
+        <span class="title">username</span>
+        <span class="result" id="urlUsername"></span>
+      </div>
+      <div>
+        <span class="title">password</span>
+        <span class="result" id="urlPassword"></span>
+      </div>
+      <div>
+        <span class="title">hostname</span>
+        <span class="result" id="urlHostname"></span>
+      </div>
+      <div>
+        <span class="title">port</span>
+        <span class="result" id="urlPort"></span>
+      </div>
+      <div>
+        <span class="title">pathname</span>
+        <span class="result" id="urlPathname"></span>
+      </div>
+      <div>
+        <span class="title">search</span>
+        <span class="result" id="urlSearch"></span>
+      </div>
+      <div>
+        <span class="title">hash</span>
+        <span class="result" id="urlHash"></span>
+      </div>
+      <div>
+        <span class="title">error</span>
+        <span class="result" id="urlException"></span>
+      </div>
     </div>
 
     <script lang="text/javascript">
       // Prepare the elements to output DOM properties
       var domHref = document.getElementById("domHref");
-      var domHash = document.getElementById("domHash");
-      var domHostname = document.getElementById("domHostname");
-      var domPathname = document.getElementById("domPathname");
-      var domPort = document.getElementById("domPort");
       var domProtocol = document.getElementById("domProtocol");
+      var domUsername = document.getElementById("domUsername");
+      var domPassword = document.getElementById("domPassword");
+      var domHostname = document.getElementById("domHostname");
+      var domPort = document.getElementById("domPort");
+      var domPathname = document.getElementById("domPathname");
       var domSearch = document.getElementById("domSearch");
+      var domHash = document.getElementById("domHash");
 
       // Prepare the elements to output URL class properties from URL.js
       var urlHref = document.getElementById("urlHref");
-      var urlHash = document.getElementById("urlHash");
-      var urlHostname = document.getElementById("urlHostname");
-      var urlPathname = document.getElementById("urlPathname");
-      var urlPort = document.getElementById("urlPort");
       var urlProtocol = document.getElementById("urlProtocol");
+      var urlUsername = document.getElementById("urlUsername");
+      var urlPassword = document.getElementById("urlPassword");
+      var urlHostname = document.getElementById("urlHostname");
+      var urlPort = document.getElementById("urlPort");
+      var urlPathname = document.getElementById("urlPathname");
       var urlSearch = document.getElementById("urlSearch");
+      var urlHash = document.getElementById("urlHash");
       var urlException = document.getElementById("urlException");
+
+      function rebase(base) {
+        document.baseURI = base;
+        document.getElementById("docbase").setAttribute('href', base);
+        parse(document.getElementById("url").value);
+      }
 
       function parse(input) {
         parseDom(input);
         parseUrl(input);
         compare(urlHref, domHref);
-        compare(urlHash, domHash);
-        compare(urlHostname, domHostname);
-        compare(urlPathname, domPathname);
-        compare(urlPort, domPort);
         compare(urlProtocol, domProtocol);
+        compare(urlUsername, domUsername);
+        compare(urlPassword, domPassword);
+        compare(urlHostname, domHostname);
+        compare(urlPort, domPort);
+        compare(urlPathname, domPathname);
         compare(urlSearch, domSearch);
+        compare(urlHash, domHash);
       }
 
       function parseDom(input) {
@@ -114,35 +163,52 @@
         target.setAttribute("href", input); 
 
         domHref.textContent = target.href;
-        domHash.textContent = target.hash;
-        domHostname.textContent = target.hostname;
-        domPathname.textContent = target.pathname;
-        domPort.textContent = target.port;
         domProtocol.textContent = target.protocol;
+        domUsername.textContent = target.username;
+        domPassword.textContent = target.password;
+        domHostname.textContent = target.hostname;
+        domPort.textContent = target.port;
+        domPathname.textContent = target.pathname;
         domSearch.textContent = target.search;
+        domHash.textContent = target.hash;
       }
 
       function parseUrl(input) {
         var base = document.baseURI;
         var url = new Url(input, base);
         urlHref.textContent = url.href;
-        urlHash.textContent = url.hash;
-        urlHostname.textContent = url.hostname;
-        urlPathname.textContent = url.pathname;
-        urlPort.textContent = url.port;
         urlProtocol.textContent = url.protocol;
+        urlUsername.textContent = url.username;
+        urlPassword.textContent = url.password;
+        urlHostname.textContent = url.hostname;
+        urlPort.textContent = url.port;
+        urlPathname.textContent = url.pathname;
         urlSearch.textContent = url.search;
-        urlException.textContent = url.exception || '';
+        urlHash.textContent = url.hash;
+
+        if (url.exception) {
+          urlException.parentNode.style.display = "block";
+          urlException.textContent = url.exception;
+        } else {
+          urlException.parentNode.style.display = "none";
+        }
       }
 
       function compare(x, y) {
         if (x.textContent != y.textContent) {
           x.className = "fail"; 
           y.className = "fail"; 
-        }
-        else {
+        } else {
           x.className = "pass"; 
           y.className = "pass"; 
+        }
+
+        if (x.textContent != '' || y.textContent != '') {
+          x.parentNode.style.display = "block";
+          y.parentNode.style.display = "block";
+        } else {
+          x.parentNode.style.display = "none";
+          y.parentNode.style.display = "none";
         }
       }
 
@@ -152,8 +218,24 @@
       }
 
       var input = document.getElementById("url");
-      input.value = location.hash.substring(1);
-      parse(input.value);
+      var base = document.getElementById("base");
+
+      if (location.pathname.indexOf('2') == -1) {
+        base.parentNode.style.display = 'none';
+        base.value = location.href;
+        input.value = location.hash.substring(1);
+      } else {
+        var fragment = location.hash.substring(1);
+        var space = fragment.indexOf(' ');
+        if (space >= 0) {
+          base.value = fragment.substr(0, space);
+          input.value = fragment.substr(space+1);
+        } else if (fragment != '') {
+          base.value = fragment;
+        }
+      }
+
+      rebase(base.value);
       input.focus();
     </script>
   </body>
