@@ -10,6 +10,11 @@ useragent-results: \
 	useragent-results/refimpl \
 	useragent-results/urltestdata
 
+softerror: softerror.rb \
+	useragent-results/galimatias \
+	useragent-results/refimpl
+	ruby softerror.rb
+
 clean:
 	rm -rf target *.class Cargo.lock urltestdata.json \
 	useragent-results/galimatias \
@@ -18,7 +23,7 @@ clean:
 	useragent-results/refimpl \
 	useragent-results/urltestdata
 
-clobber:
+clobber: clean
 	rm -f *.jar
 
 urltestdata.json: urltesttojson.js \
