@@ -39,7 +39,7 @@
 
     for (var i=0; i<string.length; i++) {
       if (/^[\u0009\u000A\u000D]$/.test(string[i])) {
-        warn = "Tab, new line, or cariage return found in " + component
+        warn = "Tab, new line, or carriage return found in " + component
         string.splice(i--, 1)
       }
     }

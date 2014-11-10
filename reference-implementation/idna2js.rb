@@ -43,7 +43,7 @@ IDNA = {
   ignored: function() {return [];},
   mapped: function(codepoint, mapping) {return mapping;},
   disallowed: function(codepoint) {
-    throw new Error("Invalid codepoint in a domain: U+" 
+    throw new Error("Invalid codepoint in a domain: U+" +
        ("000" + codepoint.toString(16)).slice(-4).toUpperCase());
   },
   deviation: function(codepoint, mapping, useSTD3ASCIIRules, transitional) {
