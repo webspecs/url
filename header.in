@@ -104,6 +104,9 @@ Known differences with current drafts of the WHATWG <a href="https://url.spec.wh
   * This draft contains a proposed implementation of 
     <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug 26431</a>
     (Define IPv4 parsing).
+  * The reference implementation contains a proposed implementation of
+    <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27289">bug 27289</a>
+    (Host parsing and utf8PercentDecode).
 
 Parsing Rules {#parsing-rules}
 =============

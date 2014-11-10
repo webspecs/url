@@ -69,7 +69,7 @@
 }
 
 /*
-   There are four unique syntaxes for
+   There are three unique syntaxes for
    <a href="https://url.spec.whatwg.org/#concept-url">URL</a>s,
    each returning a set of components, namely one or more of the following:
    <a href="https://url.spec.whatwg.org/#concept-url-scheme">scheme</a>,
@@ -82,43 +82,30 @@
    <a href="https://url.spec.whatwg.org/#concept-url-query">query</a>, and
    <a href="https://url.spec.whatwg.org/#concept-url-fragment">fragment</a>.
 
-   In each case, the value returned by the called production is returned
-   unmodified.
+   Initialize $result to the value of @FileUrl, @NonRelativeUrl, or
+   @RelativeUrl depending on which one first matches the input, and then modify
+   $result as follows:
 
-   Note: the resolution of
-   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27233">bug 27233</a>
-   may add support for relative URLs for unknown schemes.
+     * If @Query is present in the input, set $result.query to this value.
+     * If @Fragment is present in the input, set $result.fragment to this value.
+
+   Return $result.
 */
 Url
-  = FileUrl
-  / AbsoluteUrl
-  / NonRelativeUrl
-  / RelativeUrl
-
-/*
-   Terminate parsing with a <a>parse error</a> if $base.scheme is not a
-   <a href="https://url.spec.whatwg.org/#relative-scheme">relative scheme</a>.
-
-   Otherwise initialize a $result to the value returned by @RelativeReference,
-   and then modify it as follows before returning the result:
-     * Set $result.scheme to $base.scheme.
-     * Set $result.host to $base.host.
-     * Replace $result.path by the <a>path concatenation</a> of $base.path and
-       $result.Path.
-*/
-RelativeUrl
-  = result:RelativeReference
-  {
-    if (Url.RELATIVE_SCHEME.indexOf(base.scheme) == -1) {
-      error("relative URL provided with a non-relative base")
+  = result:(FileUrl / NonRelativeUrl / RelativeUrl)
+    query:('?' Query)?
+    fragment:('#' Fragment)?
+{
+    if (query) {
+      result.query = query[1]
     };
 
-    result.scheme = base.scheme;
-    result.host = base.host; 
-    result.path = Url.pathConcat(base.path, result.path)
+    if (fragment) {
+      result.fragment = fragment[1].toString()
+    };
 
     return result
-  }
+}
 
 /*
    Four production rules are defined for files, numbered from top to bottom.
@@ -126,11 +113,10 @@ RelativeUrl
    Evaluation instructions for each:
 
    <ol>
-   <li>Set $result to the object returned by
-   @RelativeReference, and then modify it as follows:
+   <li>Initialize $result to an empty object, and then modify it as follows:
 
-     * Set $result.scheme to the value returned by
-       @FileLikeRelativeScheme.
+     * Set $result.scheme to the value returned by @FileLikeScheme.
+     * Set $result.path to the value returned by @Path.
      * Remove the first element from $result.path if it is an empty
        string and if there is a second element which has a non-empty value.
      * Construct a string using the alphabetic
@@ -138,12 +124,22 @@ RelativeUrl
        concatenated with a ":".  Prepend this string to 
        $result.path.
 
+   <li>Initialize $result to an empty object, and then modify it as follows:
+
+     * Set $result.scheme to the value returned by @FileLikeScheme
+     * If the @Host is present in the input, set $result.host
+       to the value returned by the @Host production rule
+     * If the @Host is not present and no slashes precede the
+       @Path in the input, then the $base.path
+       minus the last element is prepended to the $result.path.
+     * Set $result.path to the value returned by @Path.
+
    <li>Indicate a <a>parse error</a>.
 
-   Set $result to the object returned by
-   @RelativeReference, and then modify it as follows:
+   Initialize $result to an empty object, and then modify it as follows:
 
      * Set $result.scheme to "file".
+     * Set $result.path to the value returned by @Path.
      * Remove the first element from $result.path if it is an empty
        string and if there is a second element which has a non-empty value.
      * Construct a string consisting of the character following
@@ -151,25 +147,16 @@ RelativeUrl
        with a ":".  Prepend this string to the $result.path array.
 
    <li><em>This rule is only to be evaluated if the value of
-   $base.scheme is "file"</em>.  Set $result to the object returned by
-   @RelativeReference, and then modify it as follows:
+   $base.scheme is "file"</em>.
+
+   Initialize $result to an empty object, and then modify it as follows:
 
      * Set $result.scheme to "file".
      * Set $result.host to the value returned by the
        @Host production rule.
+     * Set $result.path to the value returned by @Path.
      * Remove the first element of the path if it is an empty string and
        there is a second element which has a non-empty value.
-
-   <li>Set $result to the object returned by
-   @RelativeReference, and then modify it as follows:
-
-     * Set $result.scheme to the value returned by
-       @FileLikeRelativeScheme
-     * If the @Host is present in the input, set $result.host
-       to the value returned by the @Host production rule
-     * If the @Host is not present and no slashes precede the
-       @RelativeReference in the input, then the $base.path
-       minus the last element is prepended to the $result.path.
 
    </ol>
 
@@ -184,42 +171,20 @@ RelativeUrl
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=23550">bug 23550</a>.  
 */
 FileUrl
-  = scheme:FileLikeRelativeScheme ':' 
+  = scheme:FileLikeScheme ':' 
     drive:[a-zA-Z] [:|]
-    '/'? remainder:RelativeReference
+    '/'? path:Path
   {
-    var result = remainder;
+    var result = copy({path: path});
     result.scheme = scheme;
     if (result.path[0] == '' && result.path[1] != '') result.path.shift();
     result.path.unshift(drive+':');
     return result
   }
 
-  / '/'*
-    drive:[a-zA-Z] '|'
-    '/'? remainder:RelativeReference
+  / scheme:FileLikeScheme ':' host:('/' '/' Host)? slash:'/'* path:Path
   {
-    var result = remainder;
-    result.exception = 'Legacy compatibility issue';
-    result.scheme = 'file';
-    if (result.path[0] == '' && result.path[1] != '') result.path.shift();
-    result.path.unshift(drive+':');
-    return result
-  }
-
-  / &{ return base.scheme == 'file' }
-    '/' '/' host:Host '/' remainder:RelativeReference
-  {
-    var result = remainder
-    result.scheme = 'file';
-    result.host = host;
-    if (result.path[0] == '' && result.path[1] != '') result.path.shift();
-    return result
-  }
-
-  / scheme:FileLikeRelativeScheme ':' host:('/' '/' Host)? slash:'/'* remainder:RelativeReference
-  {
-    var result = remainder;
+    var result = copy({path: path});
     if (host) {
       result.host = host[2];
     } else if (slash.length == 0) {
@@ -231,19 +196,56 @@ FileUrl
     return result
   }
 
-/*
-  Only one "file like" relative scheme is defined at this time:
-  "file".  This scheme is to be matched case insensitively.
-  This production rule is to return the scheme value, lowercased.
-*/
-FileLikeRelativeScheme
-  = scheme:"file"i
+  / '/'*
+    drive:[a-zA-Z] '|'
+    '/'? path:Path
   {
-    return scheme.toLowerCase()
+    var result = copy({path: path});
+    result.exception = 'Legacy compatibility issue';
+    result.scheme = 'file';
+    if (result.path[0] == '' && result.path[1] != '') result.path.shift();
+    result.path.unshift(drive+':');
+    return result
+  }
+
+  / &{ return base.scheme == 'file' }
+    '/' '/' host:Host '/' path:Path
+  {
+    var result = copy({path: path});
+    result.scheme = 'file';
+    result.host = host;
+    if (result.path[0] == '' && result.path[1] != '') result.path.shift();
+    return result
   }
 
 /*
-   Three production rules are defined for absolute URLs, numbered from top to
+  Set <code>encoding override</code> to "utf-8".
+
+  Initialize $result to be a JSON object with $scheme
+  set to be the result returned by @Scheme, and
+  $schemeData set to the result returned by @Data.
+  Return $result.
+
+  Note: the resolution of
+  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug 26338</a>
+  may change how encoding override is handled.
+
+  Note: the resolution of
+  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27233">bug 27233</a>
+  may add support for relative URLs for unknown schemes.
+*/
+NonRelativeUrl
+  = scheme:Scheme ':'
+    &{ return Url.RELATIVE_SCHEME.indexOf(scheme) == -1 }
+    data:Data
+  {
+    encodingOverride = 'utf-8';
+
+    return copy({scheme: scheme, scheme_data: data}, data);
+  }
+
+/*
+   Four production rules are defined for absolute URLs, numbered from top to
    bottom.
 
    Evaluation instructions for each:
@@ -252,11 +254,9 @@ FileLikeRelativeScheme
    <li>If anything other than two forward solidus characters ("//") immediately
      follows the first colon in the input, indicate a <a>parse error</a>.
 
-     Set $result to the object returned by @RelativeReference if present in the
-     input otherwise initialize $result to be an empty object.  Modify $result
-     as follows:
+     Initialize $result to the value returned by @Authority.
+     Modify $result as follows:
 
-     * Copy the values of all the properties from @Authority to $result.
      * If @RelativeScheme is present in the input, then
        set $result.scheme to this value.
      * If @RelativeScheme is not present in the input, then
@@ -265,43 +265,50 @@ FileLikeRelativeScheme
        <a href="https://url.spec.whatwg.org/#default-port">default port</a>
        that corresponds to the $response.scheme, then delete
        the $port property from $result.
+     * If @Path is present in the input, set $result.path to its value.
 
    <li><em>This rule is only to be evaluated if the value of
-    @Scheme matches $base.scheme</em>.
+    @Scheme does not match $base.scheme</em>.
 
     Indicate a <a>parse error</a>.
 
-    Initialize $result to be the value returned by @RelativeReference, and then
-    modify it as follows:
+    Initialize $result to the value returned by @Authority.
+    Modify $result as follows:
+
+     * Set $result.scheme to the value returned by @RelativeScheme.
+     * if $result.host is either an empty string or contains a
+         colon, then terminate parsing with a <a>parse error</a>.
+     * Set $result.path to the value returned by @Path.
+
+   <li>Indicate a <a>parse error</a>.
+
+    Initialize $result to be an empty object.  Modify $result as follows:
 
      * Set $result.scheme to the value returned by @RelativeScheme.
      * Set $result.scheme to the value returned by @Scheme.
      * Set $result.host to $base.host
-     * Replace $result.path by the <a>path concatenation</a> of 
-         $base.path and $result.path
+     * Set $result.path by the <a>path concatenation</a> of 
+         $base.path and @Path.
 
-   <li>Indicate a <a>parse error</a>.
+   <li>Initialize $result to be an empty object.  Modify $result as follows:
 
-    Initialize $result to be the value returned by @RelativeReference, and then
-    modify it as follows:
-
-     * Set $result.scheme to the value returned by @RelativeScheme.
-     * Copy the values of all the properties from @Authority to $result.
-     * if $result.host is either an empty string or contains a
-         colon, then terminate parsing with a <a>parse error</a>.
+     * Set $result.scheme to $base.scheme.
+     * Set $result.host to $base.host.
+     * Set $result.path to @Path
+     * Replace $result.path by the <a>path concatenation</a> of $base.path and
+       $result.Path.
 
    </ol>
 
    Return $result.
 */
-
-AbsoluteUrl
+RelativeUrl
   = scheme:(RelativeScheme ':')? slash1:[/\\] slash2:[/\\]+
     authority:Authority
-    remainder:([/\\] RelativeReference)?
+    path:([/\\] Path)?
   {
-    result = (remainder ? remainder[1] : {});
-    for (prop in authority) result[prop] = authority[prop];
+    result = copy(authority, path && path[1]);
+    if (path) result.path = path[1];
 
     if (scheme) {
       result.scheme = scheme[0];
@@ -323,29 +330,15 @@ AbsoluteUrl
   }
 
   / scheme:RelativeScheme 
-    &{ return base.scheme == scheme }
-    ':'
-    remainder:RelativeReference
-  {
-    result = remainder;
-    result.exception = 'Expected a slash ("/")';
-    result.scheme = scheme;
-
-    result.host = base.host;
-    result.path = Url.pathConcat(base.path, result.path)
-
-    return result
-  }
-
-  / scheme:RelativeScheme 
+    &{ return base.scheme != scheme }
     ':'
     [\\/]?
     authority:Authority
     [\\/]*
-    remainder:RelativeReference
+    path:Path
   {
-    result = remainder;
-    for (prop in authority) result[prop] = authority[prop];
+    result = copy(authority, path);
+    result.path = path;
     result.exception = 'Expected a slash ("/")';
     result.scheme = scheme.toLowerCase();
 
@@ -355,64 +348,43 @@ AbsoluteUrl
     return result
   }
 
-/*
-  Initialize $result to be empty object.  
-  If @Path is present in the input, set $result.path to this value.
-  If @Query is present in the input, set $result.query to this value.
-  If @Fragment is present in the input, set $result.fragment to this value.
-  Return $result.
-*/
-RelativeReference
-  = path:Path?
-    query:('?' Query)?
-    fragment:('#' Fragment)?
+  / scheme:RelativeScheme 
+    ':'
+    path:Path
   {
-    result = copy({path: path}, path, fragment && fragment[1]);
+    result = copy({path: path});
+    result.exception = 'Expected a slash ("/")';
+    result.scheme = scheme;
 
-    if (query) {
-      result.query = query[1]
+    result.host = base.host;
+    result.path = Url.pathConcat(base.path, result.path)
+
+    return result
+  }
+
+  / path:Path
+  {
+    if (Url.RELATIVE_SCHEME.indexOf(base.scheme) == -1) {
+      error("relative URL provided with a non-relative base")
     };
 
-    if (fragment) {
-      result.fragment = fragment[1].toString()
-    };
+    var result = copy({path: path});
+    result.scheme = base.scheme;
+    result.host = base.host; 
+    result.path = Url.pathConcat(base.path, result.path)
 
     return result
   }
 
 /*
-  Set <code>encoding override</code> to "utf-8".
-
-  Initialize $result to be a JSON object with $scheme
-  set to be the result returned by @Scheme, and
-  $schemeData set to the result returned by @Data.
-  If @Query is present in the input, set $result.query to this value.
-  If @Fragment is present in the input, set $result.fragment to this value.
-  Return $result.
-
-  Note: the resolution of
-  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug 26338</a>
-  may change how encoding override is handled.
+  Only one "file like" relative scheme is defined at this time:
+  "file".  This scheme is to be matched case insensitively.
+  This production rule is to return the scheme value, lowercased.
 */
-NonRelativeUrl
-  = scheme:Scheme ':'
-    data:Data
-    query:('?' Query)?
-    fragment:('#' Fragment)?
+FileLikeScheme
+  = scheme:"file"i
   {
-    encodingOverride = 'utf-8';
-
-    result = copy({scheme: scheme, scheme_data: data}, data, fragment && fragment[1]);
-
-    if (query) {
-      result.query = query[1]
-    };
-
-    if (fragment) {
-      result.fragment = fragment[1].toString()
-    };
-
-    return result
+    return scheme.toLowerCase()
   }
 
 /*
@@ -445,7 +417,10 @@ RelativeScheme
 }
 
 /*
-  Schemes consist of one or more the letters "a" through
+  <em>This grammar rule is not to match any
+  <a href="https://url.spec.whatwg.org/#relative-scheme">relative scheme</a>s.
+
+  A scheme consists of one or more the letters "a" through
   "z", "A" through "Z", or any of the
   following special characters: hyphen-minus (U+002D),
   plus sign (U+002B) or full stop (U+002D).
