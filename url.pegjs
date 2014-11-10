@@ -120,10 +120,12 @@ Url
 /*
    Three production rules are defined for files, numbered from top to bottom.
 
-   Evaluation instructions for each:
+   Examples and evaluation instructions for each:
 
    <ol>
-   <li>Initialize $result to an empty object, and then modify it as follows:
+   <li><div class=example><code>file:c:\foo\bar.html</code></div>
+
+     Initialize $result to an empty object, and then modify it as follows:
 
      * Set $result.scheme to the value returned by @FileLikeScheme.
      * Set $result.path to the value returned by @Path.
@@ -134,7 +136,9 @@ Url
        concatenated with a ":".  Prepend this string to 
        $result.path.
 
-   <li>Initialize $result to an empty object, and then modify it as follows:
+   <li><div class=example><code>/C|\foo\bar</code></div>
+
+   Initialize $result to an empty object, and then modify it as follows:
 
      * Set $result.scheme to the value returned by @FileLikeScheme
      * If the @Host is present in the input, set $result.host
@@ -144,7 +148,9 @@ Url
        minus the last element is prepended to the $result.path.
      * Set $result.path to the value returned by @Path.
 
-   <li>Indicate a <a>parse error</a>.
+   <li><div class=example><code>file:/example.com/</code></div>
+
+   Indicate a <a>parse error</a>.
 
    Initialize $result to an empty object, and then modify it as follows:
 
@@ -160,7 +166,7 @@ Url
 
   Return $result.
 
-  Note: at the present time, file like relative URLs are generally not
+  Note: at the present time, file URLs are generally not
   interoperable, and therefore are effectively implementation defined.
   Furthermore, the parsing rules in this section have not enjoyed wide review,
   and therefore are more likely to be subject to change than other parts of this
@@ -171,10 +177,22 @@ Url
 FileUrl
   = scheme:FileLikeScheme ':' 
     drive:[a-zA-Z] [:|]
-    '/'? path:Path
+    [\\/]? path:Path
   {
     var result = copy({path: path}, path);
     result.scheme = scheme;
+    if (result.path[0] == '' && result.path[1] != '') result.path.shift();
+    result.path.unshift(drive+':');
+    return result
+  }
+
+  / '/'*
+    drive:[a-zA-Z] '|'
+    '/'? path:Path
+  {
+    var result = copy({path: path}, path);
+    result.exception = 'Legacy compatibility issue';
+    result.scheme = 'file';
     if (result.path[0] == '' && result.path[1] != '') result.path.shift();
     result.path.unshift(drive+':');
     return result
@@ -194,19 +212,9 @@ FileUrl
     return result
   }
 
-  / '/'*
-    drive:[a-zA-Z] '|'
-    '/'? path:Path
-  {
-    var result = copy({path: path}, path);
-    result.exception = 'Legacy compatibility issue';
-    result.scheme = 'file';
-    if (result.path[0] == '' && result.path[1] != '') result.path.shift();
-    result.path.unshift(drive+':');
-    return result
-  }
-
 /*
+  <div class=example><code>javascript:alert("Hello, world!");</code></div>
+
   Set <code>encoding override</code> to "utf-8".
 
   Initialize $result to be a JSON object with $scheme
@@ -233,13 +241,15 @@ NonRelativeUrl
   }
 
 /*
-   Four production rules are defined for absolute URLs, numbered from top to
+   Four production rules are defined for relative URLs, numbered from top to
    bottom.
 
-   Evaluation instructions for each:
+   Examples and evaluation instructions for each:
 
    <ol>
-   <li>If anything other than two forward solidus characters ("//") immediately
+   <li><div class=example><code>http://user:pass@example.org:21/foo/bar</code></div>
+
+     If anything other than two forward solidus characters ("//") immediately
      follows the first colon in the input, indicate a <a>parse error</a>.
 
      Initialize $result to the value returned by @Authority.
@@ -254,6 +264,9 @@ NonRelativeUrl
    <li><em>This rule is only to be evaluated if the value of
     @Scheme does not match $base.scheme</em>.
 
+    <p class=example><code>ftp:/example.com/</code> parsed using a base of
+    <code>http://example.org/foo/bar</code></p>
+
     Indicate a <a>parse error</a>.
 
     Initialize $result to the value returned by @Authority.
@@ -262,9 +275,11 @@ NonRelativeUrl
      * Set $result.scheme to the value returned by @RelativeScheme.
      * if $result.host is either an empty string or contains a
          colon, then terminate parsing with a <a>parse error</a>.
-     * Set $result.path to the value returned by @Path.
+     * If @Path is present in the input, set $result.path to its value.
 
-   <li>Indicate a <a>parse error</a>.
+   <li><div class=example><code>http:foo/bar</code></div>
+
+    Indicate a <a>parse error</a>.
 
     Initialize $result to be an empty object.  Modify $result as follows:
 
@@ -274,7 +289,8 @@ NonRelativeUrl
      * Set $result.path by the <a>path concatenation</a> of 
          $base.path and @Path.
 
-   <li>Initialize $result to be an empty object.  Modify $result as follows:
+   <li><div class=example><code>/foo/bar</code></div>
+    Initialize $result to be an empty object.  Modify $result as follows:
 
      * Set $result.scheme to $base.scheme.
      * Set $result.host to $base.host.
@@ -323,6 +339,12 @@ RelativeUrl
 
     if (!result.host || result.host == '') error('Empty host');
     if (result.host.indexOf(':') != -1) error('Invalid host');
+
+    if (slash1 == '\\') {
+      result.exception = 'Backslash ("\\") used as a delimiter'
+    } else if (path && path[0] == '\\') {
+      result.exception = 'Backslash ("\\") used as a delimiter'
+    }
 
     return result
   }
