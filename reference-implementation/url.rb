@@ -1,7 +1,7 @@
 class Url
 
   # https://url.spec.whatwg.org/#percent-encoded-bytes
-  BASE_ENCODE_SET = '[^\u0020-\u007E]'
+  BASE_ENCODE_SET = '([\uD800-\uDBFF][\uDC00-\uDFFF])|[^\u0020-\u007E]'
   SIMPLE_ENCODE_SET = RegExp.new(BASE_ENCODE_SET, 'g')
 
   DEFAULT_ENCODE_SET = RegExp.new(BASE_ENCODE_SET + '|[\u0020"#<>?]', 'g')
@@ -49,20 +49,20 @@ class Url
       ]
     else
       # surrogate pairs
-      if (c1 & 0xFC00) != 0xD800
-        throw new RangeError('Unmatched trail surrogate at ' + n)
-      end
-
       c2 = codepoint.charCodeAt(1)
-      if (c2 & 0xFC00) != 0xDC00
-        throw new RangeError('Unmatched lead surrogate at ' + (n - 1))
-      end
 
-      c1 = ((c1 & 0x3FF) << 10) + (c2 & 0x3FF) + 0x10000
-      enc = [
-        (c1 >> 18) | 240, ((c1 >> 12) & 63) | 128,
-        ((c1 >> 6) & 63) | 128, (c1 & 63) | 128
-      ]
+      if (c1 & 0xFC00) != 0xD800 or (c2 & 0xFC00) != 0xDC00
+        # unmatched surrogate pair
+        enc = [
+          (c1 >> 12) | 224, ((c1 >> 6) & 63) | 128, (c1 & 63) | 128
+        ]
+      else
+        c1 = ((c1 & 0x3FF) << 10) + (c2 & 0x3FF) + 0x10000
+        enc = [
+          (c1 >> 18) | 240, ((c1 >> 12) & 63) | 128,
+          ((c1 >> 6) & 63) | 128, (c1 & 63) | 128
+        ]
+      end
     end
 
     result = ""

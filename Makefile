@@ -59,6 +59,7 @@ reference-implementation/idna.js: reference-implementation/idna2js.rb \
 #
 clobber:
 	rm -f test/urltestdata.txt test/urltestparser.js parser.pegjs \
+	reference-implementation/test/urltestdata.txt \
 	reference-implementation/punycode.js \
 	reference-implementation/IdnaMappingTable.txt
 
