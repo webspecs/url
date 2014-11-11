@@ -155,7 +155,7 @@ Url
 
    <li><div class=example><code>file:/example.com/</code></div>
 
-   Indicate a <a>parse error</a>.
+   Indicate a <a>conformance error</a>.
 
    Initialize $result to an empty object, and then modify it as follows:
 
@@ -255,7 +255,7 @@ NonRelativeUrl
    <li><div class=example><code>http://user:pass@example.org:21/foo/bar</code></div>
 
      If anything other than two forward solidus characters ("//") immediately
-     follows the first colon in the input, indicate a <a>parse error</a>.
+     follows the first colon in the input, indicate a <a>conformance error</a>.
 
      Initialize $result to the value returned by @Authority.
      Modify $result as follows:
@@ -272,19 +272,19 @@ NonRelativeUrl
     <p class=example><code>ftp:/example.com/</code> parsed using a base of
     <code>http://example.org/foo/bar</code></p>
 
-    Indicate a <a>parse error</a>.
+    Indicate a <a>conformance error</a>.
 
     Initialize $result to the value returned by @Authority.
     Modify $result as follows:
 
      * Set $result.scheme to the value returned by @RelativeScheme.
      * if $result.host is either an empty string or contains a
-         colon, then terminate parsing with a <a>parse error</a>.
+         colon, then terminate parsing with a <a>parse exception</a>.
      * If @Path is present in the input, set $result.path to its value.
 
    <li><div class=example><code>http:foo/bar</code></div>
 
-    Indicate a <a>parse error</a>.
+    Indicate a <a>conformance error</a>.
 
     Initialize $result to be an empty object.  Modify $result as follows:
 
@@ -450,7 +450,7 @@ Scheme
        entire value.
      * If one or more "@" signs are present in the value returned
        by the @Host production, then perform the following steps:
-       * Indicate a <a>parse error</a>.
+       * Indicate a <a>conformance error</a>.
        * Initialize $info to the remainder of the @Host after the
            first "@" sign.  Remove all remaining "@" signs in $info,
            and prepend a "%40" for every "@" removed.
@@ -546,23 +546,23 @@ Password
    Otherwise:
 
      * If the string starts with a left square bracket (U+005B),
-       terminate parsing with a <a>parse error</a>.
+       terminate parsing with a <a>parse exception</a>.
      * If any U+0009, U+000A, U+000D, U+200B, U+2060, or U+FEFF characters are
        present in the input, remove those characters and indicate a
-       <a>parse error</a>.
+       <a>conformance error</a>.
      * Let $domain be the result of
        <a href="https://url.spec.whatwg.org/#concept-host-parser">host
        parsing</a> the value.  If this results in a failure,
-       terminate processing with a <a>parse error</a>.  If 
+       terminate processing with a <a>parse exception</a>.  If 
        <a href="https://url.spec.whatwg.org/#concept-host-parser">host
        parsing</a> returned a value that was different than what was
-       provided as input, indicate a <a>parse error</a> based on an
+       provided as input, indicate a <a>conformance error</a> based on an
        <a href=http://krijnhoetmer.nl/irc-logs/whatwg/20141110#l-533>IRC
        discussion</a>.
      * Validate the $domain as follows:
         * split the string at U+002E (full stop) characters
         * If any of the pieces, other than the first one, are empty strings,
-            indicate a <a>parse error</a>.
+            indicate a <a>conformance error</a>.
      * Return $domain.
 
    Note: the resolution of
@@ -656,15 +656,15 @@ Host
    
    Perform the following validation checks:
    * If there are no consecutive colon characters in the input string, indicate
-       a <a>parse error</a> and terminate processing unless there are exactly
-       six @H16 values and one @LS32 value.
+       a <a>parse exception</a> and terminate processing unless there are
+       exactly six @H16 values and one @LS32 value.
    * If there are consecutive colon characters present in the input, indicate a
-       <a>parse error</a> and terminate processing if the total number of values
-       (@H16 or @LS32) is more than six.
-   * Unless there is a @LS32 value present, indicate a <a>parse error</a> and
-       terminate processing if consecutive colon characters are present in the
-       input or if there are more than one @LS32 value after the consecutive
-       colons.
+       <a>parse exception</a> and terminate processing if the total number of
+       values (@H16 or @LS32) is more than six.
+   * Unless there is a @LS32 value present, indicate a <a>parse exception</a>
+       and terminate processing if consecutive colon characters are present in
+       the input or if there are more than one @LS32 value after the
+       consecutive colons.
 
    Perform the following steps:
    * Append "0" values to $pre while the sum of the lengths of the $pre and
@@ -720,11 +720,11 @@ IPV6Addr
 
 /*
   If any but the last @Number is greater or equal to 256, terminate processing
-  with a <a>parse error</a>.
+  with a <a>parse exception</a>.
 
   If the last @Number is greater than or equal to 256 to the power of (5 minus
   the number of @Number's present in the input), terminate processing with a
-  <a>parse error</a>.
+  <a>parse exception</a>.
 
   Initialize $n to the last @Number.
 
@@ -821,7 +821,7 @@ LS32
 /*
   Decimal bytes are a string of up to three decimal digits.  If the results
   converted to an integer are greater than 255, terminate processing with
-  a <a>parse error</a>.
+  a <a>parse exception</a>.
 */
 DecimalByte
   = a:[0-2]? b:[0-9]? c:[0-9]
@@ -841,7 +841,7 @@ DecimalByte
   until either the leading code point is not U+0030 or result is
   one code point. 
   If any characters that remain are not decimal digits, terminate processing
-  with a <a>parse error</a>.
+  with a <a>parse exception</a>.
   Otherwise, return the result as a string.
 
   Note: the resolution of
@@ -867,7 +867,7 @@ Port
 
 /*
   If any of the path separators are a reverse solidus ("\"), indicate
-  a <a>parse error</a>.
+  a <a>conformance error</a>.
 
   Extract all the pathnames into an array.  Process each name as follows:
 

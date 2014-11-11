@@ -86,7 +86,7 @@ status section or equivalent in this document.  Expand on that information
 with specific notes on known interop issues.  An example of this can be
 found in <a data-section="" href=#file-url>§3.2 file-url</a>.</p>
 
-<li data-md=""><p>Define more soft <a data-link-type=dfn href=#parse-errors title="parse errors">parse errors</a>.  The
+<li data-md=""><p>Define more <a data-link-type=dfn href=#conformance-error title="conformance errors">conformance errors</a>.  The
 <a href=https://url.spec.whatwg.org/>URL living standard</a> has a start,
 but there needs to be more.</p>
 </ul>
@@ -105,18 +105,18 @@ property getters and setters</a>.</p>
 <ul><li data-md=""><p>This draft treats URLs of the form <code>//C|/foo/bar</code> as a parse
 error, whereas current drafts of the URL standard do not.
 <a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
-agrees</a> that this should be a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+agrees</a> that this should be a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>.</p>
 <li data-md=""><p>This draft treats hosts which contain consecutive dot characters as a
-<a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>, whereas current drafts of the URL standard do not.
+<a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>, whereas current drafts of the URL standard do not.
 <a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
-agrees</a> that this should be a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+agrees</a> that this should be a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>.</p>
 <li data-md=""><p>This draft contains a proposed implementation of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug 26431</a>
 (Define IPv4 parsing).</p>
 <li data-md=""><p>The reference implementation contains a proposed implementation of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27289">bug 27289</a>
 (Host parsing and utf8PercentDecode).</p>
-<li data-md=""><p>This draft indicates a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a> if
+<li data-md=""><p>This draft indicates a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a> if
 <a href=https://url.spec.whatwg.org/#concept-host-parser>host
 parsing</a> changes the domain.
 [<a href=http://krijnhoetmer.nl/irc-logs/whatwg/20141110#l-533>IRC
@@ -134,10 +134,10 @@ Rules when evaluated return a JSON objection, typically either a string or an
 object where all of the values are strings.  The one exception is path values,
 which are arrays of strings.</p>
 
-<p>Two types of <dfn data-dfn-type=dfn data-noexport="" id=parse-errors>parse errors<a class=self-link href=#parse-errors></a></dfn> are defined.  Hard errors (indicated in
-the spec with the following text: <em>terminate processing with a parse
-error</em>) are mandatory.  Soft errors (all other errors) are optional.  User
-agents are encouraged to expose <a href=https://url.spec.whatwg.org/#parse-error>parse errors</a> somehow.</p>
+<p>Two types of parse errors are defined.  <dfn data-dfn-type=dfn data-noexport="" id=parse-exception title="parse exception">Parse
+exceptions<a class=self-link href=#parse-exception></a></dfn> terminate parsing and must be implemented by all conforming
+implementations.  By contrast, user agents are encouraged, but not required,
+to expose <dfn data-dfn-type=dfn data-noexport="" id=conformance-error title="conformance error">conformance errors<a class=self-link href=#conformance-error></a></dfn> somehow.</p>
 
 <p class=note role=note>Note: the following subsections are intended to replace steps 5-8 in the
 <a href=https://url.spec.whatwg.org/#concept-basic-url-parser>basic url parser</a>.  It also works out better if step 3 were to default <var>base</var> to a
@@ -521,7 +521,7 @@ path</text></g><path d="M654.0 160h10">
 </ul>
  <li><div class=example><code>file:/example.com/</code></div>
 
-<p>Indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+<p>Indicate a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>.</p>
 
 <p>Initialize <code>result</code> to an empty object, and then modify it as follows:</p>
 
@@ -843,7 +843,7 @@ bottom.</p>
 <li><div class=example><code>http://user:pass@example.org:<code>21</code>/foo/bar</code></div>
 
 <p>If anything other than two forward solidus characters ("<code>//</code>") immediately
-  follows the first colon in the input, indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+  follows the first colon in the input, indicate a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>.</p>
 
 <p>Initialize <code>result</code> to the value returned by <code class=grammar-rule><a href=#authority>authority</a></code>.
   Modify <code>result</code> as follows:</p>
@@ -860,19 +860,19 @@ set <code>result.scheme</code> to the value of <code>base.scheme</code>.</p>
  <p class=example><code>ftp:/example.com/</code> parsed using a base of
  <code>http://example.org/foo/bar</code></p>
 
-<p>Indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+<p>Indicate a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>.</p>
 
 <p>Initialize <code>result</code> to the value returned by <code class=grammar-rule><a href=#authority>authority</a></code>.
  Modify <code>result</code> as follows:</p>
 
 <ul><li data-md=""><p>Set <code>result.scheme</code> to the value returned by <code class=grammar-rule><a href=#relative-scheme>relative-scheme</a></code>.</p>
 <li data-md=""><p>if <code>result.host</code> is either an empty string or contains a
-  colon, then terminate parsing with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+  colon, then terminate parsing with a <a data-link-type=dfn href=#parse-exception title="parse exception">parse exception</a>.</p>
 <li data-md=""><p>If <code class=grammar-rule><a href=#path>path</a></code> is present in the input, set <code>result.path</code> to its value.</p>
 </ul>
 <li><div class=example><code>http:foo/bar</code></div>
 
-<p>Indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+<p>Indicate a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>.</p>
 
 <p>Initialize <code>result</code> to be an empty object.  Modify <code>result</code> as follows:</p>
 
@@ -1119,7 +1119,7 @@ port</text></g><path d="M594.0 51h10">
 entire value.</p>
 <li data-md=""><p>If one or more "<code>@</code>" signs are present in the value returned
 by the <code class=grammar-rule><a href=#host>host</a></code> production, then perform the following steps:</p>
-<ul><li data-md=""><p>Indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+<ul><li data-md=""><p>Indicate a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>.</p>
 <li data-md=""><p>Initialize <code>info</code> to the remainder of the <code class=grammar-rule><a href=#host>host</a></code> after the
 first "<code>@</code>" sign.  Remove all remaining "<code>@</code>" signs in <code>info</code>,
 and prepend a "<code>%<code>40</code></code>" for every "<code>@</code>" removed.</p>
@@ -1299,23 +1299,23 @@ the result returned by <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></
 <p>Otherwise:</p>
 
 <ul><li data-md=""><p>If the string starts with a left square bracket (<code>U+005B</code>),
-terminate parsing with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+terminate parsing with a <a data-link-type=dfn href=#parse-exception title="parse exception">parse exception</a>.</p>
 <li data-md=""><p>If any <code>U+<code>0009</code></code>, <code>U+000A</code>, <code>U+000D</code>, <code>U+200B</code>, <code>U+<code>2060</code></code>, or <code>U+FEFF</code> characters are
 present in the input, remove those characters and indicate a
-<a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+<a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>.</p>
 <li data-md=""><p>Let <code>domain</code> be the result of
 <a href=https://url.spec.whatwg.org/#concept-host-parser>host
 parsing</a> the value.  If this results in a failure,
-terminate processing with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.  If 
+terminate processing with a <a data-link-type=dfn href=#parse-exception title="parse exception">parse exception</a>.  If 
 <a href=https://url.spec.whatwg.org/#concept-host-parser>host
 parsing</a> returned a value that was different than what was
-provided as input, indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a> based on an
+provided as input, indicate a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a> based on an
 <a href=http://krijnhoetmer.nl/irc-logs/whatwg/<code>20141110#l-<code>533</code>&gt;IRC
 discussion</a>.</p>
 <li data-md=""><p>Validate the <code>domain</code> as follows:</p>
 <ul><li data-md=""><p>split the string at <code>U+002E</code> (full stop) characters</p>
 <li data-md=""><p>If any of the pieces, other than the first one, are empty strings,
- indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+ indicate a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>.</p>
 </ul><li data-md=""><p>Return <code>domain</code>.</p>
 </ul>
 <p class=note role=note>Note: the resolution of
@@ -1449,15 +1449,15 @@ ls32</text></g><path d="M544.0 81a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10">
 
 <p>Perform the following validation checks:</p>
 <ul><li data-md=""><p>If there are no consecutive colon characters in the input string, indicate
- a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a> and terminate processing unless there are exactly
- six <code class=grammar-rule><a href=#h16>h16</a></code> values and one <code class=grammar-rule><a href=#ls32>ls32</a></code> value.</p>
+ a <a data-link-type=dfn href=#parse-exception title="parse exception">parse exception</a> and terminate processing unless there are
+ exactly six <code class=grammar-rule><a href=#h16>h16</a></code> values and one <code class=grammar-rule><a href=#ls32>ls32</a></code> value.</p>
 <li data-md=""><p>If there are consecutive colon characters present in the input, indicate a
- <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a> and terminate processing if the total number of values
- (<code class=grammar-rule><a href=#h16>h16</a></code> or <code class=grammar-rule><a href=#ls32>ls32</a></code>) is more than six.</p>
-<li data-md=""><p>Unless there is a <code class=grammar-rule><a href=#ls32>ls32</a></code> value present, indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a> and
- terminate processing if consecutive colon characters are present in the
- input or if there are more than one <code class=grammar-rule><a href=#ls32>ls32</a></code> value after the consecutive
- colons.</p>
+ <a data-link-type=dfn href=#parse-exception title="parse exception">parse exception</a> and terminate processing if the total number of
+ values (<code class=grammar-rule><a href=#h16>h16</a></code> or <code class=grammar-rule><a href=#ls32>ls32</a></code>) is more than six.</p>
+<li data-md=""><p>Unless there is a <code class=grammar-rule><a href=#ls32>ls32</a></code> value present, indicate a <a data-link-type=dfn href=#parse-exception title="parse exception">parse exception</a>
+ and terminate processing if consecutive colon characters are present in
+ the input or if there are more than one <code class=grammar-rule><a href=#ls32>ls32</a></code> value after the
+ consecutive colons.</p>
 </ul>
 <p>Perform the following steps:</p>
 <ul><li data-md=""><p>Append "<code><code>0</code></code>" values to <code>pre</code> while the sum of the lengths of the <code>pre</code> and
@@ -1570,11 +1570,11 @@ number</text></g><path d="M646.0 61h10">
 </path></g></svg></div>
 
 <p>If any but the last <code class=grammar-rule><a href=#number>number</a></code> is greater or equal to <code>256</code>, terminate processing
-with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+with a <a data-link-type=dfn href=#parse-exception title="parse exception">parse exception</a>.</p>
 
 <p>If the last <code class=grammar-rule><a href=#number>number</a></code> is greater than or equal to <code>256</code> to the power of (<code>5</code> minus
 the number of <code class=grammar-rule><a href=#number>number</a></code>s present in the input), terminate processing with a
-<a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+<a data-link-type=dfn href=#parse-exception title="parse exception">parse exception</a>.</p>
 
 <p>Initialize <code>n</code> to the last <code class=grammar-rule><a href=#number>number</a></code>.</p>
 
@@ -1863,7 +1863,7 @@ any of [0-9]</text></g><path d="M478.0 41h10">
 
 <p>Decimal bytes are a string of up to three decimal digits.  If the results
 converted to an integer are greater than <code>255</code>, terminate processing with
-a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+a <a data-link-type=dfn href=#parse-exception title="parse exception">parse exception</a>.</p>
 
 <h3 class="heading settled" data-level=3.18 id=port><span class=secno>3.18. </span><span class=content>port</span><a class=self-link href=#port></a></h3>
 
@@ -1907,7 +1907,7 @@ Remove leading <code>U+<code>0030</code></code> code points from result
 until either the leading code point is not <code>U+<code>0030</code></code> or result is
 one code point. 
 If any characters that remain are not decimal digits, terminate processing
-with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.
+with a <a data-link-type=dfn href=#parse-exception title="parse exception">parse exception</a>.
 Otherwise, return the result as a string.</p>
 
 <p class=note role=note>Note: the resolution of
@@ -2010,7 +2010,7 @@ any except [/\\?#]</text></g><path d="M586.0 51h10">
 </path></g></svg></div>
 
 <p>If any of the path separators are a reverse solidus ("<code>\</code>"), indicate
-a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>.</p>
 
 <p>Extract all the pathnames into an array.  Process each name as follows:</p>
 
@@ -2170,15 +2170,16 @@ may add support for parsing URLs without decoding the fragment identifier.</p>
 
 <ul><li data-md=""><p>If any character in the string not a
  <a href=https://url.spec.whatwg.org/#url-code-points>URL code point</a>
- or a percent sign (<code>U+0025</code>), indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+ or a percent sign (<code>U+0025</code>), indicate a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance
+ error</a>.</p>
 
 <li data-md=""><p>If the name includes a percent sign (<code>U+0025</code>) that is not
- immediately followed by two hexadecimal characters, indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse
- error</a>.</p>
+ immediately followed by two hexadecimal characters, indicate a
+ <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>.</p>
 
 <li data-md=""><p>If any <code>U+0009</code>, <code>U+000A</code> or <code>U+000D</code>
  characters are present in the string, remove those characters and indicate
- a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+ a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>.</p>
 
 <li data-md=""><p>if the <var>encode set</var> is non-null,
 first <a href=https://encoding.spec.whatwg.org/#encode>encode</a> the
@@ -2222,4 +2223,4 @@ readability, these words do not appear in all uppercase letters in this specific
 
 <p>Conformance requirements phrased as algorithms or specific steps may be implemented in any manner, so long as the end
 result is equivalent.
-</em><h2 class="no-num heading settled" id=references><span class=content>References</span><a class=self-link href=#references></a></h2><h3 class="no-num heading settled" id=normative><span class=content>Normative References</span><a class=self-link href=#normative></a></h3><dl><dt id=biblio-rfc2119 title=rfc2119><a class=self-link href=#biblio-rfc2119></a>[rfc2119]<dd>S. Bradner. <a href=https://tools.ietf.org/html/rfc2119>Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href=https://tools.ietf.org/html/rfc2119>https://tools.ietf.org/html/rfc2119</a></dl><h3 class="no-num heading settled" id=informative><span class=content>Informative References</span><a class=self-link href=#informative></a></h3><dl><dt id=biblio-rfc3986 title=rfc3986><a class=self-link href=#biblio-rfc3986></a>[rfc3986]<dd>T. Berners-Lee; R. Fielding; L. Masinter. <a href=https://tools.ietf.org/html/rfc3986>Uniform Resource Identifier (URI): Generic Syntax</a>. January 2005. Internet Standard. URL: <a href=https://tools.ietf.org/html/rfc3986>https://tools.ietf.org/html/rfc3986</a><dt id=biblio-rfc3987 title=rfc3987><a class=self-link href=#biblio-rfc3987></a>[rfc3987]<dd>M. Duerst; M. Suignard. <a href=https://tools.ietf.org/html/rfc3987>Internationalized Resource Identifiers (IRIs)</a>. January 2005. Proposed Standard. URL: <a href=https://tools.ietf.org/html/rfc3987>https://tools.ietf.org/html/rfc3987</a></dl><h2 class="no-num heading settled" id=index><span class=content>Index</span><a class=self-link href=#index></a></h2><ul class=indexlist><li>cleanse, <a href=#cleanse title="section 4">4</a><li>parse errors, <a href=#parse-errors title="section 3">3</a><li>path concatenation, <a href=#path-concatenation title="section 4">4</a><li>query encode set, <a href=#query-encode-set title="section 3.21">3.21</a></ul>
+</em><h2 class="no-num heading settled" id=references><span class=content>References</span><a class=self-link href=#references></a></h2><h3 class="no-num heading settled" id=normative><span class=content>Normative References</span><a class=self-link href=#normative></a></h3><dl><dt id=biblio-rfc2119 title=rfc2119><a class=self-link href=#biblio-rfc2119></a>[rfc2119]<dd>S. Bradner. <a href=https://tools.ietf.org/html/rfc2119>Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href=https://tools.ietf.org/html/rfc2119>https://tools.ietf.org/html/rfc2119</a></dl><h3 class="no-num heading settled" id=informative><span class=content>Informative References</span><a class=self-link href=#informative></a></h3><dl><dt id=biblio-rfc3986 title=rfc3986><a class=self-link href=#biblio-rfc3986></a>[rfc3986]<dd>T. Berners-Lee; R. Fielding; L. Masinter. <a href=https://tools.ietf.org/html/rfc3986>Uniform Resource Identifier (URI): Generic Syntax</a>. January 2005. Internet Standard. URL: <a href=https://tools.ietf.org/html/rfc3986>https://tools.ietf.org/html/rfc3986</a><dt id=biblio-rfc3987 title=rfc3987><a class=self-link href=#biblio-rfc3987></a>[rfc3987]<dd>M. Duerst; M. Suignard. <a href=https://tools.ietf.org/html/rfc3987>Internationalized Resource Identifiers (IRIs)</a>. January 2005. Proposed Standard. URL: <a href=https://tools.ietf.org/html/rfc3987>https://tools.ietf.org/html/rfc3987</a></dl><h2 class="no-num heading settled" id=index><span class=content>Index</span><a class=self-link href=#index></a></h2><ul class=indexlist><li>cleanse, <a href=#cleanse title="section 4">4</a><li>conformance error, <a href=#conformance-error title="section 3">3</a><li>parse exception, <a href=#parse-exception title="section 3">3</a><li>path concatenation, <a href=#path-concatenation title="section 4">4</a><li>query encode set, <a href=#query-encode-set title="section 3.21">3.21</a></ul>

@@ -76,7 +76,7 @@ Goals {#goals}
     with specific notes on known interop issues.  An example of this can be
     found in [[#file-url]].
 
-  * Define more soft <a>parse errors</a>.  The 
+  * Define more <a>conformance errors</a>.  The 
     <a href="https://url.spec.whatwg.org/">URL living standard</a> has a start,
     but there needs to be more.
 
@@ -96,18 +96,18 @@ Known differences with current drafts of the WHATWG <a href="https://url.spec.wh
   * This draft treats URLs of the form <code>//C|/foo/bar</code> as a parse
     error, whereas current drafts of the URL standard do not.
     <a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
-    agrees</a> that this should be a <a>parse error</a>.
+    agrees</a> that this should be a <a>conformance error</a>.
   * This draft treats hosts which contain consecutive dot characters as a
-    <a>parse error</a>, whereas current drafts of the URL standard do not.
+    <a>conformance error</a>, whereas current drafts of the URL standard do not.
     <a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
-    agrees</a> that this should be a <a>parse error</a>.
+    agrees</a> that this should be a <a>conformance error</a>.
   * This draft contains a proposed implementation of 
     <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug 26431</a>
     (Define IPv4 parsing).
   * The reference implementation contains a proposed implementation of
     <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27289">bug 27289</a>
     (Host parsing and utf8PercentDecode).
-  * This draft indicates a <a>parse error</a> if
+  * This draft indicates a <a>conformance error</a> if
     <a href="https://url.spec.whatwg.org/#concept-host-parser">host
     parsing</a> changes the domain.
     [<a href=http://krijnhoetmer.nl/irc-logs/whatwg/20141110#l-533>IRC
@@ -126,11 +126,10 @@ Rules when evaluated return a JSON objection, typically either a string or an
 object where all of the values are strings.  The one exception is path values,
 which are arrays of strings.
 
-Two types of <dfn>parse errors</dfn> are defined.  Hard errors (indicated in
-the spec with the following text: <em>terminate processing with a parse
-error</em>) are mandatory.  Soft errors (all other errors) are optional.  User
-agents are encouraged to expose <a
-href="https://url.spec.whatwg.org/#parse-error">parse errors</a> somehow.
+Two types of parse errors are defined.  <dfn title='parse exception'>Parse
+exceptions</dfn> terminate parsing and must be implemented by all conforming
+implementations.  By contrast, user agents are encouraged, but not required,
+to expose <dfn title='conformance error'>conformance errors</dfn> somehow.
 
 Note: the following subsections are intended to replace steps 5-8 in the 
 <a href="https://url.spec.whatwg.org/#concept-basic-url-parser">basic url parser</a>.  It also works out better if step 3 were to default <var>base</var> to a
