@@ -67,6 +67,19 @@
     return string
   }
 
+  /* flatten an array */
+  function flatten(array) {
+    var result = [];
+    array.forEach(function(element) {
+      if (Array.isArray(element)) {
+        result = result.concat(flatten(element));
+      } else {
+        result.push(element);
+      }
+    });
+    return result;
+  }
+
   /* Regular expression "lookahead" on the input string */
   function lookahead(expected) {
     return expected.test(input.slice(offset()))
@@ -749,7 +762,8 @@ IPV6Addr
   may change this definition.
 */
 IPV4Addr
-  = addr:((Number '.' (Number '.' (Number '.')?)?)? Number)
+  = addr:((Number ('.' / '%2e' / '%2E') (Number ('.' / '%2e' / '%2E')
+    (Number ('.' / '%2e' / '%2E'))?)?)? Number)
 {
   var n = addr[1]
 
@@ -781,24 +795,29 @@ IPV4Addr
 }
 
 /*
-   Three production rules are defined for numbers.  Parse the values as
-   hexadecimal, octal, and decimal integers respectively.  Return the
-   result as an integer.
+   Three production rules, with uppercase and percent encoded variants, are
+   defined for numbers.  Parse the 
+   <a href=https://url.spec.whatwg.org/#percent-decode>percent decoded</a>
+   values as hexadecimal, octal, and decimal integers respectively.  Return
+   the result as an integer.
 */
 Number
-  = '0' 'x' digits:([0-9a-fA-F])+
+  = ('0' / '%30')
+    ('x' / 'X' / '%58' / '%78')
+    digits:(([0-9a-fA-F]) / ('%' '3' [0-9]) / '%' '4' [1-6] / '%' '6' [1-6])+
 {
-  return parseInt(digits.join(''), 16)
+  return parseInt(Url.utf8PercentDecode(flatten(digits).join('')), 16)
 }
 
- / '0' digits:([0-7])+
+ / ('0' / '%30')
+   digits:([0-7] / ('%' '3' [0-7]))+
 {
-  return parseInt(digits.join(''), 8)
+  return parseInt(Url.utf8PercentDecode(flatten(digits).join('')), 8)
 }
 
- / digits:([0-9])+
+ / digits:([0-9] / ('%' '3' [0-9]))+
 {
-  return parseInt(digits.join(''))
+  return parseInt(Url.utf8PercentDecode(flatten(digits).join('')))
 }
 
 /*
