@@ -295,6 +295,7 @@ NonRelativeUrl
          $base.path and @Path.
 
    <li><div class=example><code>/foo/bar</code></div>
+
     Initialize $result to be an empty object.  Modify $result as follows:
 
      * Set $result.scheme to $base.scheme.
