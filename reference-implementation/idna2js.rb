@@ -1,7 +1,14 @@
 source = File.read(File.expand_path('../IdnaMappingTable.txt', __FILE__))
+
+puts '/*'
+puts source[/(#.*\n)+/]
+puts '*/'
+puts
+
 source.gsub! /\s*#.*/, ''
 source.gsub! /\A\n+/, ''
 source.gsub! /\s*;\s*/, ';'
+
 table = []
 source.split("\n").each do |line|
   codepoints, value, mapping, status = line.split(';')
