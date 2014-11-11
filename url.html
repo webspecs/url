@@ -22,7 +22,7 @@
 </p>
   <h1 class="p-name no-ref" id=title>URL</h1>
   <h2 class="no-num no-toc no-ref heading settled" id=subtitle><span class=content>Living Standard — Last Updated
-    <span class=dt-updated><span class=value-title title=20141110>10 November 2014</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20141111>11 November 2014</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt class=editor>Editor:<dd class=editor><div class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://intertwingly.net/blog/>Sam Ruby</a> (<a class="p-org org" href=https://www.ibm.com/>IBM</a>) <a class="u-email email" href=mailto:rubys@intertwingly.net>rubys@intertwingly.net</a></div><dt>Version History:<dd><span><a href=https://github.com/rubys/url/commits/peg.js>https://github.com/rubys/url/commits/peg.js</a></span><dt>Participate:<dd><span><a href="https://www.w3.org/Bugs/Public/enter_bug.cgi?product=WHATWG&amp;component=URL">File a bug</a> (<a href="https://www.w3.org/Bugs/Public/buglist.cgi?component=URL&amp;list_id=46839&amp;product=WHATWG&amp;resolution=---">open bugs</a>)</span><dd><span><a href=https://github.com/rubys/url/issues/new>File an issue</a> (<a href="https://github.com/rubys/url/issues?q=">issues</a>)</span><dd><span><a href=mailto:public-webapps@w3.org>public-webapps@w3.org</a> (<a href=http://lists.w3.org/Archives/Public/public-webapps/>archives</a>)</span><dd><span><a href=https://whatwg.org/mailing-list>whatwg@whatwg.org</a> (<a href=https://whatwg.org/mailing-list#specs>archives</a>)</span><dd><span><a href=http://wiki.whatwg.org/wiki/IRC>IRC: #whatwg on Freenode</a></span></dl></div>
   <div data-fill-with=warning></div>
 </div>
@@ -105,17 +105,22 @@ property getters and setters</a>.</p>
 <ul><li data-md=""><p>This draft treats URLs of the form <code>//C|/foo/bar</code> as a parse
 error, whereas current drafts of the URL standard do not.
 <a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
-agrees</a> that this should be a parse error.</p>
+agrees</a> that this should be a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
 <li data-md=""><p>This draft treats hosts which contain consecutive dot characters as a
-parse error, whereas current drafts of the URL standard do not.
+<a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>, whereas current drafts of the URL standard do not.
 <a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
-agrees</a> that this should be a parse error.</p>
+agrees</a> that this should be a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
 <li data-md=""><p>This draft contains a proposed implementation of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug 26431</a>
 (Define IPv4 parsing).</p>
 <li data-md=""><p>The reference implementation contains a proposed implementation of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27289">bug 27289</a>
 (Host parsing and utf8PercentDecode).</p>
+<li data-md=""><p>This draft indicates a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a> if
+<a href=https://url.spec.whatwg.org/#concept-host-parser>host
+parsing</a> changes the domain.
+[<a href=http://krijnhoetmer.nl/irc-logs/whatwg/20141110#l-533>IRC
+discussion</a>]</p>
 </ul>
 <h2 class="heading settled" data-level=3 id=parsing-rules><span class=secno>3. </span><span class=content>Parsing Rules</span><a class=self-link href=#parsing-rules></a></h2>
 
@@ -1301,7 +1306,12 @@ present in the input, remove those characters and indicate a
 <li data-md=""><p>Let <code>domain</code> be the result of
 <a href=https://url.spec.whatwg.org/#concept-host-parser>host
 parsing</a> the value.  If this results in a failure,
-terminate processing with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.</p>
+terminate processing with a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a>.  If 
+<a href=https://url.spec.whatwg.org/#concept-host-parser>host
+parsing</a> returned a value that was different than what was
+provided as input, indicate a <a data-link-type=dfn href=#parse-errors title="parse error">parse error</a> based on an
+<a href=http://krijnhoetmer.nl/irc-logs/whatwg/<code>20141110#l-<code>533</code>&gt;IRC
+discussion</a>.</p>
 <li data-md=""><p>Validate the <code>domain</code> as follows:</p>
 <ul><li data-md=""><p>split the string at <code>U+002E</code> (full stop) characters</p>
 <li data-md=""><p>If any of the pieces, other than the first one, are empty strings,

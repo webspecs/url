@@ -553,7 +553,12 @@ Password
      * Let $domain be the result of
        <a href="https://url.spec.whatwg.org/#concept-host-parser">host
        parsing</a> the value.  If this results in a failure,
-       terminate processing with a <a>parse error</a>.
+       terminate processing with a <a>parse error</a>.  If 
+       <a href="https://url.spec.whatwg.org/#concept-host-parser">host
+       parsing</a> returned a value that was different than what was
+       provided as input, indicate a <a>parse error</a> based on an
+       <a href=http://krijnhoetmer.nl/irc-logs/whatwg/20141110#l-533>IRC
+       discussion</a>.
      * Validate the $domain as follows:
         * split the string at U+002E (full stop) characters
         * If any of the pieces, other than the first one, are empty strings,
@@ -595,7 +600,29 @@ Host
     }
 
     host = Url.utf8PercentDecode(host.join(''));
-    host = IDNA.processing_map(host, false, true).normalize('NFC');
+    var before = host;
+    host = IDNA.processing_map(host, false, true);
+
+    /* warn if IDNA processing changed the URL */
+    if (host != before) {
+      before = before.split('');
+      warn = "Domain name contains an IDNA ignored character";
+      host.split('').forEach(function(c) {
+        var index = before.indexOf(c);
+        if (index > -1) {
+          before.splice(index, 1);
+        } else {
+          warn = "Domain name contains an IDNA mapped character";
+        }
+      });
+    }
+
+    /* warn if NFC normalization changed the URL */
+    before = host;
+    host = host.normalize('NFC');
+    if (host != before) {
+      warn = "Domain name contains an non-NFC normalized character";
+    }
 
     if (/[\u0000\u0009\u000A\u000D\u0020#%\/:?\[\\\]]/.test(host)) {
       var c = host.match(/[\u0000\u0009\u000A\u000D\u0020#%\/:?\[\\\]]/)[0];
