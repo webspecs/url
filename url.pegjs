@@ -559,8 +559,6 @@ Password
 
    Otherwise:
 
-     * If the string starts with a left square bracket (U+005B),
-       terminate parsing with a <a>parse exception</a>.
      * If any U+0009, U+000A, U+000D, U+200B, U+2060, or U+FEFF characters are
        present in the input, remove those characters and indicate a
        <a>conformance error</a>.
@@ -603,8 +601,6 @@ Host
   / host:[^:/\\?#]*
   {
     var warn = null;
-
-    if (host[0] == '[') error("Invalid IPV6 address");
 
     for (var i=0; i<host.length; i++) {
       if (/^[\u0009\u000A\u000D]$/.test(host[i])) {
