@@ -177,8 +177,27 @@ fn unescape(input: &str) -> String {
                             hex.push(chars.next().unwrap());
                             hex.push(chars.next().unwrap());
                             hex.push(chars.next().unwrap());
-                            from_str_radix(hex.as_slice(), 16)
-                                .and_then(char::from_u32).unwrap()
+                            let mut codepoint = from_str_radix(hex.as_slice(),
+16);
+
+                            // handle surrogate pairs
+                            match codepoint {
+                                Some(0xD800 ... 0xDF00) => {
+                                  hex = String::new();
+                                  chars.next(); // backslash
+                                  chars.next(); // 'u'
+                                  hex.push(chars.next().unwrap());
+                                  hex.push(chars.next().unwrap());
+                                  hex.push(chars.next().unwrap());
+                                  hex.push(chars.next().unwrap());
+                                  let c1 = codepoint.unwrap();
+                                  let c2 : u32 = from_str_radix(hex.as_slice(), 16).unwrap();
+                                  codepoint = Some(((c1 & 0x3FF) << 10) + (c2 & 0x3FF) + 0x10000);
+                                },
+                                _ => {}
+                            };
+
+                            codepoint.and_then(char::from_u32).unwrap()
                         }
                         _ => panic!("Invalid test data input"),
                     }
