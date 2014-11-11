@@ -20,12 +20,12 @@
     <h2>Enter a URL to parse:</h2>
 
     <p>The output below will display a URL's parsed components from both the browser's DOM, and from the <a href="https://github.com/rubys/url/tree/peg.js/reference-implementation">reference implementation</a> for the <a href="http://url.spec.whatwg.org/">WHATWG Living Standard.</a> The output will be colored <span class="pass">dark green</span> unless a difference occurs between the two parsers in which case the affected URL component will be colored <span class="fail">red</span>.</p>
-    <input class="input" id="url" type="text" placeholder="http://example.com" onkeyup="parse(this.value)"/>
+    <input class="input" id="url" type="text" placeholder="http://example.com"/>
     <a id="target" href="http://www.lookout.net/test/url/url-liveview.html"></a>
 
     <div>
       <p>Specify a base URL</p>
-      <input class="input" id="base" type="text" value="about:" onkeyup="rebase(this.value)"/>
+      <input class="input" id="base" type="text" value="about:"/>
     </div>
 
     <h2>URL components from DOM properties:</h2>
@@ -218,7 +218,9 @@
       }
 
       var input = document.getElementById("url");
+      input.onpaste = input.onkeyup = function() {parse(this.value)};
       var base = document.getElementById("base");
+      base.onpaste = base.onkeyup = function() {rebase(this.value)};
 
       if (location.pathname.indexOf('2') == -1) {
         base.parentNode.style.display = 'none';
