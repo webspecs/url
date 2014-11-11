@@ -10,14 +10,14 @@ agents = {
   refimpl: {hash: 'refimpl'},
   testdata: {hash: 'urltestdata'},
   addressable: {useragent: `gem list addressable`[/addressable \([.\d]+/]+')'},
-  chrome: {hash: '86c335fa27b36744efd9b296a1614a42'},
-  firefox: {hash: 'f3f3cdec27f0d363469b5a351c897fc6'},
+  chrome: {hash: 'ebd30ba133d8a3e8d960169eac331e55'},
+  firefox: {hash: 'ee760790701c58f8b65905d79ee4fa17'},
   galimatias: {hash: 'galimatias'},
-  ie: {hash: '49ce89a6886e67d7c58700e397ad51f8'},
+  ie: {hash: '965e6bf062811c6e7239075dbd3fc93a'},
   nodejs: {hash: 'nodejs'},
-  opera: {hash: 'e2be785cf515227fc146416431e88ce7'},
+  opera: {hash: '8d6f340b1766498cc221ac00e4a18d53'},
   rust: {hash: 'rusturl'},
-  safari: {hash: 'e24f3b9bb81872ae7855ff74d4f4b907'},
+  safari: {hash: '89a2e4c9ca51432181b8a635857601f3'},
 }
 
 results = {}
