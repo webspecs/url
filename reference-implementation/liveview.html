@@ -12,7 +12,7 @@
     <base id="docbase" href="about:"/>
     <style>
       h2 {color: DarkBlue}
-      #urlException {color: Crimson}
+      #domException #urlException {color: Crimson}
     </style>
   </head>
 
@@ -66,6 +66,10 @@
       <div>
         <span class="title">hash</span>
         <span class="result" id="domHash"></span>
+      </div>
+      <div>
+        <span class="title">error</span>
+        <span class="result" id="domException"></span>
       </div>
     </div>
 
@@ -125,6 +129,7 @@
       var domPathname = document.getElementById("domPathname");
       var domSearch = document.getElementById("domSearch");
       var domHash = document.getElementById("domHash");
+      var domException = document.getElementById("domException");
 
       // Prepare the elements to output URL class properties from URL.js
       var urlHref = document.getElementById("urlHref");
@@ -139,8 +144,12 @@
       var urlException = document.getElementById("urlException");
 
       function rebase(base) {
-        document.baseURI = base;
-        document.getElementById("docbase").setAttribute('href', base);
+        try {
+          document.baseURI = base;
+          document.getElementById("docbase").setAttribute('href', base);
+        } catch (e) {
+        }
+
         parse(document.getElementById("url").value);
       }
 
@@ -160,7 +169,13 @@
 
       function parseDom(input) {
         var target = document.getElementById("target");
-        target.setAttribute("href", input); 
+        try {
+          domException.parentNode.style.display = "none";
+          target.setAttribute("href", input);
+        } catch (e) {
+          domException.parentNode.style.display = "block";
+          domException.textContent = e.toString();
+        }
 
         domHref.textContent = target.href;
         domProtocol.textContent = target.protocol;
