@@ -137,6 +137,14 @@ Discussion Items {#discuss}
 
     <a href=http://intertwingly.net/projects/pegurl/urltest-results/7357a04b5b>example</a>
 
+  * Given that there is little apparent consensus on how to handle '@' signs
+    in user and passwords, I see no justification for defining behavior that
+    reorders the characters in the input (see "prepend" in 
+    <a href=https://url.spec.whatwg.org/#authority-state">authority-state,
+    and [#authority]).
+  
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/1bdb1f0518>example</a>
+
   * IDNA mapping can produce an IPv4 address.  This needs to be handled, as
     the results won't round trip.
 
