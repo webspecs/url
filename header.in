@@ -140,8 +140,8 @@ Discussion Items {#discuss}
   * Given that there is little apparent consensus on how to handle '@' signs
     in user and passwords, I see no justification for defining behavior that
     reorders the characters in the input (see "prepend" in 
-    <a href=https://url.spec.whatwg.org/#authority-state">authority-state,
-    and [#authority]).
+    <a href=https://url.spec.whatwg.org/#authority-state>authority-state</a>,
+    and [[#authority]]).  Percent encoding the '@' sign is defensible.
   
     <a href=http://intertwingly.net/projects/pegurl/urltest-results/1bdb1f0518>example</a>
 
