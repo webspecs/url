@@ -25,16 +25,53 @@ Logo: https://resources.whatwg.org/logo-url.svg
 !Participate: <a href="http://wiki.whatwg.org/wiki/IRC">IRC: #whatwg on Freenode</a>
 </pre>
 
-Goals {#goals}
-=====
+Todos {#todos}
+===
 
-  * Resolve 
-    <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25946">bug
-    25946</a> by merging this specification with the <a
-    href="https://url.spec.whatwg.org/">URL Living Standard</a>.  Once a new
-    baseline has been established, evolve the standard towards greater web
-    compatibility, greater interoperability, and simpler algorithms, in that
-    order.
+The goal of this proposal is to resolve
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25946">bug 25946</a>
+by merging this specification with the 
+<a href="https://url.spec.whatwg.org/">URL Living Standard</a>.  Once a new
+baseline has been established, evolve the standard towards greater web
+compatibility, greater interoperability, and simpler algorithms, in that
+order.
+
+These are items that should be done before the proposed merge:
+
+  * Make it more clear what is normative; to be honest, I'm confused on this
+    point as the only real normative requirement for the parts defined by this
+    spec-let is "produce the same output as the algorithm defined herein".
+  * Implement <a href="https://url.spec.whatwg.org/#urlutils-and-urlutilsreadonly-members">Url
+    property getters and setters</a>.
+
+Differences {#diffs}
+---
+
+Known differences with current drafts of the WHATWG <a href="https://url.spec.whatwg.org/">URL Standard</a>:
+
+  * This draft treats URLs of the form <code>//C|/foo/bar</code> as a parse
+    error, whereas current drafts of the URL standard do not.
+    <a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
+    agrees</a> that this should be a <a>conformance error</a>.
+  * This draft treats hosts which contain consecutive dot characters as a
+    <a>conformance error</a>, whereas current drafts of the URL standard do not.
+    <a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
+    agrees</a> that this should be a <a>conformance error</a>.
+  * This draft contains a proposed implementation of 
+    <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug 26431</a>
+    (Define IPv4 parsing).
+  * The reference implementation contains a proposed implementation of
+    <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27289">bug 27289</a>
+    (Host parsing and utf8PercentDecode).
+  * This draft indicates a <a>conformance error</a> if
+    <a href="https://url.spec.whatwg.org/#concept-host-parser">host
+    parsing</a> changes the domain.
+    [<a href=http://krijnhoetmer.nl/irc-logs/whatwg/20141110#l-533>IRC
+    discussion</a>]
+
+Post-merge work items {#postmerge}
+---
+
   * Integrate with <a href="https://travis-ci.org/">Travis</a> and activate the
     <a href="http://docs.travis-ci.com/user/getting-started/#Step-two%3A-Activate-GitHub-Webhook">GitHub
     WebHook</a> so that proposed changes are verified to build correctly and
@@ -80,38 +117,51 @@ Goals {#goals}
     <a href="https://url.spec.whatwg.org/">URL living standard</a> has a start,
     but there needs to be more.
 
-Todos / Differences {#todos}
-=====
+Discussion Items {#discuss}
+---
 
-These are items that should be done before the proposed merge:
+  * Chrome and Firefox percent encode "]" in passwords.  The only user agents
+    that don't are ones that attempt to follow the specification.
 
-  * Make it more clear what is normative; to be honest, I'm confused on this
-    point as the only real normative requirement for the parts defined by this
-    spec-let is "produce the same output as the algorithm defined herein".
-  * Implement <a href="https://url.spec.whatwg.org/#urlutils-and-urlutilsreadonly-members">Url
-    property getters and setters</a>.
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/0fc16e7f9d>example</a>
 
-Known differences with current drafts of the WHATWG <a href="https://url.spec.whatwg.org/">URL Standard</a>:
+  * Does it make sense to support a zero length username when a non empty
+    password is specified?
 
-  * This draft treats URLs of the form <code>//C|/foo/bar</code> as a parse
-    error, whereas current drafts of the URL standard do not.
-    <a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
-    agrees</a> that this should be a <a>conformance error</a>.
-  * This draft treats hosts which contain consecutive dot characters as a
-    <a>conformance error</a>, whereas current drafts of the URL standard do not.
-    <a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
-    agrees</a> that this should be a <a>conformance error</a>.
-  * This draft contains a proposed implementation of 
-    <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug 26431</a>
-    (Define IPv4 parsing).
-  * The reference implementation contains a proposed implementation of
-    <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27289">bug 27289</a>
-    (Host parsing and utf8PercentDecode).
-  * This draft indicates a <a>conformance error</a> if
-    <a href="https://url.spec.whatwg.org/#concept-host-parser">host
-    parsing</a> changes the domain.
-    [<a href=http://krijnhoetmer.nl/irc-logs/whatwg/20141110#l-533>IRC
-    discussion</a>]
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/9c7b1c42d3>example</a>
+
+  * Some user agents intentionally don't provide API access to passwords.
+    This seems like a defensible choice.  For some, that merely means not
+    implementing username and password.  For a few, this includes not
+    providing access to href if that content contains password information.
+
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/7357a04b5b>example</a>
+
+  * IDNA mapping can produce an IPv4 address.  This needs to be handled, as
+    the results won't round trip.
+
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/683ac9869d>example</a>
+
+  * A number of agents don't support port numbers above 64K.  It seems
+    sensible to adopt this restriction.
+
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/a193745897>example</a>
+
+  * IE maps a windows path syntax to a file: syntax.  Chrome maps a novel
+    syntax to a file: syntax, but only appears to do so when running on
+    Windows.  The current draft of the URL Standard adopts and extends the
+    windows drive path syntax to all operating systems.  I think this choice
+    is worth revisiting.
+
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/eb30a2c2d0>example</a>
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/4b60e32190>example</a>
+
+  * Safari percent encodes non-ASCII characters in the hash.  No other browser
+    does.  Perhaps this should be revisited?
+
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/79e1a94e3f>example</a>
+
+
 
 Parsing Rules {#parsing-rules}
 =============

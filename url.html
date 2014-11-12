@@ -22,7 +22,7 @@
 </p>
   <h1 class="p-name no-ref" id=title>URL</h1>
   <h2 class="no-num no-toc no-ref heading settled" id=subtitle><span class=content>Living Standard — Last Updated
-    <span class=dt-updated><span class=value-title title=20141111>11 November 2014</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20141112>12 November 2014</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt class=editor>Editor:<dd class=editor><div class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://intertwingly.net/blog/>Sam Ruby</a> (<a class="p-org org" href=https://www.ibm.com/>IBM</a>) <a class="u-email email" href=mailto:rubys@intertwingly.net>rubys@intertwingly.net</a></div><dt>Version History:<dd><span><a href=https://github.com/rubys/url/commits/peg.js>https://github.com/rubys/url/commits/peg.js</a></span><dt>Participate:<dd><span><a href="https://www.w3.org/Bugs/Public/enter_bug.cgi?product=WHATWG&amp;component=URL">File a bug</a> (<a href="https://www.w3.org/Bugs/Public/buglist.cgi?component=URL&amp;list_id=46839&amp;product=WHATWG&amp;resolution=---">open bugs</a>)</span><dd><span><a href=https://github.com/rubys/url/issues/new>File an issue</a> (<a href="https://github.com/rubys/url/issues?q=">issues</a>)</span><dd><span><a href=mailto:public-webapps@w3.org>public-webapps@w3.org</a> (<a href=http://lists.w3.org/Archives/Public/public-webapps/>archives</a>)</span><dd><span><a href=https://whatwg.org/mailing-list>whatwg@whatwg.org</a> (<a href=https://whatwg.org/mailing-list#specs>archives</a>)</span><dd><span><a href=http://wiki.whatwg.org/wiki/IRC>IRC: #whatwg on Freenode</a></span></dl></div>
   <div data-fill-with=warning></div>
 </div>
@@ -34,18 +34,54 @@
 <div data-fill-with=at-risk></div>
 
 <h2 class="no-num no-toc no-ref heading settled" id=contents><span class=content>Table of Contents</span></h2>
-<div data-fill-with=table-of-contents role=navigation><ul class=toc role=directory><li><a href=#goals><span class=secno>1</span> <span class=content>Goals</span></a><li><a href=#todos><span class=secno>2</span> <span class=content>Todos / Differences</span></a><li><a href=#parsing-rules><span class=secno>3</span> <span class=content>Parsing Rules</span></a><ul class=toc><li><a href=#url><span class=secno>3.1</span> <span class=content>url</span></a><li><a href=#file-url><span class=secno>3.2</span> <span class=content>file-url</span></a><li><a href=#non-relative-url><span class=secno>3.3</span> <span class=content>non-relative-url</span></a><li><a href=#relative-url><span class=secno>3.4</span> <span class=content>relative-url</span></a><li><a href=#file-like-scheme><span class=secno>3.5</span> <span class=content>file-like-scheme</span></a><li><a href=#relative-scheme><span class=secno>3.6</span> <span class=content>relative-scheme</span></a><li><a href=#scheme><span class=secno>3.7</span> <span class=content>scheme</span></a><li><a href=#authority><span class=secno>3.8</span> <span class=content>authority</span></a><li><a href=#user><span class=secno>3.9</span> <span class=content>user</span></a><li><a href=#password><span class=secno>3.10</span> <span class=content>password</span></a><li><a href=#host><span class=secno>3.11</span> <span class=content>host</span></a><li><a href=#ipv6addr><span class=secno>3.12</span> <span class=content>ipv6addr</span></a><li><a href=#ipv4addr><span class=secno>3.13</span> <span class=content>ipv4addr</span></a><li><a href=#number><span class=secno>3.14</span> <span class=content>number</span></a><li><a href=#h16><span class=secno>3.15</span> <span class=content>h16</span></a><li><a href=#ls32><span class=secno>3.16</span> <span class=content>ls32</span></a><li><a href=#decimal-byte><span class=secno>3.17</span> <span class=content>decimal-byte</span></a><li><a href=#port><span class=secno>3.18</span> <span class=content>port</span></a><li><a href=#path><span class=secno>3.19</span> <span class=content>path</span></a><li><a href=#data><span class=secno>3.20</span> <span class=content>data</span></a><li><a href=#query><span class=secno>3.21</span> <span class=content>query</span></a><li><a href=#fragment><span class=secno>3.22</span> <span class=content>fragment</span></a></ul><li><a href=#common-functions><span class=secno>4</span> <span class=content>Common Functions</span></a><li><a href=#conformance><span class=secno></span> <span class=content>Conformance</span></a><li><a href=#references><span class=secno></span> <span class=content>References</span></a><ul class=toc><li><a href=#normative><span class=secno></span> <span class=content>Normative References</span></a><li><a href=#informative><span class=secno></span> <span class=content>Informative References</span></a></ul><li><a href=#index><span class=secno></span> <span class=content>Index</span></a></ul></div>
+<div data-fill-with=table-of-contents role=navigation><ul class=toc role=directory><li><a href=#todos><span class=secno>1</span> <span class=content>Todos</span></a><ul class=toc><li><a href=#diffs><span class=secno>1.1</span> <span class=content>Differences</span></a><li><a href=#postmerge><span class=secno>1.2</span> <span class=content>Post-merge work items</span></a><li><a href=#discuss><span class=secno>1.3</span> <span class=content>Discussion Items</span></a></ul><li><a href=#parsing-rules><span class=secno>2</span> <span class=content>Parsing Rules</span></a><ul class=toc><li><a href=#url><span class=secno>2.1</span> <span class=content>url</span></a><li><a href=#file-url><span class=secno>2.2</span> <span class=content>file-url</span></a><li><a href=#non-relative-url><span class=secno>2.3</span> <span class=content>non-relative-url</span></a><li><a href=#relative-url><span class=secno>2.4</span> <span class=content>relative-url</span></a><li><a href=#file-like-scheme><span class=secno>2.5</span> <span class=content>file-like-scheme</span></a><li><a href=#relative-scheme><span class=secno>2.6</span> <span class=content>relative-scheme</span></a><li><a href=#scheme><span class=secno>2.7</span> <span class=content>scheme</span></a><li><a href=#authority><span class=secno>2.8</span> <span class=content>authority</span></a><li><a href=#user><span class=secno>2.9</span> <span class=content>user</span></a><li><a href=#password><span class=secno>2.10</span> <span class=content>password</span></a><li><a href=#host><span class=secno>2.11</span> <span class=content>host</span></a><li><a href=#ipv6addr><span class=secno>2.12</span> <span class=content>ipv6addr</span></a><li><a href=#ipv4addr><span class=secno>2.13</span> <span class=content>ipv4addr</span></a><li><a href=#number><span class=secno>2.14</span> <span class=content>number</span></a><li><a href=#h16><span class=secno>2.15</span> <span class=content>h16</span></a><li><a href=#ls32><span class=secno>2.16</span> <span class=content>ls32</span></a><li><a href=#decimal-byte><span class=secno>2.17</span> <span class=content>decimal-byte</span></a><li><a href=#port><span class=secno>2.18</span> <span class=content>port</span></a><li><a href=#path><span class=secno>2.19</span> <span class=content>path</span></a><li><a href=#data><span class=secno>2.20</span> <span class=content>data</span></a><li><a href=#query><span class=secno>2.21</span> <span class=content>query</span></a><li><a href=#fragment><span class=secno>2.22</span> <span class=content>fragment</span></a></ul><li><a href=#common-functions><span class=secno>3</span> <span class=content>Common Functions</span></a><li><a href=#conformance><span class=secno></span> <span class=content>Conformance</span></a><li><a href=#references><span class=secno></span> <span class=content>References</span></a><ul class=toc><li><a href=#normative><span class=secno></span> <span class=content>Normative References</span></a><li><a href=#informative><span class=secno></span> <span class=content>Informative References</span></a></ul><li><a href=#index><span class=secno></span> <span class=content>Index</span></a></ul></div>
 <main>
 
-<h2 class="heading settled" data-level=1 id=goals><span class=secno>1. </span><span class=content>Goals</span><a class=self-link href=#goals></a></h2>
+<h2 class="heading settled" data-level=1 id=todos><span class=secno>1. </span><span class=content>Todos</span><a class=self-link href=#todos></a></h2>
 
-<ul><li data-md=""><p>Resolve
-<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25946">bug
-25946</a> by merging this specification with the <a href=https://url.spec.whatwg.org/>URL Living Standard</a>.  Once a new
+<p>The goal of this proposal is to resolve
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25946">bug 25946</a>
+by merging this specification with the 
+<a href=https://url.spec.whatwg.org/>URL Living Standard</a>.  Once a new
 baseline has been established, evolve the standard towards greater web
 compatibility, greater interoperability, and simpler algorithms, in that
 order.</p>
-<li data-md=""><p>Integrate with <a href=https://travis-ci.org/>Travis</a> and activate the
+
+<p>These are items that should be done before the proposed merge:</p>
+
+<ul><li data-md=""><p>Make it more clear what is normative; to be honest, I’m confused on this
+point as the only real normative requirement for the parts defined by this
+spec-let is "produce the same output as the algorithm defined herein".</p>
+<li data-md=""><p>Implement <a href=https://url.spec.whatwg.org/#urlutils-and-urlutilsreadonly-members>Url
+property getters and setters</a>.</p>
+</ul>
+<h3 class="heading settled" data-level=1.1 id=diffs><span class=secno>1.1. </span><span class=content>Differences</span><a class=self-link href=#diffs></a></h3>
+
+<p>Known differences with current drafts of the WHATWG <a href=https://url.spec.whatwg.org/>URL Standard</a>:</p>
+
+<ul><li data-md=""><p>This draft treats URLs of the form <code>//C|/foo/bar</code> as a parse
+error, whereas current drafts of the URL standard do not.
+<a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
+agrees</a> that this should be a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>.</p>
+<li data-md=""><p>This draft treats hosts which contain consecutive dot characters as a
+<a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>, whereas current drafts of the URL standard do not.
+<a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
+agrees</a> that this should be a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>.</p>
+<li data-md=""><p>This draft contains a proposed implementation of
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug 26431</a>
+(Define IPv4 parsing).</p>
+<li data-md=""><p>The reference implementation contains a proposed implementation of
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27289">bug 27289</a>
+(Host parsing and utf8PercentDecode).</p>
+<li data-md=""><p>This draft indicates a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a> if
+<a href=https://url.spec.whatwg.org/#concept-host-parser>host
+parsing</a> changes the domain.
+[<a href=http://krijnhoetmer.nl/irc-logs/whatwg/20141110#l-533>IRC
+discussion</a>]</p>
+</ul>
+<h3 class="heading settled" data-level=1.2 id=postmerge><span class=secno>1.2. </span><span class=content>Post-merge work items</span><a class=self-link href=#postmerge></a></h3>
+
+<ul><li data-md=""><p>Integrate with <a href=https://travis-ci.org/>Travis</a> and activate the
 <a href=http://docs.travis-ci.com/user/getting-started/#Step-two%3A-Activate-GitHub-Webhook>GitHub
 WebHook</a> so that proposed changes are verified to build correctly and
 pass the relevant tests.</p>
@@ -84,45 +120,58 @@ note</a> that precedes the [URL] normative reference in the
 <a href=http://www.w3.org/TR/html5/>HTML5 Recommendation</a> into a
 status section or equivalent in this document.  Expand on that information
 with specific notes on known interop issues.  An example of this can be
-found in <a data-section="" href=#file-url>§3.2 file-url</a>.</p>
+found in <a data-section="" href=#file-url>§2.2 file-url</a>.</p>
 
 <li data-md=""><p>Define more <a data-link-type=dfn href=#conformance-error title="conformance errors">conformance errors</a>.  The
 <a href=https://url.spec.whatwg.org/>URL living standard</a> has a start,
 but there needs to be more.</p>
 </ul>
-<h2 class="heading settled" data-level=2 id=todos><span class=secno>2. </span><span class=content>Todos / Differences</span><a class=self-link href=#todos></a></h2>
+<h3 class="heading settled" data-level=1.3 id=discuss><span class=secno>1.3. </span><span class=content>Discussion Items</span><a class=self-link href=#discuss></a></h3>
 
-<p>These are items that should be done before the proposed merge:</p>
+<ul><li data-md=""><p>Chrome and Firefox percent encode "]" in passwords.  The only user agents
+that don’t are ones that attempt to follow the specification.</p>
 
-<ul><li data-md=""><p>Make it more clear what is normative; to be honest, I’m confused on this
-point as the only real normative requirement for the parts defined by this
-spec-let is "produce the same output as the algorithm defined herein".</p>
-<li data-md=""><p>Implement <a href=https://url.spec.whatwg.org/#urlutils-and-urlutilsreadonly-members>Url
-property getters and setters</a>.</p>
+<p><a href=http://intertwingly.net/projects/pegurl/urltest-results/0fc16e7f9d>example</a></p>
+
+<li data-md=""><p>Does it make sense to support a zero length username when a non empty
+password is specified?</p>
+
+<p><a href=http://intertwingly.net/projects/pegurl/urltest-results/9c7b1c42d3>example</a></p>
+
+<li data-md=""><p>Some user agents intentionally don’t provide API access to passwords.
+This seems like a defensible choice.  For some, that merely means not
+implementing username and password.  For a few, this includes not
+providing access to href if that content contains password information.</p>
+
+<p><a href=http://intertwingly.net/projects/pegurl/urltest-results/7357a04b5b>example</a></p>
+
+<li data-md=""><p>IDNA mapping can produce an IPv4 address.  This needs to be handled, as
+the results won’t round trip.</p>
+
+<p><a href=http://intertwingly.net/projects/pegurl/urltest-results/683ac9869d>example</a></p>
+
+<li data-md=""><p>A number of agents don’t support port numbers above 64K.  It seems
+sensible to adopt this restriction.</p>
+
+<p><a href=http://intertwingly.net/projects/pegurl/urltest-results/a193745897>example</a></p>
+
+<li data-md=""><p>IE maps a windows path syntax to a file: syntax.  Chrome maps a novel
+syntax to a file: syntax, but only appears to do so when running on
+Windows.  The current draft of the URL Standard adopts and extends the
+windows drive path syntax to all operating systems.  I think this choice
+is worth revisiting.</p>
+
+<p><a href=http://intertwingly.net/projects/pegurl/urltest-results/eb30a2c2d0>example</a>
+<a href=http://intertwingly.net/projects/pegurl/urltest-results/4b60e32190>example</a></p>
+
+<li data-md=""><p>Safari percent encodes non-ASCII characters in the hash.  No other browser
+does.  Perhaps this should be revisited?</p>
+
+<p><a href=http://intertwingly.net/projects/pegurl/urltest-results/79e1a94e3f>example</a></p>
+
+
 </ul>
-<p>Known differences with current drafts of the WHATWG <a href=https://url.spec.whatwg.org/>URL Standard</a>:</p>
-
-<ul><li data-md=""><p>This draft treats URLs of the form <code>//C|/foo/bar</code> as a parse
-error, whereas current drafts of the URL standard do not.
-<a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
-agrees</a> that this should be a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>.</p>
-<li data-md=""><p>This draft treats hosts which contain consecutive dot characters as a
-<a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>, whereas current drafts of the URL standard do not.
-<a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
-agrees</a> that this should be a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>.</p>
-<li data-md=""><p>This draft contains a proposed implementation of
-<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug 26431</a>
-(Define IPv4 parsing).</p>
-<li data-md=""><p>The reference implementation contains a proposed implementation of
-<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27289">bug 27289</a>
-(Host parsing and utf8PercentDecode).</p>
-<li data-md=""><p>This draft indicates a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a> if
-<a href=https://url.spec.whatwg.org/#concept-host-parser>host
-parsing</a> changes the domain.
-[<a href=http://krijnhoetmer.nl/irc-logs/whatwg/20141110#l-533>IRC
-discussion</a>]</p>
-</ul>
-<h2 class="heading settled" data-level=3 id=parsing-rules><span class=secno>3. </span><span class=content>Parsing Rules</span><a class=self-link href=#parsing-rules></a></h2>
+<h2 class="heading settled" data-level=2 id=parsing-rules><span class=secno>2. </span><span class=content>Parsing Rules</span><a class=self-link href=#parsing-rules></a></h2>
 
 <p>These railroad diagrams, as modified by the accompanying text, define grammar
 production rules for URLs.  They are to be evaluated sequentially, first
@@ -144,7 +193,7 @@ to expose <dfn data-dfn-type=dfn data-noexport="" id=conformance-error title="co
 non-null value, ideally one with a non-relative scheme, for example:
 <code>{'scheme': 'about'}</code>.</p>
 
-<h3 class="heading settled" data-level=3.1 id=url><span class=secno>3.1. </span><span class=content>url</span><a class=self-link href=#url></a></h3>
+<h3 class="heading settled" data-level=2.1 id=url><span class=secno>2.1. </span><span class=content>url</span><a class=self-link href=#url></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=132 viewBox="0 0 629 132" width=629>
 <g transform="translate(.5 .5)">
@@ -257,7 +306,7 @@ then delete the <code>port</code> property from <code>result</code>.</p>
 </ul>
 <p>Return <code>result</code>.</p>
 
-<h3 class="heading settled" data-level=3.2 id=file-url><span class=secno>3.2. </span><span class=content>file-url</span><a class=self-link href=#file-url></a></h3>
+<h3 class="heading settled" data-level=2.2 id=file-url><span class=secno>2.2. </span><span class=content>file-url</span><a class=self-link href=#file-url></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=200 viewBox="0 0 745 200" width=745>
 <g transform="translate(.5 .5)">
@@ -545,7 +594,7 @@ specification.  People with input on this matter are encourage to add
 comments to
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=23550">bug <code>23550</code></a>.</p>
 
-<h3 class="heading settled" data-level=3.3 id=non-relative-url><span class=secno>3.3. </span><span class=content>non-relative-url</span><a class=self-link href=#non-relative-url></a></h3>
+<h3 class="heading settled" data-level=2.3 id=non-relative-url><span class=secno>2.3. </span><span class=content>non-relative-url</span><a class=self-link href=#non-relative-url></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=62 viewBox="0 0 289 62" width=289>
 <g transform="translate(.5 .5)">
@@ -594,7 +643,7 @@ may change how encoding override is handled.</p>
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27233">bug <code>27233</code></a>
 may add support for relative URLs for unknown schemes.</p>
 
-<h3 class="heading settled" data-level=3.4 id=relative-url><span class=secno>3.4. </span><span class=content>relative-url</span><a class=self-link href=#relative-url></a></h3>
+<h3 class="heading settled" data-level=2.4 id=relative-url><span class=secno>2.4. </span><span class=content>relative-url</span><a class=self-link href=#relative-url></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=232 viewBox="0 0 797 232" width=797>
 <g transform="translate(.5 .5)">
@@ -896,7 +945,7 @@ set <code>result.scheme</code> to the value of <code>base.scheme</code>.</p>
 
 <p>Return <code>result</code>.</p>
 
-<h3 class="heading settled" data-level=3.5 id=file-like-scheme><span class=secno>3.5. </span><span class=content>file-like-scheme</span><a class=self-link href=#file-like-scheme></a></h3>
+<h3 class="heading settled" data-level=2.5 id=file-like-scheme><span class=secno>2.5. </span><span class=content>file-like-scheme</span><a class=self-link href=#file-like-scheme></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=62 viewBox="0 0 153 62" width=153>
 <g transform="translate(.5 .5)">
@@ -915,7 +964,7 @@ file</text></g><path d="M102 31h10">
 "<code>file</code>".  This scheme is to be matched case insensitively.
 This production rule is to return the scheme value, lowercased.</p>
 
-<h3 class="heading settled" data-level=3.6 id=relative-scheme><span class=secno>3.6. </span><span class=content>relative-scheme</span><a class=self-link href=#relative-scheme></a></h3>
+<h3 class="heading settled" data-level=2.6 id=relative-scheme><span class=secno>2.6. </span><span class=content>relative-scheme</span><a class=self-link href=#relative-scheme></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=212 viewBox="0 0 189 212" width=189>
 <g transform="translate(.5 .5)">
@@ -980,7 +1029,7 @@ in a case insensitive manner.</p>
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug <code>26338</code></a>
 may change how encoding override is handled.</p>
 
-<h3 class="heading settled" data-level=3.7 id=scheme><span class=secno>3.7. </span><span class=content>scheme</span><a class=self-link href=#scheme></a></h3>
+<h3 class="heading settled" data-level=2.7 id=scheme><span class=secno>2.7. </span><span class=content>scheme</span><a class=self-link href=#scheme></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=71 viewBox="0 0 285 71" width=285>
 <g transform="translate(.5 .5)">
@@ -1013,7 +1062,7 @@ following special characters: hyphen-minus (<code>U+002D</code>),
 plus sign (<code>U+002B</code>) or full stop (<code>U+002D</code>).
 Return the results as a lowercased string.</p>
 
-<h3 class="heading settled" data-level=3.8 id=authority><span class=secno>3.8. </span><span class=content>authority</span><a class=self-link href=#authority></a></h3>
+<h3 class="heading settled" data-level=2.8 id=authority><span class=secno>2.8. </span><span class=content>authority</span><a class=self-link href=#authority></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=82 viewBox="0 0 665 82" width=665>
 <g transform="translate(.5 .5)">
@@ -1132,7 +1181,7 @@ append <code>info</code> to <code>result.username</code>.</p>
 </ul>
 <p>Return <code>result</code>.</p>
 
-<h3 class="heading settled" data-level=3.9 id=user><span class=secno>3.9. </span><span class=content>user</span><a class=self-link href=#user></a></h3>
+<h3 class="heading settled" data-level=2.9 id=user><span class=secno>2.9. </span><span class=content>user</span><a class=self-link href=#user></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=81 viewBox="0 0 321 81" width=321>
 <g transform="translate(.5 .5)">
@@ -1175,7 +1224,7 @@ Return the <a data-link-type=dfn href=#cleanse title=cleanse>cleansed</a> result
 <a href=https://url.spec.whatwg.org/#default-encode-set>default encode
  set</a>.</p>
 
-<h3 class="heading settled" data-level=3.10 id=password><span class=secno>3.10. </span><span class=content>password</span><a class=self-link href=#password></a></h3>
+<h3 class="heading settled" data-level=2.10 id=password><span class=secno>2.10. </span><span class=content>password</span><a class=self-link href=#password></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=81 viewBox="0 0 313 81" width=313>
 <g transform="translate(.5 .5)">
@@ -1217,7 +1266,7 @@ Return the <a data-link-type=dfn href=#cleanse title=cleanse>cleansed</a> result
 <a href=https://url.spec.whatwg.org/#default-encode-set>default encode
  set</a>.</p>
 
-<h3 class="heading settled" data-level=3.11 id=host><span class=secno>3.11. </span><span class=content>host</span><a class=self-link href=#host></a></h3>
+<h3 class="heading settled" data-level=2.11 id=host><span class=secno>2.11. </span><span class=content>host</span><a class=self-link href=#host></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=141 viewBox="0 0 353 141" width=353>
 <g transform="translate(.5 .5)">
@@ -1325,7 +1374,7 @@ may change what codepoints are allowed in a domain.</p>
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27266">bug <code>27266</code></a>
 may change the way domain names and trailing dots are handled.</p>
 
-<h3 class="heading settled" data-level=3.12 id=ipv6addr><span class=secno>3.12. </span><span class=content>ipv6addr</span><a class=self-link href=#ipv6addr></a></h3>
+<h3 class="heading settled" data-level=2.12 id=ipv6addr><span class=secno>2.12. </span><span class=content>ipv6addr</span><a class=self-link href=#ipv6addr></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=112 viewBox="0 0 605 112" width=605>
 <g transform="translate(.5 .5)">
@@ -1472,7 +1521,7 @@ ls32</text></g><path d="M544.0 81a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10">
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27234">bug <code>27234</code></a>
 may add support for link-local addresses.</p>
 
-<h3 class="heading settled" data-level=3.13 id=ipv4addr><span class=secno>3.13. </span><span class=content>ipv4addr</span><a class=self-link href=#ipv4addr></a></h3>
+<h3 class="heading settled" data-level=2.13 id=ipv4addr><span class=secno>2.13. </span><span class=content>ipv4addr</span><a class=self-link href=#ipv4addr></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=152 viewBox="0 0 805 152" width=805>
 <g transform="translate(.5 .5)">
@@ -1647,7 +1696,7 @@ return the results as a string.</p>
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug <code>26431</code></a>
 may change this definition.</p>
 
-<h3 class="heading settled" data-level=3.14 id=number><span class=secno>3.14. </span><span class=content>number</span><a class=self-link href=#number></a></h3>
+<h3 class="heading settled" data-level=2.14 id=number><span class=secno>2.14. </span><span class=content>number</span><a class=self-link href=#number></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=296 viewBox="0 0 601 296" width=601>
 <g transform="translate(.5 .5)">
@@ -1932,7 +1981,7 @@ defined for numbers.  Parse the
 values as hexadecimal, octal, and decimal integers respectively.  Return
 the result as an integer.</p>
 
-<h3 class="heading settled" data-level=3.15 id=h16><span class=secno>3.15. </span><span class=content>h16</span><a class=self-link href=#h16></a></h3>
+<h3 class="heading settled" data-level=2.15 id=h16><span class=secno>2.15. </span><span class=content>h16</span><a class=self-link href=#h16></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=72 viewBox="0 0 877 72" width=877>
 <g transform="translate(.5 .5)">
@@ -1994,7 +2043,7 @@ any of [0-9A-Fa-f]</text></g><path d="M816.0 41h20">
 
 <p>Return up to four hexadecimal characters as a string.</p>
 
-<h3 class="heading settled" data-level=3.16 id=ls32><span class=secno>3.16. </span><span class=content>ls32</span><a class=self-link href=#ls32></a></h3>
+<h3 class="heading settled" data-level=2.16 id=ls32><span class=secno>2.16. </span><span class=content>ls32</span><a class=self-link href=#ls32></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=62 viewBox="0 0 769 62" width=769>
 <g transform="translate(.5 .5)">
@@ -2056,7 +2105,7 @@ decimal-byte</text></g><path d="M718.0 31h10">
 
 <p>Return four decimal bytes separated by full stop characters as a string.</p>
 
-<h3 class="heading settled" data-level=3.17 id=decimal-byte><span class=secno>3.17. </span><span class=content>decimal-byte</span><a class=self-link href=#decimal-byte></a></h3>
+<h3 class="heading settled" data-level=2.17 id=decimal-byte><span class=secno>2.17. </span><span class=content>decimal-byte</span><a class=self-link href=#decimal-byte></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=72 viewBox="0 0 529 72" width=529>
 <g transform="translate(.5 .5)">
@@ -2106,7 +2155,7 @@ any of [0-9]</text></g><path d="M478.0 41h10">
 converted to an integer are greater than <code>255</code>, terminate processing with
 a <a data-link-type=dfn href=#parse-exception title="parse exception">parse exception</a>.</p>
 
-<h3 class="heading settled" data-level=3.18 id=port><span class=secno>3.18. </span><span class=content>port</span><a class=self-link href=#port></a></h3>
+<h3 class="heading settled" data-level=2.18 id=port><span class=secno>2.18. </span><span class=content>port</span><a class=self-link href=#port></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=81 viewBox="0 0 305 81" width=305>
 <g transform="translate(.5 .5)">
@@ -2155,7 +2204,7 @@ Otherwise, return the result as a string.</p>
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26446">bug <code>26446</code></a>
 may change port from a string to a number.</p>
 
-<h3 class="heading settled" data-level=3.19 id=path><span class=secno>3.19. </span><span class=content>path</span><a class=self-link href=#path></a></h3>
+<h3 class="heading settled" data-level=2.19 id=path><span class=secno>2.19. </span><span class=content>path</span><a class=self-link href=#path></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=120 viewBox="0 0 657 120" width=657>
 <g transform="translate(.5 .5)">
@@ -2278,7 +2327,7 @@ then process this name based on the position in the array:</p>
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=24163">bug <code>24163</code></a>
 may change what characters to escape in the path.</p>
 
-<h3 class="heading settled" data-level=3.20 id=data><span class=secno>3.20. </span><span class=content>data</span><a class=self-link href=#data></a></h3>
+<h3 class="heading settled" data-level=2.20 id=data><span class=secno>2.20. </span><span class=content>data</span><a class=self-link href=#data></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=81 viewBox="0 0 281 81" width=281>
 <g transform="translate(.5 .5)">
@@ -2318,7 +2367,7 @@ the encode set.</p>
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=24246">bug <code>24246</code></a>
 may change what characters to escape in the scheme data.</p>
 
-<h3 class="heading settled" data-level=3.21 id=query><span class=secno>3.21. </span><span class=content>query</span><a class=self-link href=#query></a></h3>
+<h3 class="heading settled" data-level=2.21 id=query><span class=secno>2.21. </span><span class=content>query</span><a class=self-link href=#query></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=81 viewBox="0 0 273 81" width=273>
 <g transform="translate(.5 .5)">
@@ -2361,7 +2410,7 @@ the result using the <a data-link-type=dfn href=#query-encode-set title="query e
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27280">bug <code>27280</code></a>
 may change how code points &lt; <code>0x20</code> are handled.</p>
 
-<h3 class="heading settled" data-level=3.22 id=fragment><span class=secno>3.22. </span><span class=content>fragment</span><a class=self-link href=#fragment></a></h3>
+<h3 class="heading settled" data-level=2.22 id=fragment><span class=secno>2.22. </span><span class=content>fragment</span><a class=self-link href=#fragment></a></h3>
 
 <div class=railroad><svg class=railroad-diagram height=81 viewBox="0 0 185 81" width=185>
 <g transform="translate(.5 .5)">
@@ -2405,7 +2454,7 @@ may change what characters to escape in the fragment.</p>
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26988">bug <code>26988</code></a>
 may add support for parsing URLs without decoding the fragment identifier.</p>
 
-<h2 class="heading settled" data-level=4 id=common-functions><span class=secno>4. </span><span class=content>Common Functions</span><a class=self-link href=#common-functions></a></h2>
+<h2 class="heading settled" data-level=3 id=common-functions><span class=secno>3. </span><span class=content>Common Functions</span><a class=self-link href=#common-functions></a></h2>
 
 <p>To <dfn data-dfn-type=dfn data-noexport="" id=cleanse>cleanse<a class=self-link href=#cleanse></a></dfn> a string given an <var>encode set</var>, run these steps:</p>
 
@@ -2464,4 +2513,4 @@ readability, these words do not appear in all uppercase letters in this specific
 
 <p>Conformance requirements phrased as algorithms or specific steps may be implemented in any manner, so long as the end
 result is equivalent.
-</em><h2 class="no-num heading settled" id=references><span class=content>References</span><a class=self-link href=#references></a></h2><h3 class="no-num heading settled" id=normative><span class=content>Normative References</span><a class=self-link href=#normative></a></h3><dl><dt id=biblio-rfc2119 title=rfc2119><a class=self-link href=#biblio-rfc2119></a>[rfc2119]<dd>S. Bradner. <a href=https://tools.ietf.org/html/rfc2119>Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href=https://tools.ietf.org/html/rfc2119>https://tools.ietf.org/html/rfc2119</a></dl><h3 class="no-num heading settled" id=informative><span class=content>Informative References</span><a class=self-link href=#informative></a></h3><dl><dt id=biblio-rfc3986 title=rfc3986><a class=self-link href=#biblio-rfc3986></a>[rfc3986]<dd>T. Berners-Lee; R. Fielding; L. Masinter. <a href=https://tools.ietf.org/html/rfc3986>Uniform Resource Identifier (URI): Generic Syntax</a>. January 2005. Internet Standard. URL: <a href=https://tools.ietf.org/html/rfc3986>https://tools.ietf.org/html/rfc3986</a><dt id=biblio-rfc3987 title=rfc3987><a class=self-link href=#biblio-rfc3987></a>[rfc3987]<dd>M. Duerst; M. Suignard. <a href=https://tools.ietf.org/html/rfc3987>Internationalized Resource Identifiers (IRIs)</a>. January 2005. Proposed Standard. URL: <a href=https://tools.ietf.org/html/rfc3987>https://tools.ietf.org/html/rfc3987</a></dl><h2 class="no-num heading settled" id=index><span class=content>Index</span><a class=self-link href=#index></a></h2><ul class=indexlist><li>cleanse, <a href=#cleanse title="section 4">4</a><li>conformance error, <a href=#conformance-error title="section 3">3</a><li>parse exception, <a href=#parse-exception title="section 3">3</a><li>path concatenation, <a href=#path-concatenation title="section 4">4</a><li>query encode set, <a href=#query-encode-set title="section 3.21">3.21</a></ul>
+</em><h2 class="no-num heading settled" id=references><span class=content>References</span><a class=self-link href=#references></a></h2><h3 class="no-num heading settled" id=normative><span class=content>Normative References</span><a class=self-link href=#normative></a></h3><dl><dt id=biblio-rfc2119 title=rfc2119><a class=self-link href=#biblio-rfc2119></a>[rfc2119]<dd>S. Bradner. <a href=https://tools.ietf.org/html/rfc2119>Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href=https://tools.ietf.org/html/rfc2119>https://tools.ietf.org/html/rfc2119</a></dl><h3 class="no-num heading settled" id=informative><span class=content>Informative References</span><a class=self-link href=#informative></a></h3><dl><dt id=biblio-rfc3986 title=rfc3986><a class=self-link href=#biblio-rfc3986></a>[rfc3986]<dd>T. Berners-Lee; R. Fielding; L. Masinter. <a href=https://tools.ietf.org/html/rfc3986>Uniform Resource Identifier (URI): Generic Syntax</a>. January 2005. Internet Standard. URL: <a href=https://tools.ietf.org/html/rfc3986>https://tools.ietf.org/html/rfc3986</a><dt id=biblio-rfc3987 title=rfc3987><a class=self-link href=#biblio-rfc3987></a>[rfc3987]<dd>M. Duerst; M. Suignard. <a href=https://tools.ietf.org/html/rfc3987>Internationalized Resource Identifiers (IRIs)</a>. January 2005. Proposed Standard. URL: <a href=https://tools.ietf.org/html/rfc3987>https://tools.ietf.org/html/rfc3987</a></dl><h2 class="no-num heading settled" id=index><span class=content>Index</span><a class=self-link href=#index></a></h2><ul class=indexlist><li>cleanse, <a href=#cleanse title="section 3">3</a><li>conformance error, <a href=#conformance-error title="section 2">2</a><li>parse exception, <a href=#parse-exception title="section 2">2</a><li>path concatenation, <a href=#path-concatenation title="section 3">3</a><li>query encode set, <a href=#query-encode-set title="section 2.21">2.21</a></ul>
