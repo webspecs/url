@@ -67,19 +67,6 @@
     return string
   }
 
-  /* flatten an array */
-  function flatten(array) {
-    var result = [];
-    array.forEach(function(element) {
-      if (Array.isArray(element)) {
-        result = result.concat(flatten(element));
-      } else {
-        result.push(element);
-      }
-    });
-    return result;
-  }
-
   /* Regular expression "lookahead" on the input string */
   function lookahead(expected) {
     return expected.test(input.slice(offset()))
@@ -625,11 +612,12 @@ Host
           warn = "Domain name contains an IDNA mapped character";
         }
       });
+    }
 
-      try {
-        host = UrlParser.parse(host, {startRule: 'IPv4Addr'});
-      } catch (e) {
-      }
+    /* If the result can be parsed as an IPv4 address, return that instead */
+    try {
+      return UrlParser.parse(host, {startRule: 'IPv4Addr'});
+    } catch (e) {
     }
 
     /* warn if NFC normalization changed the URL */
@@ -763,8 +751,7 @@ IPv6Addr
   may change this definition.
 */
 IPv4Addr
-  = addr:((Number ('.' / '%2e' / '%2E') (Number ('.' / '%2e' / '%2E')
-    (Number ('.' / '%2e' / '%2E'))?)?)? Number)
+  = addr:((Number '.' (Number '.' (Number '.')?)?)? Number)
 {
   var n = addr[1]
 
@@ -803,22 +790,19 @@ IPv4Addr
    the result as an integer.
 */
 Number
-  = ('0' / '%30')
-    ('x' / 'X' / '%58' / '%78')
-    digits:(([0-9a-fA-F]) / ('%' '3' [0-9]) / '%' '4' [1-6] / '%' '6' [1-6])+
+  = '0' ('x' / 'X') digits:[0-9a-fA-F]+
 {
-  return parseInt(Url.utf8PercentDecode(flatten(digits).join('')), 16)
+  return parseInt(Url.utf8PercentDecode(digits.join('')), 16)
 }
 
- / ('0' / '%30')
-   digits:([0-7] / ('%' '3' [0-7]))+
+ / '0' digits:[0-7]+
 {
-  return parseInt(Url.utf8PercentDecode(flatten(digits).join('')), 8)
+  return parseInt(Url.utf8PercentDecode(digits.join('')), 8)
 }
 
- / digits:([0-9] / ('%' '3' [0-9]))+
+ / digits:[0-9]+
 {
-  return parseInt(Url.utf8PercentDecode(flatten(digits).join('')))
+  return parseInt(Url.utf8PercentDecode(digits.join('')))
 }
 
 /*
