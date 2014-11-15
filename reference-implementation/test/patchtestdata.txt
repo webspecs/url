@@ -7,6 +7,7 @@
 http://192.0x00A80001  s:http h:192.168.0.1 p:/
 http://192.168.0.257
 http://%30%78%63%30%2e%30%32%35%30.01  s:http p:/ h:192.168.0.1
+http://\uff10\uff38\uff43\uff10\uff0e\uff10\uff12\uff15\uff10\uff0e\uff10\uff11  s:http p:/ h:192.168.0.1
 
 ##########################################################
 # Incorrect test results

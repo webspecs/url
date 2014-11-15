@@ -22,7 +22,7 @@
 </p>
   <h1 class="p-name no-ref" id=title>URL</h1>
   <h2 class="no-num no-toc no-ref heading settled" id=subtitle><span class=content>Living Standard — Last Updated
-    <span class=dt-updated><span class=value-title title=20141112>12 November 2014</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20141115>15 November 2014</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt class=editor>Editor:<dd class=editor><div class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://intertwingly.net/blog/>Sam Ruby</a> (<a class="p-org org" href=https://www.ibm.com/>IBM</a>) <a class="u-email email" href=mailto:rubys@intertwingly.net>rubys@intertwingly.net</a></div><dt>Version History:<dd><span><a href=https://github.com/rubys/url/commits/peg.js>https://github.com/rubys/url/commits/peg.js</a></span><dt>Participate:<dd><span><a href="https://www.w3.org/Bugs/Public/enter_bug.cgi?product=WHATWG&amp;component=URL">File a bug</a> (<a href="https://www.w3.org/Bugs/Public/buglist.cgi?component=URL&amp;list_id=46839&amp;product=WHATWG&amp;resolution=---">open bugs</a>)</span><dd><span><a href=https://github.com/rubys/url/issues/new>File an issue</a> (<a href="https://github.com/rubys/url/issues?q=">issues</a>)</span><dd><span><a href=mailto:public-webapps@w3.org>public-webapps@w3.org</a> (<a href=http://lists.w3.org/Archives/Public/public-webapps/>archives</a>)</span><dd><span><a href=https://whatwg.org/mailing-list>whatwg@whatwg.org</a> (<a href=https://whatwg.org/mailing-list#specs>archives</a>)</span><dd><span><a href=http://wiki.whatwg.org/wiki/IRC>IRC: #whatwg on Freenode</a></span></dl></div>
   <div data-fill-with=warning></div>
 </div>
@@ -59,8 +59,8 @@ property getters and setters</a>.</p>
 
 <p>Known differences with current drafts of the WHATWG <a href=https://url.spec.whatwg.org/>URL Standard</a>:</p>
 
-<ul><li data-md=""><p>This draft treats URLs of the form <code>//C|/foo/bar</code> as a parse
-error, whereas current drafts of the URL standard do not.
+<ul><li data-md=""><p>This draft treats URLs of the form <code>//C|/foo/bar</code> as a</p>
+<li data-md=""><p>conformance error, whereas current drafts of the URL standard do not.
 <a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
 agrees</a> that this should be a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>.</p>
 <li data-md=""><p>This draft treats hosts which contain consecutive dot characters as a
@@ -152,11 +152,6 @@ reorders the characters in the input (see "prepend" in
 and <a data-section="" href=#authority>§2.8 authority</a>).  Percent encoding the '@' sign is defensible.</p>
 
 <p><a href=http://intertwingly.net/projects/pegurl/urltest-results/1bdb1f0518>example</a></p>
-
-<li data-md=""><p>IDNA mapping can produce an IPv4 address.  This needs to be handled, as
-the results won’t round trip.</p>
-
-<p><a href=http://intertwingly.net/projects/pegurl/urltest-results/683ac9869d>example</a></p>
 
 <li data-md=""><p>A number of agents don’t support port numbers above 64K.  It seems
 sensible to adopt this restriction.</p>
@@ -1365,9 +1360,9 @@ parsing</a> the value.  If this results in a failure,
 terminate processing with a <a data-link-type=dfn href=#parse-exception title="parse exception">parse exception</a>.  If 
 <a href=https://url.spec.whatwg.org/#concept-host-parser>host
 parsing</a> returned a value that was different than what was
-provided as input, indicate a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a> based on an
-<a href=http://krijnhoetmer.nl/irc-logs/whatwg/<code>20141110#l-<code>533</code>&gt;IRC
-discussion</a>.</p>
+provided as input, indicate a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>.</p>
+<li data-md=""><p>Try parsing <code>domain</code> as an <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>. If this succeeds, replace <code>domain</code>
+with the result.</p>
 <li data-md=""><p>Validate the <code>domain</code> as follows:</p>
 <ul><li data-md=""><p>split the string at <code>U+002E</code> (full stop) characters</p>
 <li data-md=""><p>If any of the pieces, other than the first one, are empty strings,
@@ -2521,4 +2516,4 @@ readability, these words do not appear in all uppercase letters in this specific
 
 <p>Conformance requirements phrased as algorithms or specific steps may be implemented in any manner, so long as the end
 result is equivalent.
-</em><h2 class="no-num heading settled" id=references><span class=content>References</span><a class=self-link href=#references></a></h2><h3 class="no-num heading settled" id=normative><span class=content>Normative References</span><a class=self-link href=#normative></a></h3><dl><dt id=biblio-rfc2119 title=rfc2119><a class=self-link href=#biblio-rfc2119></a>[rfc2119]<dd>S. Bradner. <a href=https://tools.ietf.org/html/rfc2119>Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href=https://tools.ietf.org/html/rfc2119>https://tools.ietf.org/html/rfc2119</a></dl><h3 class="no-num heading settled" id=informative><span class=content>Informative References</span><a class=self-link href=#informative></a></h3><dl><dt id=biblio-rfc3986 title=rfc3986><a class=self-link href=#biblio-rfc3986></a>[rfc3986]<dd>T. Berners-Lee; R. Fielding; L. Masinter. <a href=https://tools.ietf.org/html/rfc3986>Uniform Resource Identifier (URI): Generic Syntax</a>. January 2005. Internet Standard. URL: <a href=https://tools.ietf.org/html/rfc3986>https://tools.ietf.org/html/rfc3986</a><dt id=biblio-rfc3987 title=rfc3987><a class=self-link href=#biblio-rfc3987></a>[rfc3987]<dd>M. Duerst; M. Suignard. <a href=https://tools.ietf.org/html/rfc3987>Internationalized Resource Identifiers (IRIs)</a>. January 2005. Proposed Standard. URL: <a href=https://tools.ietf.org/html/rfc3987>https://tools.ietf.org/html/rfc3987</a></dl><h2 class="no-num heading settled" id=index><span class=content>Index</span><a class=self-link href=#index></a></h2><ul class=indexlist><li>cleanse, <a href=#cleanse title="section 3">3</a><li>conformance error, <a href=#conformance-error title="section 2">2</a><li>parse exception, <a href=#parse-exception title="section 2">2</a><li>path concatenation, <a href=#path-concatenation title="section 3">3</a><li>query encode set, <a href=#query-encode-set title="section 2.21">2.21</a></ul>
+</em><h2 class="no-num heading settled" id=references><span class=content>References</span><a class=self-link href=#references></a></h2><h3 class="no-num heading settled" id=normative><span class=content>Normative References</span><a class=self-link href=#normative></a></h3><dl><dt id=biblio-rfc2119 title=rfc2119><a class=self-link href=#biblio-rfc2119></a>[rfc2119]<dd>S. Bradner. <a href=http://www.ietf.org/rfc/rfc2119.txt>Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href=http://www.ietf.org/rfc/rfc2119.txt>http://www.ietf.org/rfc/rfc2119.txt</a></dl><h3 class="no-num heading settled" id=informative><span class=content>Informative References</span><a class=self-link href=#informative></a></h3><dl><dt id=biblio-rfc3986 title=rfc3986><a class=self-link href=#biblio-rfc3986></a>[rfc3986]<dd>T. Berners-Lee; R. Fielding; L. Masinter. <a href=http://www.ietf.org/rfc/rfc3986.txt>Uniform Resource Identifier (URI): Generic Syntax</a>. January 2005. Internet Standard. URL: <a href=http://www.ietf.org/rfc/rfc3986.txt>http://www.ietf.org/rfc/rfc3986.txt</a><dt id=biblio-rfc3987 title=rfc3987><a class=self-link href=#biblio-rfc3987></a>[rfc3987]<dd>M. Duerst; M. Suignard. <a href=http://www.ietf.org/rfc/rfc3987.txt>Internationalized Resource Identifiers (IRIs)</a>. January 2005. Proposed Standard. URL: <a href=http://www.ietf.org/rfc/rfc3987.txt>http://www.ietf.org/rfc/rfc3987.txt</a></dl><h2 class="no-num heading settled" id=index><span class=content>Index</span><a class=self-link href=#index></a></h2><ul class=indexlist><li>cleanse, <a href=#cleanse title="section 3">3</a><li>conformance error, <a href=#conformance-error title="section 2">2</a><li>parse exception, <a href=#parse-exception title="section 2">2</a><li>path concatenation, <a href=#path-concatenation title="section 3">3</a><li>query encode set, <a href=#query-encode-set title="section 2.21">2.21</a></ul>

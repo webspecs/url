@@ -551,11 +551,11 @@ Password
   }
 
 /*
-   If the input contains an @IPV6Addr, return "[" plus
-   the result returned by @IPV6Addr plus "]".
+   If the input contains an @IPv6Addr, return "[" plus
+   the result returned by @IPv6Addr plus "]".
 
-   If the input contains an @IPV4Addr, return 
-   the result returned by @IPV4Addr.
+   If the input contains an @IPv4Addr, return 
+   the result returned by @IPv4Addr.
 
    Otherwise:
 
@@ -568,9 +568,9 @@ Password
        terminate processing with a <a>parse exception</a>.  If 
        <a href="https://url.spec.whatwg.org/#concept-host-parser">host
        parsing</a> returned a value that was different than what was
-       provided as input, indicate a <a>conformance error</a> based on an
-       <a href=http://krijnhoetmer.nl/irc-logs/whatwg/20141110#l-533>IRC
-       discussion</a>.
+       provided as input, indicate a <a>conformance error</a>.
+     * Try parsing $domain as an @IPv4Addr. If this succeeds, replace $domain
+       with the result.
      * Validate the $domain as follows:
         * split the string at U+002E (full stop) characters
         * If any of the pieces, other than the first one, are empty strings,
@@ -586,13 +586,13 @@ Password
    may change the way domain names and trailing dots are handled.
 */
 Host
-  = '[' addr:IPV6Addr ']' 
+  = '[' addr:IPv6Addr ']' 
     &{ return lookahead(/^([\\\/?#:]|$)/) }
   {
     return '[' + addr + ']'
   }
 
-  / addr:IPV4Addr
+  / addr:IPv4Addr
     &{ return lookahead(/^([\\\/?#:]|$)/) }
   {
     return addr
@@ -625,6 +625,11 @@ Host
           warn = "Domain name contains an IDNA mapped character";
         }
       });
+
+      try {
+        host = UrlParser.parse(host, {startRule: 'IPv4Addr'});
+      } catch (e) {
+      }
     }
 
     /* warn if NFC normalization changed the URL */
@@ -690,7 +695,7 @@ Host
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27234">bug 27234</a>
   may add support for link-local addresses.
 */
-IPV6Addr
+IPv6Addr
   = addr:(((H16 ':')* ':')? (H16 ':')* (H16 / LS32))
   {
     var pre = [];
@@ -703,11 +708,11 @@ IPV6Addr
       };
 
       if (addr[0][0].length + addr[1].length + 1 > 6) {
-        error('malformed IPV6 Address')
+        error('malformed IPv6 Address')
       }
     } else {
       if (addr[1].length != 6 || addr[2].indexOf('.')==-1) {
-        error('malformed IPV6 Address')
+        error('malformed IPv6 Address')
       }
     };
 
@@ -716,7 +721,7 @@ IPV6Addr
     };
 
     if (addr[2].indexOf('.') == -1 && addr[1].length > 1) {
-      error('malformed IPV6 Address')
+      error('malformed IPv6 Address')
     };
 
     if (addr[2].indexOf('.') == -1) {
@@ -757,30 +762,30 @@ IPV6Addr
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug 26431</a>
   may change this definition.
 */
-IPV4Addr
+IPv4Addr
   = addr:((Number ('.' / '%2e' / '%2E') (Number ('.' / '%2e' / '%2E')
     (Number ('.' / '%2e' / '%2E'))?)?)? Number)
 {
   var n = addr[1]
 
   if (addr[0]) {
-    if (addr[0][0] >= 256) error('IPV4 address component out of range');
+    if (addr[0][0] >= 256) error('IPv4 address component out of range');
     n += addr[0][0]*256*256*256;
     if (addr[0][2]) {
-      if (addr[0][2][0] >= 256) error('IPV4 address component out of range');
+      if (addr[0][2][0] >= 256) error('IPv4 address component out of range');
       n += addr[0][2][0]*256*256;
       if (addr[0][2][2]) {
-        if (addr[0][2][2][0] >= 256) error('IPV4 address component out of range');
+        if (addr[0][2][2][0] >= 256) error('IPv4 address component out of range');
         n += addr[0][2][2][0]*256;
-        if (addr[1] >= 256) error('IPV4 address component out of range');
+        if (addr[1] >= 256) error('IPv4 address component out of range');
       } else {
-        if (addr[1] >= 256*256) error('IPV4 address component out of range');
+        if (addr[1] >= 256*256) error('IPv4 address component out of range');
       }
     } else {
-      if (addr[1] >= 256*256*256) error('IPV4 address component out of range');
+      if (addr[1] >= 256*256*256) error('IPv4 address component out of range');
     }
   } else {
-    if (addr[1] >= 256*256*256*256) error('IPV4 address component out of range');
+    if (addr[1] >= 256*256*256*256) error('IPv4 address component out of range');
   }
 
   addr = []

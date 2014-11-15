@@ -49,8 +49,8 @@ Differences {#diffs}
 
 Known differences with current drafts of the WHATWG <a href="https://url.spec.whatwg.org/">URL Standard</a>:
 
-  * This draft treats URLs of the form <code>//C|/foo/bar</code> as a parse
-    error, whereas current drafts of the URL standard do not.
+  * This draft treats URLs of the form <code>//C|/foo/bar</code> as a
+  * conformance error, whereas current drafts of the URL standard do not.
     <a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
     agrees</a> that this should be a <a>conformance error</a>.
   * This draft treats hosts which contain consecutive dot characters as a
@@ -144,11 +144,6 @@ Discussion Items {#discuss}
     and [[#authority]]).  Percent encoding the '@' sign is defensible.
   
     <a href=http://intertwingly.net/projects/pegurl/urltest-results/1bdb1f0518>example</a>
-
-  * IDNA mapping can produce an IPv4 address.  This needs to be handled, as
-    the results won't round trip.
-
-    <a href=http://intertwingly.net/projects/pegurl/urltest-results/683ac9869d>example</a>
 
   * A number of agents don't support port numbers above 64K.  It seems
     sensible to adopt this restriction.
