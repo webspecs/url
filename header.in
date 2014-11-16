@@ -50,7 +50,7 @@ Differences {#diffs}
 Known differences with current drafts of the WHATWG <a href="https://url.spec.whatwg.org/">URL Standard</a>:
 
   * This draft treats URLs of the form <code>//C|/foo/bar</code> as a
-  * conformance error, whereas current drafts of the URL standard do not.
+    <a>conformance error</a>, whereas current drafts of the URL standard do not.
     <a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
     agrees</a> that this should be a <a>conformance error</a>.
   * This draft treats hosts which contain consecutive dot characters as a
