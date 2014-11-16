@@ -785,24 +785,23 @@ IPv4Addr
 /*
    Three production rules, with uppercase and percent encoded variants, are
    defined for numbers.  Parse the 
-   <a href=https://url.spec.whatwg.org/#percent-decode>percent decoded</a>
    values as hexadecimal, octal, and decimal integers respectively.  Return
    the result as an integer.
 */
 Number
   = '0' ('x' / 'X') digits:[0-9a-fA-F]+
 {
-  return parseInt(Url.utf8PercentDecode(digits.join('')), 16)
+  return parseInt(digits.join(''), 16)
 }
 
  / '0' digits:[0-7]+
 {
-  return parseInt(Url.utf8PercentDecode(digits.join('')), 8)
+  return parseInt(digits.join(''), 8)
 }
 
  / digits:[0-9]+
 {
-  return parseInt(Url.utf8PercentDecode(digits.join('')))
+  return parseInt(digits.join(''))
 }
 
 /*
