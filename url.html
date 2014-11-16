@@ -41,7 +41,7 @@
 
 <p>The goal of this proposal is to resolve
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25946">bug 25946</a>
-by merging <a data-section="" href=#parsing-rules>§2 Parsing Rules</a> with the 
+by merging <a data-section="" href=#parsing-rules>§2 Parsing Rules</a> with the
 <a href=https://url.spec.whatwg.org/>URL Living Standard</a>.  Once a new
 baseline has been established, evolve the standard towards greater web
 compatibility, greater interoperability, and simpler algorithms, in that
@@ -178,7 +178,6 @@ does.  Perhaps this should be revisited?</p>
 <a href=http://intertwingly.net/projects/pegurl/urltest-results/7959304dcf>example</a>
 <a href=http://intertwingly.net/projects/pegurl/urltest-results/9899f1fea7>example</a>
 <a href=http://intertwingly.net/projects/pegurl/urltest-results/f328599fc9>example</a></p>
-
 
 </ul>
 <h2 class="heading settled" data-level=2 id=parsing-rules><span class=secno>2. </span><span class=content>Parsing Rules</span><a class=self-link href=#parsing-rules></a></h2>
@@ -1634,6 +1633,8 @@ with a <a data-link-type=dfn href=#parse-exception title="parse exception">parse
 the number of <code class=grammar-rule><a href=#number>number</a></code>s present in the input), terminate processing with a
 <a data-link-type=dfn href=#parse-exception title="parse exception">parse exception</a>.</p>
 
+<p>Unless four <code class=grammar-rule><a href=#number>number</a></code>s are present, indicate a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>.</p>
+
 <p>Initialize <code>n</code> to the last <code class=grammar-rule><a href=#number>number</a></code>.</p>
 
 <p>If the first <code class=grammar-rule><a href=#number>number</a></code> is present, add it’s value times <code>256</code>**<code>3</code> to <code>n</code>.</p>
@@ -1756,9 +1757,10 @@ any of [0-9]</text></g><path d="M278.0 130h10">
 </path></g></svg></div>
 
 <p>Three production rules, with uppercase and percent encoded variants, are
-defined for numbers.  Parse the 
-values as hexadecimal, octal, and decimal integers respectively.  Return
-the result as an integer.</p>
+defined for numbers.
+Parse the values as hexadecimal, octal, and decimal integers respectively.
+Indicate a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a> if the value is hexadecimal or octal.
+Return the result as an integer.</p>
 
 <h3 class="heading settled" data-level=2.15 id=h16><span class=secno>2.15. </span><span class=content>h16</span><a class=self-link href=#h16></a></h3>
 

@@ -729,6 +729,8 @@ IPv6Addr
   the number of @Number's present in the input), terminate processing with a
   <a>parse exception</a>.
 
+  Unless four @Number's are present, indicate a <a>conformance error</a>.
+
   Initialize $n to the last @Number.
 
   If the first @Number is present, add it's value times 256**3 to $n.
@@ -753,55 +755,74 @@ IPv6Addr
 IPv4Addr
   = addr:((Number '.' (Number '.' (Number '.')?)?)? Number)
 {
-  var n = addr[1]
+  var n = addr[1];
+  var warn = addr[1].exception;
 
   if (addr[0]) {
     if (addr[0][0] >= 256) error('IPv4 address component out of range');
+    if (addr[0][0].exception) warn = addr[0][0].exception;
     n += addr[0][0]*256*256*256;
     if (addr[0][2]) {
       if (addr[0][2][0] >= 256) error('IPv4 address component out of range');
+      if (addr[0][2][0].exception) warn = addr[0][2][0].exception;
       n += addr[0][2][0]*256*256;
       if (addr[0][2][2]) {
         if (addr[0][2][2][0] >= 256) error('IPv4 address component out of range');
+        if (addr[0][2][2][0].exception) warn = addr[0][2][2][0].exception;
         n += addr[0][2][2][0]*256;
         if (addr[1] >= 256) error('IPv4 address component out of range');
       } else {
         if (addr[1] >= 256*256) error('IPv4 address component out of range');
+        warn = 'Missing IPv4 component';
       }
     } else {
       if (addr[1] >= 256*256*256) error('IPv4 address component out of range');
+      warn = 'Missing IPv4 component';
     }
   } else {
     if (addr[1] >= 256*256*256*256) error('IPv4 address component out of range');
+    warn = 'Missing IPv4 component';
   }
 
   addr = []
   for (var i=0; i<4; i++) {
     addr.unshift(n % 256); n = Math.floor(n/256)
   };
-  return addr.join('.')
+  addr = addr.join('.')
+
+  if (warn) {
+    addr = new String(addr);
+    addr.exception = warn;
+  }
+
+  return addr;
 }
 
 /*
    Three production rules, with uppercase and percent encoded variants, are
-   defined for numbers.  Parse the 
-   values as hexadecimal, octal, and decimal integers respectively.  Return
-   the result as an integer.
+   defined for numbers.
+   Parse the values as hexadecimal, octal, and decimal integers respectively.
+   Indicate a <a>conformance error</a> if the value is hexadecimal or octal.
+   Return the result as an integer.
 */
 Number
   = '0' ('x' / 'X') digits:[0-9a-fA-F]+
 {
-  return parseInt(digits.join(''), 16)
+  var result = parseInt(digits.join(''), 16);
+  result.exception = 'Hexadecimal IPV4 component';
+  return result
 }
 
  / '0' digits:[0-7]+
 {
-  return parseInt(digits.join(''), 8)
+  var result = new Number(parseInt(digits.join(''), 8));
+  result.exception = 'Octal IPV4 component';
+  return result
 }
 
  / digits:[0-9]+
 {
-  return parseInt(digits.join(''))
+  return new Number(parseInt(digits.join('')))
 }
 
 /*
