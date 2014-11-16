@@ -30,7 +30,7 @@ Todos {#todos}
 
 The goal of this proposal is to resolve
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25946">bug 25946</a>
-by merging this specification with the 
+by merging [[#parsing-rules]] with the
 <a href="https://url.spec.whatwg.org/">URL Living Standard</a>.  Once a new
 baseline has been established, evolve the standard towards greater web
 compatibility, greater interoperability, and simpler algorithms, in that
@@ -71,6 +71,8 @@ Known differences with current drafts of the WHATWG <a href="https://url.spec.wh
 
 Post-merge work items {#postmerge}
 ---
+
+  Note: this list should be in bugzilla or on a wiki someplace.
 
   * Integrate with <a href="https://travis-ci.org/">Travis</a> and activate the
     <a href="http://docs.travis-ci.com/user/getting-started/#Step-two%3A-Activate-GitHub-Webhook">GitHub
@@ -113,12 +115,10 @@ Post-merge work items {#postmerge}
     with specific notes on known interop issues.  An example of this can be
     found in [[#file-url]].
 
-  * Define more <a>conformance errors</a>.  The 
-    <a href="https://url.spec.whatwg.org/">URL living standard</a> has a start,
-    but there needs to be more.
-
 Discussion Items {#discuss}
 ---
+
+  Note: this list should be in bugzilla or on a wiki someplace.
 
   * Chrome and Firefox percent encode "]" in passwords.  The only user agents
     that don't are ones that attempt to follow the specification.
@@ -164,6 +164,12 @@ Discussion Items {#discuss}
 
     <a href=http://intertwingly.net/projects/pegurl/urltest-results/79e1a94e3f>example</a>
 
+  * Should we define more <a>conformance errors</a>?  Examples:
+
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/58071233e7>example</a>
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/7959304dcf>example</a>
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/9899f1fea7>example</a>
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/f328599fc9>example</a>
 
 
 Parsing Rules {#parsing-rules}
