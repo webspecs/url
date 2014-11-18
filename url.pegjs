@@ -5,6 +5,7 @@
 
 {
   var base = options.base || {scheme: 'about'};
+  var url = options.url;
   var encodingOverride = options.encodingOverride || 'utf-8';
 
   /* This function accepts a variable number of arguments.  It copies the
@@ -220,11 +221,15 @@ FileUrl
 /*
   <div class=example><code>javascript:alert("Hello, world!");</code></div>
 
+  <li><em>This rule is only to be evaluated if the value of @Scheme does not
+  match any <a href="https://url.spec.whatwg.org/#relative-scheme">relative
+  scheme</a></em>.
+
   Set <code>encoding override</code> to "utf-8".
 
   Initialize $result to be a JSON object with $scheme
   set to be the result returned by @Scheme, and
-  $schemeData set to the result returned by @Data.
+  $schemeData set to the result returned by @SchemeData.
   Return $result.
 
   Note: the resolution of
@@ -238,7 +243,7 @@ FileUrl
 NonRelativeUrl
   = scheme:Scheme ':'
     &{ return Url.RELATIVE_SCHEME.indexOf(scheme) == -1 }
-    data:Data
+    data:SchemeData
   {
     encodingOverride = 'utf-8';
 
@@ -424,9 +429,6 @@ RelativeScheme
 }
 
 /*
-  <em>This grammar rule is not to match any
-  <a href="https://url.spec.whatwg.org/#relative-scheme">relative scheme</a>s.
-
   A scheme consists of one or more the letters "a" through
   "z", "A" through "Z", or any of the
   following special characters: hyphen-minus (U+002D),
@@ -483,13 +485,12 @@ Authority
       result.exception = 
         'At sign ("@") in user or password needs to be percent encoded';
       var info = Array(host.length+1).join("%40")+host.join('');
-      if (userpass && userpass[1] != null) {
+      if (result.password != null) {
         result.password += info
       } else {
-        result.username = (result.username || '') + info
+        result.username += info
       }
     };
-  
 
     if (result.username != null && result.host == '') {
       error('Empty host');
@@ -969,7 +970,7 @@ Path
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=24246">bug 24246</a>
   may change what characters to escape in the scheme data.
 */
-Data
+SchemeData
   = data:[^?#]*
   {
     return cleanse(data, null, 'scheme data');
@@ -1007,9 +1008,112 @@ Query
   Note: the resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26988">bug 26988</a>
   may add support for parsing URLs without decoding the fragment identifier.
+
+Setter Rules {#setter-rules}
+=============
 */
 Fragment 
   = fragment:.*
   {
     return cleanse(fragment, Url.SIMPLE_ENCODE_SET, 'fragment')
   }
+
+/*
+  Set $url.scheme to @Scheme.
+*/
+setProtocol
+  = scheme:Scheme ':'? .*
+{
+  url._scheme = scheme
+}
+
+/*
+  If $url.username is not null or $url.scheme is a
+  <a href="https://url.spec.whatwg.org/#relative-scheme">relative scheme</a>,
+  then set $url.username to the 
+  <a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a>
+  value using the
+  <a href="https://url.spec.whatwg.org/#username-encode-set">username encode
+  set</a>.
+*/
+setUsername
+  = user:(.*)
+  {
+    if (url._username || Url.RELATIVE_SCHEME.indexOf(url._scheme)!=-1) {
+      url._username = Url.percentEncode(user.join(''), Url.USERNAME_ENCODE_SET)
+    }
+  }
+
+/*
+  Set $url.password to the 
+  <a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a> value
+  using the
+  <a href="https://url.spec.whatwg.org/#username-encode-set">password encode
+  set</a>.
+*/
+setPassword
+  = password:(.*)
+  {
+    return Url.percentEncode(user, PASSWORD_ENCODE_SET)
+  }
+
+/*
+  If the value of $url.scheme is a
+  <a href="https://url.spec.whatwg.org/#relative-scheme">relative
+  scheme</a></em>, perform the following steps:
+
+    * Set $url.hostname to the value of @Host.
+    * If @Port is present, set $url.port to the value of @Port.
+*/
+setHostname
+  = host:Host [:/\\?#]? port:(':' Port)? .*
+  {
+    return host;
+  }
+
+/*
+  If the value of $url.scheme does not
+  match any <a href="https://url.spec.whatwg.org/#relative-scheme">relative
+  scheme</a></em> or
+  $url.scheme doesn't have a 
+  <a href="https://url.spec.whatwg.org/#default-port">default port</a>,
+  or $result.port is equal to that default,
+  then delete the $port property from $url.
+
+  Otherwise, remove leading U+0030 code points from the leading decimal digits
+  until either the leading code point is not U+0030 or result is one code point.
+  Set $url.port to the result.
+*/
+setPort
+  = port:([0-9]*) .*
+  {
+    port = port.join('').replace(/^0+(\d)/, '$1');
+    return port;
+  }
+
+/*
+  Initialize $result to be a JSON object with $schemeData set to the result
+  returned by @SchemeData and then modify $result as follows:
+
+     * If @Query is present in the input, set $result.query to this value.
+     * If @Fragment is present in the input, set $result.fragment to this value.
+
+  return $result.
+*/
+setSchemeData
+  = data:SchemeData 
+    query:('?' Query)?
+    fragment:('#' Fragment)?
+{
+    var result = {schemeData: data}
+
+    if (query) {
+      result.query = query[1]
+    };
+
+    if (fragment) {
+      result.fragment = fragment[1].toString()
+    };
+
+    return result
+}

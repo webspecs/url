@@ -50,7 +50,7 @@ for (var i = 0; i < data.length; i++) {
   test.input = input = test.input.trim();
 
   if (properties.some(function(prop) {
-    return url[prop] != test[prop]
+    return url[prop] != (test[prop] || '')
   })) {
     console.log("test " + i + " failed\n");
     console.log("input: " + JSON.stringify(test.input));
@@ -63,7 +63,7 @@ for (var i = 0; i < data.length; i++) {
     test.input = input;
 
     properties.forEach(function(prop) {
-      if (url[prop] != test[prop]) {
+      if (url[prop] != (test[prop] || '')) {
         console.log([prop, test[prop], url[prop]])
       }
     });

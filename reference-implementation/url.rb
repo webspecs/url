@@ -3,6 +3,8 @@ class Url
   # https://url.spec.whatwg.org/#percent-encoded-bytes
   BASE_ENCODE_SET = '([\uD800-\uDBFF][\uDC00-\uDFFF])|[^\u0020-\u007E]'
   SIMPLE_ENCODE_SET = RegExp.new(BASE_ENCODE_SET, 'g')
+  PASSWORD_ENCODE_SET = RegExp.new(BASE_ENCODE_SET + "|[\\@/]", 'g')
+  USERNAME_ENCODE_SET = RegExp.new(BASE_ENCODE_SET + "|[\\@/:]", 'g')
 
   DEFAULT_ENCODE_SET = RegExp.new(BASE_ENCODE_SET + '|[\u0020"#<>?]', 'g')
 
@@ -282,25 +284,25 @@ class Url
     return result
   end
 
-  attr_accessor :scheme, :scheme_data, :username, :password, :host, :port
+  attr_accessor :scheme, :scheme_data, :host
   attr_accessor :path, :query, :fragment, :exception
 
   def initialize(input, base)
-    @scheme = ''
-    @scheme_data = ''
-    @username = ''
-    @password = nil
-    @host = nil
-    @port = ''
-    @path = []
-    @query = nil
-    @fragment = nil
-
     begin
       base = UrlParser.parse(base) if base
       input.sub! /^[\u0009\u000A\u000C\u000D\u0020]+/, ''
       input.sub! /[\u0009\u000A\u000C\u000D\u0020]+$/, ''
       url = UrlParser.parse(input, base: base)
+
+      @scheme = ''
+      @scheme_data = ''
+      @username = ''
+      @password = nil
+      @host = nil
+      @port = ''
+      @path = []
+      @query = nil
+      @fragment = nil
 
       for property in url
         this["_#{property}"] = url[property]
@@ -327,7 +329,7 @@ class Url
       if @username != '' or @password != nil
 
         # 2.2.1
-        output += @username
+        output += @username || ''
 
         # 2.2.2
         output += ":#@password" unless @password == nil
@@ -366,14 +368,57 @@ class Url
     @href || self.serializer()
   end
 
+  def href=(value)
+    begin
+      oldhref = @href
+      oldexception = @exception
+      Url.apply(this, [value, null]);
+    ensure
+      # @href is only set when there is an error.  If there previously was
+      # an error, restore it.  If there is a new error, ignore it.
+      @href = oldhref
+      @exception = oldexception
+    end
+  end
+
   # https://url.spec.whatwg.org/#dom-url-protocol
   def protocol
-    "#@scheme:"
+    @scheme ? "#@scheme:" : ':'
+  end
+
+  def protocol=(value)
+    begin
+      UrlParser.parse(value, url: this, startRule: 'setProtocol')
+    rescue => e
+    end
+  end
+
+  # https://url.spec.whatwg.org/#dom-url-username
+  def username
+    @username ? @username : ''
+  end
+
+  def username=(value)
+    begin
+      UrlParser.parse(value, url: this, startRule: 'setUsername')
+    rescue => e
+      console.log(e)
+    end
+  end
+
+  # https://url.spec.whatwg.org/#dom-url-password
+  def password
+    @password ? @password : ''
   end
 
   # https://url.spec.whatwg.org/#dom-url-hostname
   def hostname
     self.host_serializer(@host)
+  end
+
+  # https://url.spec.whatwg.org/#dom-url-port
+  def port
+    @port ? @port : ''
   end
 
   # https://url.spec.whatwg.org/#dom-url-pathname

@@ -13,6 +13,7 @@
     <style>
       h2 {color: DarkBlue}
       #domException, #urlException {color: Crimson}
+      #value {display: inline; width: 60%}
     </style>
   </head>
 
@@ -21,11 +22,29 @@
 
     <p>The output below will display a URL's parsed components from both the browser's DOM, and from the <a href="https://github.com/rubys/url/tree/peg.js/reference-implementation">reference implementation</a> for the <a href="http://url.spec.whatwg.org/">WHATWG Living Standard.</a> The output will be colored <span class="pass">dark green</span> unless a difference occurs between the two parsers in which case the affected URL component will be colored <span class="fail">red</span>.</p>
     <input class="input" id="url" type="text" placeholder="http://example.com"/>
-    <a id="target" href="http://www.lookout.net/test/url/url-liveview.html"></a>
+    <a id="target"></a>
 
     <div>
       <p>Specify a base URL</p>
       <input class="input" id="base" type="text" value="about:"/>
+    </div>
+
+    <div>
+      <span>Set</span>
+      <select name='property'>
+        <option>href</option>
+        <option>protocol</option>
+        <option>username</option>
+        <option>password</option>
+        <option>host</option>
+        <option>hostname</option>
+        <option>port</option>
+        <option>pathname</option>
+        <option>search</option>
+        <option>hash</option>
+      </select>
+      <span>=</span>
+      <input class="input" id="value" type="text"/>
     </div>
 
     <h2>URL components from DOM properties:</h2>
@@ -119,6 +138,10 @@
     </div>
 
     <script lang="text/javascript">
+      // the subjects of the comparison
+      var target = document.getElementById("target");
+      var url = new Url(location.href, location.href);
+
       // Prepare the elements to output DOM properties
       var domHref = document.getElementById("domHref");
       var domProtocol = document.getElementById("domProtocol");
@@ -150,7 +173,7 @@
         } catch (e) {
         }
 
-        parse(document.getElementById("url").value);
+        parse(target.value);
       }
 
       function parse(input) {
@@ -168,10 +191,11 @@
       }
 
       function parseDom(input) {
-        var target = document.getElementById("target");
         try {
-          domException.parentNode.style.display = "none";
-          target.setAttribute("href", input);
+          if (typeof input != 'undefined') {
+            domException.parentNode.style.display = "none";
+            target.setAttribute("href", input);
+          }
         } catch (e) {
           domException.parentNode.style.display = "block";
           domException.textContent = e.toString();
@@ -189,8 +213,11 @@
       }
 
       function parseUrl(input) {
-        var base = document.baseURI;
-        var url = new Url(input, base);
+        if (typeof input != 'undefined') {
+          url = new Url(input, document.baseURI);
+          value.value = url[property.value];
+        }
+
         urlHref.textContent = url.href;
         urlProtocol.textContent = url.protocol;
         urlUsername.textContent = url.username;
@@ -233,9 +260,29 @@
       }
 
       var input = document.getElementById("url");
-      input.onpaste = input.onkeyup = function() {parse(this.value)};
+      input.oninput = function() {parse(this.value)};
+
       var base = document.getElementById("base");
-      base.onpaste = base.onkeyup = function() {rebase(this.value)};
+      base.oninput = function() {rebase(this.value)};
+
+      var property = document.querySelector('select[name=property]');
+      property.onchange = function() {value.value = url[property.value]};
+      value.oninput = function() {
+        try {
+          url[property.value] = value.value;
+        } catch(e) {
+          url.exception = e.toString();
+        }
+
+        try {
+          target[property.value] = value.value;
+        } catch(e) {
+          domException.parentNode.style.display = "block";
+          domException.textContent = e.toString();
+        }
+
+        parse();
+      };
 
       if (location.pathname.indexOf('2') == -1) {
         base.parentNode.style.display = 'none';
@@ -244,7 +291,7 @@
       } else {
         var fragment = location.hash.substring(1);
         var space = fragment.indexOf(' ');
-        if (space >= 0) {
+        if (space != -1) {
           base.value = fragment.substr(0, space);
           input.value = fragment.substr(space+1);
         } else if (fragment != '') {
@@ -252,6 +299,24 @@
         }
       }
 
+      if (location.pathname.indexOf('3') == -1) {
+        property.parentNode.style.display = 'none';
+      } else {
+        property.onchange();
+
+        var search = location.search.substring(1);
+        var equals = search.indexOf('=');
+        if (equals != -1) {
+          for (var i=0; i<property.options.length; i++) {
+            if (property.options[i].value == search.substr(0, equals)) {
+              property.options[i].setAttribute('selected', 'selected');
+              value.value = search.substr(equals+1);
+            }
+          }
+        }
+      }
+
+      target.value = location.href;
       rebase(base.value);
       input.focus();
     </script>
