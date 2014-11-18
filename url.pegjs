@@ -436,9 +436,9 @@ RelativeScheme
   Return the results as a lowercased string.
 */
 Scheme
-  = scheme:[-a-zA-Z+.]+
+  = scheme:([a-zA-Z] [-a-zA-Z+.]*)
   {
-    return scheme.join('').toLowerCase()
+    return (scheme[0] + scheme[1].join('')).toLowerCase()
   }
 
 /*

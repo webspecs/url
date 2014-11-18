@@ -20,7 +20,7 @@
     <img alt=WHATWG height=100 src=https://resources.whatwg.org/logo-url.svg>
 </a>
 </p>
-  <h1 class="p-name no-ref allcaps" id=title>URL</h1>
+  <h1 class="p-name no-ref" id=title>URL</h1>
   <h2 class="no-num no-toc no-ref heading settled" id=subtitle><span class=content>Living Standard — Last Updated
     <span class=dt-updated><span class=value-title title=20141118>18 November 2014</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt class=editor>Editor:<dd class=editor><div class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://intertwingly.net/blog/>Sam Ruby</a> (<a class="p-org org" href=https://www.ibm.com/>IBM</a>) <a class="u-email email" href=mailto:rubys@intertwingly.net>rubys@intertwingly.net</a></div><dt>Version History:<dd><span><a href=https://github.com/rubys/url/commits/peg.js>https://github.com/rubys/url/commits/peg.js</a></span><dt>Participate:<dd><span><a href="https://www.w3.org/Bugs/Public/enter_bug.cgi?product=WHATWG&amp;component=URL">File a bug</a> (<a href="https://www.w3.org/Bugs/Public/buglist.cgi?component=URL&amp;list_id=46839&amp;product=WHATWG&amp;resolution=---">open bugs</a>)</span><dd><span><a href=https://github.com/rubys/url/issues/new>File an issue</a> (<a href="https://github.com/rubys/url/issues?q=">issues</a>)</span><dd><span><a href=mailto:public-webapps@w3.org>public-webapps@w3.org</a> (<a href=http://lists.w3.org/Archives/Public/public-webapps/>archives</a>)</span><dd><span><a href=https://whatwg.org/mailing-list>whatwg@whatwg.org</a> (<a href=https://whatwg.org/mailing-list#specs>archives</a>)</span><dd><span><a href=http://wiki.whatwg.org/wiki/IRC>IRC: #whatwg on Freenode</a></span></dl></div>
@@ -1044,26 +1044,43 @@ may change how encoding override is handled.</p>
 
 <h3 class="heading settled" data-level=2.7 id=scheme><span class=secno>2.7. </span><span class=content>scheme</span><a class=self-link href=#scheme></a></h3>
 
-<div class=railroad><svg class=railroad-diagram height=71 viewBox="0 0 285 71" width=285>
+<div class=railroad><svg class=railroad-diagram height=81 viewBox="0 0 465 81" width=465>
 <g transform="translate(.5 .5)">
-<path d="M 20 21 v 20 m 10 -20 v 20 m -10 -10 h 20.5">
-</path><path d="M40 31h10">
+<path d="M 20 31 v 20 m 10 -20 v 20 m -10 -10 h 20.5">
 </path><g>
-<path d="M50 31h0.0">
-</path><path d="M234.0 31h0.0">
-</path><path d="M50.0 31h10">
+<path d="M40 41h0.0">
+</path><path d="M424.0 41h0.0">
+</path><path d="M40.0 41h10">
 </path><g>
-<path d="M60.0 31h0.0">
-</path><path d="M224.0 31h0.0">
-</path><rect height=22 rx=10 ry=10 width=164 x=60.0 y=20>
-</rect><text x=142.0 y=35>
-any of [-a-zA-Z+.]</text></g><path d="M224.0 31h10">
-</path><path d="M60.0 31a10 10 0 0 0 -10 10v0a10 10 0 0 0 10 10">
+<path d="M50.0 41h0.0">
+</path><path d="M190.0 41h0.0">
+</path><rect height=22 rx=10 ry=10 width=140 x=50.0 y=30>
+</rect><text x=120.0 y=45>
+any of [a-zA-Z]</text></g><path d="M190.0 41h10">
 </path><g>
-<path d="M60.0 51h164">
-</path></g><path d="M224.0 51a10 10 0 0 0 10 -10v0a10 10 0 0 0 -10 -10">
-</path></g><path d="M234 31h10">
-</path><path d="M 244 31 h 20 m -10 -10 v 20 m 10 -20 v 20">
+<path d="M200.0 41h0.0">
+</path><path d="M424.0 41h0.0">
+</path><path d="M200.0 41a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10">
+</path><g>
+<path d="M220.0 21h184">
+</path></g><path d="M404.0 21a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10">
+</path><path d="M200.0 41h20">
+</path><g>
+<path d="M220.0 41h0.0">
+</path><path d="M404.0 41h0.0">
+</path><path d="M220.0 41h10">
+</path><g>
+<path d="M230.0 41h0.0">
+</path><path d="M394.0 41h0.0">
+</path><rect height=22 rx=10 ry=10 width=164 x=230.0 y=30>
+</rect><text x=312.0 y=45>
+any of [-a-zA-Z+.]</text></g><path d="M394.0 41h10">
+</path><path d="M230.0 41a10 10 0 0 0 -10 10v0a10 10 0 0 0 10 10">
+</path><g>
+<path d="M230.0 61h164">
+</path></g><path d="M394.0 61a10 10 0 0 0 10 -10v0a10 10 0 0 0 -10 -10">
+</path></g><path d="M404.0 41h20">
+</path></g></g><path d="M 424 41 h 20 m -10 -10 v 20 m 10 -20 v 20">
 </path></g></svg></div>
 
 <p>A scheme consists of one or more the letters "<code>a</code>" through
@@ -2664,6 +2681,5 @@ non-normative. Everything else in this specification is normative.
 readability, these words do not appear in all uppercase letters in this specification. <a data-biblio-type=normative data-link-type=biblio href=#biblio-rfc2119 title=RFC2119>[RFC2119]</a>
 
 <p>Conformance requirements phrased as algorithms or specific steps may be implemented in any manner, so long as the end
-result is equivalent. (In particular, the algorithms defined in this specification are intended to be easy to follow, 
-and not intended to be performant.) 
-<h2 class="no-num heading settled" id=references><span class=content>References</span><a class=self-link href=#references></a></h2><h3 class="no-num heading settled" id=normative><span class=content>Normative References</span><a class=self-link href=#normative></a></h3><dl><dt id=biblio-rfc2119 title=rfc2119><a class=self-link href=#biblio-rfc2119></a>[rfc2119]<dd>S. Bradner. <a href=https://tools.ietf.org/html/rfc2119>Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href=https://tools.ietf.org/html/rfc2119>https://tools.ietf.org/html/rfc2119</a></dl><h3 class="no-num heading settled" id=informative><span class=content>Informative References</span><a class=self-link href=#informative></a></h3><dl><dt id=biblio-rfc3986 title=rfc3986><a class=self-link href=#biblio-rfc3986></a>[rfc3986]<dd>T. Berners-Lee; R. Fielding; L. Masinter. <a href=https://tools.ietf.org/html/rfc3986>Uniform Resource Identifier (URI): Generic Syntax</a>. January 2005. Internet Standard. URL: <a href=https://tools.ietf.org/html/rfc3986>https://tools.ietf.org/html/rfc3986</a><dt id=biblio-rfc3987 title=rfc3987><a class=self-link href=#biblio-rfc3987></a>[rfc3987]<dd>M. Duerst; M. Suignard. <a href=https://tools.ietf.org/html/rfc3987>Internationalized Resource Identifiers (IRIs)</a>. January 2005. Proposed Standard. URL: <a href=https://tools.ietf.org/html/rfc3987>https://tools.ietf.org/html/rfc3987</a></dl><h2 class="no-num heading settled" id=index><span class=content>Index</span><a class=self-link href=#index></a></h2><ul class=indexlist><li>cleanse, <a href=#cleanse title="section 4">4</a><li>conformance error, <a href=#conformance-error title="section 2">2</a><li>parse exception, <a href=#parse-exception title="section 2">2</a><li>path concatenation, <a href=#path-concatenation title="section 4">4</a><li>query encode set, <a href=#query-encode-set title="section 2.21">2.21</a></ul>
+result is equivalent.
+<h2 class="no-num heading settled" id=references><span class=content>References</span><a class=self-link href=#references></a></h2><h3 class="no-num heading settled" id=normative><span class=content>Normative References</span><a class=self-link href=#normative></a></h3><dl><dt id=biblio-rfc2119 title=rfc2119><a class=self-link href=#biblio-rfc2119></a>[rfc2119]<dd>S. Bradner. <a href=http://www.ietf.org/rfc/rfc2119.txt>Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href=http://www.ietf.org/rfc/rfc2119.txt>http://www.ietf.org/rfc/rfc2119.txt</a></dl><h3 class="no-num heading settled" id=informative><span class=content>Informative References</span><a class=self-link href=#informative></a></h3><dl><dt id=biblio-rfc3986 title=rfc3986><a class=self-link href=#biblio-rfc3986></a>[rfc3986]<dd>T. Berners-Lee; R. Fielding; L. Masinter. <a href=http://www.ietf.org/rfc/rfc3986.txt>Uniform Resource Identifier (URI): Generic Syntax</a>. January 2005. Internet Standard. URL: <a href=http://www.ietf.org/rfc/rfc3986.txt>http://www.ietf.org/rfc/rfc3986.txt</a><dt id=biblio-rfc3987 title=rfc3987><a class=self-link href=#biblio-rfc3987></a>[rfc3987]<dd>M. Duerst; M. Suignard. <a href=http://www.ietf.org/rfc/rfc3987.txt>Internationalized Resource Identifiers (IRIs)</a>. January 2005. Proposed Standard. URL: <a href=http://www.ietf.org/rfc/rfc3987.txt>http://www.ietf.org/rfc/rfc3987.txt</a></dl><h2 class="no-num heading settled" id=index><span class=content>Index</span><a class=self-link href=#index></a></h2><ul class=indexlist><li>cleanse, <a href=#cleanse title="section 4">4</a><li>conformance error, <a href=#conformance-error title="section 2">2</a><li>parse exception, <a href=#parse-exception title="section 2">2</a><li>path concatenation, <a href=#path-concatenation title="section 4">4</a><li>query encode set, <a href=#query-encode-set title="section 2.21">2.21</a></ul>
