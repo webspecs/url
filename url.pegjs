@@ -429,10 +429,10 @@ RelativeScheme
 }
 
 /*
-  A scheme consists of one or more the letters "a" through
-  "z", "A" through "Z", or any of the
-  following special characters: hyphen-minus (U+002D),
-  plus sign (U+002B) or full stop (U+002D).
+  A scheme consists of the alphabetic letters "a" through "z" or "A" through
+  "Z", followed by zero or more alphabetic characters or any of the following
+  special characters: hyphen-minus (U+002D), plus sign (U+002B) or full stop
+  (U+002D).
   Return the results as a lowercased string.
 */
 Scheme
