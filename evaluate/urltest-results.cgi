@@ -63,6 +63,8 @@ agents.keys.each do |agent|
   end
 end
 
+master_results = results
+
 COLS = %w(href protocol hostname port username password pathname search hash)
 def evaluate(row)
   copy = row.dup
@@ -76,6 +78,22 @@ end
 
 _html do
   _link rel: "stylesheet", href: "../style.css"
+
+  query = (ENV['QUERY_STRING'] ? "?#{ENV['QUERY_STRING']}" : '')
+  browser_only = (query == '?browsers')
+
+  results = {}
+  master_results.each do |key, value|
+    if browser_only
+      value = value.dup
+      value.keys.each do |key|
+        unless %(refimpl testdata chrome firefox ie safari).include? key.to_s
+          value.delete key 
+        end
+      end
+    end
+    results[key] = value.dup
+  end
 
   if _.path_info == '/'
     _h1 'URL test results'
@@ -95,7 +113,7 @@ _html do
           klass = 'open'
         elsif testdata.any? {|prop, value| consensus[prop] != value.to_s}
           klass = 'problem'
-        elsif addressable.any? {|prop, value| consensus[prop] != value.to_s}
+        elsif addressable and addressable.any? {|prop, value| consensus[prop] != value.to_s}
           klass = 'diff'
         else
           klass = 'good'
@@ -104,17 +122,23 @@ _html do
         _tr_ class: klass do
           _td index
           _td do
-            _a testdata['input'].inspect, href: key[0..9]
+            _a testdata['input'].inspect, href: key[0..9] + query
           end
           _td do
-            _a testdata['base'], href: key[0..9]
+            _a testdata['base'], href: key[0..9] + query
           end
           _td do
             results.each do |agent, row|
-              COLS.each do |col|
-                if row[col].to_s != consensus[col].to_s
-                  _ agent
-                  break
+              next if agent.to_s == 'refimpl'
+              next if agent == :addressable and browser_only
+              if COLS.all? {|col| row[col].to_s != consensus[col].to_s}
+                _em 'no consensus'
+              else
+                COLS.each do |col|
+                  if row[col].to_s != consensus[col].to_s
+                    _ agent
+                    break
+                  end
                 end
               end
             end
@@ -190,6 +214,7 @@ _html do
           _th.exception 'exception' if cols.include? 'exception'
         end
         row.each do |agent, data|
+          next if agent == :addressable and browser_only
           _tr do
             _th agent.to_s
 
