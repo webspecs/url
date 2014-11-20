@@ -22,7 +22,7 @@
 </p>
   <h1 class="p-name no-ref allcaps" id=title>URL</h1>
   <h2 class="no-num no-toc no-ref heading settled" id=subtitle><span class=content>Living Standard — Last Updated
-    <span class=dt-updated><span class=value-title title=20141118>18 November 2014</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20141120>20 November 2014</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt class=editor>Editor:<dd class=editor><div class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://intertwingly.net/blog/>Sam Ruby</a> (<a class="p-org org" href=https://www.ibm.com/>IBM</a>) <a class="u-email email" href=mailto:rubys@intertwingly.net>rubys@intertwingly.net</a></div><dt>Version History:<dd><span><a href=https://github.com/rubys/url/commits/peg.js>https://github.com/rubys/url/commits/peg.js</a></span><dt>Participate:<dd><span><a href="https://www.w3.org/Bugs/Public/enter_bug.cgi?product=WHATWG&amp;component=URL">File a bug</a> (<a href="https://www.w3.org/Bugs/Public/buglist.cgi?component=URL&amp;list_id=46839&amp;product=WHATWG&amp;resolution=---">open bugs</a>)</span><dd><span><a href=https://github.com/rubys/url/issues/new>File an issue</a> (<a href="https://github.com/rubys/url/issues?q=">issues</a>)</span><dd><span><a href=mailto:public-webapps@w3.org>public-webapps@w3.org</a> (<a href=http://lists.w3.org/Archives/Public/public-webapps/>archives</a>)</span><dd><span><a href=https://whatwg.org/mailing-list>whatwg@whatwg.org</a> (<a href=https://whatwg.org/mailing-list#specs>archives</a>)</span><dd><span><a href=http://wiki.whatwg.org/wiki/IRC>IRC: #whatwg on Freenode</a></span></dl></div>
   <div data-fill-with=warning></div>
 </div>
@@ -70,9 +70,9 @@ agrees</a> that this should be a <a data-link-type=dfn href=#conformance-error t
 <li data-md=""><p>This draft contains a proposed implementation of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug 26431</a>
 (Define IPv4 parsing).</p>
-<li data-md=""><p>The reference implementation contains a proposed implementation of
-<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27289">bug 27289</a>
-(Host parsing and utf8PercentDecode).</p>
+<li data-md=""><p>This draft no longer prepends %40 but rather replaces @ signs in place.
+[<a href=http://krijnhoetmer.nl/irc-logs/whatwg/20141119#l-235>IRC
+discussion</a>]</p>
 <li data-md=""><p>This draft indicates a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a> if
 <a href=https://url.spec.whatwg.org/#concept-host-parser>host
 parsing</a> changes the domain.
@@ -1197,9 +1197,9 @@ entire value.</p>
 <li data-md=""><p>If one or more "<code>@</code>" signs are present in the value returned
 by the <code class=grammar-rule><a href=#host>host</a></code> production, then perform the following steps:</p>
 <ul><li data-md=""><p>Indicate a <a data-link-type=dfn href=#conformance-error title="conformance error">conformance error</a>.</p>
-<li data-md=""><p>Initialize <code>info</code> to the remainder of the <code class=grammar-rule><a href=#host>host</a></code> after the
-first "<code>@</code>" sign.  Remove all remaining "<code>@</code>" signs in <code>info</code>,
-and prepend a "<code>%<code>40</code></code>" for every "<code>@</code>" removed.</p>
+<li data-md=""><p>Initialize <code>info</code> to the value of '%<code>40</code>' plus the remainder of the
+<code class=grammar-rule><a href=#host>host</a></code> after the first "<code>@</code>" sign.  Replace all remaining "<code>@</code>" signs in
+<code>info</code>, with the string "<code>%<code>40</code></code>".</p>
 <li data-md=""><p>If <code class=grammar-rule><a href=#password>password</a></code> is present in the input, append <code>info</code> to <code>result.password</code>.</p>
 <li data-md=""><p>If <code class=grammar-rule><a href=#password>password</a></code> is not present in input and <code class=grammar-rule><a href=#user>user</a></code> is present,
 append <code>info</code> to <code>result.username</code>.</p>

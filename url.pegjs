@@ -454,9 +454,9 @@ Scheme
      * If one or more "@" signs are present in the value returned
        by the @Host production, then perform the following steps:
        * Indicate a <a>conformance error</a>.
-       * Initialize $info to the remainder of the @Host after the
-           first "@" sign.  Remove all remaining "@" signs in $info,
-           and prepend a "%40" for every "@" removed.
+       * Initialize $info to the value of '%40' plus the remainder of the
+           @Host after the first "@" sign.  Replace all remaining "@" signs in
+           $info, with the string "%40".
        * If @Password is present in the input, append $info to $result.password.
        * If @Password is not present in input and @User is present,
            append $info to $result.username.
@@ -484,7 +484,7 @@ Authority
     if (host.length > 0) {
       result.exception = 
         'At sign ("@") in user or password needs to be percent encoded';
-      var info = Array(host.length+1).join("%40")+host.join('');
+      var info = '%40' + host.join('%40');
       if (result.password != null) {
         result.password += info
       } else {

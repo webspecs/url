@@ -38,9 +38,6 @@ order.
 
 These are items that should be done before the proposed merge:
 
-  * Make it more clear what is normative; to be honest, I'm confused on this
-    point as the only real normative requirement for the parts defined by this
-    spec-let is "produce the same output as the algorithm defined herein".
   * Implement <a href="https://url.spec.whatwg.org/#urlutils-and-urlutilsreadonly-members">Url
     property getters and setters</a>.
 
@@ -60,9 +57,9 @@ Known differences with current drafts of the WHATWG <a href="https://url.spec.wh
   * This draft contains a proposed implementation of 
     <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug 26431</a>
     (Define IPv4 parsing).
-  * The reference implementation contains a proposed implementation of
-    <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27289">bug 27289</a>
-    (Host parsing and utf8PercentDecode).
+  * This draft no longer prepends %40 but rather replaces @ signs in place.
+    [<a href=http://krijnhoetmer.nl/irc-logs/whatwg/20141119#l-235>IRC
+    discussion</a>]
   * This draft indicates a <a>conformance error</a> if
     <a href="https://url.spec.whatwg.org/#concept-host-parser">host
     parsing</a> changes the domain.
@@ -114,6 +111,9 @@ Post-merge work items {#postmerge}
     status section or equivalent in this document.  Expand on that information
     with specific notes on known interop issues.  An example of this can be
     found in [[#file-url]].
+  * Make Railroad diagrams accessible.
+    <a href=https://github.com/tabatkins/bikeshed/issues/281">bikeshed issue
+    281</a>
 
 Discussion Items {#discuss}
 ---
