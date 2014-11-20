@@ -1,2 +1,0 @@
-# http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Nov/0035.html
-x test:test
