@@ -32,7 +32,9 @@ url.pegjson: peg2json.js parser.pegjs url.pegjs
 #
 ### test reference implementation
 #
-test: reference-implementation/punycode.js \
+test: settest urltest
+
+urltest: reference-implementation/punycode.js \
         reference-implementation/unorm.js \
         reference-implementation/idna.js \
         reference-implementation/url.js \
@@ -44,6 +46,11 @@ test: reference-implementation/punycode.js \
 	reference-implementation/test/patchtestdata.txt
 	node reference-implementation/test/urltest.js
 
+reference-implementation/test/urlsettest.js: \
+	reference-implementation/test/urlsettest.yml \
+	reference-implementation/test/yml2test.rb
+	ruby reference-implementation/test/yml2test.rb > $@
+
 reference-implementation/url.js: reference-implementation/ruby2js reference-implementation/url.rb
 	ruby reference-implementation/ruby2js reference-implementation/url.rb > $@
 
@@ -53,6 +60,8 @@ reference-implementation/urlparser.js: reference-implementation/pegcompile.js ur
 reference-implementation/idna.js: reference-implementation/idna2js.rb \
         reference-implementation/IdnaMappingTable.txt
 	ruby reference-implementation/idna2js.rb > $@
+
+settest: reference-implementation/test/urlsettest.js
 
 #
 ### Fetch files from other sources

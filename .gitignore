@@ -12,5 +12,6 @@ reference-implementation/url.js
 reference-implementation/urlparser.js
 reference-implementation/test/urltestdata.txt
 reference-implementation/test/urltestparser.js
+reference-implementation/test/urlsettest.js
 url.bs
 url.pegjson

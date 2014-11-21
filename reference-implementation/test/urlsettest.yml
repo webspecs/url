@@ -1,0 +1,86 @@
+---
+href:
+- testname: setAll
+  url: 'foo:'
+  value: http://user:pass@host/path?search#hash
+  tests:
+    href: http://user:pass@host/path?search#hash
+    protocol: 'http:'
+    username: user
+    password: pass
+    hostname: host
+    pathname: /path
+    search: ?search
+    hash: '#hash'
+
+- testname: resetAll
+  url: http://user:pass@host/path?search#hash
+  value: 'foo:'
+  tests:
+    href: foo:///
+    protocol: 'foo:'
+    username: ''
+    password: ''
+    hostname: ''
+    pathname: /
+    search: ''
+    hash: ''
+
+- testname: error
+  url: http://user:pass@host/path?search#hash
+  value: http://localhost:badport
+  tests:
+    href: http://user:pass@host/path?search#hash
+    protocol: 'http:'
+    username: user
+    password: pass
+    hostname: host
+    pathname: /path
+    search: ?search
+    hash: '#hash'
+
+protocol:
+- testname: withColon
+  url: http://user:pass@host/path?search#hash
+  value: foo:blahblahblah
+  tests:
+    href: foo://user:pass@host/path?search#hash
+    protocol: 'foo:'
+
+- testname: withoutColon
+  url: http://user:pass@host/path?search#hash
+  value: foo
+  tests:
+    href: foo://user:pass@host/path?search#hash
+    protocol: 'foo:'
+
+- testname: empty
+  url: http://user:pass@host/path?search#hash
+  value: ''
+  tests:
+    href: http://user:pass@host/path?search#hash
+    protocol: 'http:'
+
+username:
+- testname: relative
+  url: http://user:pass@host/path?search#hash
+  value: fred
+  tests:
+    href: http://fred:pass@host/path?search#hash
+    username: fred
+
+- testname: userColon
+  url: http://user:pass@host/path?search#hash
+  value: fred:secret
+  tests:
+    href: http://fred%3Asecret:pass@host/path?search#hash
+    username: fred%3Asecret
+
+- testname: mailto
+  url: mailto:someone@example.com
+  value: fred
+  tests:
+    href: mailto:someone@example.com
+    username: ''
+    href: mailto:someone@example.com
+    username: ''
