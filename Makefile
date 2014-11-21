@@ -1,7 +1,8 @@
 # Prereqs:
 #    install node, ruby, wget, then:
 #
-#    npm install pegjs
+#    npm install -g pegjs
+#    npm install -g nodeunit
 #    gem install ruby2js
 #    https://github.com/tabatkins/bikeshed/blob/master/docs/install.md
 #
@@ -13,7 +14,8 @@ all: spec test
 
 clean:
 	rm -f url.html url.bs url.pegjson reference-implementation/url.js \
-	reference-implementation/urlparser.js
+	reference-implementation/urlparser.js \
+	reference-implementation/test/urlsettest.js
 
 #
 ### specification
@@ -46,6 +48,7 @@ urltest: reference-implementation/punycode.js \
 	reference-implementation/test/patchtestdata.txt
 	node reference-implementation/test/urltest.js
 
+
 reference-implementation/test/urlsettest.js: \
 	reference-implementation/test/urlsettest.yml \
 	reference-implementation/test/yml2test.rb
@@ -61,12 +64,18 @@ reference-implementation/idna.js: reference-implementation/idna2js.rb \
         reference-implementation/IdnaMappingTable.txt
 	ruby reference-implementation/idna2js.rb > $@
 
-settest: reference-implementation/test/urlsettest.js
+settest: reference-implementation/test/urlsettest.js \
+	reference-implementation/punycode.js \
+        reference-implementation/unorm.js \
+        reference-implementation/idna.js \
+        reference-implementation/url.js \
+	reference-implementation/urlparser.js
+	nodeunit reference-implementation/test/urlsettest.js --reporter minimal
 
 #
 ### Fetch files from other sources
 #
-clobber:
+clobber: clean
 	rm -f test/urltestdata.txt test/urltestparser.js parser.pegjs \
 	reference-implementation/test/urltestdata.txt \
 	reference-implementation/punycode.js \
