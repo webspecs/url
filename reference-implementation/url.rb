@@ -390,6 +390,7 @@ class Url
     begin
       UrlParser.parse(value, url: this, startRule: 'setProtocol')
     rescue => e
+      this.exception = e.message
     end
   end
 
@@ -402,7 +403,7 @@ class Url
     begin
       UrlParser.parse(value, url: this, startRule: 'setUsername')
     rescue => e
-      console.log(e)
+      this.exception = e.message
     end
   end
 
@@ -411,9 +412,38 @@ class Url
     @password ? @password : ''
   end
 
+  def password=(value)
+    begin
+      UrlParser.parse(value, url: this, startRule: 'setPassword')
+    rescue => e
+      this.exception = e.message
+    end
+  end
+
+  # https://url.spec.whatwg.org/#dom-urlutils-host
+  def host
+    "#{self.hostname}:#{self.port}"
+  end
+
+  def host=(value)
+    begin
+      UrlParser.parse(value, url: this, startRule: 'setHost')
+    rescue => e
+      this.exception = e.message
+    end
+  end
+
   # https://url.spec.whatwg.org/#dom-url-hostname
   def hostname
     self.host_serializer(@host)
+  end
+
+  def hostname=(value)
+    begin
+      UrlParser.parse(value, url: this, startRule: 'setHostname')
+    rescue => e
+      this.exception = e.message
+    end
   end
 
   # https://url.spec.whatwg.org/#dom-url-port
@@ -421,10 +451,27 @@ class Url
     @port ? @port : ''
   end
 
+  def port=(value)
+    begin
+      UrlParser.parse(value.toString(), url: this, startRule: 'setPort')
+    rescue => e
+      this.exception = e.message
+    end
+  end
+
+
   # https://url.spec.whatwg.org/#dom-url-pathname
   def pathname
     return '' unless @scheme
     @scheme_data || ('/' + @path.join('/'))
+  end
+
+  def pathname=(value)
+    begin
+      UrlParser.parse(value.toString(), url: this, startRule: 'setPathname')
+    rescue => e
+      this.exception = e.message
+    end
   end
 
   # https://url.spec.whatwg.org/#dom-url-search
@@ -433,9 +480,25 @@ class Url
     return "?#@query"
   end
 
+  def search=(value)
+    begin
+      UrlParser.parse(value.toString(), url: this, startRule: 'setSearch')
+    rescue => e
+      this.exception = e.message
+    end
+  end
+
   # https://url.spec.whatwg.org/#dom-url-hash
   def hash
     return '' if @fragment.nil? or @fragment.empty?
     return "##@fragment"
+  end
+
+  def hash=(value)
+    begin
+      UrlParser.parse(value, url: this, startRule: 'setHash')
+    rescue => e
+      this.exception = e.message
+    end
   end
 end

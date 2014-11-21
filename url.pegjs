@@ -998,7 +998,7 @@ Query
 /*
   Consume all remaining characters in the input.  
   Return the <a title=cleanse>cleansed</a> result using the
-  <a href="https://url.spec.whatwg.org/#default-encode-set">simple encode
+  <a href="https://url.spec.whatwg.org/#simple-encode-set">simple encode
    set</a>.
 
   Note: the resolution of
@@ -1054,21 +1054,33 @@ setUsername
 setPassword
   = password:(.*)
   {
-    return Url.percentEncode(user, PASSWORD_ENCODE_SET)
+    if (url._username || Url.RELATIVE_SCHEME.indexOf(url._scheme)!=-1) {
+      url._password = Url.percentEncode(password.join(''), Url.PASSWORD_ENCODE_SET)
+    }
   }
 
 /*
-  If the value of $url.scheme is a
-  <a href="https://url.spec.whatwg.org/#relative-scheme">relative
-  scheme</a></em>, perform the following steps:
+  Set $url.host to the @Host.
+  If @Port is present, set $result.port to its value.
+*/
+setHost
+  = host:Host port:(':' Port)? ([/\\?#]? (.*))?
+  {
+    if (url._username || Url.RELATIVE_SCHEME.indexOf(url._scheme)!=-1) {
+      url._host = host
+      if (port && port[1]) url._port = port[1]
+    }
+  }
 
-    * Set $url.hostname to the value of @Host.
-    * If @Port is present, set $url.port to the value of @Port.
+/*
+  Set $url.host to the @Host.
 */
 setHostname
-  = host:Host [:/\\?#]? port:(':' Port)? .*
+  = host:Host ([:/\\?#]? (.*))?
   {
-    return host;
+    if (url._username || Url.RELATIVE_SCHEME.indexOf(url._scheme)!=-1) {
+      url._host = host
+    }
   }
 
 /*
@@ -1080,40 +1092,48 @@ setHostname
   or $result.port is equal to that default,
   then delete the $port property from $url.
 
-  Otherwise, remove leading U+0030 code points from the leading decimal digits
-  until either the leading code point is not U+0030 or result is one code point.
-  Set $url.port to the result.
+  Otherwise, set $url.port to the value returned by @Port.
 */
 setPort
-  = port:([0-9]*) .*
+  = port:Port ([/\\?#]? (.*))?
   {
-    port = port.join('').replace(/^0+(\d)/, '$1');
-    return port;
+    if (url._username || Url.DEFAULT_PORT[url._scheme]) {
+      url._port = port;
+    }
   }
 
 /*
-  Initialize $result to be a JSON object with $schemeData set to the result
-  returned by @SchemeData and then modify $result as follows:
-
-     * If @Query is present in the input, set $result.query to this value.
-     * If @Fragment is present in the input, set $result.fragment to this value.
-
-  return $result.
+  Set $url.host to the @Host.
+  If @Port is present, set $result.port to its value.
 */
-setSchemeData
-  = data:SchemeData 
-    query:('?' Query)?
-    fragment:('#' Fragment)?
-{
-    var result = {schemeData: data}
+setPathname
+  = [/\\]? path:Path ([/\\?#]? (.*))?
+  {
+    if (url._username || Url.RELATIVE_SCHEME.indexOf(url._scheme)!=-1) {
+      url._path = path
+    }
+  }
 
-    if (query) {
-      result.query = query[1]
-    };
+/*
+  Set $url.query to the 
+  <a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a> value
+  using the <a>query encode set</a>.
+*/
+setSearch
+  = '?'? query:(.*)
+  {
+    url._query = Url.percentEncode(query.join(''), Url.QUERY_ENCODE_SET)
+  }
 
-    if (fragment) {
-      result.fragment = fragment[1].toString()
-    };
-
-    return result
-}
+/*
+  Set $url.fragment to the 
+  <a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a> value
+  using the
+  <a href="https://url.spec.whatwg.org/#simple-encode-set">simple encode
+  set</a>
+*/
+setHash
+  = '#'? fragment:(.*)
+  {
+    url._fragment = Url.percentEncode(fragment.join(''), Url.SIMPLE_ENCODE_SET)
+  }
