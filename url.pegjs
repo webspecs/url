@@ -866,9 +866,14 @@ DecimalByte
   Remove leading U+0030 code points from result
   until either the leading code point is not U+0030 or result is
   one code point. 
-  If any characters that remain are not decimal digits, terminate processing
-  with a <a>parse exception</a>.
-  Otherwise, return the result as a string.
+
+  If any characters that remain are not decimal digits:
+    * If $startRule was not set, terminate processing with a
+      <a>parse exception</a>.
+    * Truncate $result starting with the first non-digit character.
+    * Indicate a <a>conformance error</a>.
+
+  Return the result as a string.
 
   Note: the resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26446">bug 26446</a>
@@ -881,7 +886,14 @@ Port
     var warn = port.exception;
 
     port = port.replace(/^0+(\d)/, '$1');
-    if (!/^\d*$/.test(port)) error('Invalid port number');
+    if (!/^\d*$/.test(port)) {
+      if (url) {
+        warn = 'Invalid port number';
+        port = port.replace(/\D.*/, '')
+      } else {
+        error('Invalid port number');
+      }
+    }
 
     if (warn) {
       port = new String(port);
@@ -1073,7 +1085,7 @@ setHost
   {
     if (url._scheme_data == null) {
       url._host = host
-      if (port && port[1]) url._port = port[1]
+      if (port) url._port = port[1]
     }
   }
 
@@ -1083,7 +1095,7 @@ setHost
   Set $url.host to the value returned by @Host.
 */
 setHostname
-  = host:Host ([:/\\?#]? (.*))?
+  = host:Host [:/\\?#]? (.*)
   {
     if (url._scheme_data == null) {
       url._host = host
@@ -1096,7 +1108,7 @@ setHostname
   Set $url.port to the value returned by @Port.
 */
 setPort
-  = port:Port ([/\\?#]? (.*))?
+  = port:Port [/\\?#]? (.*)
   {
     if (url._scheme_data == null && url._scheme != 'file') {
       url._port = port;
@@ -1109,7 +1121,7 @@ setPort
   Set $url.path to the value returned by @Path.
 */
 setPathname
-  = [/\\]? path:Path ([/\\?#]? (.*))?
+  = [/\\]? path:Path [/\\?#]? (.*)
   {
     if (url._scheme_data == null) {
       url._path = path

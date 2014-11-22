@@ -120,13 +120,21 @@ host:
     hostname: example.com
     port: 99
 
-- testname: hostColon
+- testname: hostColonPort
   url: http://user:pass@host:99/path?search#hash
   value: example.com:55
   tests:
     href: http://user:pass@example.com:55/path?search#hash
     hostname: example.com
     port: 55
+
+- testname: hostColonGarbage
+  url: http://user:pass@host:99/path?search#hash
+  value: example.com:blahblahblah
+  tests:
+    href: http://user:pass@example.com/path?search#hash
+    hostname: example.com
+    port: ''
 
 - testname: hostHash
   url: http://user:pass@host:99/path?search#hash
@@ -181,6 +189,20 @@ port:
   tests:
     href: http://user:pass@host:55/path?search#hash
     port: 55
+
+- testname: return
+  url: http://user:pass@host:99/path?search#hash
+  value: "5\n5"
+  tests:
+    href: http://user:pass@host:55/path?search#hash
+    port: 55
+
+- testname: garbage
+  url: http://user:pass@host:99/path?search#hash
+  value: blahblahblah
+  tests:
+    href: http://user:pass@host/path?search#hash
+    port: ''
 
 - testname: file
   url: file:///path
