@@ -1,5 +1,4 @@
 # TODO:
-#   relative flag
 #   default ports
 #   searchParams
 
@@ -98,6 +97,13 @@ password:
     href: http://user:secret@host:99/path?search#hash
     password: secret
 
+- testname: withHash
+  url: http://user:pass@host:99/path?search#hash
+  value: "secret#blah"
+  tests:
+    href: "http://user:secret#blah@host:99/path?search#hash"
+    password: "secret#blah"
+
 - testname: mailto
   url: mailto:someone@example.com
   value: fred
@@ -122,6 +128,14 @@ host:
     hostname: example.com
     port: 55
 
+- testname: hostHash
+  url: http://user:pass@host:99/path?search#hash
+  value: 'example.com#55'
+  tests:
+    href: http://user:pass@example.com:99/path?search#hash
+    hostname: example.com
+    port: 99
+
 - testname: mailto
   url: mailto:someone@example.com
   value: fred
@@ -138,6 +152,14 @@ hostname:
     hostname: example.com
     port: 99
 
+- testname: hostnameColon
+  url: http://user:pass@host:99/path?search#hash
+  value: 'example.com:blahblahblah'
+  tests:
+    href: http://user:pass@example.com:99/path?search#hash
+    hostname: 'example.com'
+    port: 99
+
 - testname: mailto
   url: mailto:someone@example.com
   value: fred
@@ -149,6 +171,13 @@ port:
 - testname: relative
   url: http://user:pass@host:99/path?search#hash
   value: 55
+  tests:
+    href: http://user:pass@host:55/path?search#hash
+    port: 55
+
+- testname: portQuestion
+  url: http://user:pass@host:99/path?search#hash
+  value: 55?blahblahblah
   tests:
     href: http://user:pass@host:55/path?search#hash
     port: 55
@@ -182,6 +211,13 @@ pathname:
     href: http://user:pass@host:99/fred?search#hash
     pathname: /fred
 
+- testname: relativeQuestion
+  url: http://user:pass@host:99/path?search#hash
+  value: fred?blahblahblah
+  tests:
+    href: http://user:pass@host:99/fred?search#hash
+    pathname: /fred
+
 - testname: file
   url: file:///path
   value: fred
@@ -210,6 +246,13 @@ search:
   tests:
     href: http://user:pass@host:99/path?fred#hash
     search: ?fred
+
+- testname: hash
+  url: http://user:pass@host:99/path?search#hash
+  value: 'fred#blah'
+  tests:
+    href: http://user:pass@host:99/path?fred%23blah#hash
+    search: ?fred%23blah
 
 hash:
 - testname: unadorned

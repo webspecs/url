@@ -22,7 +22,7 @@
 </p>
   <h1 class="p-name no-ref allcaps" id=title>URL</h1>
   <h2 class="no-num no-toc no-ref heading settled" id=subtitle><span class=content>Living Standard — Last Updated
-    <span class=dt-updated><span class=value-title title=20141121>21 November 2014</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20141122>22 November 2014</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt class=editor>Editor:<dd class=editor><div class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://intertwingly.net/blog/>Sam Ruby</a> (<a class="p-org org" href=https://www.ibm.com/>IBM</a>) <a class="u-email email" href=mailto:rubys@intertwingly.net>rubys@intertwingly.net</a></div><dt>Version History:<dd><span><a href=https://github.com/rubys/url/commits/peg.js>https://github.com/rubys/url/commits/peg.js</a></span><dt>Participate:<dd><span><a href="https://www.w3.org/Bugs/Public/enter_bug.cgi?product=WHATWG&amp;component=URL">File a bug</a> (<a href="https://www.w3.org/Bugs/Public/buglist.cgi?component=URL&amp;list_id=46839&amp;product=WHATWG&amp;resolution=---">open bugs</a>)</span><dd><span><a href=https://github.com/rubys/url/issues/new>File an issue</a> (<a href="https://github.com/rubys/url/issues?q=">issues</a>)</span><dd><span><a href=mailto:public-webapps@w3.org>public-webapps@w3.org</a> (<a href=http://lists.w3.org/Archives/Public/public-webapps/>archives</a>)</span><dd><span><a href=https://whatwg.org/mailing-list>whatwg@whatwg.org</a> (<a href=https://whatwg.org/mailing-list#specs>archives</a>)</span><dd><span><a href=http://wiki.whatwg.org/wiki/IRC>IRC: #whatwg on Freenode</a></span></dl></div>
   <div data-fill-with=warning></div>
 </div>
@@ -2310,7 +2310,7 @@ any</text></g><path d="M270.0 41h10">
 </path></g></g><path d="M 300 41 h 20 m -10 -10 v 20 m 10 -20 v 20" data-type=end data-updown="10 10">
 </path></g></svg></div>
 
-<p>Set <code>url.scheme</code> to <code class=grammar-rule><a href=#scheme>scheme</a></code>.</p>
+<p>Set <code>url.scheme</code> to value returned by <code class=grammar-rule><a href=#scheme>scheme</a></code>.</p>
 
 <h3 class="heading settled" data-level=3.2 id=set-username><span class=secno>3.2. </span><span class=content>set-username</span><a class=self-link href=#set-username></a></h3>
 
@@ -2343,9 +2343,9 @@ any</text></g><path d="M114.0 41h10">
 </path></g><path d="M 144 41 h 20 m -10 -10 v 20 m 10 -20 v 20" data-type=end data-updown="10 10">
 </path></g></svg></div>
 
-<p>If <code>url.username</code> is not null or <code>url.scheme</code> is a
-<a href=https://url.spec.whatwg.org/#relative-scheme>relative scheme</a>,
-then set <code>url.username</code> to the 
+<p>If <code>url.scheme_data</code> is not null, return.</p>
+
+<p>Set <code>url.username</code> to the
 <a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a>
 value using the
 <a href=https://url.spec.whatwg.org/#username-encode-set>username encode
@@ -2381,6 +2381,8 @@ any</text></g><path d="M114.0 41h10">
 </path></g><path d="M124.0 41h20">
 </path></g><path d="M 144 41 h 20 m -10 -10 v 20 m 10 -20 v 20" data-type=end data-updown="10 10">
 </path></g></svg></div>
+
+<p>If <code>url.scheme_data</code> is not null, return.</p>
 
 <p>Set <code>url.password</code> to the
 <a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a> value
@@ -2481,8 +2483,11 @@ any</text></g><path d="M538.0 51h10">
 </path></g></g><path d="M 588 51 h 20 m -10 -10 v 20 m 10 -20 v 20" data-type=end data-updown="10 10">
 </path></g></svg></div>
 
-<p>Set <code>url.host</code> to the <code class=grammar-rule><a href=#host>host</a></code>.
-If <code class=grammar-rule><a href=#port>port</a></code> is present, set <code>result.port</code> to its value.</p>
+<p>If <code>url.scheme_data</code> is not null, return.</p>
+
+<p>Set <code>url.host</code> to the value returned by <code class=grammar-rule><a href=#host>host</a></code>.</p>
+
+<p>If <code class=grammar-rule><a href=#port>port</a></code> is present, set <code>result.port</code> to its value.</p>
 
 <h3 class="heading settled" data-level=3.5 id=set-hostname><span class=secno>3.5. </span><span class=content>set-hostname</span><a class=self-link href=#set-hostname></a></h3>
 
@@ -2551,7 +2556,9 @@ any</text></g><path d="M386.0 51h10">
 </path></g></g><path d="M 436 51 h 20 m -10 -10 v 20 m 10 -20 v 20" data-type=end data-updown="10 10">
 </path></g></svg></div>
 
-<p>Set <code>url.host</code> to the <code class=grammar-rule><a href=#host>host</a></code>.</p>
+<p>If <code>url.scheme_data</code> is not null, return.</p>
+
+<p>Set <code>url.host</code> to the value returned by <code class=grammar-rule><a href=#host>host</a></code>.</p>
 
 <h3 class="heading settled" data-level=3.6 id=set-port><span class=secno>3.6. </span><span class=content>set-port</span><a class=self-link href=#set-port></a></h3>
 
@@ -2620,15 +2627,9 @@ any</text></g><path d="M378.0 51h10">
 </path></g></g><path d="M 428 51 h 20 m -10 -10 v 20 m 10 -20 v 20" data-type=end data-updown="10 10">
 </path></g></svg></div>
 
-<p>If the value of <code>url.scheme</code> does not
-match any <a href=https://url.spec.whatwg.org/#relative-scheme>relative
-scheme</a> or
-<code>url.scheme</code> doesn’t have a 
-<a href=https://url.spec.whatwg.org/#default-port>default port</a>,
-or <code>result.port</code> is equal to that default,
-then delete the <code>port</code> property from <code>url</code>.</p>
+<p>If <code>url.scheme_data</code> is not null or <code>url.scheme</code> is "<code>file</code>", return.</p>
 
-<p>Otherwise, set <code>url.port</code> to the value returned by <code class=grammar-rule><a href=#port>port</a></code>.</p>
+<p>Set <code>url.port</code> to the value returned by <code class=grammar-rule><a href=#port>port</a></code>.</p>
 
 <h3 class="heading settled" data-level=3.7 id=set-pathname><span class=secno>3.7. </span><span class=content>set-pathname</span><a class=self-link href=#set-pathname></a></h3>
 
@@ -2723,8 +2724,9 @@ any</text></g><path d="M486.0 51h10">
 </path></g></g><path d="M 536 51 h 20 m -10 -10 v 20 m 10 -20 v 20" data-type=end data-updown="10 10">
 </path></g></svg></div>
 
-<p>Set <code>url.host</code> to the <code class=grammar-rule><a href=#host>host</a></code>.
-If <code class=grammar-rule><a href=#port>port</a></code> is present, set <code>result.port</code> to its value.</p>
+<p>If <code>url.scheme_data</code> is not null, return.</p>
+
+<p>Set <code>url.path</code> to the value returned by <code class=grammar-rule><a href=#path>path</a></code>.</p>
 
 <h3 class="heading settled" data-level=3.8 id=set-search><span class=secno>3.8. </span><span class=content>set-search</span><a class=self-link href=#set-search></a></h3>
 
@@ -2776,7 +2778,8 @@ any</text></g><path d="M182.0 41h10">
 
 <p>Set <code>url.query</code> to the
 <a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a> value
-using the <a data-link-type=dfn href=#query-encode-set title="query encode set">query encode set</a>.</p>
+after the initial question mark (<code>U+003F</code>), if any, using the <a data-link-type=dfn href=#query-encode-set title="query encode set">query encode
+set</a>.</p>
 
 <h3 class="heading settled" data-level=3.9 id=set-hash><span class=secno>3.9. </span><span class=content>set-hash</span><a class=self-link href=#set-hash></a></h3>
 
@@ -2828,7 +2831,7 @@ any</text></g><path d="M182.0 41h10">
 
 <p>Set <code>url.fragment</code> to the
 <a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a> value
-using the
+after the initial number sign (<code>U+<code>0023</code></code>), if any, using the
 <a href=https://url.spec.whatwg.org/#simple-encode-set>simple encode
 set</a></p>
 

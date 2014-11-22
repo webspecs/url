@@ -294,8 +294,8 @@ class Url
       input.sub! /[\u0009\u000A\u000C\u000D\u0020]+$/, ''
       url = UrlParser.parse(input, base: base)
 
-      @scheme = ''
-      @scheme_data = ''
+      @scheme = nil
+      @scheme_data = nil
       @username = ''
       @password = nil
       @host = nil

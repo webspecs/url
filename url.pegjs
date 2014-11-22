@@ -1019,7 +1019,7 @@ Fragment
   }
 
 /*
-  Set $url.scheme to @Scheme.
+  Set $url.scheme to value returned by @Scheme.
 */
 setProtocol
   = scheme:Scheme ':'? .*
@@ -1028,9 +1028,9 @@ setProtocol
 }
 
 /*
-  If $url.username is not null or $url.scheme is a
-  <a href="https://url.spec.whatwg.org/#relative-scheme">relative scheme</a>,
-  then set $url.username to the 
+  If $url.scheme_data is not null, return.
+
+  Set $url.username to the 
   <a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a>
   value using the
   <a href="https://url.spec.whatwg.org/#username-encode-set">username encode
@@ -1039,12 +1039,14 @@ setProtocol
 setUsername
   = user:(.*)
   {
-    if (url._username || Url.RELATIVE_SCHEME.indexOf(url._scheme)!=-1) {
+    if (url._scheme_data == null) {
       url._username = Url.percentEncode(user.join(''), Url.USERNAME_ENCODE_SET)
     }
   }
 
 /*
+  If $url.scheme_data is not null, return.
+
   Set $url.password to the 
   <a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a> value
   using the
@@ -1054,70 +1056,71 @@ setUsername
 setPassword
   = password:(.*)
   {
-    if (url._username || Url.RELATIVE_SCHEME.indexOf(url._scheme)!=-1) {
+    if (url._scheme_data == null) {
       url._password = Url.percentEncode(password.join(''), Url.PASSWORD_ENCODE_SET)
     }
   }
 
 /*
-  Set $url.host to the @Host.
+  If $url.scheme_data is not null, return.
+
+  Set $url.host to the value returned by @Host.
+
   If @Port is present, set $result.port to its value.
 */
 setHost
   = host:Host port:(':' Port)? ([/\\?#]? (.*))?
   {
-    if (url._username || Url.RELATIVE_SCHEME.indexOf(url._scheme)!=-1) {
+    if (url._scheme_data == null) {
       url._host = host
       if (port && port[1]) url._port = port[1]
     }
   }
 
 /*
-  Set $url.host to the @Host.
+  If $url.scheme_data is not null, return.
+
+  Set $url.host to the value returned by @Host.
 */
 setHostname
   = host:Host ([:/\\?#]? (.*))?
   {
-    if (url._username || Url.RELATIVE_SCHEME.indexOf(url._scheme)!=-1) {
+    if (url._scheme_data == null) {
       url._host = host
     }
   }
 
 /*
-  If the value of $url.scheme does not
-  match any <a href="https://url.spec.whatwg.org/#relative-scheme">relative
-  scheme</a></em> or
-  $url.scheme doesn't have a 
-  <a href="https://url.spec.whatwg.org/#default-port">default port</a>,
-  or $result.port is equal to that default,
-  then delete the $port property from $url.
+  If $url.scheme_data is not null or $url.scheme is "file", return.
 
-  Otherwise, set $url.port to the value returned by @Port.
+  Set $url.port to the value returned by @Port.
 */
 setPort
   = port:Port ([/\\?#]? (.*))?
   {
-    if (url._username || Url.DEFAULT_PORT[url._scheme]) {
+    if (url._scheme_data == null && url._scheme != 'file') {
       url._port = port;
     }
   }
 
 /*
-  Set $url.host to the @Host.
-  If @Port is present, set $result.port to its value.
+  If $url.scheme_data is not null, return.
+
+  Set $url.path to the value returned by @Path.
 */
 setPathname
   = [/\\]? path:Path ([/\\?#]? (.*))?
   {
-    if (url._username || Url.RELATIVE_SCHEME.indexOf(url._scheme)!=-1) {
+    if (url._scheme_data == null) {
       url._path = path
     }
   }
 
 /*
-  Set $url.query to the 
+  Set $url.query to the
   <a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a> value
-  using the <a>query encode set</a>.
+  after the initial question mark (U+003F), if any, using the <a>query encode
+  set</a>.
 */
 setSearch
   = '?'? query:(.*)
@@ -1128,7 +1131,7 @@ setSearch
 /*
   Set $url.fragment to the 
   <a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a> value
-  using the
+  after the initial number sign (U+0023), if any, using the
   <a href="https://url.spec.whatwg.org/#simple-encode-set">simple encode
   set</a>
 */
