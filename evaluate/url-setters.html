@@ -1,0 +1,40 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<script src="http://www.w3c-test.org/resources/testharness.js"></script>
+<script src="http://www.w3c-test.org/resources/testharnessreport.js"></script>
+</head>
+<body>
+<div id="log"></div>
+<script>//<![CDATA[
+var setup = async_test("Loading data…")
+setup.step(function() {
+  var request = new XMLHttpRequest()
+  request.open("GET", "urlsettest.json")
+  request.send()
+  request.responseType = "text"
+  request.onload = setup.step_func(function() {
+    runURLTests(JSON.parse(request.response));
+    setup.done()
+  })
+})
+
+function runURLTests(urlsettests) {
+  for (var attr in urlsettests) {
+    var tests = urlsettests[attr];
+    for (var i=0; i<tests.length; i++) {
+      test(function() {
+        var url = new URL(tests[i].url);
+        url[attr] = tests[i].value;
+        for (var prop in tests[i].tests) {
+          assert_equals(url[prop], tests[i].tests[prop].toString());
+        }
+      }, attr + ' ' + tests[i].testname + ": <" + tests[i].url + ">." + 
+       attr + "=" + JSON.stringify(tests[i].value));
+    }
+  }
+}
+//]]></script>
+</body>
+</html>

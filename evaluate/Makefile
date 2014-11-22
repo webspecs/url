@@ -3,6 +3,15 @@
 #    gem install addressable
 #    clean make in parent directory
 
+all: useragent-results testdata
+
+testdata: \
+	urlsettest.json
+
+urlsettest.json: ../reference-implementation/test/yml2test.rb \
+	../reference-implementation/test/urlsettest.yml
+	ruby ../reference-implementation/test/yml2test.rb --json > $@
+
 useragent-results: \
 	useragent-results/galimatias \
 	useragent-results/nodejs \
@@ -16,7 +25,7 @@ softerror: softerror.rb \
 	ruby softerror.rb
 
 clean:
-	rm -rf target *.class Cargo.lock urltestdata.json \
+	rm -rf target *.class Cargo.lock urltestdata.json urlsettest.json \
 	useragent-results/galimatias \
 	useragent-results/nodejs \
 	useragent-results/rusturl \

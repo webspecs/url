@@ -2,6 +2,7 @@ evaluate/Cargo.lock
 evaluate/*.jar
 evaluate/target/
 evaluate/*.class
+evaluate/urlsettest.json
 evaluate/urltestdata.json
 parser.pegjs
 reference-implementation/IdnaMappingTable.txt

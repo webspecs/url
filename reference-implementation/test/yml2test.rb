@@ -1,5 +1,12 @@
 require 'yaml'
-require 'json'
+
+data = YAML.load_file(File.expand_path('../urlsettest.yml', __FILE__))
+
+if ARGV.include? '--json'
+  require 'json'
+  puts JSON.pretty_generate(data)
+  exit
+end
 
 puts <<-EOF
 var fs = require("fs");
@@ -10,7 +17,6 @@ eval(fs.readFileSync("reference-implementation/url.js", "utf8"));
 eval(fs.readFileSync("reference-implementation/urlparser.js", "utf8"));
 EOF
 
-data = YAML.load_file(File.expand_path('../urlsettest.yml', __FILE__))
 data.each do |attr, testcases|
   puts
   puts "exports.#{attr} = {"
