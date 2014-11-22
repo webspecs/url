@@ -117,6 +117,17 @@ _html do
           klass = 'diff'
         else
           klass = 'good'
+          if browser_only
+              results.each do |agent, row|
+                next if agent.to_s == 'refimpl'
+                next if agent == :addressable
+                COLS.each do |col|
+                  if row[col].to_s != consensus[col].to_s
+                    klass = 'diff'
+                  end
+                end
+              end
+            end
         end
 
         _tr_ class: klass do
@@ -128,16 +139,18 @@ _html do
             _a testdata['base'], href: key[0..9] + query
           end
           _td do
-            results.each do |agent, row|
-              next if agent.to_s == 'refimpl'
-              next if agent == :addressable and browser_only
-              if COLS.all? {|col| row[col].to_s != consensus[col].to_s}
-                _em 'no consensus'
-              else
-                COLS.each do |col|
-                  if row[col].to_s != consensus[col].to_s
-                    _ agent
-                    break
+            if klass == 'diff' or not browser_only
+              results.each do |agent, row|
+                next if agent.to_s == 'refimpl'
+                next if agent == :addressable and browser_only
+                if COLS.all? {|col| row[col].to_s != consensus[col].to_s}
+                  _em 'no consensus'
+                else
+                  COLS.each do |col|
+                    if row[col].to_s != consensus[col].to_s
+                      _ agent
+                      break
+                    end
                   end
                 end
               end
@@ -150,13 +163,20 @@ _html do
     _h2 'Legend'
 
     _ul do
-      _li.problem 'No agreement, i.e., no single set of values matches ' +
-        'the majority of implementations'
-      _li.open "Agreement doesn't match expected test results " +
-        "(and therefore, likely, WHATWG's URL Standard)"
-      _li.diff "Agreement doesn't match addressable's results "+
-        "(and therefore, likely, IETF RFC 3986+3987)"
-      _li.good "Agreement matches test results and addressable"
+      if browser_only
+        _li.problem 'No agreement, i.e., no single set of values matches ' +
+          'the majority of implementations'
+        _li.diff "One or more browsers don't match the spec"
+        _li.good "All browsers match the spec"
+      else
+        _li.problem 'No agreement, i.e., no single set of values matches ' +
+          'the majority of implementations'
+        _li.open "Agreement doesn't match expected test results " +
+          "(and therefore, likely, WHATWG's URL Standard)"
+        _li.diff "Agreement doesn't match addressable's results "+
+          "(and therefore, likely, IETF RFC 3986+3987)"
+        _li.good "Agreement matches test results and addressable"
+      end
     end
   else
     path = _.path_info.to_s[/\w+/]
