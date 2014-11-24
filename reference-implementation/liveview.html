@@ -1,0 +1,319 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Live DOM URL Viewer</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <script src="punycode.js" lang="text/javascript"></script>
+    <script src="unorm.js" lang="text/javascript"></script>
+    <script src="idna.js" lang="text/javascript"></script>
+    <script src="url.js" lang="text/javascript"></script>
+    <script src="urlparser.js" lang="text/javascript"></script>
+    <base id="docbase" href="about:"/>
+  </head>
+
+  <body>
+    <h2>Enter a URL to parse:</h2>
+
+    <p>The output below will display a URL's parsed components from both the browser's DOM, and from the <a href="https://github.com/rubys/url/tree/peg.js/reference-implementation">reference implementation</a> for the <a href="http://url.spec.whatwg.org/">WHATWG Living Standard.</a> The output will be colored <span class="pass">dark green</span> unless a difference occurs between the two parsers in which case the affected URL component will be colored <span class="fail">red</span>.</p>
+    <input class="input" id="url" type="text" placeholder="http://example.com"/>
+    <a id="target"></a>
+
+    <div>
+      <p>Specify a base URL</p>
+      <input class="input" id="base" type="text" value="about:"/>
+    </div>
+
+    <div>
+      <span>Set</span>
+      <select name='property'>
+        <option>href</option>
+        <option>protocol</option>
+        <option>username</option>
+        <option>password</option>
+        <option>host</option>
+        <option>hostname</option>
+        <option>port</option>
+        <option>pathname</option>
+        <option>search</option>
+        <option>hash</option>
+      </select>
+      <span>=</span>
+      <input class="input" id="value" type="text"/>
+    </div>
+
+    <h2>URL components from DOM properties:</h2>
+
+    <div class="output">
+      <div>
+        <span class="title">href</span>
+        <span class="result" id="domHref"></span>
+      </div>
+      <div>
+        <span class="title">protocol</span>
+        <span class="result" id="domProtocol"></span>
+      </div>
+      <div>
+        <span class="title">username</span>
+        <span class="result" id="domUsername"></span>
+      </div>
+      <div>
+        <span class="title">password</span>
+        <span class="result" id="domPassword"></span>
+      </div>
+      <div>
+        <span class="title">port</span>
+        <span class="result" id="domPort"></span>
+      </div>
+      <div>
+        <span class="title">hostname</span>
+        <span class="result" id="domHostname"></span>
+      </div>
+      <div>
+        <span class="title">pathname</span>
+        <span class="result" id="domPathname"></span>
+      </div>
+      <div>
+        <span class="title">search</span>
+        <span class="result" id="domSearch"></span>
+      </div>
+      <div>
+        <span class="title">hash</span>
+        <span class="result" id="domHash"></span>
+      </div>
+      <div>
+        <span class="title">error</span>
+        <span class="result" id="domException"></span>
+      </div>
+    </div>
+
+    <h2>URL components from the URL Reference Implementation:</h2>
+
+    <div class="output">
+      <div>
+        <span class="title">href</span>
+        <span class="result" id="urlHref"></span>
+      </div>
+      <div>
+        <span class="title">protocol</span>
+        <span class="result" id="urlProtocol"></span>
+      </div>
+      <div>
+        <span class="title">username</span>
+        <span class="result" id="urlUsername"></span>
+      </div>
+      <div>
+        <span class="title">password</span>
+        <span class="result" id="urlPassword"></span>
+      </div>
+      <div>
+        <span class="title">hostname</span>
+        <span class="result" id="urlHostname"></span>
+      </div>
+      <div>
+        <span class="title">port</span>
+        <span class="result" id="urlPort"></span>
+      </div>
+      <div>
+        <span class="title">pathname</span>
+        <span class="result" id="urlPathname"></span>
+      </div>
+      <div>
+        <span class="title">search</span>
+        <span class="result" id="urlSearch"></span>
+      </div>
+      <div>
+        <span class="title">hash</span>
+        <span class="result" id="urlHash"></span>
+      </div>
+      <div>
+        <span class="title">error</span>
+        <span class="result" id="urlException"></span>
+      </div>
+    </div>
+
+    <script lang="text/javascript">
+      // the subjects of the comparison
+      var target = document.getElementById("target");
+      var url = new Url(location.href, location.href);
+
+      // Prepare the elements to output DOM properties
+      var domHref = document.getElementById("domHref");
+      var domProtocol = document.getElementById("domProtocol");
+      var domUsername = document.getElementById("domUsername");
+      var domPassword = document.getElementById("domPassword");
+      var domHostname = document.getElementById("domHostname");
+      var domPort = document.getElementById("domPort");
+      var domPathname = document.getElementById("domPathname");
+      var domSearch = document.getElementById("domSearch");
+      var domHash = document.getElementById("domHash");
+      var domException = document.getElementById("domException");
+
+      // Prepare the elements to output URL class properties from URL.js
+      var urlHref = document.getElementById("urlHref");
+      var urlProtocol = document.getElementById("urlProtocol");
+      var urlUsername = document.getElementById("urlUsername");
+      var urlPassword = document.getElementById("urlPassword");
+      var urlHostname = document.getElementById("urlHostname");
+      var urlPort = document.getElementById("urlPort");
+      var urlPathname = document.getElementById("urlPathname");
+      var urlSearch = document.getElementById("urlSearch");
+      var urlHash = document.getElementById("urlHash");
+      var urlException = document.getElementById("urlException");
+
+      function rebase(base) {
+        try {
+          document.baseURI = base;
+          document.getElementById("docbase").setAttribute('href', base);
+        } catch (e) {
+        }
+
+        parse(target.value);
+      }
+
+      function parse(input) {
+        parseDom(input);
+        parseUrl(input);
+        compare(urlHref, domHref);
+        compare(urlProtocol, domProtocol);
+        compare(urlUsername, domUsername);
+        compare(urlPassword, domPassword);
+        compare(urlHostname, domHostname);
+        compare(urlPort, domPort);
+        compare(urlPathname, domPathname);
+        compare(urlSearch, domSearch);
+        compare(urlHash, domHash);
+      }
+
+      function parseDom(input) {
+        try {
+          if (typeof input != 'undefined') {
+            domException.parentNode.style.display = "none";
+            target.setAttribute("href", input);
+          }
+        } catch (e) {
+          domException.parentNode.style.display = "block";
+          domException.textContent = e.toString();
+        }
+
+        domHref.textContent = target.href;
+        domProtocol.textContent = target.protocol;
+        domUsername.textContent = target.username;
+        domPassword.textContent = target.password;
+        domHostname.textContent = target.hostname;
+        domPort.textContent = target.port;
+        domPathname.textContent = target.pathname;
+        domSearch.textContent = target.search;
+        domHash.textContent = target.hash;
+      }
+
+      function parseUrl(input) {
+        if (typeof input != 'undefined') {
+          url = new Url(input, document.baseURI);
+          value.value = url[property.value];
+        }
+
+        urlHref.textContent = url.href;
+        urlProtocol.textContent = url.protocol;
+        urlUsername.textContent = url.username;
+        urlPassword.textContent = url.password;
+        urlHostname.textContent = url.hostname;
+        urlPort.textContent = url.port;
+        urlPathname.textContent = url.pathname;
+        urlSearch.textContent = url.search;
+        urlHash.textContent = url.hash;
+
+        if (url.exception) {
+          urlException.parentNode.style.display = "block";
+          urlException.textContent = url.exception;
+        } else {
+          urlException.parentNode.style.display = "none";
+        }
+      }
+
+      function compare(x, y) {
+        if (x.textContent != y.textContent) {
+          x.className = "fail"; 
+          y.className = "fail"; 
+        } else {
+          x.className = "pass"; 
+          y.className = "pass"; 
+        }
+
+        if (x.textContent != '' || y.textContent != '') {
+          x.parentNode.style.display = "block";
+          y.parentNode.style.display = "block";
+        } else {
+          x.parentNode.style.display = "none";
+          y.parentNode.style.display = "none";
+        }
+      }
+
+      function color(element1, element2, color) {
+        element1.style.color = color;
+        element2.style.color = color;
+      }
+
+      var input = document.getElementById("url");
+      input.oninput = function() {parse(this.value)};
+
+      var base = document.getElementById("base");
+      base.oninput = function() {rebase(this.value)};
+
+      var property = document.querySelector('select[name=property]');
+      property.onchange = function() {value.value = url[property.value]};
+      value.oninput = function() {
+        try {
+          url[property.value] = value.value;
+        } catch(e) {
+          url.exception = e.toString();
+        }
+
+        try {
+          target[property.value] = value.value;
+        } catch(e) {
+          domException.parentNode.style.display = "block";
+          domException.textContent = e.toString();
+        }
+
+        parse();
+      };
+
+      if (location.pathname.indexOf('2') == -1) {
+        base.parentNode.style.display = 'none';
+        base.value = location.href;
+        input.value = location.hash.substring(1);
+      } else {
+        var fragment = location.hash.substring(1);
+        var space = fragment.indexOf(' ');
+        if (space != -1) {
+          base.value = fragment.substr(0, space);
+          input.value = fragment.substr(space+1);
+        } else if (fragment != '') {
+          base.value = fragment;
+        }
+      }
+
+      if (location.pathname.indexOf('3') == -1) {
+        property.parentNode.style.display = 'none';
+      } else {
+        property.onchange();
+
+        var search = location.search.substring(1);
+        var equals = search.indexOf('=');
+        if (equals != -1) {
+          for (var i=0; i<property.options.length; i++) {
+            if (property.options[i].value == search.substr(0, equals)) {
+              property.options[i].setAttribute('selected', 'selected');
+              value.value = search.substr(equals+1);
+            }
+          }
+        }
+      }
+
+      target.value = location.href;
+      rebase(base.value);
+      input.focus();
+    </script>
+  </body>
+</html>

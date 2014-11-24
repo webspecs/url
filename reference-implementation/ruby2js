@@ -1,0 +1,31 @@
+#
+# Historical note: I started this effort by attempting to create a
+# faithful implmentation of the URL Standard:
+#
+#   http://intertwingly.net/stories/2014/10/13/url_rb.html
+#
+# Like others who attempted to do so[1], I found the current description
+# to appear to be easy to follow yet when I attempted to do so I found
+# I had a hard time determing what should be the parsing output for
+# a number of cases.  I ended up reverse engineering the outputs,
+# and actually reading the source code, of other implementations.
+#
+# This kinda defeats the purpose of a Spec.
+#
+# I then embarked on an effort to define a formal grammar and selected
+# PEG.js.  For the parts which aren't covered by the grammar, I used a
+# path of least resistance: a tool to convert Ruby to JS.  
+#
+#!/usr/bin/ruby
+require 'ruby2js'
+require 'ruby2js/filter/functions'
+require 'ruby2js/filter/camelCase'
+
+source = File.read(ARGV.first)
+
+converted = Ruby2JS.convert(source)
+
+# Unicode transendent charcters => UTF 16 surrogate pairs
+converted.gsub! /\\\\u\{.*?\]/, '\\\\\\uD800-\\\\\\uDFFF]'
+
+print converted

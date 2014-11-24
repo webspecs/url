@@ -1,0 +1,39 @@
+table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+th, td {
+  min-width: 8em
+}
+
+th {
+  background-color: LightBlue
+}
+
+a.navlink {
+  text-decoration: none
+}
+
+.exception {
+  background-color: PaleVioletRed 
+}
+
+.diff {
+  background-color: Gold
+}
+
+.problem {
+  background-color: HotPink
+}
+
+.open {
+  background-color: #F88
+}
+
+.good {
+  background-color: #BFB
+}

@@ -1,0 +1,1142 @@
+<style>
+  .grammar-rule a {
+    color: black;
+    background-color: hsl(120, 100%, 90%);
+    font-weight: bold;
+    padding: 2px;
+    border: 2px solid black;
+  }
+</style>
+
+<pre class="metadata">
+Title: URL Standard
+Group: WebSpecs
+H1: URL
+Shortname: url
+Status: LS
+Editor: Sam Ruby, IBM https://www.ibm.com/, rubys@intertwingly.net, http://intertwingly.net/blog/
+Abstract: This specification <a href="http://agiledictionary.com/209/spike/">spike</a> defines parsing rules for URLs and includes a <a href="https://github.com/rubys/url/tree/peg.js/reference-implementation#readme">reference implementation</a> as well as a <a href="http://intertwingly.net/projects/pegurl/liveview.html">Live DOM URL Viewer</a>.  <a href=http://intertwingly.net/projects/pegurl/urltest-results/>Interop test results</a> are also available.
+Logo: https://resources.whatwg.org/logo-url.svg
+!Version History: <a href="https://github.com/rubys/url/commits/peg.js">https://github.com/rubys/url/commits/peg.js</a>
+!Participate: <a href="https://www.w3.org/Bugs/Public/enter_bug.cgi?product=WHATWG&component=URL">File a bug</a> (<a href="https://www.w3.org/Bugs/Public/buglist.cgi?component=URL&list_id=46839&product=WHATWG&resolution=---">open bugs</a>)
+!Participate: <a href="https://github.com/rubys/url/issues/new">File an issue</a> (<a href="https://github.com/rubys/url/issues?q=">issues</a>)
+!Participate: <a href="mailto:public-webapps@w3.org">public-webapps@w3.org</a> (<a href="http://lists.w3.org/Archives/Public/public-webapps/">archives</a>)
+!Participate: <a href="https://whatwg.org/mailing-list">whatwg@whatwg.org</a> (<a href="https://whatwg.org/mailing-list#specs">archives</a>)
+!Participate: <a href="http://wiki.whatwg.org/wiki/IRC">IRC: #whatwg on Freenode</a>
+</pre>
+
+Todos {#todos}
+===
+
+The goal of this proposal is to resolve
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25946">bug 25946</a>
+by merging [[#parsing-rules]] with the
+<a href="https://url.spec.whatwg.org/">URL Living Standard</a>.  Once a new
+baseline has been established, evolve the standard towards greater web
+compatibility, greater interoperability, and simpler algorithms, in that
+order.
+
+These are items that should be done before the proposed merge:
+
+  * Implement <a href="https://url.spec.whatwg.org/#urlutils-and-urlutilsreadonly-members">Url
+    property getters and setters</a>.
+
+Differences {#diffs}
+---
+
+Known differences with current drafts of the WHATWG <a href="https://url.spec.whatwg.org/">URL Standard</a>:
+
+  * This draft treats URLs of the form <code>//C|/foo/bar</code> as a
+    <a>conformance error</a>, whereas current drafts of the URL standard do not.
+    <a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
+    agrees</a> that this should be a <a>conformance error</a>.
+  * This draft treats hosts which contain consecutive dot characters as a
+    <a>conformance error</a>, whereas current drafts of the URL standard do not.
+    <a href=http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Oct/0267.html>Anne
+    agrees</a> that this should be a <a>conformance error</a>.
+  * This draft contains a proposed implementation of 
+    <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug 26431</a>
+    (Define IPv4 parsing).
+  * This draft no longer prepends %40 but rather replaces @ signs in place.
+    [<a href=http://krijnhoetmer.nl/irc-logs/whatwg/20141119#l-235>IRC
+    discussion</a>]
+  * This draft indicates a <a>conformance error</a> if
+    <a href="https://url.spec.whatwg.org/#concept-host-parser">host
+    parsing</a> changes the domain.
+    [<a href=http://krijnhoetmer.nl/irc-logs/whatwg/20141110#l-533>IRC
+    discussion</a>]
+
+Post-merge work items {#postmerge}
+---
+
+  Note: this list should be in bugzilla or on a wiki someplace.
+
+  * Integrate with <a href="https://travis-ci.org/">Travis</a> and activate the
+    <a href="http://docs.travis-ci.com/user/getting-started/#Step-two%3A-Activate-GitHub-Webhook">GitHub
+    WebHook</a> so that proposed changes are verified to build correctly and
+    pass the relevant tests.</a>
+  * Evaluate
+    <a href="https://tools.ietf.org/html/draft-ietf-appsawg-uri-scheme-reg-04">draft-thaler-appsawg-uri-scheme-reg</a>
+    for the scheme registration mechanism in the
+    <a href="https://url.spec.whatwg.org/#url-writing">URL writing</a> section.
+  * Explore the idea of obsoleting <em>only</em> [[rfc3987]] and not
+    [[rfc3986]] too.  Consider explicitly adopting the following constraints on
+      the canonicalized output of URL parsing:
+      * URL parsing of canonicalized outputs roundtrip (i.e., the URL parser is
+        an identity transform for such inputs).
+      * All canonicalized output are valid URIs (and, if necessary, submit
+        errata and/or identify specific
+        <a href="https://html.spec.whatwg.org/multipage/introduction.html#compliance-with-other-specifications">willful
+        violations</a>).  Examples of an items needing to be worked:
+          * <code>http://example.com/?%</code> is not a valid URL or a valid
+              URI, yet it round-trips the URL parsing/serialization
+              transformation.  Are any changes needed to RFC 3986 to
+              accommodate this?
+              [<a href="http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Nov/0005.html">source</a>]
+          * Parsing <code>../test</code> against a base of
+            <code>foobar://test/x</code> as a URL results in different
+            results with different user agents and different standards.
+              [<a href="http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Nov/0019.html">source</a>]
+              [<a href="http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Nov/0047.html">update</a>]
+          * Other differences may be found in the
+            <a href=http://intertwingly.net/projects/pegurl/urltest-results/>interop
+            test results</a> or using the
+            <a href="http://intertwingly.net/projects/pegurl/liveview2.html">Live
+            DOM URL Viewer</a>.
+
+  * Incorporate relevant substance from the
+    <a href="http://www.w3.org/TR/html5/references.html#refsURL">informative
+    note</a> that precedes the [URL] normative reference in the
+    <a href="http://www.w3.org/TR/html5/">HTML5 Recommendation</a> into a
+    status section or equivalent in this document.  Expand on that information
+    with specific notes on known interop issues.  An example of this can be
+    found in [[#file-url]].
+  * Make Railroad diagrams accessible.
+    <a href=https://github.com/tabatkins/bikeshed/issues/281">bikeshed issue
+    281</a>
+
+Discussion Items {#discuss}
+---
+
+  Note: this list should be in bugzilla or on a wiki someplace.
+
+  * Chrome and Firefox percent encode "]" in passwords.  The only user agents
+    that don't are ones that attempt to follow the specification.
+
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/0fc16e7f9d>example</a>
+
+  * Does it make sense to support a zero length username when a non empty
+    password is specified?
+
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/9c7b1c42d3>example</a>
+
+  * Some user agents intentionally don't provide API access to passwords.
+    This seems like a defensible choice.  For some, that merely means not
+    implementing username and password.  For a few, this includes not
+    providing access to href if that content contains password information.
+
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/7357a04b5b>example</a>
+
+  * Given that there is little apparent consensus on how to handle '@' signs
+    in user and passwords, I see no justification for defining behavior that
+    reorders the characters in the input (see "prepend" in 
+    <a href=https://url.spec.whatwg.org/#authority-state>authority-state</a>,
+    and [[#authority]]).  Percent encoding the '@' sign is defensible.
+  
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/1bdb1f0518>example</a>
+
+  * A number of agents don't support port numbers above 64K.  It seems
+    sensible to adopt this restriction.
+
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/a193745897>example</a>
+
+  * IE maps a windows path syntax to a file: syntax.  Chrome maps a novel
+    syntax to a file: syntax, but only appears to do so when running on
+    Windows.  The current draft of the URL Standard adopts and extends the
+    windows drive path syntax to all operating systems.  I think this choice
+    is worth revisiting.
+
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/eb30a2c2d0>example</a>
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/4b60e32190>example</a>
+
+  * Safari percent encodes non-ASCII characters in the hash.  No other browser
+    does.  Perhaps this should be revisited?
+
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/79e1a94e3f>example</a>
+
+  * Should we define more <a>conformance errors</a>?  Examples:
+
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/58071233e7>example</a>
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/7959304dcf>example</a>
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/9899f1fea7>example</a>
+    <a href=http://intertwingly.net/projects/pegurl/urltest-results/f328599fc9>example</a>
+
+
+Parsing Rules {#parsing-rules}
+=============
+
+These railroad diagrams, as modified by the accompanying text, define grammar
+production rules for URLs.  They are to be evaluated sequentially, first
+left-to-right then top-to-bottom, backtracking as necessary, until a complete
+match against the input provided is found.
+
+Each rule can be invoked individually.  Rules can also invoke one another.
+Rules when evaluated return a JSON objection, typically either a string or an
+object where all of the values are strings.  The one exception is path values,
+which are arrays of strings.
+
+<a href="https://url.spec.whatwg.org/#urlutils-and-urlutilsreadonly-members">URLUtils
+and URLUtilsReadOnly members</a> will invoke [[#setter-rules]] with
+<code>url</code> set to a non-<code>null</code> value.
+
+Two types of parse errors are defined.  <dfn title='parse exception'>Parse
+exceptions</dfn> terminate parsing and must be implemented by all conforming
+implementations.  By contrast, user agents are encouraged, but not required,
+to expose <dfn title='conformance error'>conformance errors</dfn> somehow.
+
+Note: the following subsections are intended to replace steps 5-8 in the 
+<a href="https://url.spec.whatwg.org/#concept-basic-url-parser">basic url parser</a>.  It also works out better if step 3 were to default <var>base</var> to a
+non-null value, ideally one with a non-relative scheme, for example:
+<code>{'scheme': 'about'}</code>.
+
+## url ## {#url}
+
+<pre class=railroad>
+Sequence:
+  Choice:
+    N: file-url
+    N: non-relative-url
+    N: relative-url
+  Optional:
+    Sequence:
+      T: ?
+      N: query
+  Optional:
+    Sequence:
+      T: #
+      N: fragment
+</pre>
+
+There are three unique syntaxes for
+<a href="https://url.spec.whatwg.org/#concept-url">URL</a>s,
+each returning a set of components, namely one or more of the following:
+<a href="https://url.spec.whatwg.org/#concept-url-scheme">scheme</a>,
+<a href="https://url.spec.whatwg.org/#concept-url-scheme-data">scheme-data</a>,
+<a href="https://url.spec.whatwg.org/#concept-url-username">username</a>,
+<a href="https://url.spec.whatwg.org/#concept-url-password">password</a>,
+<a href="https://url.spec.whatwg.org/#concept-url-host">host</a>,
+<a href="https://url.spec.whatwg.org/#concept-url-port">port</a>,
+<a href="https://url.spec.whatwg.org/#concept-url-path">path</a>,
+<a href="https://url.spec.whatwg.org/#concept-url-query">query</a>, and
+<a href="https://url.spec.whatwg.org/#concept-url-fragment">fragment</a>.
+
+Initialize <code>result</code> to the value of <code class=grammar-rule><a href=#file-url>file-url</a></code>, <code class=grammar-rule><a href=#non-relative-url>non-relative-url</a></code>, or
+<code class=grammar-rule><a href=#relative-url>relative-url</a></code> depending on which one first matches the input, and then modify
+<code>result</code> as follows:
+
+  * If <code class=grammar-rule><a href=#query>query</a></code> is present in the input, set <code>result.query</code> to this value.
+  * If <code class=grammar-rule><a href=#fragment>fragment</a></code> is present in the input, set <code>result.fragment</code> to this value.
+  * If <code>result.scheme</code> has a 
+    <a href="https://url.spec.whatwg.org/#default-port">default port</a>,
+    and if <code>result.port</code> is equal to that default,
+    then delete the <code>port</code> property from <code>result</code>.
+
+Return <code>result</code>.
+
+## file-url ## {#file-url}
+
+<pre class=railroad>
+Choice:
+  Sequence:
+    N: file-like-scheme
+    T: :
+    T: any of [a-zA-Z]
+    Choice:
+      T: :
+      T: |
+    Optional:
+      Choice:
+        T: \
+        T: /
+    N: path
+  Sequence:
+    ZeroOrMore:
+      T: /
+    T: any of [a-zA-Z]
+    T: |
+    Optional:
+      T: /
+    N: path
+  Sequence:
+    N: file-like-scheme
+    T: :
+    Optional:
+      Sequence:
+        T: /
+        T: /
+        N: host
+    ZeroOrMore:
+      T: /
+    N: path
+</pre>
+
+ Three production rules are defined for files, numbered from top to bottom.
+
+ Examples and evaluation instructions for each:
+
+ <ol>
+ <li><div class=example><code>file:c:\foo\bar.html</code></div>
+
+   Initialize <code>result</code> to an empty object, and then modify it as follows:
+
+   * Set <code>result.scheme</code> to the value returned by <code class=grammar-rule><a href=#file-like-scheme>file-like-scheme</a></code>.
+   * Set <code>result.path</code> to the value returned by <code class=grammar-rule><a href=#path>path</a></code>.
+   * Remove the first element from <code>result.path</code> if it is an empty
+     string and if there is a second element which has a non-empty value.
+   * Construct a string using the alphabetic
+     character following the first "<code>:</code>" in the input
+     concatenated with a "<code>:</code>".  Prepend this string to 
+     <code>result.path</code>.
+
+ <li><div class=example><code>/C|\foo\bar</code></div>
+
+ Initialize <code>result</code> to an empty object, and then modify it as follows:
+
+   * Set <code>result.scheme</code> to the value returned by <code class=grammar-rule><a href=#file-like-scheme>file-like-scheme</a></code>
+   * If the <code class=grammar-rule><a href=#host>host</a></code> is present in the input, set <code>result.host</code>
+     to the value returned by the <code class=grammar-rule><a href=#host>host</a></code> production rule
+   * If the <code class=grammar-rule><a href=#host>host</a></code> is not present and no slashes precede the
+     <code class=grammar-rule><a href=#path>path</a></code> in the input, then the <code>base.path</code>
+     minus the last element is prepended to the <code>result.path</code>.
+   * Set <code>result.path</code> to the value returned by <code class=grammar-rule><a href=#path>path</a></code>.
+
+ <li><div class=example><code>file:/example.com/</code></div>
+
+ Indicate a <a>conformance error</a>.
+
+ Initialize <code>result</code> to an empty object, and then modify it as follows:
+
+   * Set <code>result.scheme</code> to "<code>file</code>".
+   * Set <code>result.path</code> to the value returned by <code class=grammar-rule><a href=#path>path</a></code>.
+   * Remove the first element from <code>result.path</code> if it is an empty
+     string and if there is a second element which has a non-empty value.
+   * Construct a string consisting of the character following
+     the initial "<code>/</code>" (if any) in the production rule concatenated
+     with a "<code>:</code>".  Prepend this string to the <code>result.path</code> array.
+
+ </ol>
+
+Return <code>result</code>.
+
+Note: at the present time, file URLs are generally not
+interoperable, and therefore are effectively implementation defined.
+Furthermore, the parsing rules in this section have not enjoyed wide review,
+and therefore are more likely to be subject to change than other parts of this
+specification.  People with input on this matter are encourage to add
+comments to
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=23550">bug <code>23550</code></a>.  
+
+## non-relative-url ## {#non-relative-url}
+
+<pre class=railroad>
+Sequence:
+  N: scheme
+  T: :
+  N: scheme-data
+</pre>
+
+<div class=example><code>javascript:alert("Hello, world!");</code></div>
+
+<li><em>This rule is only to be evaluated if the value of <code class=grammar-rule><a href=#scheme>scheme</a></code> does not
+match any <a href="https://url.spec.whatwg.org/#relative-scheme">relative
+scheme</a></em>.
+
+Set <code>encoding override</code> to "<code>utf-<code>8</code></code>".
+
+Initialize <code>result</code> to be a JSON object with <code>scheme</code>
+set to be the result returned by <code class=grammar-rule><a href=#scheme>scheme</a></code>, and
+<code>schemeData</code> set to the result returned by <code class=grammar-rule><a href=#scheme-data>scheme-data</a></code>.
+Return <code>result</code>.
+
+Note: the resolution of
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug <code>26338</code></a>
+may change how encoding override is handled.
+
+Note: the resolution of
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27233">bug <code>27233</code></a>
+may add support for relative URLs for unknown schemes.
+
+## relative-url ## {#relative-url}
+
+<pre class=railroad>
+Choice:
+  Sequence:
+    Optional:
+      Sequence:
+        N: relative-scheme
+        T: :
+    Choice:
+      T: /
+      T: \
+    Choice:
+      T: /
+      T: \
+    N: authority
+    Optional:
+      Sequence:
+        Choice:
+          T: /
+          T: \
+        N: path
+  Sequence:
+    N: relative-scheme
+    T: :
+    Optional:
+      Choice:
+        T: \
+        T: /
+    N: authority
+    Optional:
+      Sequence:
+        Choice:
+          T: /
+          T: \
+        N: path
+  Sequence:
+    N: relative-scheme
+    T: :
+    N: path
+  N: path
+</pre>
+
+Four production rules are defined for relative URLs, numbered from top to
+bottom.
+
+Examples and evaluation instructions for each:
+
+<ol>
+<li><div class=example><code>http://user:pass@example.org:<code>21</code>/foo/bar</code></div>
+
+  If anything other than two forward solidus characters ("<code>//</code>") immediately
+  follows the first colon in the input, indicate a <a>conformance error</a>.
+
+  Initialize <code>result</code> to the value returned by <code class=grammar-rule><a href=#authority>authority</a></code>.
+  Modify <code>result</code> as follows:
+
+  * If <code class=grammar-rule><a href=#relative-scheme>relative-scheme</a></code> is present in the input, then
+    set <code>result.scheme</code> to this value.
+  * If <code class=grammar-rule><a href=#relative-scheme>relative-scheme</a></code> is not present in the input, then
+    set <code>result.scheme</code> to the value of <code>base.scheme</code>.
+  * If <code class=grammar-rule><a href=#path>path</a></code> is present in the input, set <code>result.path</code> to its value.
+
+<li><em>This rule is only to be evaluated if the value of
+ <code class=grammar-rule><a href=#scheme>scheme</a></code> does not match <code>base.scheme</code></em>.
+
+ <p class=example><code>ftp:/example.com/</code> parsed using a base of
+ <code>http://example.org/foo/bar</code></p>
+
+ Indicate a <a>conformance error</a>.
+
+ Initialize <code>result</code> to the value returned by <code class=grammar-rule><a href=#authority>authority</a></code>.
+ Modify <code>result</code> as follows:
+
+  * Set <code>result.scheme</code> to the value returned by <code class=grammar-rule><a href=#relative-scheme>relative-scheme</a></code>.
+  * if <code>result.host</code> is either an empty string or contains a
+      colon, then terminate parsing with a <a>parse exception</a>.
+  * If <code class=grammar-rule><a href=#path>path</a></code> is present in the input, set <code>result.path</code> to its value.
+
+<li><div class=example><code>http:foo/bar</code></div>
+
+ Indicate a <a>conformance error</a>.
+
+ Initialize <code>result</code> to be an empty object.  Modify <code>result</code> as follows:
+
+  * Set <code>result.scheme</code> to the value returned by <code class=grammar-rule><a href=#relative-scheme>relative-scheme</a></code>.
+  * Set <code>result.scheme</code> to the value returned by <code class=grammar-rule><a href=#scheme>scheme</a></code>.
+  * Set <code>result.host</code> to <code>base.host</code>
+  * Set <code>result.path</code> by the <a>path concatenation</a> of 
+      <code>base.path</code> and <code class=grammar-rule><a href=#path>path</a></code>.
+
+<li><div class=example><code>/foo/bar</code></div>
+
+ Initialize <code>result</code> to be an empty object.  Modify <code>result</code> as follows:
+
+  * Set <code>result.scheme</code> to <code>base.scheme</code>.
+  * Set <code>result.host</code> to <code>base.host</code>.
+  * Set <code>result.path</code> to <code class=grammar-rule><a href=#path>path</a></code>
+  * Replace <code>result.path</code> by the <a>path concatenation</a> of <code>base.path</code> and
+    <code>result.Path</code>.
+
+</ol>
+
+Return <code>result</code>.
+
+## file-like-scheme ## {#file-like-scheme}
+
+<pre class=railroad>
+T: file
+</pre>
+
+Only one "file like" relative scheme is defined at this time:
+"<code>file</code>".  This scheme is to be matched case insensitively.
+This production rule is to return the scheme value, lowercased.
+
+## relative-scheme ## {#relative-scheme}
+
+<pre class=railroad>
+Choice:
+  T: ftp
+  T: gopher
+  T: https
+  T: http
+  T: wss
+  T: ws
+</pre>
+
+Six relative schemes are defined.  They are to be matched against the input
+in a case insensitive manner.
+
+Set <code>encoding override</code> to "<code>utf-<code>8</code></code>" if the scheme matches
+"<code>wss</code>" or "<code>ws</code>".
+
+Return the scheme as a lowercased string.
+
+Note: the resolution of
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug <code>26338</code></a>
+may change how encoding override is handled.
+
+## scheme ## {#scheme}
+
+<pre class=railroad>
+Sequence:
+  T: any of [a-zA-Z]
+  ZeroOrMore:
+    T: any of [-a-zA-Z+.]
+</pre>
+
+A scheme consists of the alphabetic letters "<code>a</code>" through "<code>z</code>" or "<code>A</code>" through
+"<code>Z</code>", followed by zero or more alphabetic characters or any of the following
+special characters: hyphen-minus (<code>U+002D</code>), plus sign (<code>U+002B</code>) or full stop
+(<code>U+002D</code>).
+Return the results as a lowercased string.
+
+## authority ## {#authority}
+
+<pre class=railroad>
+Sequence:
+  Optional:
+    Sequence:
+      N: user
+      Optional:
+        Sequence:
+          T: :
+          N: password
+      T: @
+  N: host
+  Optional:
+    Sequence:
+      T: :
+      N: port
+</pre>
+
+Initialize <code>result</code> to an empty object, then modify it as follows:
+
+  * If <code class=grammar-rule><a href=#user>user</a></code> is present, set <code>result.username</code> to its value.
+  * If <code class=grammar-rule><a href=#password>password</a></code> is present, set <code>result.password</code> to its value.
+  * Set <code>result.host</code> to the value returned by
+    <code class=grammar-rule><a href=#host>host</a></code> up to the first "<code>@</code>" sign, if any.  If no
+    "<code>@</code>" signs are present in the return value from the
+    <code class=grammar-rule><a href=#host>host</a></code> production, then set <code>result.host</code> to the
+    entire value.
+  * If one or more "<code>@</code>" signs are present in the value returned
+    by the <code class=grammar-rule><a href=#host>host</a></code> production, then perform the following steps:
+    * Indicate a <a>conformance error</a>.
+    * Initialize <code>info</code> to the value of '%<code>40</code>' plus the remainder of the
+        <code class=grammar-rule><a href=#host>host</a></code> after the first "<code>@</code>" sign.  Replace all remaining "<code>@</code>" signs in
+        <code>info</code>, with the string "<code>%<code>40</code></code>".
+    * If <code class=grammar-rule><a href=#password>password</a></code> is present in the input, append <code>info</code> to <code>result.password</code>.
+    * If <code class=grammar-rule><a href=#password>password</a></code> is not present in input and <code class=grammar-rule><a href=#user>user</a></code> is present,
+        append <code>info</code> to <code>result.username</code>.
+    * If <code class=grammar-rule><a href=#user>user</a></code> is not present in input, set <code>result.username</code> to <code>info</code>.
+  * If <code class=grammar-rule><a href=#port>port</a></code> is present, set <code>result.port</code> to its value.
+
+Return <code>result</code>.
+
+## user ## {#user}
+
+<pre class=railroad>
+ZeroOrMore:
+  T: any except [/\\?#@:]
+</pre>
+
+Consume all characters until either 
+a solidus (<code>U+002F</code>),
+a reverse solidus (<code>U+005C</code>),
+a question mark (<code>U+003F</code>),
+a number sign (<code>U+<code>0023</code></code>), 
+a commercial at (<code>U+<code>0040</code></code>), 
+a colon (<code>U+003A</code>), 
+or the end of string is encountered.
+Return the <a title=cleanse>cleansed</a> result using the
+<a href="https://url.spec.whatwg.org/#default-encode-set">default encode
+ set</a>.
+
+## password ## {#password}
+
+<pre class=railroad>
+ZeroOrMore:
+  T: any except [/\\?#@]
+</pre>
+
+Consume all characters until either 
+a solidus (<code>U+002F</code>),
+a reverse solidus (<code>U+005C</code>),
+a question mark (<code>U+003F</code>),
+a number sign (<code>U+<code>0023</code></code>), 
+a commercial at (<code>U+<code>0040</code></code>), 
+or the end of string is encountered.
+Return the <a title=cleanse>cleansed</a> result using the
+<a href="https://url.spec.whatwg.org/#default-encode-set">default encode
+ set</a>.
+
+## host ## {#host}
+
+<pre class=railroad>
+Choice:
+  Sequence:
+    T: [
+    N: ipv6addr
+    T: ]
+  Sequence:
+    N: ipv4addr
+  ZeroOrMore:
+    T: any except [:/\\?#]
+</pre>
+
+If the input contains an <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code>, return "<code>[</code>" plus
+the result returned by <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code> plus "<code>]</code>".
+
+If the input contains an <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>, return 
+the result returned by <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>.
+
+Otherwise:
+
+  * If any <code>U+<code>0009</code></code>, <code>U+000A</code>, <code>U+000D</code>, <code>U+200B</code>, <code>U+<code>2060</code></code>, or <code>U+FEFF</code> characters are
+    present in the input, remove those characters and indicate a
+    <a>conformance error</a>.
+  * Let <code>domain</code> be the result of
+    <a href="https://url.spec.whatwg.org/#concept-host-parser">host
+    parsing</a> the value.  If this results in a failure,
+    terminate processing with a <a>parse exception</a>.  If 
+    <a href="https://url.spec.whatwg.org/#concept-host-parser">host
+    parsing</a> returned a value that was different than what was
+    provided as input, indicate a <a>conformance error</a>.
+  * Try parsing <code>domain</code> as an <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>. If this succeeds, replace <code>domain</code>
+    with the result.
+  * Validate the <code>domain</code> as follows:
+     * split the string at <code>U+002E</code> (full stop) characters
+     * If any of the pieces, other than the first one, are empty strings,
+         indicate a <a>conformance error</a>.
+  * Return <code>domain</code>.
+
+Note: the resolution of
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25334">bug <code>25334</code></a>
+may change what codepoints are allowed in a domain.
+
+Note: the resolution of
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27266">bug <code>27266</code></a>
+may change the way domain names and trailing dots are handled.
+
+## ipv6addr ## {#ipv6addr}
+
+<pre class=railroad>
+Sequence:
+  Optional:
+    Sequence:
+      ZeroOrMore:
+        Sequence:
+          N: h16
+          T: :
+      T: :
+  ZeroOrMore:
+    Sequence:
+      N: h16
+      T: :
+  Choice:
+    N: h16
+    N: ls32
+</pre>
+
+ Let <code>pre</code>, <code>post</code>, and <code>last</code> be the <code class=grammar-rule><a href=#h16>h16</a></code> values before the double colon if
+ present,  the remaining <code class=grammar-rule><a href=#h16>h16</a></code> before the last value, and the trailing
+ <code class=grammar-rule><a href=#h16>h16</a></code> or <code class=grammar-rule><a href=#ls32>ls32</a></code> value, respectively.
+ 
+ Perform the following validation checks:
+ * If there are no consecutive colon characters in the input string, indicate
+     a <a>parse exception</a> and terminate processing unless there are
+     exactly six <code class=grammar-rule><a href=#h16>h16</a></code> values and one <code class=grammar-rule><a href=#ls32>ls32</a></code> value.
+ * If there are consecutive colon characters present in the input, indicate a
+     <a>parse exception</a> and terminate processing if the total number of
+     values (<code class=grammar-rule><a href=#h16>h16</a></code> or <code class=grammar-rule><a href=#ls32>ls32</a></code>) is more than six.
+ * Unless there is a <code class=grammar-rule><a href=#ls32>ls32</a></code> value present, indicate a <a>parse exception</a>
+     and terminate processing if consecutive colon characters are present in
+     the input or if there are more than one <code class=grammar-rule><a href=#ls32>ls32</a></code> value after the
+     consecutive colons.
+
+ Perform the following steps:
+ * Append "<code><code>0</code></code>" values to <code>pre</code> while the sum of the lengths of the <code>pre</code> and
+     <code>post</code> arrays is less than six.
+ * Append a "<code><code>0</code></code>" value to <code>pre</code> if no <code class=grammar-rule><a href=#ls32>ls32</a></code> item is present in the input and
+     the sum of the lengths of the <code>pre</code> and <code>post</code> array is seven.
+ * Append <code>last</code> to <code>pre</code>.
+
+ Return the <a href=https://url.spec.whatwg.org/#concept-ipv6-serializer>ipv6
+ serialized</a> value of <code>pre</code> as a string.
+
+Note: the resolution of
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27234">bug <code>27234</code></a>
+may add support for link-local addresses.
+
+## ipv4addr ## {#ipv4addr}
+
+<pre class=railroad>
+Sequence:
+  Optional:
+    Sequence:
+      N: number
+      T: .
+      Optional:
+        Sequence:
+          N: number
+          T: .
+          Optional:
+            Sequence:
+              N: number
+              T: .
+  N: number
+</pre>
+
+If any but the last <code class=grammar-rule><a href=#number>number</a></code> is greater or equal to <code>256</code>, terminate processing
+with a <a>parse exception</a>.
+
+If the last <code class=grammar-rule><a href=#number>number</a></code> is greater than or equal to <code>256</code> to the power of (<code>5</code> minus
+the number of <code class=grammar-rule><a href=#number>number</a></code>s present in the input), terminate processing with a
+<a>parse exception</a>.
+
+Unless four <code class=grammar-rule><a href=#number>number</a></code>s are present, indicate a <a>conformance error</a>.
+
+Initialize <code>n</code> to the last <code class=grammar-rule><a href=#number>number</a></code>.
+
+If the first <code class=grammar-rule><a href=#number>number</a></code> is present, add it's value times <code>256</code>**<code>3</code> to <code>n</code>.
+
+If the second <code class=grammar-rule><a href=#number>number</a></code> is present, add it's value times <code>256</code>**<code>2</code> to <code>n</code>.
+
+If the third <code class=grammar-rule><a href=#number>number</a></code> is present, add it's value times <code>256</code> to <code>n</code>.
+
+Initialize <code>result</code> to an empty array.
+
+Four times do the following:
+  * Prepend the value of <code>n</code> modulo <code>256</code> to <code>result</code>.
+  * Set <code>n</code> to the value of the integer quotient of <code>n</code> divided by <code>256</code>.
+
+Join the values in <code>result</code> with a Full Stop (<code>U+002E</code>) character, and
+return the results as a string.
+
+Note: the resolution of
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug <code>26431</code></a>
+may change this definition.
+
+## number ## {#number}
+
+<pre class=railroad>
+Choice:
+  Sequence:
+    T: 0
+    Choice:
+      T: x
+      T: X
+    OneOrMore:
+      T: any of [0-9a-fA-F]
+  Sequence:
+    T: 0
+    OneOrMore:
+      T: any of [0-7]
+  OneOrMore:
+    T: any of [0-9]
+</pre>
+
+Three production rules, with uppercase and percent encoded variants, are
+defined for numbers.
+Parse the values as hexadecimal, octal, and decimal integers respectively.
+Indicate a <a>conformance error</a> if the value is hexadecimal or octal.
+Return the result as an integer.
+
+## h16 ## {#h16}
+
+<pre class=railroad>
+Sequence:
+  T: any of [0-9A-Fa-f]
+  Optional:
+    T: any of [0-9A-Fa-f]
+  Optional:
+    T: any of [0-9A-Fa-f]
+  Optional:
+    T: any of [0-9A-Fa-f]
+</pre>
+
+Return up to four hexadecimal characters as a string.
+
+## ls32 ## {#ls32}
+
+<pre class=railroad>
+Sequence:
+  N: decimal-byte
+  T: .
+  N: decimal-byte
+  T: .
+  N: decimal-byte
+  T: .
+  N: decimal-byte
+</pre>
+
+Return four decimal bytes separated by full stop characters as a string.
+
+## decimal-byte ## {#decimal-byte}
+
+<pre class=railroad>
+Sequence:
+  Optional:
+    T: any of [0-2]
+  Optional:
+    T: any of [0-9]
+  T: any of [0-9]
+</pre>
+
+Decimal bytes are a string of up to three decimal digits.  If the results
+converted to an integer are greater than <code>255</code>, terminate processing with
+a <a>parse exception</a>.
+
+## port ## {#port}
+
+<pre class=railroad>
+ZeroOrMore:
+  T: any except [/\\?#]
+</pre>
+
+Consume all characters until either 
+a solidus (<code>U+002F</code>),
+a reverse solidus (<code>U+005C</code>),
+a question mark (<code>U+003F</code>),
+or the end of string is encountered.
+<a title=cleanse>Cleanse</a> result using <var>null</var> as
+the encode set.
+Remove leading <code>U+<code>0030</code></code> code points from result
+until either the leading code point is not <code>U+<code>0030</code></code> or result is
+one code point. 
+
+If any characters that remain are not decimal digits:
+  * If <code>input</code> was not set, terminate processing with a
+    <a>parse exception</a>.
+  * Truncate <code>result</code> starting with the first non-digit character.
+  * Indicate a <a>conformance error</a>.
+
+Return the result as a string.
+
+Note: the resolution of
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26446">bug <code>26446</code></a>
+may change port from a string to a number.
+
+## path ## {#path}
+
+<pre class=railroad>
+Sequence:
+  ZeroOrMore:
+    Sequence:
+      ZeroOrMore:
+        T: any except [/\\?#]
+      Choice:
+        T: /
+        T: \
+  ZeroOrMore:
+    T: any except [/\\?#]
+</pre>
+
+If any of the path separators are a reverse solidus ("<code>\</code>"), indicate
+a <a>conformance error</a>.
+
+Extract all the pathnames into an array.  Process each name as follows:
+
+  * <a title=cleanse>Cleanse</a> the name using the
+    <a href="https://url.spec.whatwg.org/#default-encode-set">default encode
+    set</a> as the encode set.
+  * If the name is "<code>.</code>" or "<code>%2e</code>" (case insensitive),
+    then process this name based on the position in the array:
+      * If the position is other than the last, remove the name from the list.
+      * If the array is of length <code>1</code>, replace the entry with an empty string.
+      * Otherwise, leave the entry as is.
+  * If the name is "<code>..</code>", "<code>.%2e</code>", "<code>%2e.</code>",
+    or "<code>%2e%2e</code>" (all to be compared in a case insensitive manner),
+    then process this name based on the position in the array:
+      * If the position is the first, then remove it.
+      * If the position is other than the last, then remove it and the
+          one before it.
+      * If the position is the last, then remove it and the one before it,
+          then append an empty string.
+
+Return the array.
+
+Note: the resolution of
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=24163">bug <code>24163</code></a>
+may change what characters to escape in the path.
+
+## scheme-data ## {#scheme-data}
+
+<pre class=railroad>
+ZeroOrMore:
+  T: any except [?#]
+</pre>
+
+Consume all characters until either a question mark (<code>U+003F</code>), a
+number sign (<code>U+<code>0023</code></code>), or the end of string is encountered.
+Return the <a title=cleanse>cleansed</a> result using <var>null</var> as
+the encode set.
+
+Note: the resolution of
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=24246">bug <code>24246</code></a>
+may change what characters to escape in the scheme data.
+
+## query ## {#query}
+
+<pre class=railroad>
+ZeroOrMore:
+  T: any except [#]
+</pre>
+
+Consume all characters until either a 
+number sign (<code>U+<code>0023</code></code>) or the end of string is encountered.
+Return the <a title=cleanse>cleansed</a> result using the
+the result using the <a>query encode set</a>.
+
+The <dfn>query encode set</dfn> is defined to be bytes that are less than
+<code>0x21</code>, greater than <code>0x7E</code>, or one of <code>0x22</code>, <code>0x23</code>, <code>0x3C</code>, <code>0x3E</code>, and <code>0x60</code>.
+
+Note: the resolution of
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27280">bug <code>27280</code></a>
+may change how code points < <code>0x20</code> are handled.
+
+## fragment ## {#fragment}
+
+<pre class=railroad>
+ZeroOrMore:
+  T: any
+</pre>
+
+Consume all remaining characters in the input.  
+Return the <a title=cleanse>cleansed</a> result using the
+<a href="https://url.spec.whatwg.org/#simple-encode-set">simple encode
+ set</a>.
+
+Note: the resolution of
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27252">bug <code>27252</code></a>
+may change what characters to escape in the fragment.
+
+Note: the resolution of
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26988">bug <code>26988</code></a>
+may add support for parsing URLs without decoding the fragment identifier.
+
+Setter Rules {#setter-rules}
+=============
+
+## set-protocol ## {#set-protocol}
+
+<pre class=railroad>
+Sequence:
+  N: scheme
+  Optional:
+    T: :
+  ZeroOrMore:
+    T: any
+</pre>
+
+Set <code>url.scheme</code> to value returned by <code class=grammar-rule><a href=#scheme>scheme</a></code>.
+
+## set-username ## {#set-username}
+
+<pre class=railroad>
+ZeroOrMore:
+  T: any
+</pre>
+
+If <code>url.scheme_data</code> is not null, return.
+
+Set <code>url.username</code> to the 
+<a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a>
+value using the
+<a href="https://url.spec.whatwg.org/#username-encode-set">username encode
+set</a>.
+
+## set-password ## {#set-password}
+
+<pre class=railroad>
+ZeroOrMore:
+  T: any
+</pre>
+
+If <code>url.scheme_data</code> is not null, return.
+
+Set <code>url.password</code> to the 
+<a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a> value
+using the
+<a href="https://url.spec.whatwg.org/#username-encode-set">password encode
+set</a>.
+
+## set-host ## {#set-host}
+
+<pre class=railroad>
+Sequence:
+  N: host
+  Optional:
+    Sequence:
+      T: :
+      N: port
+  Optional:
+    Sequence:
+      Optional:
+        T: any of [/\\?#]
+      ZeroOrMore:
+        T: any
+</pre>
+
+If <code>url.scheme_data</code> is not null, return.
+
+Set <code>url.host</code> to the value returned by <code class=grammar-rule><a href=#host>host</a></code>.
+
+If <code class=grammar-rule><a href=#port>port</a></code> is present, set <code>result.port</code> to its value.
+
+## set-hostname ## {#set-hostname}
+
+<pre class=railroad>
+Sequence:
+  N: host
+  Optional:
+    T: any of [:/\\?#]
+  ZeroOrMore:
+    T: any
+</pre>
+
+If <code>url.scheme_data</code> is not null, return.
+
+Set <code>url.host</code> to the value returned by <code class=grammar-rule><a href=#host>host</a></code>.
+
+## set-port ## {#set-port}
+
+<pre class=railroad>
+Sequence:
+  N: port
+  Optional:
+    T: any of [/\\?#]
+  ZeroOrMore:
+    T: any
+</pre>
+
+If <code>url.scheme_data</code> is not null or <code>url.scheme</code> is "<code>file</code>", return.
+
+Set <code>url.port</code> to the value returned by <code class=grammar-rule><a href=#port>port</a></code>.
+
+## set-pathname ## {#set-pathname}
+
+<pre class=railroad>
+Sequence:
+  Optional:
+    Choice:
+      T: /
+      T: \
+  N: path
+  Optional:
+    T: any of [/\\?#]
+  ZeroOrMore:
+    T: any
+</pre>
+
+If <code>url.scheme_data</code> is not null, return.
+
+Set <code>url.path</code> to the value returned by <code class=grammar-rule><a href=#path>path</a></code>.
+
+## set-search ## {#set-search}
+
+<pre class=railroad>
+Sequence:
+  Optional:
+    T: ?
+  ZeroOrMore:
+    T: any
+</pre>
+
+Set <code>url.query</code> to the
+<a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a> value
+after the initial question mark (<code>U+003F</code>), if any, using the <a>query encode
+set</a>.
+
+## set-hash ## {#set-hash}
+
+<pre class=railroad>
+Sequence:
+  Optional:
+    T: #
+  ZeroOrMore:
+    T: any
+</pre>
+
+Set <code>url.fragment</code> to the 
+<a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a> value
+after the initial number sign (<code>U+<code>0023</code></code>), if any, using the
+<a href="https://url.spec.whatwg.org/#simple-encode-set">simple encode
+set</a>
+
+Common Functions {#common-functions}
+=====
+
+To <dfn>cleanse</dfn> a string given an <var>encode set</var>, run these steps:
+
+ * If any character in the string not a
+     <a href="https://url.spec.whatwg.org/#url-code-points">URL code point</a>
+     or a percent sign (<code>U+0025</code>), indicate a <a>conformance
+     error</a>.
+
+ * If the name includes a percent sign (<code>U+0025</code>) that is not
+     immediately followed by two hexadecimal characters, indicate a
+     <a>conformance error</a>.
+
+ * If any <code>U+0009</code>, <code>U+000A</code> or <code>U+000D</code>
+     characters are present in the string, remove those characters and indicate
+     a <a>conformance error</a>.
+
+ * if the <var>encode set</var> is non-null,
+    first <a href="https://encoding.spec.whatwg.org/#encode">encode</a> the
+    result using the <code>encoding override</code>, then
+    <a href="https://url.spec.whatwg.org/#percent-encode">percent encode</a>
+    that result using the provided <var>encode set</var>.
+
+ * Return the result as a string.
+
+To do <dfn>path concatenation</dfn> given a <var>base</var> array of path
+names, and a <var>path<path> array of names, perform the following steps:
+
+ * If <var>base</var> is null, set <var>base</var> to an empty array.  Otherwise
+     make a local copy of the <var>base</var> array.
+
+ * If the first element on <var>path</var> is ".", remove this first element
+     from <var>path</var> as well as the last element (if any) of
+     <var>base</var>.
+
+ * If <var>path.length</var> is one, and the first and only element on the
+     <var>path</var> is an empty string, set <var>path</var> to the value of
+     <var>base</var>.
+
+ * Otherwise if <var>path.length</var> is greater than one, and the first
+     element on the <var>path</var> is the empty string, remove the first
+     element from the <var>path</var>.
+
+ * Otherwise, remove the last element (if any) of <var>base</var> and then
+     prepend the values of the <var>base</var> array to the <var>path</var>
+     array.

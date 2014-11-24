@@ -1,0 +1,47 @@
+Common Functions {#common-functions}
+=====
+
+To <dfn>cleanse</dfn> a string given an <var>encode set</var>, run these steps:
+
+ * If any character in the string not a
+     <a href="https://url.spec.whatwg.org/#url-code-points">URL code point</a>
+     or a percent sign (<code>U+0025</code>), indicate a <a>conformance
+     error</a>.
+
+ * If the name includes a percent sign (<code>U+0025</code>) that is not
+     immediately followed by two hexadecimal characters, indicate a
+     <a>conformance error</a>.
+
+ * If any <code>U+0009</code>, <code>U+000A</code> or <code>U+000D</code>
+     characters are present in the string, remove those characters and indicate
+     a <a>conformance error</a>.
+
+ * if the <var>encode set</var> is non-null,
+    first <a href="https://encoding.spec.whatwg.org/#encode">encode</a> the
+    result using the <code>encoding override</code>, then
+    <a href="https://url.spec.whatwg.org/#percent-encode">percent encode</a>
+    that result using the provided <var>encode set</var>.
+
+ * Return the result as a string.
+
+To do <dfn>path concatenation</dfn> given a <var>base</var> array of path
+names, and a <var>path<path> array of names, perform the following steps:
+
+ * If <var>base</var> is null, set <var>base</var> to an empty array.  Otherwise
+     make a local copy of the <var>base</var> array.
+
+ * If the first element on <var>path</var> is ".", remove this first element
+     from <var>path</var> as well as the last element (if any) of
+     <var>base</var>.
+
+ * If <var>path.length</var> is one, and the first and only element on the
+     <var>path</var> is an empty string, set <var>path</var> to the value of
+     <var>base</var>.
+
+ * Otherwise if <var>path.length</var> is greater than one, and the first
+     element on the <var>path</var> is the empty string, remove the first
+     element from the <var>path</var>.
+
+ * Otherwise, remove the last element (if any) of <var>base</var> and then
+     prepend the values of the <var>base</var> array to the <var>path</var>
+     array.
