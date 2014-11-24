@@ -147,14 +147,28 @@
     {
       "input": "http://f:b/c",
       "base": "http://example.org/foo/bar",
-      "exception": "http://f:b/c is not a valid URL.",
-      "protocol": ":"
+      "href": "http://f:b/c",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://f: /c",
       "base": "http://example.org/foo/bar",
-      "exception": "http://f: /c is not a valid URL.",
-      "protocol": ":"
+      "href": "http://f: /c",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://f:\n/c",
@@ -172,8 +186,15 @@
     {
       "input": "http://f:fifty-two/c",
       "base": "http://example.org/foo/bar",
-      "exception": "http://f:fifty-two/c is not a valid URL.",
-      "protocol": ":"
+      "href": "http://f:fifty-two/c",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://f:999999/c",
@@ -191,8 +212,15 @@
     {
       "input": "http://f: 21 / b ? d # e ",
       "base": "http://example.org/foo/bar",
-      "exception": "http://f: 21 / b ? d # e  is not a valid URL.",
-      "protocol": ":"
+      "href": "http://f: 21 / b ? d # e ",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "",
@@ -496,8 +524,15 @@
     {
       "input": "http://::@c@d:2",
       "base": "http://example.org/foo/bar",
-      "exception": "http://::@c@d:2 is not a valid URL.",
-      "protocol": ":"
+      "href": "http://::@c@d:2",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://foo.com:b@d/",
@@ -710,14 +745,28 @@
     {
       "input": "http://[1::2]:3:4",
       "base": "http://example.org/foo/bar",
-      "exception": "http://[1::2]:3:4 is not a valid URL.",
-      "protocol": ":"
+      "href": "http://[1::2]:3:4",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://2001::1",
       "base": "http://example.org/foo/bar",
-      "exception": "http://2001::1 is not a valid URL.",
-      "protocol": ":"
+      "href": "http://2001::1",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://2001::1]",
@@ -726,7 +775,7 @@
       "protocol": "http:",
       "username": "",
       "password": "",
-      "hostname": "[2001::1]]",
+      "hostname": "2001::1]",
       "port": "",
       "pathname": "/",
       "search": "",
@@ -739,7 +788,7 @@
       "protocol": "http:",
       "username": "",
       "password": "",
-      "hostname": "[2001::1]]",
+      "hostname": "2001::1]",
       "port": "",
       "pathname": "/",
       "search": "",
@@ -752,7 +801,7 @@
       "protocol": "http:",
       "username": "",
       "password": "",
-      "hostname": "[2001::1]",
+      "hostname": "2001::1",
       "port": "",
       "pathname": "/",
       "search": "",
@@ -765,7 +814,7 @@
       "protocol": "http:",
       "username": "",
       "password": "",
-      "hostname": "[2001::1]",
+      "hostname": "2001::1",
       "port": "",
       "pathname": "/",
       "search": "",
@@ -891,8 +940,15 @@
     {
       "input": "data:/example.com/",
       "base": "http://example.org/foo/bar",
-      "exception": "data:/example.com/ is not a valid URL.",
-      "protocol": ":"
+      "href": "data:/example.com/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "javascript:/example.com/",
@@ -1027,8 +1083,15 @@
     {
       "input": "data:example.com/",
       "base": "http://example.org/foo/bar",
-      "exception": "data:example.com/ is not a valid URL.",
-      "protocol": ":"
+      "href": "data:example.com/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "javascript:example.com/",
@@ -1878,8 +1941,15 @@
     {
       "input": "http://[www.google.com]/",
       "base": "about:blank",
-      "exception": "http://[www.google.com]/ is not a valid URL.",
-      "protocol": ":"
+      "href": "http://[www.google.com]/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://www.google.com",
@@ -2014,8 +2084,15 @@
     {
       "input": "http://foo:-80/",
       "base": "about:blank",
-      "exception": "http://foo:-80/ is not a valid URL.",
-      "protocol": ":"
+      "href": "http://foo:-80/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "https://foo:443/",
@@ -2319,8 +2396,15 @@
     {
       "input": "data:/example.com/",
       "base": "about:blank",
-      "exception": "data:/example.com/ is not a valid URL.",
-      "protocol": ":"
+      "href": "data:/example.com/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "javascript:/example.com/",
@@ -2455,8 +2539,15 @@
     {
       "input": "data:example.com/",
       "base": "about:blank",
-      "exception": "data:example.com/ is not a valid URL.",
-      "protocol": ":"
+      "href": "data:example.com/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "javascript:example.com/",
@@ -2578,26 +2669,54 @@
     {
       "input": "http::b@www.example.com",
       "base": "about:blank",
-      "exception": "http::b@www.example.com is not a valid URL.",
-      "protocol": ":"
+      "href": "http::b@www.example.com",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:/:b@www.example.com",
       "base": "about:blank",
-      "exception": "http:/:b@www.example.com is not a valid URL.",
-      "protocol": ":"
+      "href": "http:/:b@www.example.com",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://:b@www.example.com",
       "base": "about:blank",
-      "exception": "http://:b@www.example.com is not a valid URL.",
-      "protocol": ":"
+      "href": "http://:b@www.example.com",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:/:@/www.example.com",
       "base": "about:blank",
-      "exception": "http:/:@/www.example.com is not a valid URL.",
-      "protocol": ":"
+      "href": "http:/:@/www.example.com",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://user@/www.example.com",
@@ -2706,8 +2825,15 @@
     {
       "input": "http::@/www.example.com",
       "base": "about:blank",
-      "exception": "http::@/www.example.com is not a valid URL.",
-      "protocol": ":"
+      "href": "http::@/www.example.com",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:a:@www.example.com",
@@ -2768,7 +2894,7 @@
       "protocol": "http:",
       "username": "",
       "password": "",
-      "hostname": "[:www.example.com]",
+      "hostname": ":www.example.com",
       "port": "",
       "pathname": "/",
       "search": "",
@@ -2781,7 +2907,7 @@
       "protocol": "http:",
       "username": "",
       "password": "",
-      "hostname": "[:www.example.com]",
+      "hostname": ":www.example.com",
       "port": "",
       "pathname": "/",
       "search": "",
@@ -2794,7 +2920,7 @@
       "protocol": "http:",
       "username": "",
       "password": "",
-      "hostname": "[:www.example.com]",
+      "hostname": ":www.example.com",
       "port": "",
       "pathname": "/",
       "search": "",
@@ -2803,8 +2929,15 @@
     {
       "input": "http://:@www.example.com",
       "base": "about:blank",
-      "exception": "http://:@www.example.com is not a valid URL.",
-      "protocol": ":"
+      "href": "http://:@www.example.com",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "/",
@@ -2978,14 +3111,28 @@
     {
       "input": "http://example example.com",
       "base": "http://other.com/",
-      "exception": "http://example example.com is not a valid URL.",
-      "protocol": ":"
+      "href": "http://example example.com",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://Goo%20 goo%7C|.com",
       "base": "http://other.com/",
-      "exception": "http://Goo%20 goo%7C|.com is not a valid URL.",
-      "protocol": ":"
+      "href": "http://Goo%20 goo%7C|.com",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://GOO 　goo.com",
@@ -3224,8 +3371,15 @@
     {
       "input": "http://192.168.0.1 hello",
       "base": "http://other.com/",
-      "exception": "http://192.168.0.1 hello is not a valid URL.",
-      "protocol": ":"
+      "href": "http://192.168.0.1 hello",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://０Ｘｃ０．０２５０．０１",
@@ -3243,8 +3397,15 @@
     {
       "input": "http://[google.com]",
       "base": "http://other.com/",
-      "exception": "http://[google.com] is not a valid URL.",
-      "protocol": ":"
+      "href": "http://[google.com]",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://foo:💩@example.com/bar",
@@ -3262,8 +3423,15 @@
     {
       "input": "x",
       "base": "test:test",
-      "exception": "x is not a valid URL.",
-      "protocol": ":"
+      "href": "x",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     }
   ],
   "setters": {
@@ -3305,8 +3473,14 @@
         "url": "http://user:pass@host:99/path?search#hash",
         "value": "http://localhost:badport",
         "tests": {
-          "protocol": ":",
-          "exception": "http://localhost:badport is not a valid URL."
+          "href": "http://localhost:badport",
+          "protocol": "http:",
+          "username": "",
+          "password": "",
+          "hostname": "",
+          "pathname": "",
+          "search": "",
+          "hash": ""
         }
       }
     ],

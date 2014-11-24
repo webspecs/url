@@ -147,14 +147,28 @@
     {
       "input": "http://f:b/c",
       "base": "http://example.org/foo/bar",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://f:b/c",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "0",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://f: /c",
       "base": "http://example.org/foo/bar",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://f:%20/c",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "0",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://f:\n/c",
@@ -172,20 +186,41 @@
     {
       "input": "http://f:fifty-two/c",
       "base": "http://example.org/foo/bar",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://f:fifty-two/c",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "0",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://f:999999/c",
       "base": "http://example.org/foo/bar",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://f:999999/c",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "0",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://f: 21 / b ? d # e ",
       "base": "http://example.org/foo/bar",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://f:%2021%20/%20b%20?%20d%20# e",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "0",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "",
@@ -710,26 +745,54 @@
     {
       "input": "http://[1::2]:3:4",
       "base": "http://example.org/foo/bar",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://[1::2]:3:4/",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "0",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://2001::1",
       "base": "http://example.org/foo/bar",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://2001::1/",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "0",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://2001::1]",
       "base": "http://example.org/foo/bar",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://2001::1]/",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://2001::1]:80",
       "base": "http://example.org/foo/bar",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://2001::1]/",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://[2001::1]",
@@ -1709,8 +1772,15 @@
     {
       "input": "http://example.com/foo%00%51",
       "base": "about:blank",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://example.com/foo%00Q",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/(%28:%3A%29)",
@@ -1871,8 +1941,15 @@
     {
       "input": "http://[www.google.com]/",
       "base": "about:blank",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://[www.google.com]/",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://www.google.com",
@@ -1929,8 +2006,15 @@
     {
       "input": "http://user:pass@/",
       "base": "about:blank",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://user:pass@/",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://%25DOMAIN:foobar@foodomain.com/",
@@ -2000,8 +2084,15 @@
     {
       "input": "http://foo:-80/",
       "base": "about:blank",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://foo:-80/",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "0",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "https://foo:443/",
@@ -2617,62 +2708,132 @@
     {
       "input": "http:/:@/www.example.com",
       "base": "about:blank",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http:///www.example.com",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://user@/www.example.com",
       "base": "about:blank",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://user@/www.example.com",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:@/www.example.com",
       "base": "about:blank",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http:///www.example.com",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:/@/www.example.com",
       "base": "about:blank",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http:///www.example.com",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://@/www.example.com",
       "base": "about:blank",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http:///www.example.com",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "https:@/www.example.com",
       "base": "about:blank",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "https:///www.example.com",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:a:b@/www.example.com",
       "base": "about:blank",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://a:b@/www.example.com",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:/a:b@/www.example.com",
       "base": "about:blank",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://a:b@/www.example.com",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://a:b@/www.example.com",
       "base": "about:blank",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://a:b@/www.example.com",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http::@/www.example.com",
       "base": "about:blank",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http:///www.example.com",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:a:@www.example.com",
@@ -2729,20 +2890,41 @@
     {
       "input": "http:@:www.example.com",
       "base": "about:blank",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://:www.example.com/",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "0",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:/@:www.example.com",
       "base": "about:blank",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://:www.example.com/",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "0",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://@:www.example.com",
       "base": "about:blank",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://:www.example.com/",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "0",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://:@www.example.com",
@@ -2994,14 +3176,28 @@
     {
       "input": "http://﷐zyx.com",
       "base": "http://other.com/",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://%EF%BF%BDzyx.com/",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://%ef%b7%90zyx.com",
       "base": "http://other.com/",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://%EF%BF%BDzyx.com/",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://Ｇｏ.com",
@@ -3045,14 +3241,28 @@
     {
       "input": "http://％００.com",
       "base": "http://other.com/",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://%00.com/",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://%ef%bc%85%ef%bc%90%ef%bc%90.com",
       "base": "http://other.com/",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://%00.com/",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://你好你好",
@@ -3070,20 +3280,41 @@
     {
       "input": "http://%zz%66%a.com",
       "base": "http://other.com/",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://%25zzf%25a.com/",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://%25",
       "base": "http://other.com/",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://%25/",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://hello%00",
       "base": "http://other.com/",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://hello%00/",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://%30%78%63%30%2e%30%32%35%30.01",
@@ -3114,14 +3345,28 @@
     {
       "input": "http://192.168.0.257",
       "base": "http://other.com/",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://192.168.0.257/",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://%3g%78%63%30%2e%30%32%35%30%2E.01",
       "base": "http://other.com/",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://%253gxc0.0250..01/",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://192.168.0.1 hello",
@@ -3152,8 +3397,15 @@
     {
       "input": "http://[google.com]",
       "base": "http://other.com/",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "http://[google.com]/",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://foo:💩@example.com/bar",
@@ -3171,8 +3423,15 @@
     {
       "input": "x",
       "base": "test:test",
-      "exception": "Failed to construct 'URL': Invalid URL",
-      "protocol": ":"
+      "href": "",
+      "protocol": ":",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     }
   ],
   "setters": {
@@ -3214,7 +3473,7 @@
         "url": "http://user:pass@host:99/path?search#hash",
         "value": "http://localhost:badport",
         "tests": {
-          "href": "http://localhost:badport",
+          "href": "http://localhost:badport/",
           "protocol": ":",
           "username": "",
           "password": "",

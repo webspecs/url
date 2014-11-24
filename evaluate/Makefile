@@ -16,8 +16,7 @@ useragent-results: \
 	useragent-results/galimatias \
 	useragent-results/nodejs \
 	useragent-results/rusturl \
-	useragent-results/refimpl \
-	useragent-results/urltestdata
+	useragent-results/refimpl
 
 softerror: softerror.rb \
 	useragent-results/galimatias \
@@ -29,8 +28,7 @@ clean:
 	useragent-results/galimatias \
 	useragent-results/nodejs \
 	useragent-results/rusturl \
-	useragent-results/refimpl \
-	useragent-results/urltestdata
+	useragent-results/refimpl
 
 clobber: clean
 	rm -f *.jar
@@ -45,14 +43,6 @@ useragent-results/refimpl: testrefimpl.js \
 	../reference-implementation/urlparser.js \
 	../reference-implementation/test/urltestdata.txt
 	node testrefimpl.js > $@
-
-useragent-results/urltestdata: urltestdata.json \
-	../reference-implementation/test/urltestdata.txt
-	echo urltestdata > $@
-	/bin/echo -n "Fetched " >> $@ 
-	node -e "require('fs').stat('../reference-implementation/test/urltestdata.txt', \
-		function(err,stats) {console.log(stats.mtime)})" >> $@
-	cat urltestdata.json >> $@
 
 testgalimatias.class: testgalimatias.java \
 	icu4j-54.1.1.jar galimatias-0.2.0.jar json-20140107.jar
