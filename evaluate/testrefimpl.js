@@ -16,7 +16,7 @@ var data = URLTestParser(fs.
 properties = ['href', 'protocol', 'hostname', 'port', 'username', 'password',
   'pathname', 'search', 'hash', 'exception'];
 
-var results = [];
+var constructorResults = [];
 for (var i = 0; i < data.length; i++) {
   var test = data[i];
   var url = new Url(test.input, test.base);
@@ -27,7 +27,12 @@ for (var i = 0; i < data.length; i++) {
   if (url['exception'] && url['exception'].extension) {
     result['exception_extension'] = true
   }
-  results.push(result)
+  constructorResults.push(result)
 };
 
-console.log(JSON.stringify(results));
+var results = {
+  useragent: "reference-implementation @ " + new Date().toString(),
+  constructor: constructorResults
+}
+
+console.log(JSON.stringify(results, undefined, 2));

@@ -10,6 +10,7 @@
 extern crate serialize;
 extern crate url;
 use std::char;
+use std::os;
 use std::num::from_str_radix;
 use serialize::json;
 use url::{Url, UrlParser};
@@ -86,7 +87,19 @@ fn main() {
       results.push(result);
     };
 
-    println!("{}", json::encode(&results));
+    #[deriving(Encodable)]
+    struct Output {
+      useragent: String,
+      constructor: Vec<Result>
+    }
+
+    let output = Output {
+      useragent: match os::getenv("USERAGENT") {Some(val) => val, None =>
+"unknown".to_string()},
+      constructor: results
+    };
+
+    println!("{}", json::encode(&output));
 }
 
 struct Test {

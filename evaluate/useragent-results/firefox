@@ -1,5 +1,5 @@
 {
-  "useragent": "url 0.1.0 (git+https://github.com/servo/rust-url)",
+  "useragent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0",
   "constructor": [
     {
       "input": "http://example\t.\norg",
@@ -7,13 +7,12 @@
       "href": "http://example.org/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://user:pass@foo:21/bar;par?b#c",
@@ -23,11 +22,10 @@
       "username": "user",
       "password": "pass",
       "hostname": "foo",
-      "port": 21,
+      "port": "21",
       "pathname": "/bar;par",
       "search": "?b",
-      "hash": "#c",
-      "exception": null
+      "hash": "#c"
     },
     {
       "input": "http:foo.com",
@@ -35,13 +33,12 @@
       "href": "http://example.org/foo/foo.com",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/foo/foo.com",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "\t   :foo.com   \n",
@@ -49,13 +46,12 @@
       "href": "http://example.org/foo/:foo.com",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/foo/:foo.com",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": " foo.com  ",
@@ -63,41 +59,38 @@
       "href": "http://example.org/foo/foo.com",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/foo/foo.com",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "a:\t foo.com",
       "base": "http://example.org/foo/bar",
-      "href": "a: foo.com",
+      "href": "a:%20foo.com",
       "protocol": "a:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://f:21/ b ? d # e ",
       "base": "http://example.org/foo/bar",
-      "href": "http://f:21/%20b%20?%20d%20# e",
+      "href": "http://f:21/%20b%20?%20d%20#%20e",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "f",
-      "port": 21,
+      "port": "21",
       "pathname": "/%20b%20",
       "search": "?%20d%20",
-      "hash": "# e",
-      "exception": null
+      "hash": "# e"
     },
     {
       "input": "http://f:/c",
@@ -105,13 +98,12 @@
       "href": "http://f/c",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "f",
-      "port": null,
+      "port": "",
       "pathname": "/c",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://f:0/c",
@@ -119,13 +111,12 @@
       "href": "http://f:0/c",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "f",
-      "port": 0,
+      "port": "0",
       "pathname": "/c",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://f:00000000000000/c",
@@ -133,13 +124,12 @@
       "href": "http://f:0/c",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "f",
-      "port": 0,
+      "port": "0",
       "pathname": "/c",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://f:00000000000000000000080/c",
@@ -147,41 +137,24 @@
       "href": "http://f/c",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "f",
-      "port": null,
+      "port": "",
       "pathname": "/c",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://f:b/c",
       "base": "http://example.org/foo/bar",
-      "href": "http://f:b/c",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "invalid port number"
+      "exception": "http://f:b/c is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "http://f: /c",
       "base": "http://example.org/foo/bar",
-      "href": "http://f: /c",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "invalid port number"
+      "exception": "http://f: /c is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "http://f:\n/c",
@@ -189,55 +162,37 @@
       "href": "http://f/c",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "f",
-      "port": null,
+      "port": "",
       "pathname": "/c",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://f:fifty-two/c",
       "base": "http://example.org/foo/bar",
-      "href": "http://f:fifty-two/c",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "invalid port number"
+      "exception": "http://f:fifty-two/c is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "http://f:999999/c",
       "base": "http://example.org/foo/bar",
       "href": "http://f:999999/c",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "invalid port number"
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "f",
+      "port": "999999",
+      "pathname": "/c",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://f: 21 / b ? d # e ",
       "base": "http://example.org/foo/bar",
-      "href": "http://f: 21 / b ? d # e ",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "invalid port number"
+      "exception": "http://f: 21 / b ? d # e  is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "",
@@ -245,13 +200,12 @@
       "href": "http://example.org/foo/bar",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/foo/bar",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "  \t",
@@ -259,13 +213,12 @@
       "href": "http://example.org/foo/bar",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/foo/bar",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": ":foo.com/",
@@ -273,27 +226,25 @@
       "href": "http://example.org/foo/:foo.com/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/foo/:foo.com/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": ":foo.com\\",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/:foo.com/",
+      "href": "http://example.org/foo/:foo.com%5C",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
-      "pathname": "/foo/:foo.com/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "port": "",
+      "pathname": "/foo/:foo.com%5C",
+      "search": "",
+      "hash": ""
     },
     {
       "input": ":",
@@ -301,13 +252,12 @@
       "href": "http://example.org/foo/:",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/foo/:",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": ":a",
@@ -315,13 +265,12 @@
       "href": "http://example.org/foo/:a",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/foo/:a",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": ":/",
@@ -329,27 +278,25 @@
       "href": "http://example.org/foo/:/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/foo/:/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": ":\\",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/:/",
+      "href": "http://example.org/foo/:%5C",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
-      "pathname": "/foo/:/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "port": "",
+      "pathname": "/foo/:%5C",
+      "search": "",
+      "hash": ""
     },
     {
       "input": ":#",
@@ -357,13 +304,12 @@
       "href": "http://example.org/foo/:#",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/foo/:",
-      "search": null,
-      "hash": "#",
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "#",
@@ -371,13 +317,12 @@
       "href": "http://example.org/foo/bar#",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/foo/bar",
-      "search": null,
-      "hash": "#",
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "#/",
@@ -385,13 +330,12 @@
       "href": "http://example.org/foo/bar#/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/foo/bar",
-      "search": null,
-      "hash": "#/",
-      "exception": null
+      "search": "",
+      "hash": "#/"
     },
     {
       "input": "#\\",
@@ -399,13 +343,12 @@
       "href": "http://example.org/foo/bar#\\",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/foo/bar",
-      "search": null,
-      "hash": "#\\",
-      "exception": null
+      "search": "",
+      "hash": "#\\"
     },
     {
       "input": "#;?",
@@ -413,13 +356,12 @@
       "href": "http://example.org/foo/bar#;?",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/foo/bar",
-      "search": null,
-      "hash": "#;?",
-      "exception": null
+      "search": "",
+      "hash": "#;?"
     },
     {
       "input": "?",
@@ -427,13 +369,12 @@
       "href": "http://example.org/foo/bar?",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/foo/bar",
-      "search": "?",
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "/",
@@ -441,13 +382,12 @@
       "href": "http://example.org/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": ":23",
@@ -455,13 +395,12 @@
       "href": "http://example.org/foo/:23",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/foo/:23",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "/:23",
@@ -469,13 +408,12 @@
       "href": "http://example.org/:23",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/:23",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "::",
@@ -483,13 +421,12 @@
       "href": "http://example.org/foo/::",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/foo/::",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "::23",
@@ -497,27 +434,25 @@
       "href": "http://example.org/foo/::23",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/foo/::23",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "foo://",
       "base": "http://example.org/foo/bar",
       "href": "foo://",
       "protocol": "foo:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://a:b@c:29/d",
@@ -527,193 +462,172 @@
       "username": "a",
       "password": "b",
       "hostname": "c",
-      "port": 29,
+      "port": "29",
       "pathname": "/d",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http::@c:29",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/:@c:29",
+      "href": "http://example.org/foo/http::@c:29",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
-      "pathname": "/foo/:@c:29",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "port": "",
+      "pathname": "/foo/http::@c:29",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://&a:foo(b]c@d:2/",
       "base": "http://example.org/foo/bar",
-      "href": "http://&a:foo(b]c@d:2/",
+      "href": "http://&a:foo(b%5Dc@d:2/",
       "protocol": "http:",
       "username": "&a",
-      "password": "foo(b]c",
+      "password": "foo(b%5Dc",
       "hostname": "d",
-      "port": 2,
+      "port": "2",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://::@c@d:2",
       "base": "http://example.org/foo/bar",
-      "href": "http://::%40c@d:2/",
-      "protocol": "http:",
-      "username": "",
-      "password": ":%40c",
-      "hostname": "d",
-      "port": 2,
-      "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "exception": "http://::@c@d:2 is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "http://foo.com:b@d/",
       "base": "http://example.org/foo/bar",
-      "href": "http://foo.com:b@d/",
+      "href": "http://foo%2Ecom:b@d/",
       "protocol": "http:",
-      "username": "foo.com",
+      "username": "foo%2Ecom",
       "password": "b",
       "hostname": "d",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://foo.com/\\@",
       "base": "http://example.org/foo/bar",
-      "href": "http://foo.com//@",
+      "href": "http://foo.com/%5C@",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "foo.com",
-      "port": null,
-      "pathname": "//@",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "port": "",
+      "pathname": "/%5C@",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:\\\\foo.com\\",
       "base": "http://example.org/foo/bar",
-      "href": "http://foo.com/",
+      "href": "http://example.org/foo/%5C%5Cfoo.com%5C",
       "protocol": "http:",
       "username": "",
-      "password": null,
-      "hostname": "foo.com",
-      "port": null,
-      "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "password": "",
+      "hostname": "example.org",
+      "port": "",
+      "pathname": "/foo/%5C%5Cfoo.com%5C",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:\\\\a\\b:c\\d@foo.com\\",
       "base": "http://example.org/foo/bar",
-      "href": "http://a/b:c/d@foo.com/",
+      "href": "http://example.org/foo/%5C%5Ca%5Cb:c%5Cd@foo.com%5C",
       "protocol": "http:",
       "username": "",
-      "password": null,
-      "hostname": "a",
-      "port": null,
-      "pathname": "/b:c/d@foo.com/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "password": "",
+      "hostname": "example.org",
+      "port": "",
+      "pathname": "/foo/%5C%5Ca%5Cb:c%5Cd@foo.com%5C",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "foo:/",
       "base": "http://example.org/foo/bar",
       "href": "foo:/",
       "protocol": "foo:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "foo:/bar.com/",
       "base": "http://example.org/foo/bar",
       "href": "foo:/bar.com/",
       "protocol": "foo:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "foo://///////",
       "base": "http://example.org/foo/bar",
       "href": "foo://///////",
       "protocol": "foo:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "foo://///////bar.com/",
       "base": "http://example.org/foo/bar",
       "href": "foo://///////bar.com/",
       "protocol": "foo:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "foo:////://///",
       "base": "http://example.org/foo/bar",
       "href": "foo:////://///",
       "protocol": "foo:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "c:/foo",
       "base": "http://example.org/foo/bar",
       "href": "c:/foo",
       "protocol": "c:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "//foo/bar",
@@ -721,13 +635,12 @@
       "href": "http://foo/bar",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "foo",
-      "port": null,
+      "port": "",
       "pathname": "/bar",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://foo/path;a??e#f#g",
@@ -735,13 +648,12 @@
       "href": "http://foo/path;a??e#f#g",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "foo",
-      "port": null,
+      "port": "",
       "pathname": "/path;a",
       "search": "??e",
-      "hash": "#f#g",
-      "exception": null
+      "hash": "#f#g"
     },
     {
       "input": "http://foo/abcd?efgh?ijkl",
@@ -749,13 +661,12 @@
       "href": "http://foo/abcd?efgh?ijkl",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "foo",
-      "port": null,
+      "port": "",
       "pathname": "/abcd",
       "search": "?efgh?ijkl",
-      "hash": null,
-      "exception": null
+      "hash": ""
     },
     {
       "input": "http://foo/abcd#foo?bar",
@@ -763,97 +674,76 @@
       "href": "http://foo/abcd#foo?bar",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "foo",
-      "port": null,
+      "port": "",
       "pathname": "/abcd",
-      "search": null,
-      "hash": "#foo?bar",
-      "exception": null
+      "search": "",
+      "hash": "#foo?bar"
     },
     {
       "input": "[61:24:74]:98",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/[61:24:74]:98",
+      "href": "http://example.org/foo/%5B61:24:74%5D:98",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
-      "pathname": "/foo/[61:24:74]:98",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "port": "",
+      "pathname": "/foo/%5B61:24:74%5D:98",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:[61:27]/:foo",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/[61:27]/:foo",
+      "href": "http://example.org/foo/%5B61:27%5D/:foo",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
-      "pathname": "/foo/[61:27]/:foo",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "port": "",
+      "pathname": "/foo/%5B61:27%5D/:foo",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://[1::2]:3:4",
       "base": "http://example.org/foo/bar",
-      "href": "http://[1::2]:3:4",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "invalid port number"
+      "exception": "http://[1::2]:3:4 is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "http://2001::1",
       "base": "http://example.org/foo/bar",
-      "href": "http://2001::1",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "invalid port number"
+      "exception": "http://2001::1 is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "http://2001::1]",
       "base": "http://example.org/foo/bar",
-      "href": "http://2001::1]",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "invalid port number"
+      "href": "http://2001::1]/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "[2001::1]]",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://2001::1]:80",
       "base": "http://example.org/foo/bar",
-      "href": "http://2001::1]:80",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "invalid port number"
+      "href": "http://2001::1]/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "[2001::1]]",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://[2001::1]",
@@ -861,13 +751,12 @@
       "href": "http://[2001::1]/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "[2001::1]",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://[2001::1]:80",
@@ -875,13 +764,12 @@
       "href": "http://[2001::1]/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "[2001::1]",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:/example.com/",
@@ -889,13 +777,12 @@
       "href": "http://example.org/example.com/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/example.com/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "ftp:/example.com/",
@@ -903,13 +790,12 @@
       "href": "ftp://example.com/",
       "protocol": "ftp:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "https:/example.com/",
@@ -917,27 +803,25 @@
       "href": "https://example.com/",
       "protocol": "https:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "madeupscheme:/example.com/",
       "base": "http://example.org/foo/bar",
       "href": "madeupscheme:/example.com/",
       "protocol": "madeupscheme:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "file:/example.com/",
@@ -945,41 +829,38 @@
       "href": "file:///example.com/",
       "protocol": "file:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "",
-      "port": null,
+      "port": "",
       "pathname": "/example.com/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "ftps:/example.com/",
       "base": "http://example.org/foo/bar",
       "href": "ftps:/example.com/",
       "protocol": "ftps:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "gopher:/example.com/",
       "base": "http://example.org/foo/bar",
-      "href": "gopher://example.com/",
+      "href": "gopher:/example.com/",
       "protocol": "gopher:",
       "username": "",
-      "password": null,
-      "hostname": "example.com",
-      "port": null,
-      "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "ws:/example.com/",
@@ -987,13 +868,12 @@
       "href": "ws://example.com/",
       "protocol": "ws:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "wss:/example.com/",
@@ -1001,55 +881,44 @@
       "href": "wss://example.com/",
       "protocol": "wss:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "data:/example.com/",
       "base": "http://example.org/foo/bar",
-      "href": "data:/example.com/",
-      "protocol": "data:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "exception": "data:/example.com/ is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "javascript:/example.com/",
       "base": "http://example.org/foo/bar",
       "href": "javascript:/example.com/",
       "protocol": "javascript:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "mailto:/example.com/",
       "base": "http://example.org/foo/bar",
       "href": "mailto:/example.com/",
       "protocol": "mailto:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:example.com/",
@@ -1057,13 +926,12 @@
       "href": "http://example.org/foo/example.com/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/foo/example.com/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "ftp:example.com/",
@@ -1071,13 +939,12 @@
       "href": "ftp://example.com/",
       "protocol": "ftp:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "https:example.com/",
@@ -1085,55 +952,51 @@
       "href": "https://example.com/",
       "protocol": "https:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "madeupscheme:example.com/",
       "base": "http://example.org/foo/bar",
       "href": "madeupscheme:example.com/",
       "protocol": "madeupscheme:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "ftps:example.com/",
       "base": "http://example.org/foo/bar",
       "href": "ftps:example.com/",
       "protocol": "ftps:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "gopher:example.com/",
       "base": "http://example.org/foo/bar",
-      "href": "gopher://example.com/",
+      "href": "gopher:example.com/",
       "protocol": "gopher:",
       "username": "",
-      "password": null,
-      "hostname": "example.com",
-      "port": null,
-      "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "ws:example.com/",
@@ -1141,13 +1004,12 @@
       "href": "ws://example.com/",
       "protocol": "ws:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "wss:example.com/",
@@ -1155,55 +1017,44 @@
       "href": "wss://example.com/",
       "protocol": "wss:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "data:example.com/",
       "base": "http://example.org/foo/bar",
-      "href": "data:example.com/",
-      "protocol": "data:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "exception": "data:example.com/ is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "javascript:example.com/",
       "base": "http://example.org/foo/bar",
       "href": "javascript:example.com/",
       "protocol": "javascript:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "mailto:example.com/",
       "base": "http://example.org/foo/bar",
       "href": "mailto:example.com/",
       "protocol": "mailto:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "/a/b/c",
@@ -1211,13 +1062,12 @@
       "href": "http://example.org/a/b/c",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/a/b/c",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "/a/ /c",
@@ -1225,13 +1075,12 @@
       "href": "http://example.org/a/%20/c",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/a/%20/c",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "/a%2fc",
@@ -1239,13 +1088,12 @@
       "href": "http://example.org/a%2fc",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/a%2fc",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "/a/%2f/c",
@@ -1253,13 +1101,12 @@
       "href": "http://example.org/a/%2f/c",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/a/%2f/c",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "#β",
@@ -1267,139 +1114,129 @@
       "href": "http://example.org/foo/bar#%CE%B2",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.org",
-      "port": null,
+      "port": "",
       "pathname": "/foo/bar",
-      "search": null,
-      "hash": "#%CE%B2",
-      "exception": null
+      "search": "",
+      "hash": "#β"
     },
     {
       "input": "data:text/html,test#test",
       "base": "http://example.org/foo/bar",
       "href": "data:text/html,test#test",
       "protocol": "data:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": "#test",
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": "#test"
     },
     {
       "input": "file:c:\\foo\\bar.html",
       "base": "file:///tmp/mock/path",
-      "href": "file:///c:/foo/bar.html",
+      "href": "file:///tmp/mock/c:%5Cfoo%5Cbar.html",
       "protocol": "file:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "",
-      "port": null,
-      "pathname": "/c:/foo/bar.html",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "port": "",
+      "pathname": "/tmp/mock/c:%5Cfoo%5Cbar.html",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "  File:c|////foo\\bar.html",
       "base": "file:///tmp/mock/path",
-      "href": "file:///c:////foo/bar.html",
+      "href": "file:///tmp/mock/c|////foo%5Cbar.html",
       "protocol": "file:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "",
-      "port": null,
-      "pathname": "/c:////foo/bar.html",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "port": "",
+      "pathname": "/tmp/mock/c|////foo%5Cbar.html",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "C|/foo/bar",
       "base": "file:///tmp/mock/path",
-      "href": "file:///C:/foo/bar",
+      "href": "file:///tmp/mock/C|/foo/bar",
       "protocol": "file:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "",
-      "port": null,
-      "pathname": "/C:/foo/bar",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "port": "",
+      "pathname": "/tmp/mock/C|/foo/bar",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "/C|\\foo\\bar",
       "base": "file:///tmp/mock/path",
-      "href": "file:///C:/foo/bar",
+      "href": "file:///C|%5Cfoo%5Cbar",
       "protocol": "file:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "",
-      "port": null,
-      "pathname": "/C:/foo/bar",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "port": "",
+      "pathname": "/C|%5Cfoo%5Cbar",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "//C|/foo/bar",
       "base": "file:///tmp/mock/path",
-      "href": "file:///C:/foo/bar",
+      "href": "file:///foo/bar",
       "protocol": "file:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "",
-      "port": null,
-      "pathname": "/C:/foo/bar",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "port": "",
+      "pathname": "/foo/bar",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "//server/file",
       "base": "file:///tmp/mock/path",
-      "href": "file://server/file",
+      "href": "file:///file",
       "protocol": "file:",
       "username": "",
-      "password": null,
-      "hostname": "server",
-      "port": null,
+      "password": "",
+      "hostname": "",
+      "port": "",
       "pathname": "/file",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "\\\\server\\file",
       "base": "file:///tmp/mock/path",
-      "href": "file://server/file",
+      "href": "file:///tmp/mock/%5C%5Cserver%5Cfile",
       "protocol": "file:",
       "username": "",
-      "password": null,
-      "hostname": "server",
-      "port": null,
-      "pathname": "/file",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "/tmp/mock/%5C%5Cserver%5Cfile",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "/\\server/file",
       "base": "file:///tmp/mock/path",
-      "href": "file://server/file",
+      "href": "file:///%5Cserver/file",
       "protocol": "file:",
       "username": "",
-      "password": null,
-      "hostname": "server",
-      "port": null,
-      "pathname": "/file",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "/%5Cserver/file",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "file:///foo/bar.txt",
@@ -1407,13 +1244,12 @@
       "href": "file:///foo/bar.txt",
       "protocol": "file:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "",
-      "port": null,
+      "port": "",
       "pathname": "/foo/bar.txt",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "file:///home/me",
@@ -1421,13 +1257,12 @@
       "href": "file:///home/me",
       "protocol": "file:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "",
-      "port": null,
+      "port": "",
       "pathname": "/home/me",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "//",
@@ -1435,13 +1270,12 @@
       "href": "file:///",
       "protocol": "file:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "///",
@@ -1449,13 +1283,12 @@
       "href": "file:///",
       "protocol": "file:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "///test",
@@ -1463,69 +1296,64 @@
       "href": "file:///test",
       "protocol": "file:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "",
-      "port": null,
+      "port": "",
       "pathname": "/test",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "file://test",
       "base": "file:///tmp/mock/path",
-      "href": "file://test/",
+      "href": "file:///",
       "protocol": "file:",
       "username": "",
-      "password": null,
-      "hostname": "test",
-      "port": null,
+      "password": "",
+      "hostname": "",
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "file://localhost",
       "base": "file:///tmp/mock/path",
-      "href": "file://localhost/",
+      "href": "file:///",
       "protocol": "file:",
       "username": "",
-      "password": null,
-      "hostname": "localhost",
-      "port": null,
+      "password": "",
+      "hostname": "",
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "file://localhost/",
       "base": "file:///tmp/mock/path",
-      "href": "file://localhost/",
+      "href": "file:///",
       "protocol": "file:",
       "username": "",
-      "password": null,
-      "hostname": "localhost",
-      "port": null,
+      "password": "",
+      "hostname": "",
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "file://localhost/test",
       "base": "file:///tmp/mock/path",
-      "href": "file://localhost/test",
+      "href": "file:///test",
       "protocol": "file:",
       "username": "",
-      "password": null,
-      "hostname": "localhost",
-      "port": null,
+      "password": "",
+      "hostname": "",
+      "port": "",
       "pathname": "/test",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "test",
@@ -1533,13 +1361,12 @@
       "href": "file:///tmp/mock/test",
       "protocol": "file:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "",
-      "port": null,
+      "port": "",
       "pathname": "/tmp/mock/test",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "file:test",
@@ -1547,13 +1374,12 @@
       "href": "file:///tmp/mock/test",
       "protocol": "file:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "",
-      "port": null,
+      "port": "",
       "pathname": "/tmp/mock/test",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/././foo",
@@ -1561,13 +1387,12 @@
       "href": "http://example.com/foo",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/foo",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/./.foo",
@@ -1575,13 +1400,12 @@
       "href": "http://example.com/.foo",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/.foo",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo/.",
@@ -1589,13 +1413,12 @@
       "href": "http://example.com/foo/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/foo/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo/./",
@@ -1603,13 +1426,12 @@
       "href": "http://example.com/foo/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/foo/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo/bar/..",
@@ -1617,13 +1439,12 @@
       "href": "http://example.com/foo/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/foo/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo/bar/../",
@@ -1631,13 +1452,12 @@
       "href": "http://example.com/foo/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/foo/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo/..bar",
@@ -1645,13 +1465,12 @@
       "href": "http://example.com/foo/..bar",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/foo/..bar",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo/bar/../ton",
@@ -1659,13 +1478,12 @@
       "href": "http://example.com/foo/ton",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/foo/ton",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo/bar/../ton/../../a",
@@ -1673,13 +1491,12 @@
       "href": "http://example.com/a",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/a",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo/../../..",
@@ -1687,13 +1504,12 @@
       "href": "http://example.com/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo/../../../ton",
@@ -1701,27 +1517,25 @@
       "href": "http://example.com/ton",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/ton",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo/%2e",
       "base": "about:blank",
-      "href": "http://example.com/foo/",
+      "href": "http://example.com/foo/%2e",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
-      "pathname": "/foo/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "port": "",
+      "pathname": "/foo/%2e",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo/%2e%2",
@@ -1729,13 +1543,12 @@
       "href": "http://example.com/foo/%2e%2",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/foo/%2e%2",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo/%2e./%2e%2e/.%2e/%2e.bar",
@@ -1743,13 +1556,12 @@
       "href": "http://example.com/%2e.bar",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/%2e.bar",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com////../..",
@@ -1757,13 +1569,12 @@
       "href": "http://example.com//",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "//",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo/bar//../..",
@@ -1771,13 +1582,12 @@
       "href": "http://example.com/foo/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/foo/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo/bar//..",
@@ -1785,13 +1595,12 @@
       "href": "http://example.com/foo/bar/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/foo/bar/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo",
@@ -1799,13 +1608,12 @@
       "href": "http://example.com/foo",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/foo",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/%20foo",
@@ -1813,13 +1621,12 @@
       "href": "http://example.com/%20foo",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/%20foo",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo%",
@@ -1827,13 +1634,12 @@
       "href": "http://example.com/foo%",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/foo%",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo%2",
@@ -1841,13 +1647,12 @@
       "href": "http://example.com/foo%2",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/foo%2",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo%2zbar",
@@ -1855,13 +1660,12 @@
       "href": "http://example.com/foo%2zbar",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/foo%2zbar",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo%2Â©zbar",
@@ -1869,13 +1673,12 @@
       "href": "http://example.com/foo%2%C3%82%C2%A9zbar",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/foo%2%C3%82%C2%A9zbar",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo%41%7a",
@@ -1883,13 +1686,12 @@
       "href": "http://example.com/foo%41%7a",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/foo%41%7a",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo\t%91",
@@ -1897,13 +1699,12 @@
       "href": "http://example.com/foo%C2%91%91",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/foo%C2%91%91",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo%00%51",
@@ -1911,13 +1712,12 @@
       "href": "http://example.com/foo%00%51",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/foo%00%51",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/(%28:%3A%29)",
@@ -1925,13 +1725,12 @@
       "href": "http://example.com/(%28:%3A%29)",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/(%28:%3A%29)",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/%3A%3a%3C%3c",
@@ -1939,13 +1738,12 @@
       "href": "http://example.com/%3A%3a%3C%3c",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/%3A%3a%3C%3c",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/foo\tbar",
@@ -1953,27 +1751,25 @@
       "href": "http://example.com/foobar",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/foobar",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com\\\\foo\\\\bar",
       "base": "about:blank",
-      "href": "http://example.com//foo//bar",
+      "href": "http://example.com\\\\foo\\\\bar/",
       "protocol": "http:",
       "username": "",
-      "password": null,
-      "hostname": "example.com",
-      "port": null,
-      "pathname": "//foo//bar",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "password": "",
+      "hostname": "example.com\\\\foo\\\\bar",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/%7Ffp3%3Eju%3Dduvgw%3Dd",
@@ -1981,13 +1777,12 @@
       "href": "http://example.com/%7Ffp3%3Eju%3Dduvgw%3Dd",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/%7Ffp3%3Eju%3Dduvgw%3Dd",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/@asdf%40",
@@ -1995,13 +1790,12 @@
       "href": "http://example.com/@asdf%40",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/@asdf%40",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/你好你好",
@@ -2009,13 +1803,12 @@
       "href": "http://example.com/%E4%BD%A0%E5%A5%BD%E4%BD%A0%E5%A5%BD",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/%E4%BD%A0%E5%A5%BD%E4%BD%A0%E5%A5%BD",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/‥/foo",
@@ -2023,13 +1816,12 @@
       "href": "http://example.com/%E2%80%A5/foo",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/%E2%80%A5/foo",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/﻿/foo",
@@ -2037,13 +1829,12 @@
       "href": "http://example.com/%EF%BB%BF/foo",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/%EF%BB%BF/foo",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example.com/‮/foo/‭/bar",
@@ -2051,13 +1842,12 @@
       "href": "http://example.com/%E2%80%AE/foo/%E2%80%AD/bar",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/%E2%80%AE/foo/%E2%80%AD/bar",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://www.google.com/foo?bar=baz#",
@@ -2065,41 +1855,31 @@
       "href": "http://www.google.com/foo?bar=baz#",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "www.google.com",
-      "port": null,
+      "port": "",
       "pathname": "/foo",
       "search": "?bar=baz",
-      "hash": "#",
-      "exception": null
+      "hash": ""
     },
     {
       "input": "http://www.google.com/foo?bar=baz# »",
       "base": "about:blank",
-      "href": "http://www.google.com/foo?bar=baz# %C2%BB",
+      "href": "http://www.google.com/foo?bar=baz#%20%C2%BB",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "www.google.com",
-      "port": null,
+      "port": "",
       "pathname": "/foo",
       "search": "?bar=baz",
-      "hash": "# %C2%BB",
-      "exception": null
+      "hash": "# »"
     },
     {
       "input": "http://[www.google.com]/",
       "base": "about:blank",
-      "href": "http://[www.google.com]/",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "invalid IPv6 address"
+      "exception": "http://[www.google.com]/ is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "http://www.google.com",
@@ -2107,13 +1887,12 @@
       "href": "http://www.google.com/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "www.google.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://192.0x00A80001",
@@ -2121,13 +1900,12 @@
       "href": "http://192.0x00a80001/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "192.0x00a80001",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://www/foo%2Ehtml",
@@ -2135,13 +1913,12 @@
       "href": "http://www/foo%2Ehtml",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "www",
-      "port": null,
+      "port": "",
       "pathname": "/foo%2Ehtml",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://www/foo/%2E/html",
@@ -2149,27 +1926,25 @@
       "href": "http://www/foo/html",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "www",
-      "port": null,
+      "port": "",
       "pathname": "/foo/html",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://user:pass@/",
       "base": "about:blank",
       "href": "http://user:pass@/",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "empty host"
+      "protocol": "http:",
+      "username": "user",
+      "password": "pass",
+      "hostname": "",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://%25DOMAIN:foobar@foodomain.com/",
@@ -2179,25 +1954,23 @@
       "username": "%25DOMAIN",
       "password": "foobar",
       "hostname": "foodomain.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:\\\\www.google.com\\foo",
       "base": "about:blank",
-      "href": "http://www.google.com/foo",
+      "href": "http://\\\\www.google.com\\foo/",
       "protocol": "http:",
       "username": "",
-      "password": null,
-      "hostname": "www.google.com",
-      "port": null,
-      "pathname": "/foo",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "password": "",
+      "hostname": "\\\\www.google.com\\foo",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://foo:80/",
@@ -2205,13 +1978,12 @@
       "href": "http://foo/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "foo",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://foo:81/",
@@ -2219,41 +1991,31 @@
       "href": "http://foo:81/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "foo",
-      "port": 81,
+      "port": "81",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "httpa://foo:80/",
       "base": "about:blank",
       "href": "httpa://foo:80/",
       "protocol": "httpa:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://foo:-80/",
       "base": "about:blank",
-      "href": "http://foo:-80/",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "invalid port number"
+      "exception": "http://foo:-80/ is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "https://foo:443/",
@@ -2261,13 +2023,12 @@
       "href": "https://foo/",
       "protocol": "https:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "foo",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "https://foo:80/",
@@ -2275,13 +2036,12 @@
       "href": "https://foo:80/",
       "protocol": "https:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "foo",
-      "port": 80,
+      "port": "80",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "ftp://foo:21/",
@@ -2289,13 +2049,12 @@
       "href": "ftp://foo/",
       "protocol": "ftp:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "foo",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "ftp://foo:80/",
@@ -2303,27 +2062,25 @@
       "href": "ftp://foo:80/",
       "protocol": "ftp:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "foo",
-      "port": 80,
+      "port": "80",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "gopher://foo:70/",
       "base": "about:blank",
-      "href": "gopher://foo/",
+      "href": "gopher://foo:70/",
       "protocol": "gopher:",
       "username": "",
-      "password": null,
-      "hostname": "foo",
-      "port": null,
-      "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "gopher://foo:443/",
@@ -2331,13 +2088,12 @@
       "href": "gopher://foo:443/",
       "protocol": "gopher:",
       "username": "",
-      "password": null,
-      "hostname": "foo",
-      "port": 443,
-      "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "ws://foo:80/",
@@ -2345,13 +2101,12 @@
       "href": "ws://foo/",
       "protocol": "ws:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "foo",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "ws://foo:81/",
@@ -2359,13 +2114,12 @@
       "href": "ws://foo:81/",
       "protocol": "ws:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "foo",
-      "port": 81,
+      "port": "81",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "ws://foo:443/",
@@ -2373,13 +2127,12 @@
       "href": "ws://foo:443/",
       "protocol": "ws:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "foo",
-      "port": 443,
+      "port": "443",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "ws://foo:815/",
@@ -2387,13 +2140,12 @@
       "href": "ws://foo:815/",
       "protocol": "ws:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "foo",
-      "port": 815,
+      "port": "815",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "wss://foo:80/",
@@ -2401,13 +2153,12 @@
       "href": "wss://foo:80/",
       "protocol": "wss:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "foo",
-      "port": 80,
+      "port": "80",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "wss://foo:81/",
@@ -2415,13 +2166,12 @@
       "href": "wss://foo:81/",
       "protocol": "wss:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "foo",
-      "port": 81,
+      "port": "81",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "wss://foo:443/",
@@ -2429,13 +2179,12 @@
       "href": "wss://foo/",
       "protocol": "wss:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "foo",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "wss://foo:815/",
@@ -2443,13 +2192,12 @@
       "href": "wss://foo:815/",
       "protocol": "wss:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "foo",
-      "port": 815,
+      "port": "815",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:/example.com/",
@@ -2457,13 +2205,12 @@
       "href": "http://example.com/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "ftp:/example.com/",
@@ -2471,13 +2218,12 @@
       "href": "ftp://example.com/",
       "protocol": "ftp:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "https:/example.com/",
@@ -2485,27 +2231,25 @@
       "href": "https://example.com/",
       "protocol": "https:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "madeupscheme:/example.com/",
       "base": "about:blank",
       "href": "madeupscheme:/example.com/",
       "protocol": "madeupscheme:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "file:/example.com/",
@@ -2513,41 +2257,38 @@
       "href": "file:///example.com/",
       "protocol": "file:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "",
-      "port": null,
+      "port": "",
       "pathname": "/example.com/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "ftps:/example.com/",
       "base": "about:blank",
       "href": "ftps:/example.com/",
       "protocol": "ftps:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "gopher:/example.com/",
       "base": "about:blank",
-      "href": "gopher://example.com/",
+      "href": "gopher:/example.com/",
       "protocol": "gopher:",
       "username": "",
-      "password": null,
-      "hostname": "example.com",
-      "port": null,
-      "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "ws:/example.com/",
@@ -2555,13 +2296,12 @@
       "href": "ws://example.com/",
       "protocol": "ws:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "wss:/example.com/",
@@ -2569,55 +2309,44 @@
       "href": "wss://example.com/",
       "protocol": "wss:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "data:/example.com/",
       "base": "about:blank",
-      "href": "data:/example.com/",
-      "protocol": "data:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "exception": "data:/example.com/ is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "javascript:/example.com/",
       "base": "about:blank",
       "href": "javascript:/example.com/",
       "protocol": "javascript:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "mailto:/example.com/",
       "base": "about:blank",
       "href": "mailto:/example.com/",
       "protocol": "mailto:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:example.com/",
@@ -2625,13 +2354,12 @@
       "href": "http://example.com/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "ftp:example.com/",
@@ -2639,13 +2367,12 @@
       "href": "ftp://example.com/",
       "protocol": "ftp:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "https:example.com/",
@@ -2653,55 +2380,51 @@
       "href": "https://example.com/",
       "protocol": "https:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "madeupscheme:example.com/",
       "base": "about:blank",
       "href": "madeupscheme:example.com/",
       "protocol": "madeupscheme:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "ftps:example.com/",
       "base": "about:blank",
       "href": "ftps:example.com/",
       "protocol": "ftps:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "gopher:example.com/",
       "base": "about:blank",
-      "href": "gopher://example.com/",
+      "href": "gopher:example.com/",
       "protocol": "gopher:",
       "username": "",
-      "password": null,
-      "hostname": "example.com",
-      "port": null,
-      "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "ws:example.com/",
@@ -2709,13 +2432,12 @@
       "href": "ws://example.com/",
       "protocol": "ws:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "wss:example.com/",
@@ -2723,55 +2445,44 @@
       "href": "wss://example.com/",
       "protocol": "wss:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "data:example.com/",
       "base": "about:blank",
-      "href": "data:example.com/",
-      "protocol": "data:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "exception": "data:example.com/ is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "javascript:example.com/",
       "base": "about:blank",
       "href": "javascript:example.com/",
       "protocol": "javascript:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "mailto:example.com/",
       "base": "about:blank",
       "href": "mailto:example.com/",
       "protocol": "mailto:",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": null
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:@www.example.com",
@@ -2779,13 +2490,12 @@
       "href": "http://www.example.com/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "www.example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:/@www.example.com",
@@ -2793,13 +2503,12 @@
       "href": "http://www.example.com/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "www.example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://@www.example.com",
@@ -2807,13 +2516,12 @@
       "href": "http://www.example.com/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "www.example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:a:b@www.example.com",
@@ -2823,11 +2531,10 @@
       "username": "a",
       "password": "b",
       "hostname": "www.example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:/a:b@www.example.com",
@@ -2837,11 +2544,10 @@
       "username": "a",
       "password": "b",
       "hostname": "www.example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://a:b@www.example.com",
@@ -2851,11 +2557,10 @@
       "username": "a",
       "password": "b",
       "hostname": "www.example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://@pple.com",
@@ -2863,195 +2568,146 @@
       "href": "http://pple.com/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "pple.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http::b@www.example.com",
       "base": "about:blank",
-      "href": "http://:b@www.example.com/",
-      "protocol": "http:",
-      "username": "",
-      "password": "b",
-      "hostname": "www.example.com",
-      "port": null,
-      "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "exception": "http::b@www.example.com is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "http:/:b@www.example.com",
       "base": "about:blank",
-      "href": "http://:b@www.example.com/",
-      "protocol": "http:",
-      "username": "",
-      "password": "b",
-      "hostname": "www.example.com",
-      "port": null,
-      "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "exception": "http:/:b@www.example.com is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "http://:b@www.example.com",
       "base": "about:blank",
-      "href": "http://:b@www.example.com/",
-      "protocol": "http:",
-      "username": "",
-      "password": "b",
-      "hostname": "www.example.com",
-      "port": null,
-      "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "exception": "http://:b@www.example.com is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "http:/:@/www.example.com",
       "base": "about:blank",
-      "href": "http:/:@/www.example.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "empty host"
+      "exception": "http:/:@/www.example.com is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "http://user@/www.example.com",
       "base": "about:blank",
       "href": "http://user@/www.example.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "empty host"
+      "protocol": "http:",
+      "username": "user",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "/www.example.com",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:@/www.example.com",
       "base": "about:blank",
-      "href": "http:@/www.example.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "empty host"
+      "href": "http:///www.example.com",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "/www.example.com",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:/@/www.example.com",
       "base": "about:blank",
-      "href": "http:/@/www.example.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "empty host"
+      "href": "http:///www.example.com",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "/www.example.com",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://@/www.example.com",
       "base": "about:blank",
-      "href": "http://@/www.example.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "empty host"
+      "href": "http:///www.example.com",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "/www.example.com",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "https:@/www.example.com",
       "base": "about:blank",
-      "href": "https:@/www.example.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "empty host"
+      "href": "https:///www.example.com",
+      "protocol": "https:",
+      "username": "",
+      "password": "",
+      "hostname": "",
+      "port": "",
+      "pathname": "/www.example.com",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:a:b@/www.example.com",
       "base": "about:blank",
-      "href": "http:a:b@/www.example.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "empty host"
+      "href": "http://a:b@/www.example.com",
+      "protocol": "http:",
+      "username": "a",
+      "password": "b",
+      "hostname": "",
+      "port": "",
+      "pathname": "/www.example.com",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:/a:b@/www.example.com",
       "base": "about:blank",
-      "href": "http:/a:b@/www.example.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "empty host"
+      "href": "http://a:b@/www.example.com",
+      "protocol": "http:",
+      "username": "a",
+      "password": "b",
+      "hostname": "",
+      "port": "",
+      "pathname": "/www.example.com",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://a:b@/www.example.com",
       "base": "about:blank",
       "href": "http://a:b@/www.example.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "empty host"
+      "protocol": "http:",
+      "username": "a",
+      "password": "b",
+      "hostname": "",
+      "port": "",
+      "pathname": "/www.example.com",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http::@/www.example.com",
       "base": "about:blank",
-      "href": "http::@/www.example.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "empty host"
+      "exception": "http::@/www.example.com is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "http:a:@www.example.com",
@@ -3061,11 +2717,10 @@
       "username": "a",
       "password": "",
       "hostname": "www.example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:/a:@www.example.com",
@@ -3075,11 +2730,10 @@
       "username": "a",
       "password": "",
       "hostname": "www.example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://a:@www.example.com",
@@ -3089,81 +2743,68 @@
       "username": "a",
       "password": "",
       "hostname": "www.example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://www.@pple.com",
       "base": "about:blank",
-      "href": "http://www.@pple.com/",
+      "href": "http://www%2E@pple.com/",
       "protocol": "http:",
-      "username": "www.",
-      "password": null,
+      "username": "www%2E",
+      "password": "",
       "hostname": "pple.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:@:www.example.com",
       "base": "about:blank",
-      "href": "http:@:www.example.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "empty host"
+      "href": "http://:www.example.com/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "[:www.example.com]",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http:/@:www.example.com",
       "base": "about:blank",
-      "href": "http:/@:www.example.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "empty host"
+      "href": "http://:www.example.com/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "[:www.example.com]",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://@:www.example.com",
       "base": "about:blank",
-      "href": "http://@:www.example.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "empty host"
+      "href": "http://:www.example.com/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "[:www.example.com]",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://:@www.example.com",
       "base": "about:blank",
-      "href": "http://:@www.example.com/",
-      "protocol": "http:",
-      "username": "",
-      "password": "",
-      "hostname": "www.example.com",
-      "port": null,
-      "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "exception": "http://:@www.example.com is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "/",
@@ -3171,13 +2812,12 @@
       "href": "http://www.example.com/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "www.example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "/test.txt",
@@ -3185,13 +2825,12 @@
       "href": "http://www.example.com/test.txt",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "www.example.com",
-      "port": null,
+      "port": "",
       "pathname": "/test.txt",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": ".",
@@ -3199,13 +2838,12 @@
       "href": "http://www.example.com/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "www.example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "..",
@@ -3213,13 +2851,12 @@
       "href": "http://www.example.com/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "www.example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "test.txt",
@@ -3227,13 +2864,12 @@
       "href": "http://www.example.com/test.txt",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "www.example.com",
-      "port": null,
+      "port": "",
       "pathname": "/test.txt",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "./test.txt",
@@ -3241,13 +2877,12 @@
       "href": "http://www.example.com/test.txt",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "www.example.com",
-      "port": null,
+      "port": "",
       "pathname": "/test.txt",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "../test.txt",
@@ -3255,13 +2890,12 @@
       "href": "http://www.example.com/test.txt",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "www.example.com",
-      "port": null,
+      "port": "",
       "pathname": "/test.txt",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "../aaa/test.txt",
@@ -3269,13 +2903,12 @@
       "href": "http://www.example.com/aaa/test.txt",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "www.example.com",
-      "port": null,
+      "port": "",
       "pathname": "/aaa/test.txt",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "../../test.txt",
@@ -3283,13 +2916,12 @@
       "href": "http://www.example.com/test.txt",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "www.example.com",
-      "port": null,
+      "port": "",
       "pathname": "/test.txt",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "中/test.txt",
@@ -3297,13 +2929,12 @@
       "href": "http://www.example.com/%E4%B8%AD/test.txt",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "www.example.com",
-      "port": null,
+      "port": "",
       "pathname": "/%E4%B8%AD/test.txt",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://www.example2.com",
@@ -3311,13 +2942,12 @@
       "href": "http://www.example2.com/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "www.example2.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "//www.example2.com",
@@ -3325,13 +2955,12 @@
       "href": "http://www.example2.com/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "www.example2.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://ExAmPlE.CoM",
@@ -3339,265 +2968,232 @@
       "href": "http://example.com/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://example example.com",
       "base": "http://other.com/",
-      "href": "http://example example.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "invalid domain character"
+      "exception": "http://example example.com is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "http://Goo%20 goo%7C|.com",
       "base": "http://other.com/",
-      "href": "http://Goo%20 goo%7C|.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "invalid domain character"
+      "exception": "http://Goo%20 goo%7C|.com is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "http://GOO 　goo.com",
       "base": "http://other.com/",
-      "href": "http://GOO 　goo.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "non-ASCII domains are not supported yet"
+      "href": "http://goo 　goo.com/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "goo 　goo.com",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://GOO​⁠﻿goo.com",
       "base": "http://other.com/",
-      "href": "http://GOO​⁠﻿goo.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "non-ASCII domains are not supported yet"
+      "href": "http://googoo.com/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "googoo.com",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://www.foo。bar.com",
       "base": "http://other.com/",
-      "href": "http://www.foo。bar.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "non-ASCII domains are not supported yet"
+      "href": "http://www.foo.bar.com/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "www.foo.bar.com",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://﷐zyx.com",
       "base": "http://other.com/",
-      "href": "http://﷐zyx.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "non-ASCII domains are not supported yet"
+      "href": "http://﷐zyx.com/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "﷐zyx.com",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://%ef%b7%90zyx.com",
       "base": "http://other.com/",
-      "href": "http://%ef%b7%90zyx.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "non-ASCII domains are not supported yet"
+      "href": "http://%ef%b7%90zyx.com/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "%ef%b7%90zyx.com",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://Ｇｏ.com",
       "base": "http://other.com/",
-      "href": "http://Ｇｏ.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "non-ASCII domains are not supported yet"
+      "href": "http://go.com/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "go.com",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://％４１.com",
       "base": "http://other.com/",
-      "href": "http://％４１.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "non-ASCII domains are not supported yet"
+      "href": "http://%41.com/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "%41.com",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://%ef%bc%85%ef%bc%94%ef%bc%91.com",
       "base": "http://other.com/",
-      "href": "http://%ef%bc%85%ef%bc%94%ef%bc%91.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "non-ASCII domains are not supported yet"
+      "href": "http://%ef%bc%85%ef%bc%94%ef%bc%91.com/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "%ef%bc%85%ef%bc%94%ef%bc%91.com",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://％００.com",
       "base": "http://other.com/",
-      "href": "http://％００.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "non-ASCII domains are not supported yet"
+      "href": "http://%00.com/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "%00.com",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://%ef%bc%85%ef%bc%90%ef%bc%90.com",
       "base": "http://other.com/",
-      "href": "http://%ef%bc%85%ef%bc%90%ef%bc%90.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "non-ASCII domains are not supported yet"
+      "href": "http://%ef%bc%85%ef%bc%90%ef%bc%90.com/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "%ef%bc%85%ef%bc%90%ef%bc%90.com",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://你好你好",
       "base": "http://other.com/",
-      "href": "http://你好你好",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "non-ASCII domains are not supported yet"
+      "href": "http://你好你好/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "你好你好",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://%zz%66%a.com",
       "base": "http://other.com/",
-      "href": "http://%zz%66%a.com",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "invalid domain character"
+      "href": "http://%zz%66%a.com/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "%zz%66%a.com",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://%25",
       "base": "http://other.com/",
-      "href": "http://%25",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "invalid domain character"
+      "href": "http://%25/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "%25",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://hello%00",
       "base": "http://other.com/",
-      "href": "http://hello%00",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "invalid domain character"
+      "href": "http://hello%00/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "hello%00",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://%30%78%63%30%2e%30%32%35%30.01",
       "base": "http://other.com/",
-      "href": "http://0xc0.0250.01/",
+      "href": "http://%30%78%63%30%2e%30%32%35%30.01/",
       "protocol": "http:",
       "username": "",
-      "password": null,
-      "hostname": "0xc0.0250.01",
-      "port": null,
+      "password": "",
+      "hostname": "%30%78%63%30%2e%30%32%35%30.01",
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://%30%78%63%30%2e%30%32%35%30.01%2e",
       "base": "http://other.com/",
-      "href": "http://0xc0.0250.01./",
+      "href": "http://%30%78%63%30%2e%30%32%35%30.01%2e/",
       "protocol": "http:",
       "username": "",
-      "password": null,
-      "hostname": "0xc0.0250.01.",
-      "port": null,
+      "password": "",
+      "hostname": "%30%78%63%30%2e%30%32%35%30.01%2e",
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://192.168.0.257",
@@ -3605,69 +3201,50 @@
       "href": "http://192.168.0.257/",
       "protocol": "http:",
       "username": "",
-      "password": null,
+      "password": "",
       "hostname": "192.168.0.257",
-      "port": null,
+      "port": "",
       "pathname": "/",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://%3g%78%63%30%2e%30%32%35%30%2E.01",
       "base": "http://other.com/",
-      "href": "http://%3g%78%63%30%2e%30%32%35%30%2E.01",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "invalid domain character"
+      "href": "http://%3g%78%63%30%2e%30%32%35%30%2e.01/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "%3g%78%63%30%2e%30%32%35%30%2e.01",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://192.168.0.1 hello",
       "base": "http://other.com/",
-      "href": "http://192.168.0.1 hello",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "invalid domain character"
+      "exception": "http://192.168.0.1 hello is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "http://０Ｘｃ０．０２５０．０１",
       "base": "http://other.com/",
-      "href": "http://０Ｘｃ０．０２５０．０１",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "non-ASCII domains are not supported yet"
+      "href": "http://0xc0.0250.01/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "0xc0.0250.01",
+      "port": "",
+      "pathname": "/",
+      "search": "",
+      "hash": ""
     },
     {
       "input": "http://[google.com]",
       "base": "http://other.com/",
-      "href": "http://[google.com]",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "invalid IPv6 address"
+      "exception": "http://[google.com] is not a valid URL.",
+      "protocol": ":"
     },
     {
       "input": "http://foo:💩@example.com/bar",
@@ -3677,25 +3254,382 @@
       "username": "foo",
       "password": "%F0%9F%92%A9",
       "hostname": "example.com",
-      "port": null,
+      "port": "",
       "pathname": "/bar",
-      "search": null,
-      "hash": null,
-      "exception": null
+      "search": "",
+      "hash": ""
     },
     {
       "input": "x",
       "base": "test:test",
-      "href": "x",
-      "protocol": ":",
-      "username": null,
-      "password": null,
-      "hostname": null,
-      "port": null,
-      "pathname": null,
-      "search": null,
-      "hash": null,
-      "exception": "relative URL with a non-relative base"
+      "exception": "x is not a valid URL.",
+      "protocol": ":"
     }
-  ]
+  ],
+  "setters": {
+    "href": [
+      {
+        "testname": "setAll",
+        "url": "foo:",
+        "value": "http://user:pass@host:99/path?search#hash",
+        "tests": {
+          "href": "http://user:pass@host:99/path?search#hash",
+          "protocol": "http:",
+          "username": "user",
+          "password": "pass",
+          "hostname": "host",
+          "port": "99",
+          "pathname": "/path",
+          "search": "?search",
+          "hash": "#hash"
+        }
+      },
+      {
+        "testname": "resetAll",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "foo:",
+        "tests": {
+          "href": "foo:",
+          "protocol": "foo:",
+          "username": "",
+          "password": "",
+          "hostname": "",
+          "port": "",
+          "pathname": "",
+          "search": "",
+          "hash": ""
+        }
+      },
+      {
+        "testname": "error",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "http://localhost:badport",
+        "tests": {
+          "protocol": ":",
+          "exception": "http://localhost:badport is not a valid URL."
+        }
+      }
+    ],
+    "protocol": [
+      {
+        "testname": "withColon",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "foo:blahblahblah",
+        "tests": {
+          "href": "foo://user:pass@host:99/path?search#hash",
+          "protocol": "foo:"
+        }
+      },
+      {
+        "testname": "withoutColon",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "foo",
+        "tests": {
+          "href": "foo://user:pass@host:99/path?search#hash",
+          "protocol": "foo:"
+        }
+      },
+      {
+        "testname": "empty",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "",
+        "tests": {
+          "href": "http://user:pass@host:99/path?search#hash",
+          "protocol": "http:"
+        }
+      }
+    ],
+    "username": [
+      {
+        "testname": "relative",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "fred",
+        "tests": {
+          "href": "http://fred:pass@host:99/path?search#hash",
+          "username": "fred"
+        }
+      },
+      {
+        "testname": "userColon",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "fred:secret",
+        "tests": {
+          "href": "http://fred%3Asecret:pass@host:99/path?search#hash",
+          "username": "fred%3Asecret"
+        }
+      },
+      {
+        "testname": "mailto",
+        "url": "mailto:someone@example.com",
+        "value": "fred",
+        "tests": {
+          "href": "mailto:someone@example.com",
+          "username": ""
+        }
+      }
+    ],
+    "password": [
+      {
+        "testname": "relative",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "secret",
+        "tests": {
+          "href": "http://user:secret@host:99/path?search#hash",
+          "password": "secret"
+        }
+      },
+      {
+        "testname": "withHash",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "secret#blah",
+        "tests": {
+          "href": "http://user:secret%23blah@host:99/path?search#hash",
+          "password": "secret%23blah"
+        }
+      },
+      {
+        "testname": "mailto",
+        "url": "mailto:someone@example.com",
+        "value": "fred",
+        "tests": {
+          "href": "mailto:someone@example.com",
+          "password": ""
+        }
+      }
+    ],
+    "host": [
+      {
+        "testname": "relative",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "example.com",
+        "tests": {
+          "href": "http://user:pass@example.com:99/path?search#hash",
+          "hostname": "example.com",
+          "port": "99"
+        }
+      },
+      {
+        "testname": "hostColonPort",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "example.com:55",
+        "tests": {
+          "href": "http://user:pass@example.com:55/path?search#hash",
+          "hostname": "example.com",
+          "port": "55"
+        }
+      },
+      {
+        "testname": "hostColonGarbage",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "example.com:blahblahblah",
+        "tests": {
+          "href": "http://user:pass@example.com:99/path?search#hash",
+          "hostname": "example.com",
+          "port": "99"
+        }
+      },
+      {
+        "testname": "hostHash",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "example.com#55",
+        "tests": {
+          "href": "http://user:pass@example.com:99/path?search#hash",
+          "hostname": "example.com",
+          "port": "99"
+        }
+      },
+      {
+        "testname": "mailto",
+        "url": "mailto:someone@example.com",
+        "value": "fred",
+        "tests": {
+          "href": "mailto:someone@example.com",
+          "hostname": ""
+        }
+      }
+    ],
+    "hostname": [
+      {
+        "testname": "relative",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "example.com",
+        "tests": {
+          "href": "http://user:pass@example.com:99/path?search#hash",
+          "hostname": "example.com",
+          "port": "99"
+        }
+      },
+      {
+        "testname": "hostnameColon",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "example.com:blahblahblah",
+        "tests": {
+          "href": "http://user:pass@host:99/path?search#hash",
+          "hostname": "host",
+          "port": "99"
+        }
+      },
+      {
+        "testname": "mailto",
+        "url": "mailto:someone@example.com",
+        "value": "fred",
+        "tests": {
+          "href": "mailto:someone@example.com",
+          "hostname": ""
+        }
+      }
+    ],
+    "port": [
+      {
+        "testname": "relative",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": 55,
+        "tests": {
+          "href": "http://user:pass@host:55/path?search#hash",
+          "port": "55"
+        }
+      },
+      {
+        "testname": "portQuestion",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "55?blahblahblah",
+        "tests": {
+          "href": "http://user:pass@host:55/path?search#hash",
+          "port": "55"
+        }
+      },
+      {
+        "testname": "return",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "5\n5",
+        "tests": {
+          "href": "http://user:pass@host:5/path?search#hash",
+          "port": "5"
+        }
+      },
+      {
+        "testname": "garbage",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "blahblahblah",
+        "tests": {
+          "href": "http://user:pass@host:99/path?search#hash",
+          "port": "99"
+        }
+      },
+      {
+        "testname": "file",
+        "url": "file:///path",
+        "value": 55,
+        "tests": {
+          "href": "file:///path",
+          "port": ""
+        }
+      },
+      {
+        "testname": "mailto",
+        "url": "mailto:someone@example.com",
+        "value": 55,
+        "tests": {
+          "href": "mailto:someone@example.com",
+          "port": ""
+        }
+      }
+    ],
+    "pathname": [
+      {
+        "testname": "relative",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "fred",
+        "tests": {
+          "href": "http://user:pass@host:99/fred?search#hash",
+          "pathname": "/fred"
+        }
+      },
+      {
+        "testname": "relativeSlash",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "/fred",
+        "tests": {
+          "href": "http://user:pass@host:99/fred?search#hash",
+          "pathname": "/fred"
+        }
+      },
+      {
+        "testname": "relativeQuestion",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "fred?blahblahblah",
+        "tests": {
+          "href": "http://user:pass@host:99/fred%3Fblahblahblah?search#hash",
+          "pathname": "/fred%3Fblahblahblah"
+        }
+      },
+      {
+        "testname": "file",
+        "url": "file:///path",
+        "value": "fred",
+        "tests": {
+          "href": "file:///fred",
+          "pathname": "/fred"
+        }
+      },
+      {
+        "testname": "mailto",
+        "url": "mailto:someone@example.com",
+        "value": "fred",
+        "tests": {
+          "href": "mailto:someone@example.com",
+          "pathname": ""
+        }
+      }
+    ],
+    "search": [
+      {
+        "testname": "unadorned",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "fred",
+        "tests": {
+          "href": "http://user:pass@host:99/path?fred#hash",
+          "search": "?fred"
+        }
+      },
+      {
+        "testname": "question",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "?fred",
+        "tests": {
+          "href": "http://user:pass@host:99/path?fred#hash",
+          "search": "?fred"
+        }
+      },
+      {
+        "testname": "hash",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "fred#blah",
+        "tests": {
+          "href": "http://user:pass@host:99/path?fred%23blah#hash",
+          "search": "?fred%23blah"
+        }
+      }
+    ],
+    "hash": [
+      {
+        "testname": "unadorned",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "fred",
+        "tests": {
+          "href": "http://user:pass@host:99/path?search#fred",
+          "hash": "#fred"
+        }
+      },
+      {
+        "testname": "pound",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": "#fred",
+        "tests": {
+          "href": "http://user:pass@host:99/path?search#fred",
+          "hash": "#fred"
+        }
+      }
+    ]
+  }
 }

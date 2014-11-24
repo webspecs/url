@@ -5,7 +5,7 @@ fs.readFile('../reference-implementation/test/urltestparser.js', 'utf8', functio
   eval(script);
   fs.readFile('../reference-implementation/test/urltestdata.txt', 'utf8', function (err,data) {
     var tests = URLTestParser(data);
-    var results = [];
+    var constructorResults = [];
 
     for (var i=0; i<tests.length; i++) {
       var test = tests[i];
@@ -19,9 +19,13 @@ fs.readFile('../reference-implementation/test/urltestparser.js', 'utf8', functio
       value.input = test.input;
       value.base = test.base;
 
-      results.push(value);
+      constructorResults.push(value);
     }
 
-    console.log(JSON.stringify(results));
+    var results = {
+      useragent: "node.js " + process.versions.node,
+      constructor: constructorResults
+    }
+    console.log(JSON.stringify(results, undefined, 2));
   });
 });

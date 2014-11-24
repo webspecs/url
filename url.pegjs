@@ -868,7 +868,7 @@ DecimalByte
   one code point. 
 
   If any characters that remain are not decimal digits:
-    * If $startRule was not set, terminate processing with a
+    * If $input was not set, terminate processing with a
       <a>parse exception</a>.
     * Truncate $result starting with the first non-digit character.
     * Indicate a <a>conformance error</a>.

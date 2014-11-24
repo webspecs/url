@@ -19,6 +19,15 @@ public class testgalimatias {
   private GalimatiasParseException fatalErrorException;
 
   public void run() throws Exception {
+    String useragent = "unknown";
+
+    String[] paths = System.getProperty("java.class.path").split(":");
+    for (int i=0; i<paths.length; i++) {
+      if (paths[i].startsWith("galimatias-")) {
+        useragent = paths[i].substring(0, paths[i].lastIndexOf('.'));
+      }
+    }
+
     JSONArray tests = new JSONArray(new JSONTokener(new FileInputStream("urltestdata.json")));
 
     HashMap<String, Integer> DEFAULT_PORTS = new HashMap<String, Integer>();
@@ -92,6 +101,11 @@ public class testgalimatias {
       }
       results.put(result);
     }
-    System.out.println(results.toString());
+
+    JSONObject output = new JSONObject();
+    output.put("useragent", useragent);
+    output.put("constructor", results);
+
+    System.out.println(output.toString(2));
   }
 }

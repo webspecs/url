@@ -8,31 +8,31 @@ require 'addressable/uri'
 
 agents = {
   refimpl: {hash: 'refimpl'},
-  testdata: {hash: 'urltestdata'},
   addressable: {useragent: `gem list addressable`[/addressable \([.\d]+/]+')'},
-  chrome: {hash: 'ebd30ba133d8a3e8d960169eac331e55'},
-  firefox: {hash: 'ee760790701c58f8b65905d79ee4fa17'},
+  chrome: {hash: 'chrome'},
+  firefox: {hash: 'firefox'},
   galimatias: {hash: 'galimatias'},
-  ie: {hash: '965e6bf062811c6e7239075dbd3fc93a'},
+  ie: {hash: 'ie'},
   nodejs: {hash: 'nodejs'},
-  opera: {hash: '8d6f340b1766498cc221ac00e4a18d53'},
+  opera: {hash: 'opera'},
   rust: {hash: 'rusturl'},
-  safari: {hash: '89a2e4c9ca51432181b8a635857601f3'},
+  safari: {hash: 'safari'},
 }
 
 results = {}
 agents.keys.each do |agent|
   next if agent == :addressable
 
-  File.open("useragent-results/#{agents[agent][:hash]}") do |file|
-    hash = file.gets
-    agents[agent][:useragent] = file.gets
-    JSON.parse(file.gets).each do |result|
+  hash = agents[agent][:hash]
+  File.open("useragent-results/#{hash}") do |file|
+    json = JSON.parse(file.read)
+    agents[agent][:useragent] = json['useragent']
+    json['constructor'].each do |result|
       hash = Digest::MD5.hexdigest("#{result['input']}|#{result['base']}")
       results[hash] ||= {}
       results[hash][agent] = result
 
-      if agent == :testdata
+      if agent == :refimpl
         result['protocol'] = "#{result.delete('scheme')}:" if result['scheme']
         result['hostname'] = result.delete('host') if result['host']
         result['pathname'] = result.delete('path') if result['path']
@@ -87,7 +87,7 @@ _html do
     if browser_only
       value = value.dup
       value.keys.each do |key|
-        unless %(refimpl testdata chrome firefox ie safari).include? key.to_s
+        unless %(refimpl chrome firefox ie safari).include? key.to_s
           value.delete key 
         end
       end
@@ -107,11 +107,11 @@ _html do
 
       results.each_with_index do |(key, results), index|
         addressable = results[:addressable]
-        testdata = results[:testdata]
+        refimpl = results[:refimpl]
         consensus = evaluate(results)
         if consensus.values.any? {|value| value.nil?}
           klass = 'open'
-        elsif testdata.any? {|prop, value| consensus[prop] != value.to_s}
+        elsif refimpl.any? {|prop, value| consensus[prop] != value.to_s}
           klass = 'problem'
         elsif addressable and addressable.any? {|prop, value| consensus[prop] != value.to_s}
           klass = 'diff'
@@ -133,10 +133,10 @@ _html do
         _tr_ class: klass do
           _td index
           _td do
-            _a testdata['input'].inspect, href: key[0..9] + query
+            _a refimpl['input'].inspect, href: key[0..9] + query
           end
           _td do
-            _a testdata['base'], href: key[0..9] + query
+            _a refimpl['base'], href: key[0..9] + query
           end
           _td do
             if klass == 'diff' or not browser_only
@@ -181,13 +181,8 @@ _html do
   else
     path = _.path_info.to_s[/\w+/]
     row = results[results.keys.find {|key| key.start_with? path}]
-    if row and row[:testdata]
-      _title row[:testdata]['input'].inspect
-
-      row[:testdata]['exception'] = row[:refimpl]['exception']
-      row[:testdata]['exception_extension'] = 
-        row[:refimpl]['exception_extension']
-      row.delete(:refimpl)
+    if row and row[:refimpl]
+      _title row[:refimpl]['input'].inspect
 
       cols = []
       row.each do |agent, data|
@@ -212,7 +207,7 @@ _html do
 
       _p! do
         _b "Input"
-        input = row[:testdata]['input'].inspect
+        input = row[:refimpl]['input'].inspect
         _ ": #{input}"
         if input =~ /[^\x20-\x7E]/
           input.gsub! /[^\x20-\x7E]/  do |c| 
@@ -223,7 +218,7 @@ _html do
       end
       _p! do
         _b "Base"
-        _": #{row[:testdata]['base'].inspect}"
+        _": #{row[:refimpl]['base'].inspect}"
       end
 
       _h2_ 'Results'
