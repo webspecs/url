@@ -16,3 +16,4 @@ reference-implementation/test/urltestparser.js
 reference-implementation/test/urlsettest.js
 url.html
 url.pegjson
+node_modules/
