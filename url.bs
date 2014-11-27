@@ -921,7 +921,8 @@ optionally with an <a>encoding</a>
    <var>input</var>.
   </ol>
 
- <li><p>If <var>base</var> is not given, set it to null.
+ <li><p>If <var>base</var> is not given, set it a new <a>URL</a> with
+ <code>scheme</code> set to <code>about</code>.
 
  <li><p>If <var>encoding override</var> is not given, set it to
  <a>utf-8</a>.
@@ -961,13 +962,6 @@ exceptions</dfn> terminate parsing and must be implemented by all conforming
 implementations.  By contrast, user agents are encouraged, but not required,
 to expose <dfn title='conformance error'>conformance errors</dfn> somehow.
 
-Note: the following subsections are intended to replace steps 5-8 in the
-<a href="https://url.spec.whatwg.org/#concept-basic-url-parser">basic url
-parser</a>.  It also works out better if step 3 were to default
-<var>base</var> to a
-non-null value, ideally one with a non-relative scheme, for example:
-<code>{'scheme': 'about'}</code>.
-
 
 <h4 id=url>url</h4>
 
@@ -988,17 +982,17 @@ Sequence:
 </pre>
 
 There are three unique syntaxes for
-<a href="https://url.spec.whatwg.org/#concept-url">URL</a>s,
+<a href="#concept-url">URL</a>s,
 each returning a set of components, namely one or more of the following:
-<a href="https://url.spec.whatwg.org/#concept-url-scheme">scheme</a>,
-<a href="https://url.spec.whatwg.org/#concept-url-scheme-data">scheme-data</a>,
-<a href="https://url.spec.whatwg.org/#concept-url-username">username</a>,
-<a href="https://url.spec.whatwg.org/#concept-url-password">password</a>,
-<a href="https://url.spec.whatwg.org/#concept-url-host">host</a>,
-<a href="https://url.spec.whatwg.org/#concept-url-port">port</a>,
-<a href="https://url.spec.whatwg.org/#concept-url-path">path</a>,
-<a href="https://url.spec.whatwg.org/#concept-url-query">query</a>, and
-<a href="https://url.spec.whatwg.org/#concept-url-fragment">fragment</a>.
+<a href="#concept-url-scheme">scheme</a>,
+<a href="#concept-url-scheme-data">scheme-data</a>,
+<a href="#concept-url-username">username</a>,
+<a href="#concept-url-password">password</a>,
+<a href="#concept-url-host">host</a>,
+<a href="#concept-url-port">port</a>,
+<a href="#concept-url-path">path</a>,
+<a href="#concept-url-query">query</a>, and
+<a href="#concept-url-fragment">fragment</a>.
 
 Initialize <code>result</code> to the value of <code class=grammar-rule><a href=#file-url>file-url</a></code>, <code class=grammar-rule><a href=#non-relative-url>non-relative-url</a></code>, or
 <code class=grammar-rule><a href=#relative-url>relative-url</a></code> depending on which one first matches the input, and then modify
@@ -1007,7 +1001,7 @@ Initialize <code>result</code> to the value of <code class=grammar-rule><a href=
   * If <code class=grammar-rule><a href=#query>query</a></code> is present in the input, set <code>result.query</code> to this value.
   * If <code class=grammar-rule><a href=#fragment>fragment</a></code> is present in the input, set <code>result.fragment</code> to this value.
   * If <code>result.scheme</code> has a 
-    <a href="https://url.spec.whatwg.org/#default-port">default port</a>,
+    <a>default port</a>,
     and if <code>result.port</code> is equal to that default,
     then delete the <code>port</code> property from <code>result</code>.
 
@@ -1118,8 +1112,7 @@ Sequence:
 <div class=example><code>javascript:alert("Hello, world!");</code></div>
 
 <li><em>This rule is only to be evaluated if the value of <code class=grammar-rule><a href=#scheme>scheme</a></code> does not
-match any <a href="https://url.spec.whatwg.org/#relative-scheme">relative
-scheme</a></em>.
+match any <a>relative scheme</a></em>.
 
 Set <code>encoding override</code> to "<code>utf-<code>8</code></code>".
 
@@ -1348,8 +1341,7 @@ a commercial at (<code>U+<code>0040</code></code>),
 a colon (<code>U+003A</code>), 
 or the end of string is encountered.
 Return the <a title=cleanse>cleansed</a> result using the
-<a href="https://url.spec.whatwg.org/#default-encode-set">default encode
- set</a>.
+<a>default encode set</a>.
 
 <h4 id=password>password</h4>
 
@@ -1366,8 +1358,7 @@ a number sign (<code>U+<code>0023</code></code>),
 a commercial at (<code>U+<code>0040</code></code>), 
 or the end of string is encountered.
 Return the <a title=cleanse>cleansed</a> result using the
-<a href="https://url.spec.whatwg.org/#default-encode-set">default encode
- set</a>.
+<a>default encode set</a>.
 
 <h4 id=host>host</h4>
 
@@ -1395,10 +1386,10 @@ Otherwise:
     present in the input, remove those characters and indicate a
     <a>conformance error</a>.
   * Let <code>domain</code> be the result of
-    <a href="https://url.spec.whatwg.org/#concept-host-parser">host
+    <a href=#concept-host-parser>host
     parsing</a> the value.  If this results in a failure,
     terminate processing with a <a>parse exception</a>.  If 
-    <a href="https://url.spec.whatwg.org/#concept-host-parser">host
+    <a href=#concept-host-parser>host
     parsing</a> returned a value that was different than what was
     provided as input, indicate a <a>conformance error</a>.
   * Try parsing <code>domain</code> as an <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>. If this succeeds, replace <code>domain</code>
@@ -1460,7 +1451,7 @@ Sequence:
      the sum of the lengths of the <code>pre</code> and <code>post</code> array is seven.
  * Append <code>last</code> to <code>pre</code>.
 
- Return the <a href=https://url.spec.whatwg.org/#concept-ipv6-serializer>ipv6
+ Return the <a href=#concept-ipv6-serializer>ipv6
  serialized</a> value of <code>pre</code> as a string.
 
 Note: the resolution of
@@ -1637,8 +1628,7 @@ a <a>conformance error</a>.
 Extract all the pathnames into an array.  Process each name as follows:
 
   * <a title=cleanse>Cleanse</a> the name using the
-    <a href="https://url.spec.whatwg.org/#default-encode-set">default encode
-    set</a> as the encode set.
+    <a>default encode set</a> as the encode set.
   * If the name is "<code>.</code>" or "<code>%2e</code>" (case insensitive),
     then process this name based on the position in the array:
       * If the position is other than the last, remove the name from the list.
@@ -1703,8 +1693,7 @@ ZeroOrMore:
 
 Consume all remaining characters in the input.  
 Return the <a title=cleanse>cleansed</a> result using the
-<a href="https://url.spec.whatwg.org/#simple-encode-set">simple encode
- set</a>.
+<a>simple encode set</a>.
 
 Note: the resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27252">bug <code>27252</code></a>
@@ -1740,10 +1729,9 @@ ZeroOrMore:
 If <code>url.scheme_data</code> is not null, return.
 
 Set <code>url.username</code> to the 
-<a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a>
+<a href=#percent-encode>percent encoded</a>
 value using the
-<a href="https://url.spec.whatwg.org/#username-encode-set">username encode
-set</a>.
+<a>username encode set</a>.
 
 <h4 id=set-password>set-password</h4>
 
@@ -1755,10 +1743,9 @@ ZeroOrMore:
 If <code>url.scheme_data</code> is not null, return.
 
 Set <code>url.password</code> to the 
-<a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a> value
+<a href=#percent-encode>percent encoded</a> value
 using the
-<a href="https://url.spec.whatwg.org/#username-encode-set">password encode
-set</a>.
+<a>password encode set</a>.
 
 <h4 id=set-host>set-host</h4>
 
@@ -1843,7 +1830,7 @@ Sequence:
 </pre>
 
 Set <code>url.query</code> to the
-<a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a> value
+<a href=#percent-encode>percent encoded</a> value
 after the initial question mark (<code>U+003F</code>), if any, using the <a>query encode
 set</a>.
 
@@ -1858,18 +1845,16 @@ Sequence:
 </pre>
 
 Set <code>url.fragment</code> to the 
-<a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a> value
+<a href=#percent-encode>percent encoded</a> value
 after the initial number sign (<code>U+<code>0023</code></code>), if any, using the
-<a href="https://url.spec.whatwg.org/#simple-encode-set">simple encode
-set</a>
+<a>simple encode set</a>
 
 Common Functions {#common-functions}
 ---
 
 To <dfn>cleanse</dfn> a string given an <var>encode set</var>, run these steps:
 
- * If any character in the string not a
-     <a href="https://url.spec.whatwg.org/#url-code-points">URL code point</a>
+ * If any character in the string not a <a>URL code point</a>
      or a percent sign (<code>U+0025</code>), indicate a <a>conformance
      error</a>.
 
@@ -1884,7 +1869,7 @@ To <dfn>cleanse</dfn> a string given an <var>encode set</var>, run these steps:
  * if the <var>encode set</var> is non-null,
     first <a href="https://encoding.spec.whatwg.org/#encode">encode</a> the
     result using the <code>encoding override</code>, then
-    <a href="https://url.spec.whatwg.org/#percent-encode">percent encode</a>
+    <a>percent encode</a>
     that result using the provided <var>encode set</var>.
 
  * Return the result as a string.

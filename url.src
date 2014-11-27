@@ -932,7 +932,8 @@ optionally with an <a>encoding</a>
    <var>input</var>.
   </ol>
 
- <li><p>If <var>base</var> is not given, set it to null.
+ <li><p>If <var>base</var> is not given, set it a new <a>URL</a> with
+ <code>scheme</code> set to <code>about</code>.
 
  <li><p>If <var>encoding override</var> is not given, set it to
  <a>utf-8</a>.
@@ -972,13 +973,6 @@ exceptions</dfn> terminate parsing and must be implemented by all conforming
 implementations.  By contrast, user agents are encouraged, but not required,
 to expose <dfn title='conformance error'>conformance errors</dfn> somehow.
 
-Note: the following subsections are intended to replace steps 5-8 in the
-<a href="https://url.spec.whatwg.org/#concept-basic-url-parser">basic url
-parser</a>.  It also works out better if step 3 were to default
-<var>base</var> to a
-non-null value, ideally one with a non-relative scheme, for example:
-<code>{'scheme': 'about'}</code>.
-
 #include <url.pegjs>
 
 Common Functions {#common-functions}
@@ -986,8 +980,7 @@ Common Functions {#common-functions}
 
 To <dfn>cleanse</dfn> a string given an <var>encode set</var>, run these steps:
 
- * If any character in the string not a
-     <a href="https://url.spec.whatwg.org/#url-code-points">URL code point</a>
+ * If any character in the string not a <a>URL code point</a>
      or a percent sign (<code>U+0025</code>), indicate a <a>conformance
      error</a>.
 
@@ -1002,7 +995,7 @@ To <dfn>cleanse</dfn> a string given an <var>encode set</var>, run these steps:
  * if the <var>encode set</var> is non-null,
     first <a href="https://encoding.spec.whatwg.org/#encode">encode</a> the
     result using the <code>encoding override</code>, then
-    <a href="https://url.spec.whatwg.org/#percent-encode">percent encode</a>
+    <a>percent encode</a>
     that result using the provided <var>encode set</var>.
 
  * Return the result as a string.

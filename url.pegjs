@@ -76,17 +76,17 @@
 
 /*
    There are three unique syntaxes for
-   <a href="https://url.spec.whatwg.org/#concept-url">URL</a>s,
+   <a href="#concept-url">URL</a>s,
    each returning a set of components, namely one or more of the following:
-   <a href="https://url.spec.whatwg.org/#concept-url-scheme">scheme</a>,
-   <a href="https://url.spec.whatwg.org/#concept-url-scheme-data">scheme-data</a>,
-   <a href="https://url.spec.whatwg.org/#concept-url-username">username</a>,
-   <a href="https://url.spec.whatwg.org/#concept-url-password">password</a>,
-   <a href="https://url.spec.whatwg.org/#concept-url-host">host</a>,
-   <a href="https://url.spec.whatwg.org/#concept-url-port">port</a>,
-   <a href="https://url.spec.whatwg.org/#concept-url-path">path</a>,
-   <a href="https://url.spec.whatwg.org/#concept-url-query">query</a>, and
-   <a href="https://url.spec.whatwg.org/#concept-url-fragment">fragment</a>.
+   <a href="#concept-url-scheme">scheme</a>,
+   <a href="#concept-url-scheme-data">scheme-data</a>,
+   <a href="#concept-url-username">username</a>,
+   <a href="#concept-url-password">password</a>,
+   <a href="#concept-url-host">host</a>,
+   <a href="#concept-url-port">port</a>,
+   <a href="#concept-url-path">path</a>,
+   <a href="#concept-url-query">query</a>, and
+   <a href="#concept-url-fragment">fragment</a>.
 
    Initialize $result to the value of @FileUrl, @NonRelativeUrl, or
    @RelativeUrl depending on which one first matches the input, and then modify
@@ -95,7 +95,7 @@
      * If @Query is present in the input, set $result.query to this value.
      * If @Fragment is present in the input, set $result.fragment to this value.
      * If $result.scheme has a 
-       <a href="https://url.spec.whatwg.org/#default-port">default port</a>,
+       <a>default port</a>,
        and if $result.port is equal to that default,
        then delete the $port property from $result.
 
@@ -222,8 +222,7 @@ FileUrl
   <div class=example><code>javascript:alert("Hello, world!");</code></div>
 
   <li><em>This rule is only to be evaluated if the value of @Scheme does not
-  match any <a href="https://url.spec.whatwg.org/#relative-scheme">relative
-  scheme</a></em>.
+  match any <a>relative scheme</a></em>.
 
   Set <code>encoding override</code> to "utf-8".
 
@@ -511,8 +510,7 @@ Authority
   a colon (U+003A), 
   or the end of string is encountered.
   Return the <a title=cleanse>cleansed</a> result using the
-  <a href="https://url.spec.whatwg.org/#default-encode-set">default encode
-   set</a>.
+  <a>default encode set</a>.
 */
 User
   = user:[^/\\?#@:]*
@@ -529,8 +527,7 @@ User
   a commercial at (U+0040), 
   or the end of string is encountered.
   Return the <a title=cleanse>cleansed</a> result using the
-  <a href="https://url.spec.whatwg.org/#default-encode-set">default encode
-   set</a>.
+  <a>default encode set</a>.
 */
 Password
   = password:[^/\\?#@]*
@@ -551,10 +548,10 @@ Password
        present in the input, remove those characters and indicate a
        <a>conformance error</a>.
      * Let $domain be the result of
-       <a href="https://url.spec.whatwg.org/#concept-host-parser">host
+       <a href=#concept-host-parser>host
        parsing</a> the value.  If this results in a failure,
        terminate processing with a <a>parse exception</a>.  If 
-       <a href="https://url.spec.whatwg.org/#concept-host-parser">host
+       <a href=#concept-host-parser>host
        parsing</a> returned a value that was different than what was
        provided as input, indicate a <a>conformance error</a>.
      * Try parsing $domain as an @IPv4Addr. If this succeeds, replace $domain
@@ -677,7 +674,7 @@ Host
        the sum of the lengths of the $pre and $post array is seven.
    * Append $last to $pre.
 
-   Return the <a href=https://url.spec.whatwg.org/#concept-ipv6-serializer>ipv6
+   Return the <a href=#concept-ipv6-serializer>ipv6
    serialized</a> value of $pre as a string.
 
   Note: the resolution of
@@ -910,8 +907,7 @@ Port
   Extract all the pathnames into an array.  Process each name as follows:
 
     * <a title=cleanse>Cleanse</a> the name using the
-      <a href="https://url.spec.whatwg.org/#default-encode-set">default encode
-      set</a> as the encode set.
+      <a>default encode set</a> as the encode set.
     * If the name is "." or "%2e" (case insensitive),
       then process this name based on the position in the array:
         * If the position is other than the last, remove the name from the list.
@@ -1010,8 +1006,7 @@ Query
 /*
   Consume all remaining characters in the input.  
   Return the <a title=cleanse>cleansed</a> result using the
-  <a href="https://url.spec.whatwg.org/#simple-encode-set">simple encode
-   set</a>.
+  <a>simple encode set</a>.
 
   Note: the resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27252">bug 27252</a>
@@ -1043,10 +1038,9 @@ setProtocol
   If $url.scheme_data is not null, return.
 
   Set $url.username to the 
-  <a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a>
+  <a href=#percent-encode>percent encoded</a>
   value using the
-  <a href="https://url.spec.whatwg.org/#username-encode-set">username encode
-  set</a>.
+  <a>username encode set</a>.
 */
 setUsername
   = user:(.*)
@@ -1060,10 +1054,9 @@ setUsername
   If $url.scheme_data is not null, return.
 
   Set $url.password to the 
-  <a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a> value
+  <a href=#percent-encode>percent encoded</a> value
   using the
-  <a href="https://url.spec.whatwg.org/#username-encode-set">password encode
-  set</a>.
+  <a>password encode set</a>.
 */
 setPassword
   = password:(.*)
@@ -1130,7 +1123,7 @@ setPathname
 
 /*
   Set $url.query to the
-  <a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a> value
+  <a href=#percent-encode>percent encoded</a> value
   after the initial question mark (U+003F), if any, using the <a>query encode
   set</a>.
 */
@@ -1142,10 +1135,9 @@ setSearch
 
 /*
   Set $url.fragment to the 
-  <a href=https://url.spec.whatwg.org/#percent-encode>percent encoded</a> value
+  <a href=#percent-encode>percent encoded</a> value
   after the initial number sign (U+0023), if any, using the
-  <a href="https://url.spec.whatwg.org/#simple-encode-set">simple encode
-  set</a>
+  <a>simple encode set</a>
 */
 setHash
   = '#'? fragment:(.*)
