@@ -963,7 +963,7 @@ implementations.  By contrast, user agents are encouraged, but not required,
 to expose <dfn title='conformance error'>conformance errors</dfn> somehow.
 
 
-<h4 id=url>url</h4>
+<h4 id=url class=no-toc>url</h4>
 
 <pre class=railroad>
 Sequence:
@@ -1007,7 +1007,7 @@ Initialize <code>result</code> to the value of <code class=grammar-rule><a href=
 
 Return <code>result</code>.
 
-<h4 id=file-url>file-url</h4>
+<h4 id=file-url class=no-toc>file-url</h4>
 
 <pre class=railroad>
 Choice:
@@ -1100,7 +1100,7 @@ specification.  People with input on this matter are encourage to add
 comments to
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=23550">bug <code>23550</code></a>.  
 
-<h4 id=non-relative-url>non-relative-url</h4>
+<h4 id=non-relative-url class=no-toc>non-relative-url</h4>
 
 <pre class=railroad>
 Sequence:
@@ -1129,7 +1129,7 @@ Note: the resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27233">bug <code>27233</code></a>
 may add support for relative URLs for unknown schemes.
 
-<h4 id=relative-url>relative-url</h4>
+<h4 id=relative-url class=no-toc>relative-url</h4>
 
 <pre class=railroad>
 Choice:
@@ -1234,7 +1234,7 @@ Examples and evaluation instructions for each:
 
 Return <code>result</code>.
 
-<h4 id=file-like-scheme>file-like-scheme</h4>
+<h4 id=file-like-scheme class=no-toc>file-like-scheme</h4>
 
 <pre class=railroad>
 T: file
@@ -1244,7 +1244,7 @@ Only one "file like" relative scheme is defined at this time:
 "<code>file</code>".  This scheme is to be matched case insensitively.
 This production rule is to return the scheme value, lowercased.
 
-<h4 id=non-file-relative-scheme>non-file-relative-scheme</h4>
+<h4 id=non-file-relative-scheme class=no-toc>non-file-relative-scheme</h4>
 
 <pre class=railroad>
 Choice:
@@ -1268,7 +1268,7 @@ Note: the resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug <code>26338</code></a>
 may change how encoding override is handled.
 
-<h4 id=scheme>scheme</h4>
+<h4 id=scheme class=no-toc>scheme</h4>
 
 <pre class=railroad>
 Sequence:
@@ -1283,7 +1283,7 @@ special characters: hyphen-minus (<code>U+002D</code>), plus sign (<code>U+002B<
 (<code>U+002D</code>).
 Return the results as a lowercased string.
 
-<h4 id=authority>authority</h4>
+<h4 id=authority class=no-toc>authority</h4>
 
 <pre class=railroad>
 Sequence:
@@ -1325,7 +1325,7 @@ Initialize <code>result</code> to an empty object, then modify it as follows:
 
 Return <code>result</code>.
 
-<h4 id=user>user</h4>
+<h4 id=user class=no-toc>user</h4>
 
 <pre class=railroad>
 ZeroOrMore:
@@ -1343,7 +1343,7 @@ or the end of string is encountered.
 Return the <a title=cleanse>cleansed</a> result using the
 <a>default encode set</a>.
 
-<h4 id=password>password</h4>
+<h4 id=password class=no-toc>password</h4>
 
 <pre class=railroad>
 ZeroOrMore:
@@ -1360,7 +1360,7 @@ or the end of string is encountered.
 Return the <a title=cleanse>cleansed</a> result using the
 <a>default encode set</a>.
 
-<h4 id=host>host</h4>
+<h4 id=host class=no-toc>host</h4>
 
 <pre class=railroad>
 Choice:
@@ -1408,7 +1408,7 @@ Note: the resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27266">bug <code>27266</code></a>
 may change the way domain names and trailing dots are handled.
 
-<h4 id=ipv6addr>ipv6addr</h4>
+<h4 id=ipv6addr class=no-toc>ipv6addr</h4>
 
 <pre class=railroad>
 Sequence:
@@ -1458,7 +1458,7 @@ Note: the resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27234">bug <code>27234</code></a>
 may add support for link-local addresses.
 
-<h4 id=ipv4addr>ipv4addr</h4>
+<h4 id=ipv4addr class=no-toc>ipv4addr</h4>
 
 <pre class=railroad>
 Sequence:
@@ -1507,7 +1507,7 @@ Note: the resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug <code>26431</code></a>
 may change this definition.
 
-<h4 id=number>number</h4>
+<h4 id=number class=no-toc>number</h4>
 
 <pre class=railroad>
 Choice:
@@ -1532,7 +1532,7 @@ Parse the values as hexadecimal, octal, and decimal integers respectively.
 Indicate a <a>conformance error</a> if the value is hexadecimal or octal.
 Return the result as an integer.
 
-<h4 id=h16>h16</h4>
+<h4 id=h16 class=no-toc>h16</h4>
 
 <pre class=railroad>
 Sequence:
@@ -1547,7 +1547,7 @@ Sequence:
 
 Return up to four hexadecimal characters as a string.
 
-<h4 id=ls32>ls32</h4>
+<h4 id=ls32 class=no-toc>ls32</h4>
 
 <pre class=railroad>
 Sequence:
@@ -1562,7 +1562,7 @@ Sequence:
 
 Return four decimal bytes separated by full stop characters as a string.
 
-<h4 id=decimal-byte>decimal-byte</h4>
+<h4 id=decimal-byte class=no-toc>decimal-byte</h4>
 
 <pre class=railroad>
 Sequence:
@@ -1577,7 +1577,7 @@ Decimal bytes are a string of up to three decimal digits.  If the results
 converted to an integer are greater than <code>255</code>, terminate processing with
 a <a>parse exception</a>.
 
-<h4 id=port>port</h4>
+<h4 id=port class=no-toc>port</h4>
 
 <pre class=railroad>
 ZeroOrMore:
@@ -1607,7 +1607,7 @@ Note: the resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26446">bug <code>26446</code></a>
 may change port from a string to a number.
 
-<h4 id=path>path</h4>
+<h4 id=path class=no-toc>path</h4>
 
 <pre class=railroad>
 Sequence:
@@ -1649,7 +1649,7 @@ Note: the resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=24163">bug <code>24163</code></a>
 may change what characters to escape in the path.
 
-<h4 id=scheme-data>scheme-data</h4>
+<h4 id=scheme-data class=no-toc>scheme-data</h4>
 
 <pre class=railroad>
 ZeroOrMore:
@@ -1665,7 +1665,7 @@ Note: the resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=24246">bug <code>24246</code></a>
 may change what characters to escape in the scheme data.
 
-<h4 id=query>query</h4>
+<h4 id=query class=no-toc>query</h4>
 
 <pre class=railroad>
 ZeroOrMore:
@@ -1684,7 +1684,7 @@ Note: the resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27280">bug <code>27280</code></a>
 may change how code points < <code>0x20</code> are handled.
 
-<h4 id=fragment>fragment</h4>
+<h4 id=fragment class=no-toc>fragment</h4>
 
 <pre class=railroad>
 ZeroOrMore:
@@ -1706,7 +1706,7 @@ may add support for parsing URLs without decoding the fragment identifier.
 Setter Rules {#setter-rules}
 ---
 
-<h4 id=set-protocol>set-protocol</h4>
+<h4 id=set-protocol class=no-toc>set-protocol</h4>
 
 <pre class=railroad>
 Sequence:
@@ -1719,7 +1719,7 @@ Sequence:
 
 Set <code>url.scheme</code> to value returned by <code class=grammar-rule><a href=#scheme>scheme</a></code>.
 
-<h4 id=set-username>set-username</h4>
+<h4 id=set-username class=no-toc>set-username</h4>
 
 <pre class=railroad>
 ZeroOrMore:
@@ -1729,11 +1729,11 @@ ZeroOrMore:
 If <code>url.scheme_data</code> is not null, return.
 
 Set <code>url.username</code> to the 
-<a href=#percent-encode>percent encoded</a>
+<a title="percent encode">percent encoded</a>
 value using the
 <a>username encode set</a>.
 
-<h4 id=set-password>set-password</h4>
+<h4 id=set-password class=no-toc>set-password</h4>
 
 <pre class=railroad>
 ZeroOrMore:
@@ -1743,11 +1743,11 @@ ZeroOrMore:
 If <code>url.scheme_data</code> is not null, return.
 
 Set <code>url.password</code> to the 
-<a href=#percent-encode>percent encoded</a> value
+<a title="percent encode">percent encoded</a> value
 using the
 <a>password encode set</a>.
 
-<h4 id=set-host>set-host</h4>
+<h4 id=set-host class=no-toc>set-host</h4>
 
 <pre class=railroad>
 Sequence:
@@ -1770,7 +1770,7 @@ Set <code>url.host</code> to the value returned by <code class=grammar-rule><a h
 
 If <code class=grammar-rule><a href=#port>port</a></code> is present, set <code>result.port</code> to its value.
 
-<h4 id=set-hostname>set-hostname</h4>
+<h4 id=set-hostname class=no-toc>set-hostname</h4>
 
 <pre class=railroad>
 Sequence:
@@ -1785,7 +1785,7 @@ If <code>url.scheme_data</code> is not null, return.
 
 Set <code>url.host</code> to the value returned by <code class=grammar-rule><a href=#host>host</a></code>.
 
-<h4 id=set-port>set-port</h4>
+<h4 id=set-port class=no-toc>set-port</h4>
 
 <pre class=railroad>
 Sequence:
@@ -1800,7 +1800,7 @@ If <code>url.scheme_data</code> is not null or <code>url.scheme</code> is "<code
 
 Set <code>url.port</code> to the value returned by <code class=grammar-rule><a href=#port>port</a></code>.
 
-<h4 id=set-pathname>set-pathname</h4>
+<h4 id=set-pathname class=no-toc>set-pathname</h4>
 
 <pre class=railroad>
 Sequence:
@@ -1819,7 +1819,7 @@ If <code>url.scheme_data</code> is not null, return.
 
 Set <code>url.path</code> to the value returned by <code class=grammar-rule><a href=#path>path</a></code>.
 
-<h4 id=set-search>set-search</h4>
+<h4 id=set-search class=no-toc>set-search</h4>
 
 <pre class=railroad>
 Sequence:
@@ -1830,11 +1830,11 @@ Sequence:
 </pre>
 
 Set <code>url.query</code> to the
-<a href=#percent-encode>percent encoded</a> value
+<a title="percent encode">percent encoded</a> value
 after the initial question mark (<code>U+003F</code>), if any, using the <a>query encode
 set</a>.
 
-<h4 id=set-hash>set-hash</h4>
+<h4 id=set-hash class=no-toc>set-hash</h4>
 
 <pre class=railroad>
 Sequence:
@@ -1845,7 +1845,7 @@ Sequence:
 </pre>
 
 Set <code>url.fragment</code> to the 
-<a href=#percent-encode>percent encoded</a> value
+<a title="percent encode">percent encoded</a> value
 after the initial number sign (<code>U+<code>0023</code></code>), if any, using the
 <a>simple encode set</a>
 

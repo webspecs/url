@@ -1038,7 +1038,7 @@ setProtocol
   If $url.scheme_data is not null, return.
 
   Set $url.username to the 
-  <a href=#percent-encode>percent encoded</a>
+  <a title="percent encode">percent encoded</a>
   value using the
   <a>username encode set</a>.
 */
@@ -1054,7 +1054,7 @@ setUsername
   If $url.scheme_data is not null, return.
 
   Set $url.password to the 
-  <a href=#percent-encode>percent encoded</a> value
+  <a title="percent encode">percent encoded</a> value
   using the
   <a>password encode set</a>.
 */
@@ -1123,7 +1123,7 @@ setPathname
 
 /*
   Set $url.query to the
-  <a href=#percent-encode>percent encoded</a> value
+  <a title="percent encode">percent encoded</a> value
   after the initial question mark (U+003F), if any, using the <a>query encode
   set</a>.
 */
@@ -1135,7 +1135,7 @@ setSearch
 
 /*
   Set $url.fragment to the 
-  <a href=#percent-encode>percent encoded</a> value
+  <a title="percent encode">percent encoded</a> value
   after the initial number sign (U+0023), if any, using the
   <a>simple encode set</a>
 */

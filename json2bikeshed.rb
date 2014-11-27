@@ -103,7 +103,7 @@ output = StringIO.new
 rules.each do |rule|
   name = hyphenate(rule['name'])
   output.puts
-  output.puts "<h4 id=#{name}>#{name}</h4>"
+  output.puts "<h4 id=#{name} class=no-toc>#{name}</h4>"
 
   output.puts
   output.puts "<pre class=railroad>"
