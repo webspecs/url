@@ -29,13 +29,16 @@ Logo: https://resources.whatwg.org/logo-url.svg
   }
 #ifdef WEBSPECS
 
-  .big-issue, .XXX {
-    background: none repeat scroll 0 0 white;
-    border: medium solid red;
-    color: #E50000;
-    margin: 1em 0;
-    padding: 0.5em;
-  }
+.big-issue, .XXX { color: #E50000; background: white; border: solid red; padding: 0.5em; margin: 1em 0; }
+.big-issue > :first-child, .XXX > :first-child { margin-top: 0; }
+p .big-issue, p .XXX { line-height: 3em; }
+
+table { border-collapse: collapse; border-style: hidden hidden none hidden; }
+table thead, table tbody { border-bottom: solid; }
+table tbody th { text-align: left; }
+table tbody th:first-child { border-left: solid; }
+table td, table th { border-left: solid; border-right: solid; border-bottom:
+solid thin; vertical-align: top; padding: 0.2em; }
 #endif
 </style>
 
