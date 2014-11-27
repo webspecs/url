@@ -1,57 +1,71 @@
 require 'json'
+require 'stringio'
+
+source = File.read('url.src')
+config = File.read('.git/config')
+
+group = config[/\[remote "origin"\]\s+url =.*?:(.*?)\//, 1].upcase
+
+source.gsub!(/#ifdef.*?#endif\n/m) do |conditions|
+  result = nil
+  conditions.split(/^(#.*)\n/)[1..-2].each_slice(2) do |condition, text|
+    if ["#ifdef #{group}", '#else'].include? condition
+      result ||= text
+    end
+  end
+  result
+end
 
 def hyphenate(name)
   name.gsub(/([a-z])([A-Z])/, '\1-\2').downcase
 end
 
-def expression(node, indent)
+def expression(node, indent, output)
   if node['type'] == 'choice'
-    puts ''.ljust(indent) + 'Choice:'
+    output.puts ''.ljust(indent) + 'Choice:'
     node['alternatives'].each do |alternative|
-      expression(alternative, indent+2)
+      expression(alternative, indent+2, output)
     end
   elsif node['type'] == 'rule_ref'
-    puts ''.ljust(indent) + 'N: ' + hyphenate(node['name'])
+    output.puts ''.ljust(indent) + 'N: ' + hyphenate(node['name'])
   elsif node['type'] == 'literal'
-    puts ''.ljust(indent) + 'T: ' + node['value']
+    output.puts ''.ljust(indent) + 'T: ' + node['value']
   elsif node['type'] == 'any'
-    puts ''.ljust(indent) + 'T: any'
+    output.puts ''.ljust(indent) + 'T: any'
   elsif node['type'] == 'class'
     text = node['rawText'].sub('[^', '[').sub(']i', ']')
     if node['inverted']
-      puts ''.ljust(indent) + 'T: any except ' + text
+      output.puts ''.ljust(indent) + 'T: any except ' + text
     elsif text =~ /^\[\\?(.)\\?(.)\]$/
-      puts ''.ljust(indent) + 'Choice:'
-      puts ''.ljust(indent) + "  T: #{$1}"
-      puts ''.ljust(indent) + "  T: #{$2}"
+      output.puts ''.ljust(indent) + 'Choice:'
+      output.puts ''.ljust(indent) + "  T: #{$1}"
+      output.puts ''.ljust(indent) + "  T: #{$2}"
     else
-      puts ''.ljust(indent) + 'T: any of ' + text
+      output.puts ''.ljust(indent) + 'T: any of ' + text
     end
   elsif node['type'] == 'action'
-    expression(node['expression'], indent)
+    expression(node['expression'], indent, output)
   elsif node['type'] == 'labeled'
-    expression(node['expression'], indent)
+    expression(node['expression'], indent, output)
   elsif node['type'] == 'optional'
-    puts ''.ljust(indent) + 'Optional:'
-    expression(node['expression'], indent+2)
+    output.puts ''.ljust(indent) + 'Optional:'
+    expression(node['expression'], indent+2, output)
   elsif node['type'] == 'zero_or_more'
-    puts ''.ljust(indent) + 'ZeroOrMore:'
-    expression(node['expression'], indent+2)
+    output.puts ''.ljust(indent) + 'ZeroOrMore:'
+    expression(node['expression'], indent+2, output)
   elsif node['type'] == 'one_or_more'
-    puts ''.ljust(indent) + 'OneOrMore:'
-    expression(node['expression'], indent+2)
+    output.puts ''.ljust(indent) + 'OneOrMore:'
+    expression(node['expression'], indent+2, output)
   elsif node['type'] == 'sequence'
-    puts ''.ljust(indent) + 'Sequence:'
+    output.puts ''.ljust(indent) + 'Sequence:'
     node['elements'].each do |element|
-      expression(element, indent+2)
+      expression(element, indent+2, output)
     end
   elsif node['type'] == 'semantic_and'
   else
-    puts ''.ljust(indent) + '??? ' + node['type'] + ' ???'
+    output.puts ''.ljust(indent) + '??? ' + node['type'] + ' ???'
   end
 end
-
-puts File.read('header.in')
 
 grammar = File.read('url.pegjs')
 
@@ -85,21 +99,23 @@ prose = Hash[grammar.scan(/^\/\*\n?(.*?)\*\/\s*(\w+)/m).map { |text, name|
 }]
 
 rules = JSON.load(File.read('url.pegjson'))['rules']
+output = StringIO.new
 rules.each do |rule|
   name = hyphenate(rule['name'])
-  puts
-  puts "## #{name} ## {##{name}}"
+  output.puts
+  output.puts "<h4 id=#{name}>#{name}</h4>"
 
-  puts
-  puts "<pre class=railroad>"
-  expression(rule['expression'], 0)
-  puts "</pre>"
+  output.puts
+  output.puts "<pre class=railroad>"
+  expression(rule['expression'], 0, output)
+  output.puts "</pre>"
 
   if prose[rule['name']]
-    puts 
-    puts prose[rule['name']]
+    output.puts 
+    output.puts prose[rule['name']]
   end
 end
 
-puts
-puts File.read('footer.in')
+source.sub! /^#include <url.pegjs>\n/, output.string
+
+puts source

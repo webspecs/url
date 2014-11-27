@@ -265,9 +265,9 @@ NonRelativeUrl
      Initialize $result to the value returned by @Authority.
      Modify $result as follows:
 
-     * If @RelativeScheme is present in the input, then
+     * If @NonFileRelativeScheme is present in the input, then
        set $result.scheme to this value.
-     * If @RelativeScheme is not present in the input, then
+     * If @NonFileRelativeScheme is not present in the input, then
        set $result.scheme to the value of $base.scheme.
      * If @Path is present in the input, set $result.path to its value.
 
@@ -282,7 +282,7 @@ NonRelativeUrl
     Initialize $result to the value returned by @Authority.
     Modify $result as follows:
 
-     * Set $result.scheme to the value returned by @RelativeScheme.
+     * Set $result.scheme to the value returned by @NonFileRelativeScheme.
      * if $result.host is either an empty string or contains a
          colon, then terminate parsing with a <a>parse exception</a>.
      * If @Path is present in the input, set $result.path to its value.
@@ -293,7 +293,7 @@ NonRelativeUrl
 
     Initialize $result to be an empty object.  Modify $result as follows:
 
-     * Set $result.scheme to the value returned by @RelativeScheme.
+     * Set $result.scheme to the value returned by @NonFileRelativeScheme.
      * Set $result.scheme to the value returned by @Scheme.
      * Set $result.host to $base.host
      * Set $result.path by the <a>path concatenation</a> of 
@@ -314,7 +314,7 @@ NonRelativeUrl
    Return $result.
 */
 RelativeUrl
-  = scheme:(RelativeScheme ':')? slash1:[/\\] slash2:[/\\]
+  = scheme:(NonFileRelativeScheme ':')? slash1:[/\\] slash2:[/\\]
     authority:Authority
     path:([/\\] Path)?
   {
@@ -336,7 +336,7 @@ RelativeUrl
     return result
   }
 
-  / scheme:RelativeScheme 
+  / scheme:NonFileRelativeScheme 
     &{ return base.scheme != scheme }
     ':'
     slash1:[\\/]?
@@ -360,7 +360,7 @@ RelativeUrl
     return result
   }
 
-  / scheme:RelativeScheme 
+  / scheme:NonFileRelativeScheme 
     ':'
     path:Path
   {
@@ -412,7 +412,7 @@ FileLikeScheme
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug 26338</a>
   may change how encoding override is handled.
 */
-RelativeScheme
+NonFileRelativeScheme
   = "ftp"i
   / "gopher"i
   / "https"i
@@ -1022,7 +1022,7 @@ Query
   may add support for parsing URLs without decoding the fragment identifier.
 
 Setter Rules {#setter-rules}
-=============
+---
 */
 Fragment 
   = fragment:.*
