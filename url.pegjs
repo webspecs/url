@@ -797,7 +797,7 @@ IPv4Addr
 }
 
 /*
-   Three production rules, with uppercase and percent encoded variants, are
+   Three production rules, with uppercase and lowercase variants, are
    defined for numbers.
    Parse the values as hexadecimal, octal, and decimal integers respectively.
    Indicate a <a>conformance error</a> if the value is hexadecimal or octal.
