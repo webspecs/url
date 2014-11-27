@@ -27,6 +27,16 @@ Logo: https://resources.whatwg.org/logo-url.svg
     padding: 2px;
     border: 2px solid black;
   }
+#ifdef WEBSPECS
+
+  .big-issue, .XXX {
+    background: none repeat scroll 0 0 white;
+    border: medium solid red;
+    color: #E50000;
+    margin: 1em 0;
+    padding: 0.5em;
+  }
+#endif
 </style>
 
 <h2 id=goals class=no-num>Goals</h2>
@@ -87,9 +97,12 @@ or in the range U+0061 to U+007A.
 <p>The <dfn>EOF code point</dfn> is a conceptual code point that signifies the end of a
 string or code point stream.
 
-<p>A <dfn>parse error</dfn> indicates a non-fatal mismatch between input and requirements.
-User agents are encouraged to expose <a title="parse error">parse errors</a>
-somehow.
+Two types of parse errors are defined.  <dfn title='parse exception'>Parse
+exceptions</dfn> terminate parsing and must be implemented by all conforming
+implementations.  By contrast, user agents are encouraged, but not required,
+to expose <dfn title='conformance error'>conformance errors</dfn> somehow.
+
+<p class=XXX>Add the ability to halt on the first conformance error.
 
 <p>Within a parser algorithm that uses a <var>pointer</var> variable, <dfn>c</dfn>
 references the code point the <var>pointer</var> variable points to.
@@ -190,6 +203,10 @@ and
 <a>password encode set</a> and code point
 "<code>:</code>". <!-- 0x3A -->
 
+<p>The <dfn>query encode set</dfn> is defined to be code points that are less
+than U+0021, greater than U+007E, or one of U+0022, U+0023, U+003C, U+003E,
+and U+0060.
+
 <p>To <dfn>utf-8 percent encode</dfn> a <var>code point</var>, using
 an <var>encode set</var>, run these steps:
 
@@ -213,15 +230,20 @@ an <var>encode set</var>, run these steps:
      http://tools.ietf.org/html/rfc3492
      http://mothereff.in/punycode -->
 
-<p>A <dfn id=concept-host title='host'>host</dfn> is a network address in the form of a
-<a>domain</a> or an
+<p>A <dfn id=concept-host title='host'>host</dfn> is a network address in the
+form of a <a>domain</a>, an <a title='IPv4'>IPv4 address</a>, or an
 <a title='IPv6'>IPv6 address</a>.
 
 <p>A <dfn id=concept-domain title='domain'>domain</dfn> identifies a realm within a network.
 
-<p>An <dfn id=concept-ipv6 title='IPv6'>IPv6 address</dfn> is a 128-bit identifier and
-for the purposes of this specification represented as an ordered list of
-eight <dfn id=concept-ipv6-piece title='IPv6 piece'>16-bit pieces</dfn>.
+<p>An <dfn id=concept-ipv4 title='IPv4'>IPv4 address</dfn> is a 32-bit
+identifier and for the purposes of this specification represented as an ordered
+list of four <dfn id=concept-ipv4-piece title='IPv4 piece'>8-bit pieces</dfn>.
+[[RFC791]]
+
+<p>An <dfn id=concept-ipv6 title='IPv6'>IPv6 address</dfn> is a 128-bit
+identifier and for the purposes of this specification represented as an ordered
+list of eight <dfn id=concept-ipv6-piece title='IPv6 piece'>16-bit pieces</dfn>.
 [[RFC4291]]
 
 
@@ -260,9 +282,10 @@ eight <dfn id=concept-ipv6-piece title='IPv6 piece'>16-bit pieces</dfn>.
 
 <h3 id=host-writing>Host writing</h3>
 
-<p>A <a>host</a> must be either a
-<a>domain</a> or "<code>[</code>", followed
-by an <a title='IPv6'>IPv6 address</a>, followed by
+<p>A <a>host</a> must be either a <a>domain</a>,
+or an <a title='IPv4'>IPv4 address</a>, 
+or "<code>[</code>" followed
+by an <a title='IPv6'>IPv6 address</a> followed by
 "<code>]</code>".
 
 <p>A <var>domain</var> is a <dfn>valid domain</dfn> if these steps return success:
@@ -293,6 +316,11 @@ by an <a title='IPv6'>IPv6 address</a>, followed by
 <p>A <a>domain</a> must be a string that is a
 <a>valid domain</a>.
 
+<p class=XXX>Textual representation of <a title='IPv4'>IPv4 address</a> does
+not appear to be defined by an RFC.  See 
+<a href="https://tools.ietf.org/html/draft-main-ipaddr-text-rep-00">Textual
+Representation of IPv4 and IPv6 Addresses</a> for some history.
+
 <p>An <a title='IPv6'>IPv6 address</a> is defined in the
 <a href="http://tools.ietf.org/html/rfc4291#section-2.2">"Text Representation of Addresses" chapter of IP Version 6 Addressing Architecture</a>.
 [[!RFC4291]]
@@ -322,7 +350,7 @@ these steps:
 
   <ol>
    <li><p>If <var>input</var> does not end with
-   "<code>]</code>", <a>parse error</a>, return failure.
+   "<code>]</code>", <a>parse exception</a>, return failure.
 
    <li><p>Return the result of
    <a title='IPv6 parser'>IPv6 parsing</a> <var>input</var>
@@ -392,7 +420,7 @@ these steps:
 
   <ol>
    <li><p>If <a>remaining</a> does not start with
-   "<code>:</code>", <a>parse error</a>, return failure.
+   "<code>:</code>", <a>parse exception</a>, return failure.
 
    <li><p>Increase <var>pointer</var> by two.
 
@@ -407,7 +435,7 @@ these steps:
 
   <ol>
    <li><p>If <var>piece pointer</var> is eight,
-   <a>parse error</a>, return failure.
+   <a>parse exception</a>, return failure.
 
    <li>
     <p>If <a>c</a> is "<code>:</code>", run these inner
@@ -415,7 +443,7 @@ these steps:
 
     <ol>
      <li><p>If <var>compress pointer</var> is not null,
-     <a>parse error</a>, return failure.
+     <a>parse exception</a>, return failure.
 
      <li>Increase <var>pointer</var> and <var>piece pointer</var> by one, set
      <var>compress pointer</var> to <var>piece pointer</var>,
@@ -437,7 +465,7 @@ these steps:
     <dl class=switch>
      <dt>"<code>.</code>"
      <dd>
-      <p>If <var>length</var> is 0, <a>parse error</a>,
+      <p>If <var>length</var> is 0, <a>parse exception</a>,
       return failure.
       <p>Decrease <var>pointer</var> by <var>length</var>.
       <p>Jump to <a title='IPv6 parser IPv4'>IPv4</a>.
@@ -446,10 +474,10 @@ these steps:
      <dd>
       <p>Increase <var>pointer</var> by one.
       <p>If <a>c</a> is the <a>EOF code point</a>,
-      <a>parse error</a>, return failure.
+      <a>parse exception</a>, return failure.
 
      <dt>Anything but the <a>EOF code point</a>
-     <dd><p><a>Parse error</a>, return failure.
+     <dd><p><a>Parse exception</a>, return failure.
     </dl>
 
    <li><p>Set <var>piece</var> to <var>value</var>.
@@ -462,7 +490,7 @@ these steps:
 
  <li><p><dfn id=concept-ipv6-parser-ipv4 title='IPv6 parser IPv4'>IPv4</dfn>:
  If <var>piece pointer</var> is greater than six,
- <a>parse error</a>, return failure.
+ <a>parse exception</a>, return failure.
 
  <li><p>Let <var>dots seen</var> be 0.
 
@@ -474,7 +502,7 @@ these steps:
    <li><p>Let <var>value</var> be null.
 
    <li><p>If <a>c</a> is not an <a title="ASCII digits">ASCII digit</a>,
-   <a>parse error</a>, return failure. <!-- prevent the empty string -->
+   <a>parse exception</a>, return failure. <!-- prevent the empty string -->
 
    <li>
     <p>While <a>c</a> is an
@@ -486,19 +514,19 @@ these steps:
      <li>
       <p>If <var>value</var> is null, set <var>value</var> to <var>number</var>.
 
-      <p>Otherwise, if <var>value</var> is 0, <a>parse error</a>, return failure.
+      <p>Otherwise, if <var>value</var> is 0, <a>parse exception</a>, return failure.
 
       <p>Otherwise, set <var>value</var> to <var>value</var> &times; 10 + <var>number</var>.
 
      <li><p>Increase <var>pointer</var> by one.
 
-     <li><p>If <var>value</var> is greater than 255, <a>parse error</a>,
+     <li><p>If <var>value</var> is greater than 255, <a>parse exception</a>,
      return failure.
     </ol>
 
    <li><p>If <var>dots seen</var> is less than 3 and
    <a>c</a> is not a "<code>.</code>",
-   <a>parse error</a>, return failure.
+   <a>parse exception</a>, return failure.
 
    <li><p>Set <var>piece</var> to
    <var>piece</var> &times; 0x100 + <var>value</var>.
@@ -510,7 +538,7 @@ these steps:
 
    <li><p>If <var>dots seen</var> is 3 and <a>c</a> is not
    the <a>EOF code point</a>,
-   <a>parse error</a>, return failure.
+   <a>parse exception</a>, return failure.
 
    <li><p>Increase <var>dots seen</var> by one.
   </ol>
@@ -533,7 +561,7 @@ these steps:
   </ol>
 
  <li><p>Otherwise, if <var>compress pointer</var> is null and
- <var>piece pointer</var> is not eight, <a>parse error</a>,
+ <var>piece pointer</var> is not eight, <a>parse exception</a>,
  return failure.
 
  <li><p>Return <var>address</var>.
@@ -555,7 +583,8 @@ these steps:
  <a>IPv6 serializer</a> on <var>host</var>,
  followed by "<code>]</code>".
 
- <li><p>Otherwise, <var>host</var> is a <a>domain</a>,
+ <li><p>Otherwise, <var>host</var> is a <a>domain</a> or an
+ <a title='IPv4'>IPv4 address</a>,
  return <var>host</var>.
 </ol>
 
@@ -635,11 +664,11 @@ A Recommendation for IPv6 Address Text Representation.
 <p>A <a>URL</a>'s <dfn id=concept-url-scheme title='URL scheme'>scheme</dfn> is
 a string that identifies the type of <a>URL</a> and can be used to
 dispatch a <a>URL</a> for further processing after
-<a title='URL parser'>parsing</a>. It is initially the empty string.
+<a title='URL parser'>parsing</a>. It is initially null.
 
 <p>A <a>URL</a>'s
 <dfn id=concept-url-scheme-data title='URL scheme data'>scheme data</dfn> is a string holding the contents of a
-<a>URL</a>. It is initially the empty string.
+<a>URL</a>. It is initially null.
 
 <p class="note no-backref">A <a>URL</a>'s
 <a title='URL scheme data'>scheme data</a> will be its initial value if its
@@ -866,8 +895,6 @@ U+100000 to U+10FFFD.
 
 <h3 id=url-parsing>URL parsing</h3>
 
-<p class=XXX>Add the ability to halt on the first conformance error.
-
 <p>The <dfn id=concept-url-parser title='URL parser'>URL parser</dfn> takes a string
 <var>input</var>, optionally with a
 <a>base URL</a> <var>base</var>, and
@@ -938,19 +965,10 @@ optionally with an <a>encoding</a>
  <li><p>If <var>encoding override</var> is not given, set it to
  <a>utf-8</a>.
 
- <li><p>Let <var>buffer</var> be the empty string.
+ <li>Invoke <code class=grammar-rule><a href=#set-protocol>url</a></code>
+ on the <var>input</var> passing <var>url</var>, <var>base</var> and
+ <var>encoding override</var>.
 
- <li><p>Let the <var>@ flag</var> and the <var>[] flag</var> be
- unset.
-
- <li><p>Let <var>pointer</var> be a pointer to first code point in
- <var>input</var>.
-
- <li>
-  <p>Keep running the following state machine by switching on <var>state</var>. If
-  after a run <var>pointer</var> points to the <a>EOF code point</a>, go to
-  the next step. Otherwise, increase <var>pointer</var> by one and continue with the
-  state machine.
 
 Parsing Rules {#parsing-rules}
 ---
@@ -967,11 +985,6 @@ which are arrays of strings.
 
 [[#urlutils-and-urlutilsreadonly-members]] will invoke [[#setter-rules]] with
 <code>url</code> set to a non-<code>null</code> value.
-
-Two types of parse errors are defined.  <dfn title='parse exception'>Parse
-exceptions</dfn> terminate parsing and must be implemented by all conforming
-implementations.  By contrast, user agents are encouraged, but not required,
-to expose <dfn title='conformance error'>conformance errors</dfn> somehow.
 
 #include <url.pegjs>
 
@@ -2296,6 +2309,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
         "href": "http://dev.w3.org/2006/webapi/FileAPI/",
         "title": "File API",
         "publisher": "W3C"
+    },
+    "RFC791": {
+        "authors": [
+            "Jon Postel"
+        ],
+        "href": "http://tools.ietf.org/html/rfc791",
+        "title": "Internet Protocol",
+        "publisher": "IETF"
     },
     "WEBIDL": {
         "authors": [

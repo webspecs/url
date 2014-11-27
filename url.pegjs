@@ -99,7 +99,8 @@
        and if $result.port is equal to that default,
        then delete the $port property from $result.
 
-   Return $result.
+   For each property in $result, set the corresponding property in $url to
+   the value of the property in $result.
 */
 Url
   = base:(FileUrl / NonRelativeUrl / RelativeUrl)
@@ -137,8 +138,8 @@ Url
      * Set $result.path to the value returned by @Path.
      * Remove the first element from $result.path if it is an empty
        string and if there is a second element which has a non-empty value.
-     * Construct a string using the alphabetic
-       character following the first ":" in the input
+     * Construct a string using the <a>ASCII alpha</a>
+       following the first ":" in the input
        concatenated with a ":".  Prepend this string to 
        $result.path.
 
@@ -164,7 +165,7 @@ Url
      * Set $result.path to the value returned by @Path.
      * Remove the first element from $result.path if it is an empty
        string and if there is a second element which has a non-empty value.
-     * Construct a string consisting of the character following
+     * Construct a string consisting of the code point following
        the initial "/" (if any) in the production rule concatenated
        with a ":".  Prepend this string to the $result.path array.
 
@@ -172,7 +173,7 @@ Url
 
   Return $result.
 
-  Note: at the present time, file URLs are generally not
+  <p class=XXX>At the present time, file URLs are generally not
   interoperable, and therefore are effectively implementation defined.
   Furthermore, the parsing rules in this section have not enjoyed wide review,
   and therefore are more likely to be subject to change than other parts of this
@@ -231,11 +232,11 @@ FileUrl
   $schemeData set to the result returned by @SchemeData.
   Return $result.
 
-  Note: the resolution of
+  <p class=XXX>The resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug 26338</a>
   may change how encoding override is handled.
 
-  Note: the resolution of
+  <p class=XX>The resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27233">bug 27233</a>
   may add support for relative URLs for unknown schemes.
 */
@@ -258,7 +259,7 @@ NonRelativeUrl
    <ol>
    <li><div class=example><code>http://user:pass@example.org:21/foo/bar</code></div>
 
-     If anything other than two forward solidus characters ("//") immediately
+     If anything other than two forward solidus code points ("//") immediately
      follows the first colon in the input, indicate a <a>conformance error</a>.
 
      Initialize $result to the value returned by @Authority.
@@ -399,15 +400,14 @@ FileLikeScheme
   }
 
 /*
-  Six relative schemes are defined.  They are to be matched against the input
-  in a case insensitive manner.
+  Schemes are to be matched against the input in a case insensitive manner.
 
   Set <code>encoding override</code> to "utf-8" if the scheme matches
   "wss" or "ws".
 
   Return the scheme as a lowercased string.
 
-  Note: the resolution of
+  <p class=XXX>The resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug 26338</a>
   may change how encoding override is handled.
 */
@@ -428,9 +428,9 @@ NonFileRelativeScheme
 }
 
 /*
-  A scheme consists of the alphabetic letters "a" through "z" or "A" through
-  "Z", followed by zero or more alphabetic characters or any of the following
-  special characters: hyphen-minus (U+002D), plus sign (U+002B) or full stop
+  A scheme consists of an <a>ASCII alpha</a>,
+  followed by zero or more <a>ASCII alpha</a> or any of the following
+  code points: hyphen-minus (U+002D), plus sign (U+002B) or full stop
   (U+002D).
   Return the results as a lowercased string.
 */
@@ -501,7 +501,7 @@ Authority
   }
 
 /*
-  Consume all characters until either 
+  Consume all code points until either 
   a solidus (U+002F),
   a reverse solidus (U+005C),
   a question mark (U+003F),
@@ -519,7 +519,7 @@ User
   }
 
 /*
-  Consume all characters until either 
+  Consume all code points until either 
   a solidus (U+002F),
   a reverse solidus (U+005C),
   a question mark (U+003F),
@@ -544,8 +544,8 @@ Password
 
    Otherwise:
 
-     * If any U+0009, U+000A, U+000D, U+200B, U+2060, or U+FEFF characters are
-       present in the input, remove those characters and indicate a
+     * If any U+0009, U+000A, U+000D, U+200B, U+2060, or U+FEFF code points are
+       present in the input, remove those code points and indicate a
        <a>conformance error</a>.
      * Let $domain be the result of
        <a href=#concept-host-parser>host
@@ -557,16 +557,16 @@ Password
      * Try parsing $domain as an @IPv4Addr. If this succeeds, replace $domain
        with the result.
      * Validate the $domain as follows:
-        * split the string at U+002E (full stop) characters
+        * split the string at U+002E (full stop) code points
         * If any of the pieces, other than the first one, are empty strings,
             indicate a <a>conformance error</a>.
      * Return $domain.
 
-   Note: the resolution of
+   <p class=XXX>The resolution of
    <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25334">bug 25334</a>
    may change what codepoints are allowed in a domain.
 
-   Note: the resolution of
+   <p class=XXX>The resolution of
    <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27266">bug 27266</a>
    may change the way domain names and trailing dots are handled.
 */
@@ -656,14 +656,14 @@ Host
    @H16 or @LS32 value, respectively.
    
    Perform the following validation checks:
-   * If there are no consecutive colon characters in the input string, indicate
+   * If there are no consecutive colon code points in the input string, indicate
        a <a>parse exception</a> and terminate processing unless there are
        exactly six @H16 values and one @LS32 value.
-   * If there are consecutive colon characters present in the input, indicate a
+   * If there are consecutive colon code points present in the input, indicate a
        <a>parse exception</a> and terminate processing if the total number of
        values (@H16 or @LS32) is more than six.
    * Unless there is a @LS32 value present, indicate a <a>parse exception</a>
-       and terminate processing if consecutive colon characters are present in
+       and terminate processing if consecutive colon code points are present in
        the input or if there are more than one @LS32 value after the
        consecutive colons.
 
@@ -677,7 +677,7 @@ Host
    Return the <a href=#concept-ipv6-serializer>ipv6
    serialized</a> value of $pre as a string.
 
-  Note: the resolution of
+  <p class=XXX>The resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27234">bug 27234</a>
   may add support for link-local addresses.
 */
@@ -743,10 +743,10 @@ IPv6Addr
     * Prepend the value of $n modulo 256 to $result.
     * Set $n to the value of the integer quotient of $n divided by 256.
 
-  Join the values in $result with a Full Stop (U+002E) character, and
+  Join the values in $result with a Full Stop (U+002E) code point, and
   return the results as a string.
 
-  Note: the resolution of
+  <p class=XXX>The resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug 26431</a>
   may change this definition.
 */
@@ -824,7 +824,7 @@ Number
 }
 
 /*
-  Return up to four hexadecimal characters as a string.
+  Return up to four <a>ASCII hex digits</a> as a string.
 */
 H16
   = a:[0-9A-Fa-f] b:[0-9A-Fa-f]? c:[0-9A-Fa-f]? d:[0-9A-Fa-f]?
@@ -833,7 +833,8 @@ H16
   }
 
 /*
-  Return four decimal bytes separated by full stop characters as a string.
+  Return four decimal <a title='IPv4 piece'>8-bit pieces</a> separated by full
+  stop code points as a string.
 */
 LS32
   = a:DecimalByte '.' b:DecimalByte '.' d:DecimalByte '.' d:DecimalByte
@@ -853,7 +854,7 @@ DecimalByte
   }
 
 /*
-  Consume all characters until either 
+  Consume all code points until either 
   a solidus (U+002F),
   a reverse solidus (U+005C),
   a question mark (U+003F),
@@ -864,15 +865,15 @@ DecimalByte
   until either the leading code point is not U+0030 or result is
   one code point. 
 
-  If any characters that remain are not decimal digits:
+  If any code points that remain are not decimal digits:
     * If $input was not set, terminate processing with a
       <a>parse exception</a>.
-    * Truncate $result starting with the first non-digit character.
+    * Truncate $result starting with the first non-digit code point.
     * Indicate a <a>conformance error</a>.
 
   Return the result as a string.
 
-  Note: the resolution of
+  <p class=XXX>The resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26446">bug 26446</a>
   may change port from a string to a number.
 */
@@ -924,9 +925,9 @@ Port
 
   Return the array.
 
-  Note: the resolution of
+  <p class=XXX>The resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=24163">bug 24163</a>
-  may change what characters to escape in the path.
+  may change what code points to escape in the path.
 */
 Path
   = path:([^/\\?#]* [/\\])* basename:[^/\\?#]*
@@ -969,14 +970,14 @@ Path
   }
 
 /*
-  Consume all characters until either a question mark (U+003F), a
+  Consume all code points until either a question mark (U+003F), a
   number sign (U+0023), or the end of string is encountered.
   Return the <a title=cleanse>cleansed</a> result using <var>null</var> as
   the encode set.
 
-  Note: the resolution of
+  <p class=XXX>The resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=24246">bug 24246</a>
-  may change what characters to escape in the scheme data.
+  may change what code points to escape in the scheme data.
 */
 SchemeData
   = data:[^?#]*
@@ -985,15 +986,12 @@ SchemeData
   }
 
 /*
-  Consume all characters until either a 
+  Consume all code points until either a 
   number sign (U+0023) or the end of string is encountered.
   Return the <a title=cleanse>cleansed</a> result using the
   the result using the <a>query encode set</a>.
 
-  The <dfn>query encode set</dfn> is defined to be bytes that are less than
-  0x21, greater than 0x7E, or one of 0x22, 0x23, 0x3C, 0x3E, and 0x60.
-
-  Note: the resolution of
+  <p class=XXX>The resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27280">bug 27280</a>
   may change how code points < 0x20 are handled.
 */
@@ -1004,15 +1002,15 @@ Query
   }
 
 /*
-  Consume all remaining characters in the input.  
+  Consume all remaining code points in the input.  
   Return the <a title=cleanse>cleansed</a> result using the
   <a>simple encode set</a>.
 
-  Note: the resolution of
+  <p class=XXX>The resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27252">bug 27252</a>
-  may change what characters to escape in the fragment.
+  may change what code points to escape in the fragment.
 
-  Note: the resolution of
+  <p class=XXX>The resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26988">bug 26988</a>
   may add support for parsing URLs without decoding the fragment identifier.
 

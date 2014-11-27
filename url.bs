@@ -16,6 +16,14 @@ Abstract: The URL Standard defines URLs, domains, IP addresses, the <code title>
     padding: 2px;
     border: 2px solid black;
   }
+
+  .big-issue, .XXX {
+    background: none repeat scroll 0 0 white;
+    border: medium solid red;
+    color: #E50000;
+    margin: 1em 0;
+    padding: 0.5em;
+  }
 </style>
 
 <h2 id=goals class=no-num>Goals</h2>
@@ -76,9 +84,12 @@ or in the range U+0061 to U+007A.
 <p>The <dfn>EOF code point</dfn> is a conceptual code point that signifies the end of a
 string or code point stream.
 
-<p>A <dfn>parse error</dfn> indicates a non-fatal mismatch between input and requirements.
-User agents are encouraged to expose <a title="parse error">parse errors</a>
-somehow.
+Two types of parse errors are defined.  <dfn title='parse exception'>Parse
+exceptions</dfn> terminate parsing and must be implemented by all conforming
+implementations.  By contrast, user agents are encouraged, but not required,
+to expose <dfn title='conformance error'>conformance errors</dfn> somehow.
+
+<p class=XXX>Add the ability to halt on the first conformance error.
 
 <p>Within a parser algorithm that uses a <var>pointer</var> variable, <dfn>c</dfn>
 references the code point the <var>pointer</var> variable points to.
@@ -179,6 +190,10 @@ and
 <a>password encode set</a> and code point
 "<code>:</code>". <!-- 0x3A -->
 
+<p>The <dfn>query encode set</dfn> is defined to be code points that are less
+than U+0021, greater than U+007E, or one of U+0022, U+0023, U+003C, U+003E,
+and U+0060.
+
 <p>To <dfn>utf-8 percent encode</dfn> a <var>code point</var>, using
 an <var>encode set</var>, run these steps:
 
@@ -202,15 +217,20 @@ an <var>encode set</var>, run these steps:
      http://tools.ietf.org/html/rfc3492
      http://mothereff.in/punycode -->
 
-<p>A <dfn id=concept-host title='host'>host</dfn> is a network address in the form of a
-<a>domain</a> or an
+<p>A <dfn id=concept-host title='host'>host</dfn> is a network address in the
+form of a <a>domain</a>, an <a title='IPv4'>IPv4 address</a>, or an
 <a title='IPv6'>IPv6 address</a>.
 
 <p>A <dfn id=concept-domain title='domain'>domain</dfn> identifies a realm within a network.
 
-<p>An <dfn id=concept-ipv6 title='IPv6'>IPv6 address</dfn> is a 128-bit identifier and
-for the purposes of this specification represented as an ordered list of
-eight <dfn id=concept-ipv6-piece title='IPv6 piece'>16-bit pieces</dfn>.
+<p>An <dfn id=concept-ipv4 title='IPv4'>IPv4 address</dfn> is a 32-bit
+identifier and for the purposes of this specification represented as an ordered
+list of four <dfn id=concept-ipv4-piece title='IPv4 piece'>8-bit pieces</dfn>.
+[[RFC791]]
+
+<p>An <dfn id=concept-ipv6 title='IPv6'>IPv6 address</dfn> is a 128-bit
+identifier and for the purposes of this specification represented as an ordered
+list of eight <dfn id=concept-ipv6-piece title='IPv6 piece'>16-bit pieces</dfn>.
 [[RFC4291]]
 
 
@@ -249,9 +269,10 @@ eight <dfn id=concept-ipv6-piece title='IPv6 piece'>16-bit pieces</dfn>.
 
 <h3 id=host-writing>Host writing</h3>
 
-<p>A <a>host</a> must be either a
-<a>domain</a> or "<code>[</code>", followed
-by an <a title='IPv6'>IPv6 address</a>, followed by
+<p>A <a>host</a> must be either a <a>domain</a>,
+or an <a title='IPv4'>IPv4 address</a>, 
+or "<code>[</code>" followed
+by an <a title='IPv6'>IPv6 address</a> followed by
 "<code>]</code>".
 
 <p>A <var>domain</var> is a <dfn>valid domain</dfn> if these steps return success:
@@ -282,6 +303,11 @@ by an <a title='IPv6'>IPv6 address</a>, followed by
 <p>A <a>domain</a> must be a string that is a
 <a>valid domain</a>.
 
+<p class=XXX>Textual representation of <a title='IPv4'>IPv4 address</a> does
+not appear to be defined by an RFC.  See 
+<a href="https://tools.ietf.org/html/draft-main-ipaddr-text-rep-00">Textual
+Representation of IPv4 and IPv6 Addresses</a> for some history.
+
 <p>An <a title='IPv6'>IPv6 address</a> is defined in the
 <a href="http://tools.ietf.org/html/rfc4291#section-2.2">"Text Representation of Addresses" chapter of IP Version 6 Addressing Architecture</a>.
 [[!RFC4291]]
@@ -311,7 +337,7 @@ these steps:
 
   <ol>
    <li><p>If <var>input</var> does not end with
-   "<code>]</code>", <a>parse error</a>, return failure.
+   "<code>]</code>", <a>parse exception</a>, return failure.
 
    <li><p>Return the result of
    <a title='IPv6 parser'>IPv6 parsing</a> <var>input</var>
@@ -381,7 +407,7 @@ these steps:
 
   <ol>
    <li><p>If <a>remaining</a> does not start with
-   "<code>:</code>", <a>parse error</a>, return failure.
+   "<code>:</code>", <a>parse exception</a>, return failure.
 
    <li><p>Increase <var>pointer</var> by two.
 
@@ -396,7 +422,7 @@ these steps:
 
   <ol>
    <li><p>If <var>piece pointer</var> is eight,
-   <a>parse error</a>, return failure.
+   <a>parse exception</a>, return failure.
 
    <li>
     <p>If <a>c</a> is "<code>:</code>", run these inner
@@ -404,7 +430,7 @@ these steps:
 
     <ol>
      <li><p>If <var>compress pointer</var> is not null,
-     <a>parse error</a>, return failure.
+     <a>parse exception</a>, return failure.
 
      <li>Increase <var>pointer</var> and <var>piece pointer</var> by one, set
      <var>compress pointer</var> to <var>piece pointer</var>,
@@ -426,7 +452,7 @@ these steps:
     <dl class=switch>
      <dt>"<code>.</code>"
      <dd>
-      <p>If <var>length</var> is 0, <a>parse error</a>,
+      <p>If <var>length</var> is 0, <a>parse exception</a>,
       return failure.
       <p>Decrease <var>pointer</var> by <var>length</var>.
       <p>Jump to <a title='IPv6 parser IPv4'>IPv4</a>.
@@ -435,10 +461,10 @@ these steps:
      <dd>
       <p>Increase <var>pointer</var> by one.
       <p>If <a>c</a> is the <a>EOF code point</a>,
-      <a>parse error</a>, return failure.
+      <a>parse exception</a>, return failure.
 
      <dt>Anything but the <a>EOF code point</a>
-     <dd><p><a>Parse error</a>, return failure.
+     <dd><p><a>Parse exception</a>, return failure.
     </dl>
 
    <li><p>Set <var>piece</var> to <var>value</var>.
@@ -451,7 +477,7 @@ these steps:
 
  <li><p><dfn id=concept-ipv6-parser-ipv4 title='IPv6 parser IPv4'>IPv4</dfn>:
  If <var>piece pointer</var> is greater than six,
- <a>parse error</a>, return failure.
+ <a>parse exception</a>, return failure.
 
  <li><p>Let <var>dots seen</var> be 0.
 
@@ -463,7 +489,7 @@ these steps:
    <li><p>Let <var>value</var> be null.
 
    <li><p>If <a>c</a> is not an <a title="ASCII digits">ASCII digit</a>,
-   <a>parse error</a>, return failure. <!-- prevent the empty string -->
+   <a>parse exception</a>, return failure. <!-- prevent the empty string -->
 
    <li>
     <p>While <a>c</a> is an
@@ -475,19 +501,19 @@ these steps:
      <li>
       <p>If <var>value</var> is null, set <var>value</var> to <var>number</var>.
 
-      <p>Otherwise, if <var>value</var> is 0, <a>parse error</a>, return failure.
+      <p>Otherwise, if <var>value</var> is 0, <a>parse exception</a>, return failure.
 
       <p>Otherwise, set <var>value</var> to <var>value</var> &times; 10 + <var>number</var>.
 
      <li><p>Increase <var>pointer</var> by one.
 
-     <li><p>If <var>value</var> is greater than 255, <a>parse error</a>,
+     <li><p>If <var>value</var> is greater than 255, <a>parse exception</a>,
      return failure.
     </ol>
 
    <li><p>If <var>dots seen</var> is less than 3 and
    <a>c</a> is not a "<code>.</code>",
-   <a>parse error</a>, return failure.
+   <a>parse exception</a>, return failure.
 
    <li><p>Set <var>piece</var> to
    <var>piece</var> &times; 0x100 + <var>value</var>.
@@ -499,7 +525,7 @@ these steps:
 
    <li><p>If <var>dots seen</var> is 3 and <a>c</a> is not
    the <a>EOF code point</a>,
-   <a>parse error</a>, return failure.
+   <a>parse exception</a>, return failure.
 
    <li><p>Increase <var>dots seen</var> by one.
   </ol>
@@ -522,7 +548,7 @@ these steps:
   </ol>
 
  <li><p>Otherwise, if <var>compress pointer</var> is null and
- <var>piece pointer</var> is not eight, <a>parse error</a>,
+ <var>piece pointer</var> is not eight, <a>parse exception</a>,
  return failure.
 
  <li><p>Return <var>address</var>.
@@ -544,7 +570,8 @@ these steps:
  <a>IPv6 serializer</a> on <var>host</var>,
  followed by "<code>]</code>".
 
- <li><p>Otherwise, <var>host</var> is a <a>domain</a>,
+ <li><p>Otherwise, <var>host</var> is a <a>domain</a> or an
+ <a title='IPv4'>IPv4 address</a>,
  return <var>host</var>.
 </ol>
 
@@ -624,11 +651,11 @@ A Recommendation for IPv6 Address Text Representation.
 <p>A <a>URL</a>'s <dfn id=concept-url-scheme title='URL scheme'>scheme</dfn> is
 a string that identifies the type of <a>URL</a> and can be used to
 dispatch a <a>URL</a> for further processing after
-<a title='URL parser'>parsing</a>. It is initially the empty string.
+<a title='URL parser'>parsing</a>. It is initially null.
 
 <p>A <a>URL</a>'s
 <dfn id=concept-url-scheme-data title='URL scheme data'>scheme data</dfn> is a string holding the contents of a
-<a>URL</a>. It is initially the empty string.
+<a>URL</a>. It is initially null.
 
 <p class="note no-backref">A <a>URL</a>'s
 <a title='URL scheme data'>scheme data</a> will be its initial value if its
@@ -855,8 +882,6 @@ U+100000 to U+10FFFD.
 
 <h3 id=url-parsing>URL parsing</h3>
 
-<p class=XXX>Add the ability to halt on the first conformance error.
-
 <p>The <dfn id=concept-url-parser title='URL parser'>URL parser</dfn> takes a string
 <var>input</var>, optionally with a
 <a>base URL</a> <var>base</var>, and
@@ -927,19 +952,10 @@ optionally with an <a>encoding</a>
  <li><p>If <var>encoding override</var> is not given, set it to
  <a>utf-8</a>.
 
- <li><p>Let <var>buffer</var> be the empty string.
+ <li>Invoke <code class=grammar-rule><a href=#set-protocol>url</a></code>
+ on the <var>input</var> passing <var>url</var>, <var>base</var> and
+ <var>encoding override</var>.
 
- <li><p>Let the <var>@ flag</var> and the <var>[] flag</var> be
- unset.
-
- <li><p>Let <var>pointer</var> be a pointer to first code point in
- <var>input</var>.
-
- <li>
-  <p>Keep running the following state machine by switching on <var>state</var>. If
-  after a run <var>pointer</var> points to the <a>EOF code point</a>, go to
-  the next step. Otherwise, increase <var>pointer</var> by one and continue with the
-  state machine.
 
 Parsing Rules {#parsing-rules}
 ---
@@ -956,11 +972,6 @@ which are arrays of strings.
 
 [[#urlutils-and-urlutilsreadonly-members]] will invoke [[#setter-rules]] with
 <code>url</code> set to a non-<code>null</code> value.
-
-Two types of parse errors are defined.  <dfn title='parse exception'>Parse
-exceptions</dfn> terminate parsing and must be implemented by all conforming
-implementations.  By contrast, user agents are encouraged, but not required,
-to expose <dfn title='conformance error'>conformance errors</dfn> somehow.
 
 
 <h4 id=url class=no-toc>url</h4>
@@ -1005,7 +1016,8 @@ Initialize <code>result</code> to the value of <code class=grammar-rule><a href=
     and if <code>result.port</code> is equal to that default,
     then delete the <code>port</code> property from <code>result</code>.
 
-Return <code>result</code>.
+For each property in <code>result</code>, set the corresponding property in <code>url</code> to
+the value of the property in <code>result</code>.
 
 <h4 id=file-url class=no-toc>file-url</h4>
 
@@ -1057,8 +1069,8 @@ Choice:
    * Set <code>result.path</code> to the value returned by <code class=grammar-rule><a href=#path>path</a></code>.
    * Remove the first element from <code>result.path</code> if it is an empty
      string and if there is a second element which has a non-empty value.
-   * Construct a string using the alphabetic
-     character following the first "<code>:</code>" in the input
+   * Construct a string using the <a>ASCII alpha</a>
+     following the first "<code>:</code>" in the input
      concatenated with a "<code>:</code>".  Prepend this string to 
      <code>result.path</code>.
 
@@ -1084,7 +1096,7 @@ Choice:
    * Set <code>result.path</code> to the value returned by <code class=grammar-rule><a href=#path>path</a></code>.
    * Remove the first element from <code>result.path</code> if it is an empty
      string and if there is a second element which has a non-empty value.
-   * Construct a string consisting of the character following
+   * Construct a string consisting of the code point following
      the initial "<code>/</code>" (if any) in the production rule concatenated
      with a "<code>:</code>".  Prepend this string to the <code>result.path</code> array.
 
@@ -1092,7 +1104,7 @@ Choice:
 
 Return <code>result</code>.
 
-Note: at the present time, file URLs are generally not
+<p class=XXX>At the present time, file URLs are generally not
 interoperable, and therefore are effectively implementation defined.
 Furthermore, the parsing rules in this section have not enjoyed wide review,
 and therefore are more likely to be subject to change than other parts of this
@@ -1121,11 +1133,11 @@ set to be the result returned by <code class=grammar-rule><a href=#scheme>scheme
 <code>schemeData</code> set to the result returned by <code class=grammar-rule><a href=#scheme-data>scheme-data</a></code>.
 Return <code>result</code>.
 
-Note: the resolution of
+<p class=XXX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug <code>26338</code></a>
 may change how encoding override is handled.
 
-Note: the resolution of
+<p class=XX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27233">bug <code>27233</code></a>
 may add support for relative URLs for unknown schemes.
 
@@ -1180,7 +1192,7 @@ Examples and evaluation instructions for each:
 <ol>
 <li><div class=example><code>http://user:pass@example.org:<code>21</code>/foo/bar</code></div>
 
-  If anything other than two forward solidus characters ("<code>//</code>") immediately
+  If anything other than two forward solidus code points ("<code>//</code>") immediately
   follows the first colon in the input, indicate a <a>conformance error</a>.
 
   Initialize <code>result</code> to the value returned by <code class=grammar-rule><a href=#authority>authority</a></code>.
@@ -1256,15 +1268,14 @@ Choice:
   T: ws
 </pre>
 
-Six relative schemes are defined.  They are to be matched against the input
-in a case insensitive manner.
+Schemes are to be matched against the input in a case insensitive manner.
 
 Set <code>encoding override</code> to "<code>utf-<code>8</code></code>" if the scheme matches
 "<code>wss</code>" or "<code>ws</code>".
 
 Return the scheme as a lowercased string.
 
-Note: the resolution of
+<p class=XXX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug <code>26338</code></a>
 may change how encoding override is handled.
 
@@ -1277,9 +1288,9 @@ Sequence:
     T: any of [-a-zA-Z+.]
 </pre>
 
-A scheme consists of the alphabetic letters "<code>a</code>" through "<code>z</code>" or "<code>A</code>" through
-"<code>Z</code>", followed by zero or more alphabetic characters or any of the following
-special characters: hyphen-minus (<code>U+002D</code>), plus sign (<code>U+002B</code>) or full stop
+A scheme consists of an <a>ASCII alpha</a>,
+followed by zero or more <a>ASCII alpha</a> or any of the following
+code points: hyphen-minus (<code>U+002D</code>), plus sign (<code>U+002B</code>) or full stop
 (<code>U+002D</code>).
 Return the results as a lowercased string.
 
@@ -1332,7 +1343,7 @@ ZeroOrMore:
   T: any except [/\?#@:]
 </pre>
 
-Consume all characters until either 
+Consume all code points until either 
 a solidus (<code>U+002F</code>),
 a reverse solidus (<code>U+005C</code>),
 a question mark (<code>U+003F</code>),
@@ -1350,7 +1361,7 @@ ZeroOrMore:
   T: any except [/\?#@]
 </pre>
 
-Consume all characters until either 
+Consume all code points until either 
 a solidus (<code>U+002F</code>),
 a reverse solidus (<code>U+005C</code>),
 a question mark (<code>U+003F</code>),
@@ -1382,8 +1393,8 @@ the result returned by <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></
 
 Otherwise:
 
-  * If any <code>U+<code>0009</code></code>, <code>U+000A</code>, <code>U+000D</code>, <code>U+200B</code>, <code>U+<code>2060</code></code>, or <code>U+FEFF</code> characters are
-    present in the input, remove those characters and indicate a
+  * If any <code>U+<code>0009</code></code>, <code>U+000A</code>, <code>U+000D</code>, <code>U+200B</code>, <code>U+<code>2060</code></code>, or <code>U+FEFF</code> code points are
+    present in the input, remove those code points and indicate a
     <a>conformance error</a>.
   * Let <code>domain</code> be the result of
     <a href=#concept-host-parser>host
@@ -1395,16 +1406,16 @@ Otherwise:
   * Try parsing <code>domain</code> as an <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>. If this succeeds, replace <code>domain</code>
     with the result.
   * Validate the <code>domain</code> as follows:
-     * split the string at <code>U+002E</code> (full stop) characters
+     * split the string at <code>U+002E</code> (full stop) code points
      * If any of the pieces, other than the first one, are empty strings,
          indicate a <a>conformance error</a>.
   * Return <code>domain</code>.
 
-Note: the resolution of
+<p class=XXX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25334">bug <code>25334</code></a>
 may change what codepoints are allowed in a domain.
 
-Note: the resolution of
+<p class=XXX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27266">bug <code>27266</code></a>
 may change the way domain names and trailing dots are handled.
 
@@ -1433,14 +1444,14 @@ Sequence:
  <code class=grammar-rule><a href=#h16>h16</a></code> or <code class=grammar-rule><a href=#ls32>ls32</a></code> value, respectively.
  
  Perform the following validation checks:
- * If there are no consecutive colon characters in the input string, indicate
+ * If there are no consecutive colon code points in the input string, indicate
      a <a>parse exception</a> and terminate processing unless there are
      exactly six <code class=grammar-rule><a href=#h16>h16</a></code> values and one <code class=grammar-rule><a href=#ls32>ls32</a></code> value.
- * If there are consecutive colon characters present in the input, indicate a
+ * If there are consecutive colon code points present in the input, indicate a
      <a>parse exception</a> and terminate processing if the total number of
      values (<code class=grammar-rule><a href=#h16>h16</a></code> or <code class=grammar-rule><a href=#ls32>ls32</a></code>) is more than six.
  * Unless there is a <code class=grammar-rule><a href=#ls32>ls32</a></code> value present, indicate a <a>parse exception</a>
-     and terminate processing if consecutive colon characters are present in
+     and terminate processing if consecutive colon code points are present in
      the input or if there are more than one <code class=grammar-rule><a href=#ls32>ls32</a></code> value after the
      consecutive colons.
 
@@ -1454,7 +1465,7 @@ Sequence:
  Return the <a href=#concept-ipv6-serializer>ipv6
  serialized</a> value of <code>pre</code> as a string.
 
-Note: the resolution of
+<p class=XXX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27234">bug <code>27234</code></a>
 may add support for link-local addresses.
 
@@ -1500,10 +1511,10 @@ Four times do the following:
   * Prepend the value of <code>n</code> modulo <code>256</code> to <code>result</code>.
   * Set <code>n</code> to the value of the integer quotient of <code>n</code> divided by <code>256</code>.
 
-Join the values in <code>result</code> with a Full Stop (<code>U+002E</code>) character, and
+Join the values in <code>result</code> with a Full Stop (<code>U+002E</code>) code point, and
 return the results as a string.
 
-Note: the resolution of
+<p class=XXX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug <code>26431</code></a>
 may change this definition.
 
@@ -1545,7 +1556,7 @@ Sequence:
     T: any of [0-9A-Fa-f]
 </pre>
 
-Return up to four hexadecimal characters as a string.
+Return up to four <a>ASCII hex digits</a> as a string.
 
 <h4 id=ls32 class=no-toc>ls32</h4>
 
@@ -1560,7 +1571,8 @@ Sequence:
   N: decimal-byte
 </pre>
 
-Return four decimal bytes separated by full stop characters as a string.
+Return four decimal <a title='IPv4 piece'><code>8</code>-bit pieces</a> separated by full
+stop code points as a string.
 
 <h4 id=decimal-byte class=no-toc>decimal-byte</h4>
 
@@ -1584,7 +1596,7 @@ ZeroOrMore:
   T: any except [/\?#]
 </pre>
 
-Consume all characters until either 
+Consume all code points until either 
 a solidus (<code>U+002F</code>),
 a reverse solidus (<code>U+005C</code>),
 a question mark (<code>U+003F</code>),
@@ -1595,15 +1607,15 @@ Remove leading <code>U+<code>0030</code></code> code points from result
 until either the leading code point is not <code>U+<code>0030</code></code> or result is
 one code point. 
 
-If any characters that remain are not decimal digits:
+If any code points that remain are not decimal digits:
   * If <code>input</code> was not set, terminate processing with a
     <a>parse exception</a>.
-  * Truncate <code>result</code> starting with the first non-digit character.
+  * Truncate <code>result</code> starting with the first non-digit code point.
   * Indicate a <a>conformance error</a>.
 
 Return the result as a string.
 
-Note: the resolution of
+<p class=XXX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26446">bug <code>26446</code></a>
 may change port from a string to a number.
 
@@ -1645,9 +1657,9 @@ Extract all the pathnames into an array.  Process each name as follows:
 
 Return the array.
 
-Note: the resolution of
+<p class=XXX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=24163">bug <code>24163</code></a>
-may change what characters to escape in the path.
+may change what code points to escape in the path.
 
 <h4 id=scheme-data class=no-toc>scheme-data</h4>
 
@@ -1656,14 +1668,14 @@ ZeroOrMore:
   T: any except [?#]
 </pre>
 
-Consume all characters until either a question mark (<code>U+003F</code>), a
+Consume all code points until either a question mark (<code>U+003F</code>), a
 number sign (<code>U+<code>0023</code></code>), or the end of string is encountered.
 Return the <a title=cleanse>cleansed</a> result using <var>null</var> as
 the encode set.
 
-Note: the resolution of
+<p class=XXX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=24246">bug <code>24246</code></a>
-may change what characters to escape in the scheme data.
+may change what code points to escape in the scheme data.
 
 <h4 id=query class=no-toc>query</h4>
 
@@ -1672,15 +1684,12 @@ ZeroOrMore:
   T: any except [#]
 </pre>
 
-Consume all characters until either a 
+Consume all code points until either a 
 number sign (<code>U+<code>0023</code></code>) or the end of string is encountered.
 Return the <a title=cleanse>cleansed</a> result using the
 the result using the <a>query encode set</a>.
 
-The <dfn>query encode set</dfn> is defined to be bytes that are less than
-<code>0x21</code>, greater than <code>0x7E</code>, or one of <code>0x22</code>, <code>0x23</code>, <code>0x3C</code>, <code>0x3E</code>, and <code>0x60</code>.
-
-Note: the resolution of
+<p class=XXX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27280">bug <code>27280</code></a>
 may change how code points < <code>0x20</code> are handled.
 
@@ -1691,15 +1700,15 @@ ZeroOrMore:
   T: any
 </pre>
 
-Consume all remaining characters in the input.  
+Consume all remaining code points in the input.  
 Return the <a title=cleanse>cleansed</a> result using the
 <a>simple encode set</a>.
 
-Note: the resolution of
+<p class=XXX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27252">bug <code>27252</code></a>
-may change what characters to escape in the fragment.
+may change what code points to escape in the fragment.
 
-Note: the resolution of
+<p class=XXX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26988">bug <code>26988</code></a>
 may add support for parsing URLs without decoding the fragment identifier.
 
@@ -3170,6 +3179,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
         "href": "http://dev.w3.org/2006/webapi/FileAPI/",
         "title": "File API",
         "publisher": "W3C"
+    },
+    "RFC791": {
+        "authors": [
+            "Jon Postel"
+        ],
+        "href": "http://tools.ietf.org/html/rfc791",
+        "title": "Internet Protocol",
+        "publisher": "IETF"
     },
     "WEBIDL": {
         "authors": [
