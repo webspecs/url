@@ -1,22 +1,30 @@
-url
-===
-
-The URL specification
+The URL Standard
 =======
 
-This repository hosts the 
-[URL Standard](https://specs.webplatform.org/url/webspecs/develop/). 
-Please do not include `url.bs` in pull requests. Tests can be found in the
-`url/` directory of
-[`w3c/web-platform-tests`](https://github.com/w3c/web-platform-tests).
+The URL Standard is being developed at two locations:
 
-Contains:
+  * On a continuing basis, the
+    [WHATWG URL Standard](https://url.spec.whatwg.org/) with source at
+    [github.com/whatwg](https://github.com/whatwg/url).
+    For more information, see [What is the WHATWG?](https://wiki.whatwg.org/wiki/FAQ#What_is_the_WHATWG.3F).
+  * By [request](http://lists.w3.org/Archives/Public/public-w3process/2014Nov/0149.html),
+    and on a [provisional basis](http://lists.w3.org/Archives/Public/public-w3process/2014Nov/0177.html),
+    the [webplatform URL Standard](https://specs.webplatform.org/url/webspecs/develop/) with source at
+    [github.com/webspecs](https://github.com/webspecs/url).
+    For more information, see [Web Platform Specs](https://specs.webplatform.org/docs/).
+
+Contents
+---
+
    * [reference implementation](https://github.com/webspecs/url/tree/develop/reference-implementation#readme)
      in JavaScript.  This directory also contains web pages that demonstate
      live parsing of URLs entered in an HTML input field.
    * [evaluate](https://github.com/webspecs/url/tree/develop/evaluate) programs
      and scripts which capture and compare test results against a number
      of implementations.
+
+Tests can be found in the `url/` directory of
+[`w3c/web-platform-tests`](https://github.com/w3c/web-platform-tests).
 
 Running `make` at the top level will build the spec, build the reference
 implementation, and run the tests against the reference implementation.  See
