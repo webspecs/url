@@ -30,6 +30,7 @@ Logo: https://resources.whatwg.org/logo-url.svg
 #ifdef WEBSPECS
 
 .big-issue, .XXX { color: #E50000; background: white; border: solid red; padding: 0.5em; margin: 1em 0; }
+.big-issue, .XXX { border-radius: 0.5em }
 .big-issue > :first-child, .XXX > :first-child { margin-top: 0; }
 p .big-issue, p .XXX { line-height: 3em; }
 
