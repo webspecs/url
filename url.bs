@@ -965,7 +965,7 @@ optionally with an <a>encoding</a>
  <li><p>If <var>encoding override</var> is not given, set it to
  <a>utf-8</a>.
 
- <li>Invoke <code class=grammar-rule><a href=#set-protocol>url</a></code>
+ <li>Invoke <code class=grammar-rule><a href=#url>url</a></code>
  on the <var>input</var> passing <var>url</var>, <var>base</var> and
  <var>encoding override</var>.
 
@@ -1820,7 +1820,10 @@ Sequence:
 
 If <code>url.scheme_data</code> is not null or <code>url.scheme</code> is "<code>file</code>", return.
 
-Set <code>url.port</code> to the value returned by <code class=grammar-rule><a href=#port>port</a></code>.
+If <code>url.scheme</code> has a <a>default port</a>, and if <code class=grammar-rule><a href=#port>port</a></code> is equal to that
+default, then set the <code>port</code> property of <code>url</code> to the empty string.
+
+Otherwise, set <code>url.port</code> to the value returned by <code class=grammar-rule><a href=#port>port</a></code>.
 
 <h4 id=set-pathname class=no-toc>set-pathname</h4>
 

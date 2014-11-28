@@ -1103,13 +1103,20 @@ setHostname
 /*
   If $url.scheme_data is not null or $url.scheme is "file", return.
 
-  Set $url.port to the value returned by @Port.
+  If $url.scheme has a <a>default port</a>, and if @Port is equal to that
+  default, then set the $port property of $url to the empty string.
+
+  Otherwise, set $url.port to the value returned by @Port.
 */
 setPort
   = port:Port [/\\?#]? (.*)
   {
     if (url._scheme_data == null && url._scheme != 'file') {
-      url._port = port;
+      if (Url.DEFAULT_PORT[url._scheme] == port) {
+        url._port = '';
+      } else {
+        url._port = port;
+      }
     }
   }
 

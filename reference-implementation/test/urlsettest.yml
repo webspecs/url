@@ -190,12 +190,19 @@ port:
     href: http://user:pass@host:55/path?search#hash
     port: 55
 
-- testname: return
+- testname: carriageReturn
   url: http://user:pass@host:99/path?search#hash
   value: "5\n5"
   tests:
     href: http://user:pass@host:55/path?search#hash
     port: 55
+
+- testname: default
+  url: http://user:pass@host:99/path?search#hash
+  value: 80
+  tests:
+    href: http://user:pass@host/path?search#hash
+    port: ''
 
 - testname: garbage
   url: http://user:pass@host:99/path?search#hash
