@@ -978,7 +978,7 @@ optionally with an <a>encoding</a>
  <li><p>If <var>encoding override</var> is not given, set it to
  <a>utf-8</a>.
 
- <li>Invoke <code class=grammar-rule><a href=#set-protocol>url</a></code>
+ <li>Invoke <code class=grammar-rule><a href=#url>url</a></code>
  on the <var>input</var> passing <var>url</var>, <var>base</var> and
  <var>encoding override</var>.
 
