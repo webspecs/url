@@ -1013,15 +1013,21 @@ Query
   <p class=XXX>The resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26988">bug 26988</a>
   may add support for parsing URLs without decoding the fragment identifier.
-
-Setter Rules {#setter-rules}
----
 */
 Fragment 
   = fragment:.*
   {
     return cleanse(fragment, Url.SIMPLE_ENCODE_SET, 'fragment')
   }
+
+/**
+ * Setter Rules {#setter-rules}
+ * ---
+ *
+ * <a href=#urlutils-and-urlutilsreadonly-members>URLUtils and
+ * URLUtilsReadOnly members</a> invoke the following setter
+ * rules with <code>url</code> set to a non-<code>null</code> value.
+ */
 
 /*
   Set $url.scheme to value returned by @Scheme.

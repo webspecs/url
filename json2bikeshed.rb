@@ -68,8 +68,14 @@ def expression(node, indent, output)
 end
 
 grammar = File.read('url.pegjs')
+header = {}
 
 prose = Hash[grammar.scan(/^\/\*\n?(.*?)\*\/\s*(\w+)/m).map { |text, name|
+  if text =~ /\A *\*/
+    header[name] = "\n" + text[/(\s*\*\s.*\n)+/].gsub(/^\s*\*\s/, '')
+    text = text[/\/\*\n?(.*)/m, 1]
+  end
+
   indent = text.split("\n").map {|line| line[/^ */]}.reject(&:empty?).min
   text.gsub!(/@([A-Z][-\w]+)'?/) do
     "<code class=grammar-rule><a href=##{hyphenate $1}>#{hyphenate $1}</a></code>"
@@ -102,6 +108,7 @@ rules = JSON.load(File.read('url.pegjson'))['rules']
 output = StringIO.new
 rules.each do |rule|
   name = hyphenate(rule['name'])
+  output.puts header[rule['name']] if header[rule['name']]
   output.puts
   output.puts "<h4 id=#{name} class=no-toc>#{name}</h4>"
 

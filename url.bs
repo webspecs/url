@@ -965,9 +965,6 @@ Rules when evaluated return a JSON objection, typically either a string or an
 object where all of the values are strings.  The one exception is path values,
 which are arrays of strings.
 
-[[#urlutils-and-urlutilsreadonly-members]] will invoke [[#setter-rules]] with
-<code>url</code> set to a non-<code>null</code> value.
-
 
 <h4 id=url class=no-toc>url</h4>
 
@@ -1709,6 +1706,9 @@ may add support for parsing URLs without decoding the fragment identifier.
 
 Setter Rules {#setter-rules}
 ---
+<a href=#urlutils-and-urlutilsreadonly-members>URLUtils and
+URLUtilsReadOnly members</a> invoke the following setter
+rules with <code>url</code> set to a non-<code>null</code> value.
 
 <h4 id=set-protocol class=no-toc>set-protocol</h4>
 
