@@ -9,7 +9,7 @@ The URL Standard is being developed at two locations:
     For more information, see [What is the WHATWG?](https://wiki.whatwg.org/wiki/FAQ#What_is_the_WHATWG.3F).
   * By [request](http://lists.w3.org/Archives/Public/public-w3process/2014Nov/0149.html),
     and on a [provisional basis](http://lists.w3.org/Archives/Public/public-w3process/2014Nov/0177.html),
-    the [webplatform URL Standard](https://specs.webplatform.org/url/webspecs/develop/) with source at
+    the [Web Platform URL Standard](https://specs.webplatform.org/url/webspecs/develop/) with source at
     [github.com/webspecs](https://github.com/webspecs/url).
     For more information, see [Web Platform Specs](https://specs.webplatform.org/docs/).
 
