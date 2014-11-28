@@ -1029,6 +1029,7 @@ Fragment
 setProtocol
   = scheme:Scheme ':'? .*
 {
+  // XXX maybe disallow setting protocol to nonsensical values
   url._scheme = scheme
 }
 

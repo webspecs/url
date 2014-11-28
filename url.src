@@ -702,15 +702,6 @@ is either null or a string holding data that can be used for further processing 
 resource the <a>URL</a>'s other components identify.
 It is initially null.
 
-<p>A <a>URL</a> also has an associated <dfn>relative flag</dfn>.
-It is initially unset.
-
-<p class="note no-backref">The <a>relative flag</a> exists as checking if a
-<a>URL</a>'s <a title='URL scheme'>scheme</a> is a
-<a>relative scheme</a> can give incorrect results due to the
-<code><a attribute for=URLUtils>protocol</a></code> attribute.
-<!-- XXX maybe disallow setting protocol to non-sensical values -->
-
 <p>A <a>URL</a> also has an associated
 <dfn id=concept-url-object title='URL object'>object</dfn> that is either null or a
 <code><a>Blob</a></code>. It is initially null.
@@ -1085,7 +1076,7 @@ optionally an <i title>exclude fragment flag</i>, and then runs these steps:
  "<code>:</code>" concatenated.
 
  <li>
-  <p>If <var>url</var>'s <a>relative flag</a> is set:
+  <p>If <var>url</var>'s <a title='URL scheme data'>scheme data</a> is unset:
 
   <ol>
    <li><p>Append "<code>//</code>" to <var>output</var>.
@@ -1127,8 +1118,7 @@ optionally an <i title>exclude fragment flag</i>, and then runs these steps:
    "<code>/</code>" to <var>output</var>.
   </ol>
 
- <li><p>Otherwise, if <var>url</var>'s <a>relative flag</a> is
- unset, append <var>url</var>'s
+ <li><p>Otherwise, append <var>url</var>'s
  <a title='URL scheme data'>scheme data</a> to
  <var>output</var>.
 
@@ -1775,7 +1765,7 @@ run these steps:
 
 <ol>
  <li><p>If <a title='URLUtils URL'>url</a> is null, or its
- <a>relative flag</a> is unset, terminate these steps.
+ <a title='URL scheme data'>scheme data</a> is set, terminate these steps.
 
  <li><p><a>Set the username</a> given <a title='URLUtils URL'>url</a>
  and the given value.
@@ -1799,7 +1789,7 @@ run these steps:
 
 <ol>
  <li><p>If <a title='URLUtils URL'>url</a> is null, or its
- <a>relative flag</a> is unset, terminate these steps.
+ <a title='URL scheme data'>scheme data</a> is set, terminate these steps.
 
  <li><p><a>Set the password</a> given <a title='URLUtils URL'>url</a>
  and the given value.
@@ -1829,7 +1819,7 @@ steps:
 
 <ol>
  <li><p>If <a title='URLUtils URL'>url</a> is null, or its
- <a>relative flag</a> is unset, terminate these steps.
+ <a title='URL scheme data'>scheme data</a> is set, terminate these steps.
 
  <li>Invoke <code class=grammar-rule><a href=#set-host>set-host</a></code>
  on the <var>input</var> with
@@ -1854,7 +1844,7 @@ run these steps:
 
 <ol>
  <li><p>If <a title='URLUtils URL'>url</a> is null, or its
- <a>relative flag</a> is unset, terminate these steps.
+ <a title='URL scheme data'>scheme data</a> is set, terminate these steps.
 
  <li>Invoke <code class=grammar-rule><a href=#set-hostname>set-hostname</a></code>
  on the <var>input</var> with
@@ -1877,7 +1867,7 @@ these steps:
 
 <ol>
  <li><p>If <a title='URLUtils URL'>url</a> is null, its
- <a>relative flag</a> is unset, or its
+ <a title='URL scheme data'>scheme data</a> is set, or its
  <a title='URL scheme'>scheme</a> is "<code>file</code>",
  terminate these steps.
 
@@ -1895,7 +1885,7 @@ must run these steps:
  <li><p>If <a title='URLUtils URL'>url</a> is null, return the
  empty string.
 
- <li><p>If the <a>relative flag</a> is unset, return
+ <li><p>If the <a title='URL scheme data'>scheme data</a> is set, return
  <a title='URL scheme data'>scheme data</a>.
 
  <li><p>Return "<code>/</code>" concatenated with the strings in
@@ -1908,7 +1898,7 @@ run these steps:
 
 <ol>
  <li><p>If <a title='URLUtils URL'>url</a> is null, or its
- <a>relative flag</a> is unset, terminate these steps.
+ <a title='URL scheme data'>scheme data</a> is set, terminate these steps.
 
  <li><p>Empty <a title='URL path'>path</a>.
 
