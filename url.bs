@@ -103,29 +103,12 @@ or in the range U+0061 to U+007A.
 
 <h3 id=parsers>Parsers</h3>
 
-<p>The <dfn>EOF code point</dfn> is a conceptual code point that signifies the end of a
-string or code point stream.
-
 Two types of parse errors are defined.  <dfn title='parse exception'>Parse
 exceptions</dfn> terminate parsing and must be implemented by all conforming
 implementations.  By contrast, user agents are encouraged, but not required,
 to expose <dfn title='conformance error'>conformance errors</dfn> somehow.
 
 <p class=XXX>Add the ability to halt on the first conformance error.
-
-<p>Within a parser algorithm that uses a <var>pointer</var> variable, <dfn>c</dfn>
-references the code point the <var>pointer</var> variable points to.
-
-<p>Within a string-based parser algorithm that uses a <var>pointer</var> variable,
-<dfn>remaining</dfn> references the substring after <var>pointer</var> in the string
-being processed.
-
-<p class=example>If "<code>mailto:username@example</code>" is a string being
-processed and <var>pointer</var> points to "<code>@</code>",
-<a>c</a> is "<code>@</code>" and <a>remaining</a> is
-"<code>example</code>".
-
-
 
 <h2 id=percent-encoded-bytes>Percent-encoded bytes</h2>
 
