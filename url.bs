@@ -341,9 +341,8 @@ Representation of IPv4 and IPv6 Addresses</a> for some history.
 
 <h3 id=host-parsing>Host parsing</h3>
 
-<p>The <dfn id=concept-host-parser title='host parser'>host parser</dfn> takes a string
-<var>input</var> and optionally a <var>Unicode flag</var>, and then runs
-these steps:
+<p>The <dfn id=concept-host-parser title='host parser'>host parser</dfn> takes
+a string <var>input</var> and then runs these steps:
 
 <ol>
  <li><p>If <var>input</var> is the empty string, return failure.
@@ -352,20 +351,6 @@ these steps:
       http://@/example.org/ -> http:///example.org/ -> http://example.org/
 
       Could potentially move this check to the URL parser if deemed problematic. -->
-
- <li>
-  <p>If <var>input</var> starts with "<code>[</code>", run these
-  substeps:
-
-  <ol>
-   <li><p>If <var>input</var> does not end with
-   "<code>]</code>", <a>parse exception</a>, return failure.
-
-   <li><p>Return the result of
-   <a title='IPv6 parser'>IPv6 parsing</a> <var>input</var>
-   with its leading "<code>[</code>" and trailing
-   "<code>]</code>" removed.
-  </ol>
 
  <li><p>Let <var>domain</var> be the result of
  <a>utf-8 decode without BOM</a> on the
@@ -397,185 +382,8 @@ these steps:
   "<code>]</code>",<!-- 5D -->
   return failure.
 
- <li><p>Return <var>asciiDomain</var> if the <var>Unicode flag</var> is unset,
- and the result of running <a>domain to Unicode</a>
- on <var>asciiDomain</var> otherwise.
+ <li><p>Return <var>asciiDomain</var>.
 </ol>
-
-<p>The <dfn id=concept-ipv6-parser title='IPv6 parser'>IPv6 parser</dfn> takes a string
-<var>input</var> and then runs these steps:
-
-<ol>
- <li><p>Let <var>address</var> be a new
- <a title='IPv6'>IPv6 address</a> with its
- <a title='IPv6 piece'>16-bit pieces</a> initialized to 0.
-
- <li><p>Let <var>piece pointer</var> be a pointer into
- <var>address</var>'s
- <a title='IPv6 piece'>16-bit pieces</a>, initially zero
- (pointing to the first <a title='IPv6 piece'>16-bit piece</a>),
- and let <var>piece</var> be the
- <a title='IPv6 piece'>16-bit piece</a> it points to.
-
- <li><p>Let <var>compress pointer</var> be another pointer into
- <var>address</var>'s <a title='IPv6 piece'>16-bit pieces</a>, initially
- null and pointing to nothing.
-
- <li><p>Let <var>pointer</var> be a pointer into
- <var>input</var>, initially zero (pointing to the first code point).
-
- <li>
-  <p>If <a>c</a> is "<code>:</code>", run these substeps:
-
-  <ol>
-   <li><p>If <a>remaining</a> does not start with
-   "<code>:</code>", <a>parse exception</a>, return failure.
-
-   <li><p>Increase <var>pointer</var> by two.
-
-   <li><p>Increase <var>piece pointer</var> by one and then set
-   <var>compress pointer</var> to <var>piece pointer</var>.
-  </ol>
-
- <li>
-  <p><dfn id=concept-ipv6-parser-main title='IPv6 parser Main'>Main</dfn>:
-  While <a>c</a> is not the <a>EOF code point</a>, run these
-  substeps:
-
-  <ol>
-   <li><p>If <var>piece pointer</var> is eight,
-   <a>parse exception</a>, return failure.
-
-   <li>
-    <p>If <a>c</a> is "<code>:</code>", run these inner
-    substeps:
-
-    <ol>
-     <li><p>If <var>compress pointer</var> is not null,
-     <a>parse exception</a>, return failure.
-
-     <li>Increase <var>pointer</var> and <var>piece pointer</var> by one, set
-     <var>compress pointer</var> to <var>piece pointer</var>,
-     and then jump to <a title='IPv6 parser Main'>Main</a>.
-    </ol>
-
-   <li><p>Let <var>value</var> and <var>length</var> be 0.
-
-   <li><p>While <var>length</var> is less than 4 and
-   <a>c</a> is an
-   <a title="ASCII hex digits">ASCII hex digit</a>, set
-   <var>value</var> to
-   <var>value</var> &times; 0x10 + <a>c</a> interpreted as hexadecimal number,
-   and increase <var>pointer</var> and <var>length</var> by one.
-
-   <li>
-    <p>Based on <a>c</a>:
-
-    <dl class=switch>
-     <dt>"<code>.</code>"
-     <dd>
-      <p>If <var>length</var> is 0, <a>parse exception</a>,
-      return failure.
-      <p>Decrease <var>pointer</var> by <var>length</var>.
-      <p>Jump to <a title='IPv6 parser IPv4'>IPv4</a>.
-
-     <dt>"<code>:</code>"
-     <dd>
-      <p>Increase <var>pointer</var> by one.
-      <p>If <a>c</a> is the <a>EOF code point</a>,
-      <a>parse exception</a>, return failure.
-
-     <dt>Anything but the <a>EOF code point</a>
-     <dd><p><a>Parse exception</a>, return failure.
-    </dl>
-
-   <li><p>Set <var>piece</var> to <var>value</var>.
-
-   <li><p>Increase <var>piece pointer</var> by one.
-  </ol>
-
- <li><p>If <a>c</a> is the <a>EOF code point</a>, jump to
- <a title='IPv6 parser Finale'>Finale</a>.
-
- <li><p><dfn id=concept-ipv6-parser-ipv4 title='IPv6 parser IPv4'>IPv4</dfn>:
- If <var>piece pointer</var> is greater than six,
- <a>parse exception</a>, return failure.
-
- <li><p>Let <var>dots seen</var> be 0.
-
- <li>
-  <p>While <a>c</a> is not the <a>EOF code point</a>, run
-  these substeps:
-
-  <ol>
-   <li><p>Let <var>value</var> be null.
-
-   <li><p>If <a>c</a> is not an <a title="ASCII digits">ASCII digit</a>,
-   <a>parse exception</a>, return failure. <!-- prevent the empty string -->
-
-   <li>
-    <p>While <a>c</a> is an
-    <a title="ASCII digits">ASCII digit</a>, run these subsubsteps:
-
-    <ol>
-     <li><p>Let <var>number</var> be <a>c</a> interpreted as decimal number.
-
-     <li>
-      <p>If <var>value</var> is null, set <var>value</var> to <var>number</var>.
-
-      <p>Otherwise, if <var>value</var> is 0, <a>parse exception</a>, return failure.
-
-      <p>Otherwise, set <var>value</var> to <var>value</var> &times; 10 + <var>number</var>.
-
-     <li><p>Increase <var>pointer</var> by one.
-
-     <li><p>If <var>value</var> is greater than 255, <a>parse exception</a>,
-     return failure.
-    </ol>
-
-   <li><p>If <var>dots seen</var> is less than 3 and
-   <a>c</a> is not a "<code>.</code>",
-   <a>parse exception</a>, return failure.
-
-   <li><p>Set <var>piece</var> to
-   <var>piece</var> &times; 0x100 + <var>value</var>.
-
-   <li><p>If <var>dots seen</var> is 1 or 3, increase
-   <var>piece pointer</var> by one.
-
-   <li><p>Increase <var>pointer</var> by one.
-
-   <li><p>If <var>dots seen</var> is 3 and <a>c</a> is not
-   the <a>EOF code point</a>,
-   <a>parse exception</a>, return failure.
-
-   <li><p>Increase <var>dots seen</var> by one.
-  </ol>
-
- <li>
-  <p><dfn id=concept-ipv6-parser-finale title='IPv6 parser Finale'>Finale</dfn>:
-  If <var>compress pointer</var> is not null, run these substeps:
-
-  <ol>
-   <li><p>Let <var>swaps</var> be
-   <var>piece pointer</var> &minus; <var>compress pointer</var>.
-
-   <li><p>Set <var>piece pointer</var> to seven.
-
-   <li><p>While <var>piece pointer</var> is not zero and <var>swaps</var> is
-   greater than zero, swap <var>piece</var> with the
-   <a title='IPv6 piece'>piece</a> at pointer
-   <var>compress pointer</var> + <var>swaps</var> &minus; 1, and then
-   decrease both <var>piece pointer</var> and <var>swaps</var> by one.
-  </ol>
-
- <li><p>Otherwise, if <var>compress pointer</var> is null and
- <var>piece pointer</var> is not eight, <a>parse exception</a>,
- return failure.
-
- <li><p>Return <var>address</var>.
-</ol>
-
 
 <h3 id=host-serializing>Host serializing</h3>
 
@@ -1386,17 +1194,15 @@ Return the <a title=cleanse>cleansed</a> result using the
 <pre class=railroad>
 Choice:
   Sequence:
-    T: [
     N: ipv6addr
-    T: ]
   Sequence:
     N: ipv4addr
   ZeroOrMore:
     T: any except [:/\?#]
 </pre>
 
-If the input contains an <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code>, return "<code>[</code>" plus
-the result returned by <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code> plus "<code>]</code>".
+If the input contains an <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code>, 
+the result returned by <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code>.
 
 If the input contains an <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>, return 
 the result returned by <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>.
@@ -1433,20 +1239,23 @@ may change the way domain names and trailing dots are handled.
 
 <pre class=railroad>
 Sequence:
-  Optional:
-    Sequence:
-      ZeroOrMore:
-        Sequence:
-          N: h16
-          T: :
-      T: :
-  ZeroOrMore:
-    Sequence:
+  T: [
+  Sequence:
+    Optional:
+      Sequence:
+        ZeroOrMore:
+          Sequence:
+            N: h16
+            T: :
+        T: :
+    ZeroOrMore:
+      Sequence:
+        N: h16
+        T: :
+    Choice:
       N: h16
-      T: :
-  Choice:
-    N: h16
-    N: ls32
+      N: ls32
+  T: ]
 </pre>
 
  Let <code>pre</code>, <code>post</code>, and <code>last</code> be the <code class=grammar-rule><a href=#h16>h16</a></code> values before the double colon if
@@ -1472,8 +1281,8 @@ Sequence:
      the sum of the lengths of the <code>pre</code> and <code>post</code> array is seven.
  * Append <code>last</code> to <code>pre</code>.
 
- Return the <a href=#concept-ipv6-serializer>ipv6
- serialized</a> value of <code>pre</code> as a string.
+ Return '[' plus the <a href=#concept-ipv6-serializer>ipv6
+ serialized</a> value of <code>pre</code> as a string, plus ']'.
 
 <p class=XXX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27234">bug <code>27234</code></a>
@@ -2507,10 +2316,13 @@ static method, when invoked, must run these steps:
 
 <ol>
  <li><p>Let <var>asciiDomain</var> be the result of
- <a title='host parser'>host parsing</a> <var>domain</var>.
+ invoking <code class=grammar-rule><a href=#host>host</a></code> with
+ <var>domain</var> as input.
 
- <li><p>If <var>asciiDomain</var> is an <a title='IPv6'>IPv6 address</a>
- or failure, return the empty string.
+ <li><p>If <var>asciiDomain</var> matches
+ <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code> or
+ <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code> or
+ failure, return the empty string.
 
  <li><p>Return <var>asciiDomain</var>.
 </ol>
@@ -2520,14 +2332,12 @@ static method, when invoked, must run these steps:
 static method, when invoked, must run these steps:
 
 <ol>
- <li><p>Let <var>unicodeDomain</var> be the result of
- <a title='host parser'>host parsing</a> <var>domain</var> with the
- <var>Unicode flag</var> set.
+ <li><p>Let <var>asciiDomain</var> be the result of invoking
+ <a link-for=URL method title=domainToASCII()>domainToASCII</a> with
+ <var>domain</var> as input.
 
- <li><p>If <var>unicodeDomain</var> is an
- <a title='IPv6'>IPv6 address</a> or failure, return the empty string.
-
- <li><p>Return <var>unicodeDomain</var>.
+ <li><p>Return the result of running <a>domain to Unicode</a>
+ on <var>asciiDomain</var>.
 </ol>
 
 <p class=XXX>Add domainToUI() which follows the UA conventions for when to use the Unicode

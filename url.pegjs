@@ -536,8 +536,8 @@ Password
   }
 
 /*
-   If the input contains an @IPv6Addr, return "[" plus
-   the result returned by @IPv6Addr plus "]".
+   If the input contains an @IPv6Addr, 
+   the result returned by @IPv6Addr.
 
    If the input contains an @IPv4Addr, return 
    the result returned by @IPv4Addr.
@@ -571,10 +571,10 @@ Password
    may change the way domain names and trailing dots are handled.
 */
 Host
-  = '[' addr:IPv6Addr ']' 
+  = addr:IPv6Addr
     &{ return lookahead(/^([\\\/?#:]|$)/) }
   {
-    return '[' + addr + ']'
+    return addr
   }
 
   / addr:IPv4Addr
@@ -674,15 +674,15 @@ Host
        the sum of the lengths of the $pre and $post array is seven.
    * Append $last to $pre.
 
-   Return the <a href=#concept-ipv6-serializer>ipv6
-   serialized</a> value of $pre as a string.
+   Return '[' plus the <a href=#concept-ipv6-serializer>ipv6
+   serialized</a> value of $pre as a string, plus ']'.
 
   <p class=XXX>The resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27234">bug 27234</a>
   may add support for link-local addresses.
 */
 IPv6Addr
-  = addr:(((H16 ':')* ':')? (H16 ':')* (H16 / LS32))
+  = '[' addr:(((H16 ':')* ':')? (H16 ':')* (H16 / LS32)) ']'
   {
     var pre = [];
     var post = [];
@@ -716,7 +716,7 @@ IPv6Addr
       ipv4 = addr[2]
     };
 
-    return Url.canonicalizeIpv6(pre, post, ipv4)
+    return '[' + Url.canonicalizeIpv6(pre, post, ipv4) + ']'
   }
 
 /*
