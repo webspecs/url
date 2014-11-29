@@ -1892,7 +1892,7 @@ To <dfn>cleanse</dfn> a string given an <var>encode set</var>, run these steps:
      a <a>conformance error</a>.
 
  * if the <var>encode set</var> is non-null,
-    first <a href="https://encoding.spec.whatwg.org/#encode">encode</a> the
+    first <a function>encode</a> the
     result using the <code>encoding override</code>, then
     <a>percent encode</a>
     that result using the provided <var>encode set</var>.
@@ -2030,11 +2030,11 @@ optionally an <i title>exclude fragment flag</i>, and then runs these steps:
 <h3 id=origin>Origin</h3>
 <!-- Still need to watch the final bits -->
 
-<p class=note>See <a>origin</a>'s definition in HTML for the
+<p class=note>See <a spec=html>origin</a>'s definition in HTML for the
 necessary background information. [[!HTML]]
 
 <p>A <a>URL</a>'s <dfn id=concept-url-origin title='URL origin'>origin</dfn> is
-the <a>origin</a> returned by running these steps, switching
+the <a spec=html>origin</a> returned by running these steps, switching
 on <a>URL</a>'s <a title='URL scheme'>scheme</a>:
 
 <dl class=switch>
@@ -2242,7 +2242,7 @@ takes a list of name-value pairs <var>pairs</var>, optionally with an
    <li><p>Let <var>outputPair</var> be a copy of <var>pair</var>.
 
    <li><p>Replace <var>outputPair</var>'s name and value with the result of running
-   <a>encode</a> on them using
+   <a function>encode</a> on them using
    <var>encoding override</var>, respectively.
 
    <li><p>Replace <var>outputPair</var>'s name and value with their
@@ -3263,6 +3263,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
         "shortname": "dom", "type": "dfn", "level": 1, "status": "current"
     },
     {
+        "linkingText": "encode",
+        "url": "https://encoding.spec.whatwg.org/#encode",
+        "shortname": "encode", "type": "function", "level": 1, "status": "current"
+    },
+    {
         "linkingText": "encoding",
         "url": "https://encoding.spec.whatwg.org/#encoding",
         "shortname": "encoding", "type": "dfn", "level": 1, "status": "current"
@@ -3280,6 +3285,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
     {
         "linkingText": "hashchangeevent",
         "url": "https://html.spec.whatwg.org/multipage/comms.html#hashchangeevent",
+        "shortname": "html", "type": "dfn", "level": 1, "status": "current"
+    },
+    {
+        "linkingText": "origin",
+        "url": "https://html.spec.whatwg.org/multipage/browsers.html#origin",
         "shortname": "html", "type": "dfn", "level": 1, "status": "current"
     },
     {
