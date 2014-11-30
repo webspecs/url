@@ -113,70 +113,12 @@ or in the range U+0061 to U+007A.
 <p>The <dfn>ASCII alphanumeric</dfn> are <a>ASCII digits</a> or
 <a>ASCII alpha</a>.
 
-
-<h3 id=parsers>Parsers</h3>
-
-Two types of parse errors are defined.  <dfn title='parse exception'>Parse
-exceptions</dfn> terminate parsing and must be implemented by all conforming
-implementations.  By contrast, user agents are encouraged, but not required,
-to expose <dfn title='conformance error'>conformance errors</dfn> somehow.
-
-<p class=XXX>Add the ability to halt on the first conformance error.
-
-<h2 id=percent-encoded-bytes>Percent-encoded bytes</h2>
-
 <p>A <dfn>percent-encoded byte</dfn> is "<code>%</code>", followed by
 two <a>ASCII hex digits</a>. Sequences of
 <a title="percent-encoded byte">percent-encoded bytes</a>, after
 conversion to bytes, should not cause a
 <a>utf-8 decoder</a> to run into any
 <a title=error>errors</a>.
-
-<p>To <dfn>percent encode</dfn> a <var>byte</var> into a
-<a>percent-encoded byte</a>, return a string consisting of
-"<code>%</code>", followed by a double-digit, uppercase, hexadecimal
-representation of <var>byte</var>.
-
-<p>To <dfn>percent decode</dfn> a byte sequence <var>input</var>, run these steps:
-
-<p class=warning>Using anything but a <a>utf-8 decoder</a>
-when the <var>input</var> contains bytes outside the range 0x00 to 0x7F might be
-insecure and is not recommended.
-
-<ol>
- <li><p>Let <var>output</var> be an empty byte sequence.
-
- <li>
-  <p>For each byte <var>byte</var> in <var>input</var>, run these steps:
-
-  <ol>
-   <li><p>If <var>byte</var> is not `<code>%</code>`, append
-   <var>byte</var> to <var>output</var>.
-
-   <li><p>Otherwise, if <var>byte</var> is `<code>%</code>` and the next two
-   bytes after <var>byte</var> in <var>input</var> are not in the ranges
-   0x30 to 0x39, 0x41 to 0x46, and 0x61 to 0x66, append <var>byte</var> to
-   <var>output</var>.
-
-   <li>
-    <p>Otherwise, run these substeps:
-
-    <ol>
-     <li><p>Let <var>bytePoint</var> be the two bytes after <var>byte</var> in
-     <var>input</var>,
-     <a title="utf-8 decode without BOM">decoded</a>, and
-     then interpreted as hexadecimal number.
-     <!-- We should have a definition for this that is saner. -->
-
-     <li><p>Append a byte whose value is <var>bytePoint</var> to
-     <var>output</var>.
-
-     <li><p>Skip the next two bytes in <var>input</var>.
-    </ol>
-  </ol>
-
- <li><p>Return <var>output</var>.
-</ol>
 
 <!-- the escape sets are minimal as escaping can lead to problems; we might
      be able to escape more here but only if implementors are willing and
@@ -212,25 +154,6 @@ and
 than U+0021, greater than U+007E, or one of U+0022, U+0023, U+003C, U+003E,
 and U+0060.
 
-<p>To <dfn>utf-8 percent encode</dfn> a <var>code point</var>, using
-an <var>encode set</var>, run these steps:
-
-<ol>
- <li><p>If <var>code point</var> is not in
- <var>encode set</var>, return <var>code point</var>.
-
- <li><p>Let <var>bytes</var> be the result of running
- <a>utf-8 encode</a> on
- <var>code point</var>.
-
- <li><p><a>Percent encode</a> each byte in <var>bytes</var>, and
- then return them concatenated, in the same order.
-</ol>
-
-
-
-<h2 id="hosts-(domains-and-ip-addresses)">Hosts (domains and IP addresses)</h2>
-
 <!-- Punycode:
      http://tools.ietf.org/html/rfc3492
      http://mothereff.in/punycode -->
@@ -247,214 +170,11 @@ list of four <dfn id=concept-ipv4-piece title='IPv4 piece'>8-bit pieces</dfn>.
 [[RFC791]]
 
 <p>An <dfn id=concept-ipv6 title='IPv6'>IPv6 address</dfn> is a 128-bit
-identifier and for the purposes of this specification represented as an ordered
-list of eight <dfn id=concept-ipv6-piece title='IPv6 piece'>16-bit pieces</dfn>.
-[[RFC4291]]
-
-
-<h3 id=idna>IDNA</h3>
-
-<p>The <dfn id=concept-domain-to-ascii title='domain to ASCII'>domain to ASCII</dfn> given a
-<a>domain</a> <var>domain</var>, runs these steps:
-
-<ol>
- <li><p>Let <var>result</var> be the result of running
- <a title=ToASCII>Unicode ToASCII</a> with
- <i>domain_name</i> set to <var>domain</var>,
- <i>UseSTD3ASCIIRules</i> set to false, <i>processing_option</i> set to
- <i>Transitional_Processing</i>, and <i>VerifyDnsLength</i> set to false.
-
- <li><p>If <var>result</var> is a failure value, return failure.
-
- <li><p>Return <var>result</var>.
-</ol>
-
-<p>The <dfn id=concept-domain-to-unicode title='domain to Unicode'>domain to Unicode</dfn> given a
-<a>domain</a> <var>domain</var>, runs these steps:
-
-<ol>
- <li><p>Let <var>result</var> be the result of running
- <a title=ToUnicode>Unicode ToUnicode</a> with
- <i>domain_name</i> set to <var>domain</var>,
- <i>UseSTD3ASCIIRules</i> set to false.
-
- <li>
-  <p>Return <var>result</var>, ignoring any returned errors.
-
-  <p class=note>User agents are encouraged to report errors through a developer console.
-</ol>
-
-
-<h3 id=host-writing>Host writing</h3>
-
-<p>A <a>host</a> must be either a <a>domain</a>,
-or an <a title='IPv4'>IPv4 address</a>, 
-or "<code>[</code>" followed
-by an <a title='IPv6'>IPv6 address</a> followed by
-"<code>]</code>".
-
-<p>A <var>domain</var> is a <dfn>valid domain</dfn> if these steps return success:
-
-<ol>
- <li><p>Let <var>result</var> be the result of running
- <a title=ToASCII>Unicode ToASCII</a> with
- <i>domain_name</i> set to <var>domain</var>,
- <i>UseSTD3ASCIIRules</i> set to true, <i>processing_option</i> set to
- <i>Nontransitional_Processing</i>, and <i>VerifyDnsLength</i> set to true.
-
- <li><p>If <var>result</var> is a failure value, return failure.
-
- <li><p>Set <var>result</var> to the result of running
- <a title=ToUnicode>Unicode ToUnicode</a> with
- <i>domain_name</i> set to <var>result</var>,
- <i>UseSTD3ASCIIRules</i> set to true.
-
- <li><p>If <var>result</var> contains any errors, return failure.
-
- <li><p>Return success.
-</ol>
-
-<p class=XXX>Ideally we define this in terms of a sequence of code points that make up a
-<a>valid domain</a> rather than through a whack-a-mole:
-<a href=https://www.w3.org/Bugs/Public/show_bug.cgi?id=25334>bug 25334</a>.
-
-<p>A <a>domain</a> must be a string that is a
-<a>valid domain</a>.
-
-<p class=XXX>Textual representation of <a title='IPv4'>IPv4 address</a> does
-not appear to be defined by an RFC.  See 
-<a href="https://tools.ietf.org/html/draft-main-ipaddr-text-rep-00">Textual
-Representation of IPv4 and IPv6 Addresses</a> for some history.
-
-<p>An <a title='IPv6'>IPv6 address</a> is defined in the
-<a href="http://tools.ietf.org/html/rfc4291#section-2.2">"Text Representation of Addresses" chapter of IP Version 6 Addressing Architecture</a>.
-[[!RFC4291]]
-<!-- http://tools.ietf.org/html/rfc5952 updates that RFC, but it seems as
-     far as what developers can do we should be liberal
-
-     XXX should we define the format inline instead just like STD 66? -->
-
-
-<h3 id=host-parsing>Host parsing</h3>
-
-<p>The <dfn id=concept-host-parser title='host parser'>host parser</dfn> takes
-a string <var>input</var> and then runs these steps:
-
-<ol>
- <li><p>If <var>input</var> is the empty string, return failure.
- <!-- Otherwise parsing URLs would not be idempotent:
-
-      http://@/example.org/ -> http:///example.org/ -> http://example.org/
-
-      Could potentially move this check to the URL parser if deemed problematic. -->
-
- <li><p>Let <var>domain</var> be the result of
- <a>utf-8 decode without BOM</a> on the
- <a title="percent decode">percent decoding</a> of
- <a>utf-8 encode</a> on <var>input</var>.
- <!-- https://bugzilla.mozilla.org/show_bug.cgi?id=309671 -->
-
- <li><p>Let <var>asciiDomain</var> be the result of running
- <a>domain to ASCII</a> on <var>domain</var>.
-
- <li><p>If <var>asciiDomain</var> is failure, return failure.
-
- <li>
-  <p>If <var>asciiDomain</var> contains one of
-  U+0000,
-  U+0009,
-  U+000A,
-  U+000D,
-  U+0020,
-  "<code>#</code>",<!-- 23 -->
-  "<code>%</code>",<!-- 25 -->
-  "<code>/</code>",<!-- 2F -->
-  "<code>:</code>",<!-- 3A -->
-  "<code>?</code>",<!-- 3F -->
-  "<code>@</code>",<!-- 40 -->
-  "<code>[</code>",<!-- 5B -->
-  "<code>\</code>",<!-- 5C -->
-  and
-  "<code>]</code>",<!-- 5D -->
-  return failure.
-
- <li><p>Return <var>asciiDomain</var>.
-</ol>
-
-<h3 id=host-serializing>Host serializing</h3>
-
-<p>The <dfn id=concept-host-serializer title='host serializer'>host serializer</dfn> takes null or a
-<a>host</a> <var>host</var> and then runs
-these steps:
-
-<ol>
- <li><p>If <var>host</var> is null, return the empty string.
-
- <li><p>If <var>host</var> is an
- <a title='IPv6'>IPv6 address</a>, return
- "<code>[</code>", followed by the result of running the
- <a>IPv6 serializer</a> on <var>host</var>,
- followed by "<code>]</code>".
-
- <li><p>Otherwise, <var>host</var> is a <a>domain</a> or an
- <a title='IPv4'>IPv4 address</a>,
- return <var>host</var>.
-</ol>
-
-<p>The <dfn id=concept-ipv6-serializer title='IPv6 serializer'>IPv6 serializer</dfn> takes an
-<a title='IPv6'>IPv6 address</a> <var>address</var> and
-then runs these steps:
-
-<ol>
- <li><p>Let <var>output</var> be the empty string.
-
- <li>
-  <p>Let <var>compress pointer</var> be a pointer to the first
-  <a title='IPv6 piece'>16-bit piece</a> in the first longest
-  sequences of <var>address</var>'s
-  <a title='IPv6 piece'>16-bit pieces</a> that are 0.
-
-  <p class=example>In <code>0:f:0:0:f:f:0:0</code> it would point to
-  the second 0.
-
- <li><p>If there is no sequence of <var>address</var>'s
- <a title='IPv6 piece'>16-bit pieces</a> that are 0 longer than
- one, set <var>compress pointer</var> to null.
-
- <li>
-  <p>For each <var>piece</var> in <var>address</var>'s
-  <a title='IPv6 piece'>pieces</a>, run these substeps:
-
-  <ol>
-   <li><p>If <var>compress pointer</var> points to
-   <var>piece</var>, append "<code>::</code>" to
-   <var>output</var> if <var>piece</var> is
-   <var>address</var>'s first <a title='IPv6 piece'>piece</a> and append
-   "<code>:</code>" otherwise, and then run these substeps again with all
-   subsequent <a title='IPv6 piece'>pieces</a> in
-   <var>address</var>'s <a title='IPv6 piece'>pieces</a>
-   that are 0 skipped or go the next step in the overall set of steps if
-   that leaves no <a title='IPv6 piece'>pieces</a>.
-
-   <li><p>Append <var>piece</var>, represented as the shortest
-   possible lowercase hexadecimal number, to <var>output</var>.
-
-   <li><p>If <var>piece</var> is not
-   <var>address</var>'s last <a title='IPv6 piece'>piece</a>,
-   append "<code>:</code>" to <var>output</var>.
-  </ol>
-
- <li><p>Return <var>output</var>.
-</ol>
-
-<p class=note>This algorithm requires the recommendation from
-A Recommendation for IPv6 Address Text Representation.
-[[RFC5952]]
-
-<!-- Safari/Gecko/Opera do not normalize IPv6. Chrome does. This algorithm
-     follows Chrome because we normalize domains too. -->
-
-
+identifier and for the purposes of this specification is either represented as an ordered
+list of eight <dfn id=concept-ipv6-piece title='IPv6 piece'>16-bit
+pieces</dfn>, or as a list of seven <a title='IPv6 piece'>16-bit pieces</a>
+followed by a single
+<dfn id=concept-ipv6-ls32 title='IPV6 LS32'>32-bit piece</dfn>. [[RFC4291]]
 
 <h2 id=urls>URLs</h2>
 
@@ -560,7 +280,7 @@ the <a>URL parser</a> when the input is potentially a
 <a>relative URL</a>.
 
 
-<h3 id=url-writing>URL writing</h3>
+<h3 id=url-writing>URL Authoring Requirements</h3>
 
 <!-- http://tantek.com/2011/238/b1/many-ways-slice-url-name-pieces -->
 
@@ -624,6 +344,29 @@ optionally followed by an
 <p>A <a title='URL password'>password</a> must be zero or more
 <a>URL units</a>, excluding "<code>/</code>",
 "<code>?</code>", and "<code>@</code>".
+
+<p>A <a>host</a> must be either a <a>domain</a>,
+or an <a title='IPv4'>IPv4 address</a>, 
+or "<code>[</code>" followed
+by an <a title='IPv6'>IPv6 address</a> followed by
+"<code>]</code>".
+
+<p>A <a>domain</a> must be a string that is a
+<a>valid domain</a>.
+
+<p class=XXX>Textual representation of <a title='IPv4'>IPv4 address</a> does
+not appear to be defined by an RFC.  See 
+<a href="https://tools.ietf.org/html/draft-main-ipaddr-text-rep-00">Textual
+Representation of IPv4 and IPv6 Addresses</a> for some history.
+
+<p>An <a title='IPv6'>IPv6 address</a> is defined in the
+<a href="http://tools.ietf.org/html/rfc4291#section-2.2">"Text Representation of Addresses" chapter of IP Version 6 Addressing Architecture</a>.
+[[!RFC4291]]
+<!-- http://tools.ietf.org/html/rfc5952 updates that RFC, but it seems as
+     far as what developers can do we should be liberal
+
+     XXX should we define the format inline instead just like STD 66? -->
+
 
 <p>A <a title='URL port'>port</a> must be zero or more
 <a>ASCII digits</a>.
@@ -787,10 +530,252 @@ Rules when evaluated return a JSON objection, typically either a string or an
 object where all of the values are strings.  The one exception is path values,
 which are arrays of strings.
 
+Two types of parse errors are defined.  <dfn title='parse exception'>Parse
+exceptions</dfn> terminate parsing and must be implemented by all conforming
+implementations.  By contrast, user agents are encouraged, but not required,
+to expose <dfn title='conformance error'>conformance errors</dfn> somehow.
+If parsing a given input results in the detection of multiple
+<a>conformance errors</a>, user agents may chose to only report a subset of
+the errors detected.
+
 #include <url.pegjs>
 
 Common Functions {#common-functions}
 ---
+
+<p>To <dfn>percent encode</dfn> a <var>byte</var> into a
+<a>percent-encoded byte</a>, return a string consisting of
+"<code>%</code>", followed by a double-digit, uppercase, hexadecimal
+representation of <var>byte</var>.
+
+<p>To <dfn>percent decode</dfn> a byte sequence <var>input</var>, run these steps:
+
+<p class=warning>Using anything but a <a>utf-8 decoder</a>
+when the <var>input</var> contains bytes outside the range 0x00 to 0x7F might be
+insecure and is not recommended.
+
+<ol>
+ <li><p>Let <var>output</var> be an empty byte sequence.
+
+ <li>
+  <p>For each byte <var>byte</var> in <var>input</var>, run these steps:
+
+  <ol>
+   <li><p>If <var>byte</var> is not `<code>%</code>`, append
+   <var>byte</var> to <var>output</var>.
+
+   <li><p>Otherwise, if <var>byte</var> is `<code>%</code>` and the next two
+   bytes after <var>byte</var> in <var>input</var> are not in the ranges
+   0x30 to 0x39, 0x41 to 0x46, and 0x61 to 0x66, append <var>byte</var> to
+   <var>output</var>.
+
+   <li>
+    <p>Otherwise, run these substeps:
+
+    <ol>
+     <li><p>Let <var>bytePoint</var> be the two bytes after <var>byte</var> in
+     <var>input</var>,
+     <a title="utf-8 decode without BOM">decoded</a>, and
+     then interpreted as hexadecimal number.
+     <!-- We should have a definition for this that is saner. -->
+
+     <li><p>Append a byte whose value is <var>bytePoint</var> to
+     <var>output</var>.
+
+     <li><p>Skip the next two bytes in <var>input</var>.
+    </ol>
+  </ol>
+
+ <li><p>Return <var>output</var>.
+</ol>
+
+<p>To <dfn>utf-8 percent encode</dfn> a <var>code point</var>, using
+an <var>encode set</var>, run these steps:
+
+<ol>
+ <li><p>If <var>code point</var> is not in
+ <var>encode set</var>, return <var>code point</var>.
+
+ <li><p>Let <var>bytes</var> be the result of running
+ <a>utf-8 encode</a> on
+ <var>code point</var>.
+
+ <li><p><a>Percent encode</a> each byte in <var>bytes</var>, and
+ then return them concatenated, in the same order.
+</ol>
+
+<p>The <dfn id=concept-domain-to-ascii title='domain to ASCII'>domain to
+ASCII</dfn> function given a <a>domain</a> <var>domain</var>, runs these steps:
+
+<ol>
+ <li><p>Let <var>result</var> be the result of running
+ <a title=ToASCII>Unicode ToASCII</a> with
+ <i>domain_name</i> set to <var>domain</var>,
+ <i>UseSTD3ASCIIRules</i> set to false, <i>processing_option</i> set to
+ <i>Transitional_Processing</i>, and <i>VerifyDnsLength</i> set to false.
+
+ <li><p>If <var>result</var> is a failure value, return failure.
+
+ <li><p>Return <var>result</var>.
+</ol>
+
+<p>The <dfn id=concept-domain-to-unicode title='domain to Unicode'>domain to
+Unicode</dfn> function given a <a>domain</a> <var>domain</var>, runs these
+steps:
+
+<ol>
+ <li><p>Let <var>result</var> be the result of running
+ <a title=ToUnicode>Unicode ToUnicode</a> with
+ <i>domain_name</i> set to <var>domain</var>,
+ <i>UseSTD3ASCIIRules</i> set to false.
+
+ <li>
+  <p>Return <var>result</var>, ignoring any returned errors.
+
+  <p class=note>User agents are encouraged to report errors through a developer console.
+</ol>
+
+<p>A <var>domain</var> is a <dfn>valid domain</dfn> if these steps return success:
+
+<ol>
+ <li><p>Let <var>result</var> be the result of running
+ <a title=ToASCII>Unicode ToASCII</a> with
+ <i>domain_name</i> set to <var>domain</var>,
+ <i>UseSTD3ASCIIRules</i> set to true, <i>processing_option</i> set to
+ <i>Nontransitional_Processing</i>, and <i>VerifyDnsLength</i> set to true.
+
+ <li><p>If <var>result</var> is a failure value, return failure.
+
+ <li><p>Set <var>result</var> to the result of running
+ <a title=ToUnicode>Unicode ToUnicode</a> with
+ <i>domain_name</i> set to <var>result</var>,
+ <i>UseSTD3ASCIIRules</i> set to true.
+
+ <li><p>If <var>result</var> contains any errors, return failure.
+
+ <li><p>Return success.
+</ol>
+
+<p class=XXX>Ideally we define this in terms of a sequence of code points that make up a
+<a>valid domain</a> rather than through a whack-a-mole:
+<a href=https://www.w3.org/Bugs/Public/show_bug.cgi?id=25334>bug 25334</a>.
+
+<p>The <dfn id=concept-host-parser title='host parser'>host parser</dfn> takes
+a string <var>input</var> and then runs these steps:
+
+<ol>
+ <li><p>If <var>input</var> is the empty string, return failure.
+ <!-- Otherwise parsing URLs would not be idempotent:
+
+      http://@/example.org/ -> http:///example.org/ -> http://example.org/
+
+      Could potentially move this check to the URL parser if deemed problematic. -->
+
+ <li><p>Let <var>domain</var> be the result of
+ <a>utf-8 decode without BOM</a> on the
+ <a title="percent decode">percent decoding</a> of
+ <a>utf-8 encode</a> on <var>input</var>.
+ <!-- https://bugzilla.mozilla.org/show_bug.cgi?id=309671 -->
+
+ <li><p>Let <var>asciiDomain</var> be the result of running
+ <a>domain to ASCII</a> on <var>domain</var>.
+
+ <li><p>If <var>asciiDomain</var> is failure, return failure.
+
+ <li>
+  <p>If <var>asciiDomain</var> contains one of
+  U+0000,
+  U+0009,
+  U+000A,
+  U+000D,
+  U+0020,
+  "<code>#</code>",<!-- 23 -->
+  "<code>%</code>",<!-- 25 -->
+  "<code>/</code>",<!-- 2F -->
+  "<code>:</code>",<!-- 3A -->
+  "<code>?</code>",<!-- 3F -->
+  "<code>@</code>",<!-- 40 -->
+  "<code>[</code>",<!-- 5B -->
+  "<code>\</code>",<!-- 5C -->
+  and
+  "<code>]</code>",<!-- 5D -->
+  return failure.
+
+ <li><p>Return <var>asciiDomain</var>.
+</ol>
+
+<p>The <dfn id=concept-host-serializer title='host serializer'>host serializer</dfn> takes null or a
+<a>host</a> <var>host</var> and then runs
+these steps:
+
+<ol>
+ <li><p>If <var>host</var> is null, return the empty string.
+
+ <li><p>If <var>host</var> is an
+ <a title='IPv6'>IPv6 address</a>, return
+ "<code>[</code>", followed by the result of running the
+ <a>IPv6 serializer</a> on <var>host</var>,
+ followed by "<code>]</code>".
+
+ <li><p>Otherwise, <var>host</var> is a <a>domain</a> or an
+ <a title='IPv4'>IPv4 address</a>,
+ return <var>host</var>.
+</ol>
+
+<p>The <dfn id=concept-ipv6-serializer title='IPv6 serializer'>IPv6 serializer</dfn> takes an
+<a title='IPv6'>IPv6 address</a> <var>address</var> and
+then runs these steps:
+
+<ol>
+ <li><p>Let <var>output</var> be the empty string.
+
+ <li>
+  <p>Let <var>compress pointer</var> be a pointer to the first
+  <a title='IPv6 piece'>16-bit piece</a> in the first longest
+  sequences of <var>address</var>'s
+  <a title='IPv6 piece'>16-bit pieces</a> that are 0.
+
+  <p class=example>In <code>0:f:0:0:f:f:0:0</code> it would point to
+  the second 0.
+
+ <li><p>If there is no sequence of <var>address</var>'s
+ <a title='IPv6 piece'>16-bit pieces</a> that are 0 longer than
+ one, set <var>compress pointer</var> to null.
+
+ <li>
+  <p>For each <var>piece</var> in <var>address</var>'s
+  <a title='IPv6 piece'>pieces</a>, run these substeps:
+
+  <ol>
+   <li><p>If <var>compress pointer</var> points to
+   <var>piece</var>, append "<code>::</code>" to
+   <var>output</var> if <var>piece</var> is
+   <var>address</var>'s first <a title='IPv6 piece'>piece</a> and append
+   "<code>:</code>" otherwise, and then run these substeps again with all
+   subsequent <a title='IPv6 piece'>pieces</a> in
+   <var>address</var>'s <a title='IPv6 piece'>pieces</a>
+   that are 0 skipped or go the next step in the overall set of steps if
+   that leaves no <a title='IPv6 piece'>pieces</a>.
+
+   <li><p>Append <var>piece</var>, represented as the shortest
+   possible lowercase hexadecimal number, to <var>output</var>.
+
+   <li><p>If <var>piece</var> is not
+   <var>address</var>'s last <a title='IPv6 piece'>piece</a>,
+   append "<code>:</code>" to <var>output</var>.
+  </ol>
+
+ <li><p>Return <var>output</var>.
+</ol>
+
+<p class=note>This algorithm requires the recommendation from
+A Recommendation for IPv6 Address Text Representation.
+[[RFC5952]]
+
+<!-- Safari/Gecko/Opera do not normalize IPv6. Chrome does. This algorithm
+     follows Chrome because we normalize domains too. -->
+
+
 
 To <dfn>cleanse</dfn> a string given an <var>encode set</var>, run these steps:
 
