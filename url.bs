@@ -1614,40 +1614,6 @@ names, and a <var>path<path> array of names, perform the following steps:
      prepend the values of the <var>base</var> array to the <var>path</var>
      array.
 
-<p>To <dfn>set the username</dfn> given a <var>url</var> and
-<var>username</var>, run these steps:
-
-<ol>
- <li><p>Set <var>url</var>'s <a title='URL username'>username</a> to the
- empty string.
-
- <li><p>For each code point in <var>username</var>,
- <a>utf-8 percent encode</a> it using the <a>username encode set</a>, and
- append the result to <var>url</var>'s
- <a title='URL username'>username</a>.
-</ol>
-
-<p>To <dfn>set the password</dfn> given a <var>url</var> and
-<var>password</var>, run these steps:
-
-<ol>
- <li><p>If <var>password</var> is the empty string, set <var>url</var>'s
- <a title='URL password'>password</a> to null.
-
- <li>
-  <p>Otherwise, run these substeps:
-
-  <ol>
-   <li><p>Set <var>url</var>'s <a title='URL password'>password</a> to
-   the empty string.
-
-   <li><p>For each code point in <var>password</var>,
-   <a>utf-8 percent encode</a> it using the <a>password encode set</a>, and
-   append the result to <var>url</var>'s
-   <a title='URL password'>password</a>.
-  </ol>
-</ol>
-
 
 <h3 id=url-serializing>URL serializing</h3>
 
@@ -2158,8 +2124,13 @@ run these steps:
  <li><p>If <a title='URLUtils URL'>url</a> is null, or its
  <a title='URL scheme data'>scheme data</a> is set, terminate these steps.
 
- <li><p><a>Set the username</a> given <a title='URLUtils URL'>url</a>
- and the given value.
+ <li><p>Set <var>url</var>'s <a title='URL username'>username</a> to the
+ empty string.
+
+ <li><p>For each code point in <var>username</var>,
+ <a>utf-8 percent encode</a> it using the <a>username encode set</a>, and
+ append the result to <var>url</var>'s
+ <a title='URL username'>username</a>.
 
  <li><p>Run the <a>pre-update steps</a>.
 </ol>
@@ -2182,8 +2153,21 @@ run these steps:
  <li><p>If <a title='URLUtils URL'>url</a> is null, or its
  <a title='URL scheme data'>scheme data</a> is set, terminate these steps.
 
- <li><p><a>Set the password</a> given <a title='URLUtils URL'>url</a>
- and the given value.
+ <li><p>If <var>password</var> is the empty string, set <var>url</var>'s
+ <a title='URL password'>password</a> to null.
+
+ <li>
+  <p>Otherwise, run these substeps:
+
+  <ol>
+   <li><p>Set <var>url</var>'s <a title='URL password'>password</a> to
+   the empty string.
+
+   <li><p>For each code point in <var>password</var>,
+   <a>utf-8 percent encode</a> it using the <a>password encode set</a>, and
+   append the result to <var>url</var>'s
+   <a title='URL password'>password</a>.
+  </ol>
 
  <li><p>Run the <a>pre-update steps</a>.
 </ol>
