@@ -236,7 +236,7 @@ FileUrl
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug 26338</a>
   may change how encoding override is handled.
 
-  <p class=XX>The resolution of
+  <p class=XXX>The resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27233">bug 27233</a>
   may add support for relative URLs for unknown schemes.
 */

@@ -75,7 +75,7 @@ solid thin; vertical-align: top; padding: 0.2em; }
  for JavaScript worker environments.)
 </ul>
 
-<p class=note>As the editor learns more about the subject matter the goals
+<p class=note>As the editors learn more about the subject matter the goals
 might increase in scope somewhat.
 
 
@@ -605,7 +605,7 @@ Return <code>result</code>.
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug <code>26338</code></a>
 may change how encoding override is handled.
 
-<p class=XX>The resolution of
+<p class=XXX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27233">bug <code>27233</code></a>
 may add support for relative URLs for unknown schemes.
 
@@ -2905,7 +2905,7 @@ and
 <a href=mailto:rubys@intertwingly.net>rubys@intertwingly.net</a>).
 
 <p>Per <a rel="license" href="//creativecommons.org/publicdomain/zero/1.0/">CC0</a>, to
-the extent possible under law, the editor has waived all copyright and related or
+the extent possible under law, the editors have waived all copyright and related or
 neighboring rights to this work.
 
 <script>
