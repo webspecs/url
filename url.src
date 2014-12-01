@@ -110,6 +110,18 @@ might increase in scope somewhat.
 <a title='URL query'>query</a>, and
 <a title='URL fragment'>fragment</a>.
 
+<p class="example">
+<code>http://username:password@example.com:8000/path?query#fragment</code>
+contains values for all <a>URL</a> components except 
+<a title="URL scheme data">scheme data</a>.
+</p>
+
+<p class="example">
+<code>javascript:doSomething()</code> contains values for only 
+<a title='URL scheme'>scheme</a> and 
+<a title='URL scheme data'>scheme data</a>.
+</p>
+
 <p>A <a>URL</a>'s <dfn id=concept-url-scheme title='URL scheme'>scheme</dfn> is
 a string that identifies the type of <a>URL</a> and can be used to
 dispatch a <a>URL</a> for further processing after
@@ -120,9 +132,10 @@ dispatch a <a>URL</a> for further processing after
 <a>URL</a>. It is initially null.
 
 <p class="note no-backref">A <a>URL</a>'s
-<a title='URL scheme data'>scheme data</a> will be its initial value if its
+<a title='URL scheme data'>scheme data</a> will be null if its initial
 <a title='URL scheme'>scheme</a> is a <a>relative scheme</a>, and
-otherwise will be the only component without an initial value.
+otherwise will be the only component other than <a title='URL
+scheme'>scheme</a> that differs from its initial value.
 
 <p>A  <a>URL</a>'s <dfn id=concept-url-username title='URL username'>username</dfn>
 is a string identifying a user. It is initially the empty string.
