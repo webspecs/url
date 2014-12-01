@@ -20,7 +20,7 @@ Logo: https://resources.whatwg.org/logo-url.svg
 </pre>
 
 <style>
-  .grammar-rule a {
+  .grammar-rule a, .grammar-rule span {
     color: black;
     background-color: hsl(120, 100%, 90%);
     font-weight: bold;
@@ -210,6 +210,14 @@ the <a>URL parser</a> when the input is potentially a
 
 
 <h3 id=url-writing>Authoring Requirements</h3>
+
+Two types of parse errors are defined.  <dfn title='parse exception'>Parse
+exceptions</dfn> terminate parsing and must be implemented by all conforming
+implementations.  By contrast, user agents are encouraged, but not required,
+to expose <dfn title='conformance error'>conformance errors</dfn> somehow.
+If parsing a given input results in the detection of multiple
+<a>conformance errors</a>, user agents may chose to only report a subset of
+the errors detected.
 
 <!-- http://tantek.com/2011/238/b1/many-ways-slice-url-name-pieces -->
 
@@ -456,16 +464,39 @@ left-to-right then top-to-bottom, backtracking as necessary, until a complete
 match against the input provided is found.
 
 Each rule defines a function that can be invoked individually.  Rules can
-invoke one another.  Rules when evaluated return either a JSON objection or
-failure.
+invoke one another.
 
-Two types of parse errors are defined.  <dfn title='parse exception'>Parse
-exceptions</dfn> terminate parsing and must be implemented by all conforming
-implementations.  By contrast, user agents are encouraged, but not required,
-to expose <dfn title='conformance error'>conformance errors</dfn> somehow.
-If parsing a given input results in the detection of multiple
-<a>conformance errors</a>, user agents may chose to only report a subset of
-the errors detected.
+Parsing a given input according to a railroad diagram produces a number of
+intermediate values that can be referenced individually as local variables
+within the function.  The names of those local variables isn't specified
+by this specification, instead the names used in the railroad diagrams are
+referenced.
+
+If a given input doesn't match the railroad diagram, failure is returned
+instead.
+
+The following conventions are used in descriptions of parsing logic for
+clarity and conciseness:
+
+ * The phrase "<code class=grammar-rule><span>x</span></code> is present" is
+     to be interpreted to mean "the grammar rule for
+     <code class=grammar-rule><span>x</code><span> matches some part of the
+     <code>input</code> when that <code>input</code> is parsed according to
+     the given railroad diagram".  Note that if the railroad diagram contains
+     alternatives where multiple alternatives could potentially match the
+     input, only the first matching input is considered to be present.
+
+ * The phrase "value of <code class=grammar-rule><span>x</span></code>" is to be
+     interpreted to mean "the value returned by the function
+     <code>x(input)</code> when the function <code>x</code> is passed some
+     part of the original <code>input</code> during the parsing of that
+     original <code>input</code> according to the given railroad diagram".
+
+Note: extracting the railroad diagrams from this specification and
+interpreting them in isolation will produce incorrect results.  In particular,
+the definitions provided in the prose modifies these parsing algorithms in
+important ways including early termination and preconditions for subparts of a
+given diagram.
 
 #include <url.pegjs>
 

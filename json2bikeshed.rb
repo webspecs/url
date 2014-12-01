@@ -110,8 +110,11 @@ rules.each do |rule|
   name = hyphenate(rule['name'])
   output.puts header[rule['name']] if header[rule['name']]
   output.puts
-  output.puts "<h4 id=#{name} class=no-toc>#{name}</h4>"
+  output.puts "<h4 id=#{name} class=no-toc>#{name}(input)</h4>"
 
+  returns = prose[rule['name']].slice! /returns: .*\s*\n\n/m
+
+  output.puts returns if returns
   output.puts
   output.puts "<pre class=railroad>"
   expression(rule['expression'], 0, output)

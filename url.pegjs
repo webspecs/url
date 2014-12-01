@@ -75,32 +75,29 @@
 }
 
 /*
-   There are three unique syntaxes for
-   <a href="#concept-url">URL</a>s,
-   each returning a set of components, namely one or more of the following:
-   <a href="#concept-url-scheme">scheme</a>,
-   <a href="#concept-url-scheme-data">scheme-data</a>,
-   <a href="#concept-url-username">username</a>,
-   <a href="#concept-url-password">password</a>,
-   <a href="#concept-url-host">host</a>,
-   <a href="#concept-url-port">port</a>,
-   <a href="#concept-url-path">path</a>,
-   <a href="#concept-url-query">query</a>, and
-   <a href="#concept-url-fragment">fragment</a>.
+   returns: { 
+     <a href="#concept-url-scheme">scheme</a>,
+     <a href="#concept-url-scheme-data">scheme-data</a>,
+     <a href="#concept-url-username">username</a>,
+     <a href="#concept-url-password">password</a>,
+     <a href="#concept-url-host">host</a>,
+     <a href="#concept-url-port">port</a>,
+     <a href="#concept-url-path">path</a>,
+     <a href="#concept-url-query">query</a>,
+     <a href="#concept-url-fragment">fragment</a>
+   }
 
-   Initialize $result to the value of @FileUrl, @NonRelativeUrl, or
-   @RelativeUrl depending on which one first matches the input, and then modify
-   $result as follows:
-
-     * If @Query is present in the input, set $result.query to this value.
-     * If @Fragment is present in the input, set $result.fragment to this value.
-     * If $result.scheme has a 
-       <a>default port</a>,
-       and if $result.port is equal to that default,
-       then delete the $port property from $result.
-
-   For each property in $result, set the corresponding property in $url to
-   the value of the property in $result.
+   <ol>
+   <li>Parse $input according to the above railroad diagram.
+   <li>Let $result be the value of @FileUrl, @NonRelativeUrl,
+       or @RelativeUrl depending on which is present.
+   <li>If @Query is present, set $result.query to the value of @Query.
+   <li>If @Fragment is present, set $result.fragment to the value
+       of @Fragment.
+   <li>If $result.scheme has a <a>default port</a>, and if $result.port is
+       equal to that default, then delete the $port property from $result.
+   <li>Return $result.
+   </ol>
 */
 Url
   = base:(FileUrl / NonRelativeUrl / RelativeUrl)
