@@ -112,7 +112,7 @@ rules.each do |rule|
   output.puts
   output.puts "<h4 id=#{name} class=no-toc>#{name}(input)</h4>"
 
-  returns = prose[rule['name']].slice! /returns: .*\s*\n\n/m
+  returns = prose[rule['name']].slice! /returns: .*?\s*\n\n/m
 
   output.puts returns if returns
   output.puts

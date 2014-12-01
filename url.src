@@ -466,11 +466,11 @@ match against the input provided is found.
 Each rule defines a function that can be invoked individually.  Rules can
 invoke one another.
 
-Parsing a given input according to a railroad diagram produces a number of
-intermediate values that can be referenced individually as local variables
-within the function.  The names of those local variables isn't specified
-by this specification, instead the names used in the railroad diagrams are
-referenced.
+<dfn title="parse input">Parsing a given input</dfn> according to a railroad
+diagram produces a number of intermediate values that can be referenced
+individually as local variables within the function.  The names of those local
+variables isn't specified by this specification, instead the names used in the
+railroad diagrams are referenced.
 
 If a given input doesn't match the railroad diagram, failure is returned
 instead.
@@ -478,7 +478,8 @@ instead.
 The following conventions are used in descriptions of parsing logic for
 clarity and conciseness:
 
- * The phrase "<code class=grammar-rule><span>x</span></code> is present" is
+ * The phrase "<code class=grammar-rule><span>x</span></code> 
+     <dfn>is present</dfn>" is
      to be interpreted to mean "the grammar rule for
      <code class=grammar-rule><span>x</code><span> matches some part of the
      <code>input</code> when that <code>input</code> is parsed according to
@@ -486,7 +487,8 @@ clarity and conciseness:
      alternatives where multiple alternatives could potentially match the
      input, only the first matching input is considered to be present.
 
- * The phrase "value of <code class=grammar-rule><span>x</span></code>" is to be
+ * The phrase "<dfn>value of</dfn> 
+     <code class=grammar-rule><span>x</span></code>" is to be
      interpreted to mean "the value returned by the function
      <code>x(input)</code> when the function <code>x</code> is passed some
      part of the original <code>input</code> during the parsing of that

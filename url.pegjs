@@ -88,12 +88,13 @@
    }
 
    <ol>
-   <li>Parse $input according to the above railroad diagram.
-   <li>Let $result be the value of @FileUrl, @NonRelativeUrl,
-       or @RelativeUrl depending on which is present.
-   <li>If @Query is present, set $result.query to the value of @Query.
-   <li>If @Fragment is present, set $result.fragment to the value
-       of @Fragment.
+   <li><a>Parse $input</a> according to the above railroad diagram.
+   <li>Let $result be the <a>value of</a> @FileUrl, @NonRelativeUrl,
+       or @RelativeUrl depending on which <a>is present</a>.
+   <li>If @Query <a>is present</a>, set $result.query to the <a>value of</a>
+       @Query.
+   <li>If @Fragment <a>is present</a>, set $result.fragment to the 
+       <a>value of</a> @Fragment.
    <li>If $result.scheme has a <a>default port</a>, and if $result.port is
        equal to that default, then delete the $port property from $result.
    <li>Return $result.
@@ -122,53 +123,62 @@ Url
 }
 
 /*
-   Three production rules are defined for files, numbered from top to bottom.
+   returns: { 
+     <a href="#concept-url-scheme">scheme</a>,
+     <a href="#concept-url-host">host</a>,
+     <a href="#concept-url-path">path</a>
+   }
 
-   Examples and evaluation instructions for each:
+   <ol>
+   <li><a>Parse $input</a> according to the above railroad diagram.
+   <li>Let $result be an empty object.
+
+   <li>Three rows of production rules are defined for files, numbered from top
+   to bottom.  Examples and evaluation instructions for each:
 
    <ol>
    <li><div class=example><code>file:c:\foo\bar.html</code></div>
 
-     Initialize $result to an empty object, and then modify it as follows:
-
-     * Set $result.scheme to the value returned by @FileLikeScheme.
-     * Set $result.path to the value returned by @Path.
-     * Remove the first element from $result.path if it is an empty
+     <ol>
+     <li>Set $result.scheme to the <a>value of</a> @FileLikeScheme.
+     <li>Set $result.path to the <a>value of</a> @Path.
+     <li>Remove the first element from $result.path if it is an empty
        string and if there is a second element which has a non-empty value.
-     * Construct a string using the <a>ASCII alpha</a>
+     <li>Construct a string using the <a>ASCII alpha</a>
        following the first ":" in the input
        concatenated with a ":".  Prepend this string to 
        $result.path.
+     </ol>
 
    <li><div class=example><code>/C|\foo\bar</code></div>
 
-   Initialize $result to an empty object, and then modify it as follows:
-
-     * Set $result.scheme to the value returned by @FileLikeScheme
-     * If the @Host is present in the input, set $result.host
-       to the value returned by the @Host production rule
-     * If the @Host is not present and no slashes precede the
-       @Path in the input, then the $base.path
-       minus the last element is prepended to the $result.path.
-     * Set $result.path to the value returned by @Path.
+     <ol>
+     <li>Set $result.scheme to the <a>value of</a> @FileLikeScheme.
+     <li>If the @Host <a>is present</a>, set $result.host
+       to the <a>value of</a> @Host.
+     <li>If the @Host <a title='is present'>is not present</a> and no slashes
+       precede the @Path in the input, then prepend $base.path
+       minus the last element to the $result.path.
+     <li>Set $result.path to the <a>value of</a> @Path.
+     </ol>
 
    <li><div class=example><code>file:/example.com/</code></div>
 
-   Indicate a <a>conformance error</a>.
-
-   Initialize $result to an empty object, and then modify it as follows:
-
-     * Set $result.scheme to "file".
-     * Set $result.path to the value returned by @Path.
-     * Remove the first element from $result.path if it is an empty
+     <ol>
+     <li>Indicate a <a>conformance error</a>.
+     <li>Set $result.scheme to "file".
+     <li>Set $result.path to the <a>value of</a> @Path.
+     <li>Remove the first element from $result.path if it is an empty
        string and if there is a second element which has a non-empty value.
-     * Construct a string consisting of the code point following
+     <li>Construct a string consisting of the code point following
        the initial "/" (if any) in the production rule concatenated
        with a ":".  Prepend this string to the $result.path array.
+     </ol>
 
    </ol>
 
-  Return $result.
+  <li>Return $result.
+  </ol>
 
   <p class=XXX>At the present time, file URLs are generally not
   interoperable, and therefore are effectively implementation defined.

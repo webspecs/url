@@ -453,11 +453,11 @@ match against the input provided is found.
 Each rule defines a function that can be invoked individually.  Rules can
 invoke one another.
 
-Parsing a given input according to a railroad diagram produces a number of
-intermediate values that can be referenced individually as local variables
-within the function.  The names of those local variables isn't specified
-by this specification, instead the names used in the railroad diagrams are
-referenced.
+<dfn title="parse input">Parsing a given input</dfn> according to a railroad
+diagram produces a number of intermediate values that can be referenced
+individually as local variables within the function.  The names of those local
+variables isn't specified by this specification, instead the names used in the
+railroad diagrams are referenced.
 
 If a given input doesn't match the railroad diagram, failure is returned
 instead.
@@ -465,7 +465,8 @@ instead.
 The following conventions are used in descriptions of parsing logic for
 clarity and conciseness:
 
- * The phrase "<code class=grammar-rule><span>x</span></code> is present" is
+ * The phrase "<code class=grammar-rule><span>x</span></code> 
+     <dfn>is present</dfn>" is
      to be interpreted to mean "the grammar rule for
      <code class=grammar-rule><span>x</code><span> matches some part of the
      <code>input</code> when that <code>input</code> is parsed according to
@@ -473,7 +474,8 @@ clarity and conciseness:
      alternatives where multiple alternatives could potentially match the
      input, only the first matching input is considered to be present.
 
- * The phrase "value of <code class=grammar-rule><span>x</span></code>" is to be
+ * The phrase "<dfn>value of</dfn> 
+     <code class=grammar-rule><span>x</span></code>" is to be
      interpreted to mean "the value returned by the function
      <code>x(input)</code> when the function <code>x</code> is passed some
      part of the original <code>input</code> during the parsing of that
@@ -517,18 +519,25 @@ Sequence:
 </pre>
 
 <ol>
-<li>Parse <code>input</code> according to the above railroad diagram.
-<li>Let <code>result</code> be the value of <code class=grammar-rule><a href=#file-url>file-url</a></code>, <code class=grammar-rule><a href=#non-relative-url>non-relative-url</a></code>,
-    or <code class=grammar-rule><a href=#relative-url>relative-url</a></code> depending on which is present.
-<li>If <code class=grammar-rule><a href=#query>query</a></code> is present, set <code>result.query</code> to the value of <code class=grammar-rule><a href=#query>query</a></code>.
-<li>If <code class=grammar-rule><a href=#fragment>fragment</a></code> is present, set <code>result.fragment</code> to the value
-    of <code class=grammar-rule><a href=#fragment>fragment</a></code>.
+<li><a>Parse <code>input</code></a> according to the above railroad diagram.
+<li>Let <code>result</code> be the <a>value of</a> <code class=grammar-rule><a href=#file-url>file-url</a></code>, <code class=grammar-rule><a href=#non-relative-url>non-relative-url</a></code>,
+    or <code class=grammar-rule><a href=#relative-url>relative-url</a></code> depending on which <a>is present</a>.
+<li>If <code class=grammar-rule><a href=#query>query</a></code> <a>is present</a>, set <code>result.query</code> to the <a>value of</a>
+    <code class=grammar-rule><a href=#query>query</a></code>.
+<li>If <code class=grammar-rule><a href=#fragment>fragment</a></code> <a>is present</a>, set <code>result.fragment</code> to the 
+    <a>value of</a> <code class=grammar-rule><a href=#fragment>fragment</a></code>.
 <li>If <code>result.scheme</code> has a <a>default port</a>, and if <code>result.port</code> is
     equal to that default, then delete the <code>port</code> property from <code>result</code>.
 <li>Return <code>result</code>.
 </ol>
 
 <h4 id=file-url class=no-toc>file-url(input)</h4>
+returns: { 
+   <a href="#concept-url-scheme">scheme</a>,
+   <a href="#concept-url-host">host</a>,
+   <a href="#concept-url-path">path</a>
+ }
+
 
 <pre class=railroad>
 Choice:
@@ -565,53 +574,56 @@ Choice:
     N: path
 </pre>
 
- Three production rules are defined for files, numbered from top to bottom.
+  <ol>
+ <li><a>Parse <code>input</code></a> according to the above railroad diagram.
+ <li>Let <code>result</code> be an empty object.
 
- Examples and evaluation instructions for each:
+ <li>Three rows of production rules are defined for files, numbered from top
+ to bottom.  Examples and evaluation instructions for each:
 
  <ol>
  <li><div class=example><code>file:c:\foo\bar.html</code></div>
 
-   Initialize <code>result</code> to an empty object, and then modify it as follows:
-
-   * Set <code>result.scheme</code> to the value returned by <code class=grammar-rule><a href=#file-like-scheme>file-like-scheme</a></code>.
-   * Set <code>result.path</code> to the value returned by <code class=grammar-rule><a href=#path>path</a></code>.
-   * Remove the first element from <code>result.path</code> if it is an empty
+   <ol>
+   <li>Set <code>result.scheme</code> to the <a>value of</a> <code class=grammar-rule><a href=#file-like-scheme>file-like-scheme</a></code>.
+   <li>Set <code>result.path</code> to the <a>value of</a> <code class=grammar-rule><a href=#path>path</a></code>.
+   <li>Remove the first element from <code>result.path</code> if it is an empty
      string and if there is a second element which has a non-empty value.
-   * Construct a string using the <a>ASCII alpha</a>
+   <li>Construct a string using the <a>ASCII alpha</a>
      following the first "<code>:</code>" in the input
      concatenated with a "<code>:</code>".  Prepend this string to 
      <code>result.path</code>.
+   </ol>
 
  <li><div class=example><code>/C|\foo\bar</code></div>
 
- Initialize <code>result</code> to an empty object, and then modify it as follows:
-
-   * Set <code>result.scheme</code> to the value returned by <code class=grammar-rule><a href=#file-like-scheme>file-like-scheme</a></code>
-   * If the <code class=grammar-rule><a href=#host>host</a></code> is present in the input, set <code>result.host</code>
-     to the value returned by the <code class=grammar-rule><a href=#host>host</a></code> production rule
-   * If the <code class=grammar-rule><a href=#host>host</a></code> is not present and no slashes precede the
-     <code class=grammar-rule><a href=#path>path</a></code> in the input, then the <code>base.path</code>
-     minus the last element is prepended to the <code>result.path</code>.
-   * Set <code>result.path</code> to the value returned by <code class=grammar-rule><a href=#path>path</a></code>.
+   <ol>
+   <li>Set <code>result.scheme</code> to the <a>value of</a> <code class=grammar-rule><a href=#file-like-scheme>file-like-scheme</a></code>.
+   <li>If the <code class=grammar-rule><a href=#host>host</a></code> <a>is present</a>, set <code>result.host</code>
+     to the <a>value of</a> <code class=grammar-rule><a href=#host>host</a></code>.
+   <li>If the <code class=grammar-rule><a href=#host>host</a></code> <a title='is present'>is not present</a> and no slashes
+     precede the <code class=grammar-rule><a href=#path>path</a></code> in the input, then prepend <code>base.path</code>
+     minus the last element to the <code>result.path</code>.
+   <li>Set <code>result.path</code> to the <a>value of</a> <code class=grammar-rule><a href=#path>path</a></code>.
+   </ol>
 
  <li><div class=example><code>file:/example.com/</code></div>
 
- Indicate a <a>conformance error</a>.
-
- Initialize <code>result</code> to an empty object, and then modify it as follows:
-
-   * Set <code>result.scheme</code> to "<code>file</code>".
-   * Set <code>result.path</code> to the value returned by <code class=grammar-rule><a href=#path>path</a></code>.
-   * Remove the first element from <code>result.path</code> if it is an empty
+   <ol>
+   <li>Indicate a <a>conformance error</a>.
+   <li>Set <code>result.scheme</code> to "<code>file</code>".
+   <li>Set <code>result.path</code> to the <a>value of</a> <code class=grammar-rule><a href=#path>path</a></code>.
+   <li>Remove the first element from <code>result.path</code> if it is an empty
      string and if there is a second element which has a non-empty value.
-   * Construct a string consisting of the code point following
+   <li>Construct a string consisting of the code point following
      the initial "<code>/</code>" (if any) in the production rule concatenated
      with a "<code>:</code>".  Prepend this string to the <code>result.path</code> array.
+   </ol>
 
  </ol>
 
-Return <code>result</code>.
+<li>Return <code>result</code>.
+</ol>
 
 <p class=XXX>At the present time, file URLs are generally not
 interoperable, and therefore are effectively implementation defined.
