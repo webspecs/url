@@ -31,8 +31,8 @@ implementation, and run the tests against the reference implementation.  See
 the [Makefile](Makefile) for a list
 of prerequisites.
 
-Deploy the `evaluate` directory to a web browser capable of running CGI
-programs.  The [urltest](develop/evaluate/urltest.cgi)
+Deploy the `evaluate` directory to a web server capable of running CGI
+programs in ruby.  The [urltest](develop/evaluate/urltest.cgi)
 script will capture and automatically upload test results based on the browser
 that visited the page.  The [urltest-results](urltest-results.cgi)
 script will display the aggregated results.
