@@ -129,6 +129,8 @@ Url
      <a href="#concept-url-path">path</a>
    }
 
+  <em>"file" is to be matched case insensitively.</em>
+
    <ol>
    <li><a>Parse $input</a> according to the above railroad diagram.
    <li>Let $result be an empty object.
@@ -140,7 +142,7 @@ Url
    <li><div class=example><code>file:c:\foo\bar.html</code></div>
 
      <ol>
-     <li>Set $result.scheme to the <a>value of</a> @FileLikeScheme.
+     <li>Set $result.scheme to "file".
      <li>Set $result.path to the <a>value of</a> @Path.
      <li>Remove the first element from $result.path if it is an empty
        string and if there is a second element which has a non-empty value.
@@ -153,7 +155,7 @@ Url
    <li><div class=example><code>/C|\foo\bar</code></div>
 
      <ol>
-     <li>Set $result.scheme to the <a>value of</a> @FileLikeScheme.
+     <li>Set $result.scheme to "file".
      <li>If the @Host <a>is present</a>, set $result.host
        to the <a>value of</a> @Host.
      <li>If the @Host <a title='is present'>is not present</a> and no slashes
@@ -189,12 +191,12 @@ Url
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=23550">bug 23550</a>.  
 */
 FileUrl
-  = scheme:FileLikeScheme ':' 
+  = 'file'i ':' 
     drive:[a-zA-Z] [:|]
     [\\/]? path:Path
   {
     var result = copy({path: path}, path);
-    result.scheme = scheme;
+    result.scheme = 'file';
     if (result.path[0] == '' && result.path[1] != '') result.path.shift();
     result.path.unshift(drive+':');
     return result
@@ -212,7 +214,7 @@ FileUrl
     return result
   }
 
-  / scheme:FileLikeScheme ':' host:('/' '/' Host)? slash:'/'* path:Path
+  / 'file'i ':' host:('/' '/' Host)? slash:'/'* path:Path
   {
     var result = copy({path: path}, path);
     if (host) {
@@ -222,7 +224,7 @@ FileUrl
       path.push.apply(path, result.path);
       result.path = path
     }
-    result.scheme = scheme;
+    result.scheme = 'file';
     return result
   }
 
@@ -393,17 +395,6 @@ RelativeUrl
     result.path = Url.pathConcat(base.path, result.path)
 
     return result
-  }
-
-/*
-  Only one "file like" relative scheme is defined at this time:
-  "file".  This scheme is to be matched case insensitively.
-  This production rule is to return the scheme value, lowercased.
-*/
-FileLikeScheme
-  = scheme:"file"i
-  {
-    return scheme.toLowerCase()
   }
 
 /*

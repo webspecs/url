@@ -542,7 +542,7 @@ returns: {
 <pre class=railroad>
 Choice:
   Sequence:
-    N: file-like-scheme
+    T: file
     T: :
     T: any of [a-zA-Z]
     Choice:
@@ -562,7 +562,7 @@ Choice:
       T: /
     N: path
   Sequence:
-    N: file-like-scheme
+    T: file
     T: :
     Optional:
       Sequence:
@@ -574,7 +574,9 @@ Choice:
     N: path
 </pre>
 
-  <ol>
+ <em>"<code>file</code>" is to be matched case insensitively.</em>
+
+ <ol>
  <li><a>Parse <code>input</code></a> according to the above railroad diagram.
  <li>Let <code>result</code> be an empty object.
 
@@ -585,7 +587,7 @@ Choice:
  <li><div class=example><code>file:c:\foo\bar.html</code></div>
 
    <ol>
-   <li>Set <code>result.scheme</code> to the <a>value of</a> <code class=grammar-rule><a href=#file-like-scheme>file-like-scheme</a></code>.
+   <li>Set <code>result.scheme</code> to "<code>file</code>".
    <li>Set <code>result.path</code> to the <a>value of</a> <code class=grammar-rule><a href=#path>path</a></code>.
    <li>Remove the first element from <code>result.path</code> if it is an empty
      string and if there is a second element which has a non-empty value.
@@ -598,7 +600,7 @@ Choice:
  <li><div class=example><code>/C|\foo\bar</code></div>
 
    <ol>
-   <li>Set <code>result.scheme</code> to the <a>value of</a> <code class=grammar-rule><a href=#file-like-scheme>file-like-scheme</a></code>.
+   <li>Set <code>result.scheme</code> to "<code>file</code>".
    <li>If the <code class=grammar-rule><a href=#host>host</a></code> <a>is present</a>, set <code>result.host</code>
      to the <a>value of</a> <code class=grammar-rule><a href=#host>host</a></code>.
    <li>If the <code class=grammar-rule><a href=#host>host</a></code> <a title='is present'>is not present</a> and no slashes
@@ -766,16 +768,6 @@ Examples and evaluation instructions for each:
 </ol>
 
 Return <code>result</code>.
-
-<h4 id=file-like-scheme class=no-toc>file-like-scheme(input)</h4>
-
-<pre class=railroad>
-T: file
-</pre>
-
-Only one "file like" relative scheme is defined at this time:
-"<code>file</code>".  This scheme is to be matched case insensitively.
-This production rule is to return the scheme value, lowercased.
 
 <h4 id=non-file-relative-scheme class=no-toc>non-file-relative-scheme(input)</h4>
 
