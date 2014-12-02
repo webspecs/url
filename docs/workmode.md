@@ -76,7 +76,7 @@ This is general agreement on [Royalty Free Licensing](http://www.w3.org/Consorti
 
   * The [Invited Expert and Collaborator Agreement](http://www.w3.org/Consortium/Legal/2014/08-invited-expert.html) explicitly disallows «Branching», which would seem to preclude [GitHub pull requests](https://help.github.com/articles/using-pull-requests/).
 
-  * While the [W3C Member Agreement](http://www.w3.org/2009/12/Member-Agreement) is only publicly visible in draft form, it has been reported in various times that the actual agreement that members have signed does not permit activities that seem similar to the WorkMode as described on this page.
+  * While the [W3C Member Agreement](http://www.w3.org/2009/12/Member-Agreement) is only publicly visible in draft form, it has been reported at various times that the actual agreement that members have signed does not permit activities that seem similar to the WorkMode as described on this page.
 
 An alternate approach that has been tried in the past is to use the CG process to obtain [licensing commitments](http://www.w3.org/community/whatwg/spec/82/commitments).
 
