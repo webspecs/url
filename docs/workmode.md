@@ -35,6 +35,7 @@ The primary place for work on the URL standard has been, and continues to be:
 All technical communications are to take place on a publicly archived list.  As an example, this includes [www-archive](http://lists.w3.org/Archives/Public/www-archive/).  In general, the editors intend to aggressively follow up with any individual or group that has technical input and will bring the results of those efforts back to the venues mentioned above.  The current list of alternate venues being evaluated:
 
   * [webspecs/url repository](https://github.com/webspecs/url) hosted by GitHub
+  * [public webapps Mailing list](http://lists.w3.org/Archives/Public/public-webapps/) hosted by the W3C
 
 The Technical Reports Process (What is an Editor's Draft?)
 ---
