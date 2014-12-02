@@ -84,7 +84,7 @@ For URL to become a W3C Recommendation, the W3C will need to define a workable p
 
 Limiting the scope of new or modified agreements to a period of time or to this specific work product may be worth exploring.
 
-Also worth noting, the [acknowledgements]https://url.spec.whatwg.org/#acknowledgments) section contains a list of people who have already contributed.
+Also worth noting, the [acknowledgements](https://url.spec.whatwg.org/#acknowledgments) section contains a list of people who have already contributed.
 
 Meetings
 ---
