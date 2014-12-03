@@ -77,15 +77,25 @@ This is general agreement on [Royalty Free Licensing](http://www.w3.org/Consorti
 
   * The [Invited Expert and Collaborator Agreement](http://www.w3.org/Consortium/Legal/2014/08-invited-expert.html) explicitly disallows «Branching», which would seem to preclude [GitHub pull requests](https://help.github.com/articles/using-pull-requests/).
 
-  * While the [W3C Member Agreement](http://www.w3.org/2009/12/Member-Agreement) is only publicly visible in draft form, it has been reported at various times that the actual agreement that members have signed does not permit activities that seem similar to the WorkMode as described on this page.
+  * Section 7 of
+    [Appendix 1](http://www.w3.org/Consortium/Agreement/Appendix1-2013.html)
+    of the [W3C Member Agreement](http://www.w3.org/2009/12/Member-Agreement)
+    has been cited in the past as not permitting activities that seem similar to
+    the workMode as described on this page.
 
 An alternate approach that has been tried in the past is to use the CG process to obtain [licensing commitments](http://www.w3.org/community/whatwg/spec/82/commitments).
 
-For URL to become a W3C Recommendation, the W3C will need to define a workable process that gets the necessary commitments without imposing unrelated requirements.  That may require the drafting of new agreements, or modification of existing agreements.  It may also require a review of the actual Member Agreements that are in place by someone who has access to this information and a public and authoritative statement that such agreements are not in conflict with the Work Mode as described on this page.
-
-Limiting the scope of new or modified agreements to a period of time or to this specific work product may be worth exploring.
-
 Also worth noting, the [acknowledgements](https://url.spec.whatwg.org/#acknowledgments) section contains a list of people who have already contributed.
+
+For URL to become a W3C Recommendation, the W3C will need to define a workable
+process that gets the necessary commitments without imposing unrelated
+requirements.  The proposal is therefore to:
+
+  * Get the W3C to publicly state that this WorkMode is consistent with the
+    W3C Process, and therefore nothing in Section 7 of Appendix 1 of the
+    Member agreement would inhibit this WorkMode being adopted.
+  * Modify section 2.2 of the Invited Expert agreement to align it with the
+    Member Agreement.
 
 Meetings
 ---
