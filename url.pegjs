@@ -707,8 +707,8 @@ Host
   returns: String
 
   <ol>
-  <li>Let $pre before the double colon, if present.
-  <li>Let $post be the remaining @H16 before the last value
+  <li>Let $pre be the set of @H16 values before the double colon, if present.
+  <li>Let $post be the remaining @H16 value before the last value
   <li>Let $last be the trailing @H16 or @LS32 value.
    
   <li>If there are no consecutive colon code points in the input string,
