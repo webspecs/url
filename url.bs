@@ -1022,8 +1022,8 @@ Sequence:
 </pre>
 
 <ol>
-<li>Let <code>pre</code> before the double colon, if present.
-<li>Let <code>post</code> be the remaining <code class=grammar-rule><a href=#h16>h16</a></code> before the last value
+<li>Let <code>pre</code> be the set of <code class=grammar-rule><a href=#h16>h16</a></code> values before the double colon, if present.
+<li>Let <code>post</code> be the remaining <code class=grammar-rule><a href=#h16>h16</a></code> value before the last value
 <li>Let <code>last</code> be the trailing <code class=grammar-rule><a href=#h16>h16</a></code> or <code class=grammar-rule><a href=#ls32>ls32</a></code> value.
  
 <li>If there are no consecutive colon code points in the input string,
