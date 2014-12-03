@@ -114,7 +114,7 @@ rules.each do |rule|
 
   returns = prose[rule['name']].slice! /returns: .*?\s*\n\n/m
 
-  output.puts returns if returns
+  output.puts "\n" + returns if returns
   output.puts
   output.puts "<pre class=railroad>"
   expression(rule['expression'], 0, output)

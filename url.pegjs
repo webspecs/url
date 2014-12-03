@@ -129,7 +129,7 @@ Url
      <a href="#concept-url-path">path</a>
    }
 
-  <em>"file" is to be matched case insensitively.</em>
+  <em>"<code>file</code>" is to be matched case insensitively.</em>
 
    <ol>
    <li><a>Parse $input</a> according to the above railroad diagram.
@@ -229,17 +229,25 @@ FileUrl
   }
 
 /*
+   returns: { 
+     <a href="#concept-url-scheme">scheme</a>,
+     <a href="#concept-url-scheme-data">scheme-data</a>
+   }
+
   <div class=example><code>javascript:alert("Hello, world!");</code></div>
 
-  <li><em>This rule is only to be evaluated if the value of @Scheme does not
-  match any <a>relative scheme</a></em>.
+  <ol>
+  <li><a>Parse $input</a> according to the above railroad diagram.
+  <li>If the <a>value of</a> @Scheme does not
+  match any <a>relative scheme</a> then return failure.
 
-  Set <code>encoding override</code> to "utf-8".
+  <li>Set <code>encoding override</code> to "utf-8".
 
-  Initialize $result to be a JSON object with $scheme
+  <li>Initialize $result to be a JSON object with $scheme
   set to be the result returned by @Scheme, and
-  $schemeData set to the result returned by @SchemeData.
-  Return $result.
+  $schemeData set to the <a>value of</a> @SchemeData.
+  <li>Return $result.
+  </ol>
 
   <p class=XXX>The resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug 26338</a>
@@ -260,67 +268,90 @@ NonRelativeUrl
   }
 
 /*
-   Four production rules are defined for relative URLs, numbered from top to
-   bottom.
+   returns: { 
+     <a href="#concept-url-scheme">scheme</a>,
+     <a href="#concept-url-username">username</a>,
+     <a href="#concept-url-password">password</a>,
+     <a href="#concept-url-host">host</a>,
+     <a href="#concept-url-port">port</a>,
+     <a href="#concept-url-path">path</a>
+   }
 
-   Examples and evaluation instructions for each:
+   <ol>
+   <li><a>Parse $input</a> according to the above railroad diagram.
+
+   <li>Four rows of production rules are defined for relative URLs, numbered
+   from top to bottom.  Examples and evaluation instructions for each:
 
    <ol>
    <li><div class=example><code>http://user:pass@example.org:21/foo/bar</code></div>
 
-     If anything other than two forward solidus code points ("//") immediately
-     follows the first colon in the input, indicate a <a>conformance error</a>.
+     <ol>
+     <li>If anything other than two forward solidus code points ("//")
+     immediately follows the first colon in the input, indicate a
+     <a>conformance error</a>.
 
-     Initialize $result to the value returned by @Authority.
-     Modify $result as follows:
+     <li>Let $result be the <a>value of</a> @Authority.
 
-     * If @NonFileRelativeScheme is present in the input, then
-       set $result.scheme to this value.
-     * If @NonFileRelativeScheme is not present in the input, then
-       set $result.scheme to the value of $base.scheme.
-     * If @Path is present in the input, set $result.path to its value.
+     <li>If @NonFileRelativeScheme <a>is present</a> in the input, then
+     set $result.scheme to the <a>value of</a> @NonFileRelativeScheme.
 
-   <li><em>This rule is only to be evaluated if the value of
-    @Scheme does not match $base.scheme</em>.
+     <li>If @NonFileRelativeScheme <a title='is present'>is not present</a>,
+     then set $result.scheme to the value of $base.scheme.
 
-    <p class=example><code>ftp:/example.com/</code> parsed using a base of
-    <code>http://example.org/foo/bar</code></p>
+     <li>If @Path <a>is present</a>, set $result.path to the <a>value of</a>
+     @Path.
+     </ol>
 
-    Indicate a <a>conformance error</a>.
+   <li><div class=example><code>ftp:/example.com/</code> parsed using a base of
+    <code>http://example.org/foo/bar</code></div>
 
-    Initialize $result to the value returned by @Authority.
-    Modify $result as follows:
+    <ol>
 
-     * Set $result.scheme to the value returned by @NonFileRelativeScheme.
-     * if $result.host is either an empty string or contains a
-         colon, then terminate parsing with a <a>parse exception</a>.
-     * If @Path is present in the input, set $result.path to its value.
+    <li>If the <a>value of</a> @Scheme equals $base.scheme then return failure.
+
+    <li>Indicate a <a>conformance error</a>.
+
+    <li>Let $result be the <a>value of</a> @Authority.
+
+    <li>Set $result.scheme to the <a>value of</a> @NonFileRelativeScheme.
+
+    <li>If $result.host is either an empty string or contains a
+    colon, then terminate parsing with a <a>parse exception</a>.
+
+    <li>If @Path <a>is present</a>, set $result.path to the <a>value of</a>
+    @Path.
+    </ol>
 
    <li><div class=example><code>http:foo/bar</code></div>
 
-    Indicate a <a>conformance error</a>.
+    <ol>
+    <li>Indicate a <a>conformance error</a>.
 
-    Initialize $result to be an empty object.  Modify $result as follows:
+    <li>Let $result be an empty object.
 
-     * Set $result.scheme to the value returned by @NonFileRelativeScheme.
-     * Set $result.scheme to the value returned by @Scheme.
-     * Set $result.host to $base.host
-     * Set $result.path by the <a>path concatenation</a> of 
+     <li>Set $result.scheme to the <a>value of</a> @NonFileRelativeScheme.
+     <li>Set $result.scheme to the <a>value of</a> @Scheme.
+     <li>Set $result.host to $base.host.
+     <li>Set $result.path by the <a>path concatenation</a> of 
          $base.path and @Path.
+     </ol>
 
    <li><div class=example><code>/foo/bar</code></div>
 
-    Initialize $result to be an empty object.  Modify $result as follows:
-
-     * Set $result.scheme to $base.scheme.
-     * Set $result.host to $base.host.
-     * Set $result.path to @Path
-     * Replace $result.path by the <a>path concatenation</a> of $base.path and
-       $result.Path.
+    <ol>
+    <li>Let $result be an empty object.
+    <li>Set $result.scheme to $base.scheme.
+    <li>Set $result.host to $base.host.
+    <li>Set $result.path to @Path
+    <li>Replace $result.path with the <a>path concatenation</a> of $base.path
+    and $result.Path.
+    </ol>
 
    </ol>
 
-   Return $result.
+   <li>Return $result.
+  </ol>
 */
 RelativeUrl
   = scheme:(NonFileRelativeScheme ':')? slash1:[/\\] slash2:[/\\]
@@ -398,12 +429,18 @@ RelativeUrl
   }
 
 /*
-  Schemes are to be matched against the input in a case insensitive manner.
+  returns: String
 
-  Set <code>encoding override</code> to "utf-8" if the scheme matches
+  <em>Schemes are to be matched against the input in a case insensitive
+  manner.</em>
+
+  <ol>
+  <li><a>Parse $input</a> according to the above railroad diagram.
+  <li>Set <code>encoding override</code> to "utf-8" if the scheme matches
   "wss" or "ws".
 
-  Return the scheme as a lowercased string.
+  <li>Return the scheme as a lowercased string.
+  </ol>
 
   <p class=XXX>The resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug 26338</a>
@@ -426,6 +463,8 @@ NonFileRelativeScheme
 }
 
 /*
+  returns: String
+
   A scheme consists of an <a>ASCII alpha</a>,
   followed by zero or more <a>ASCII alpha</a> or any of the following
   code points: hyphen-minus (U+002D), plus sign (U+002B) or full stop
@@ -439,6 +478,13 @@ Scheme
   }
 
 /*
+   returns: { 
+     <a href="#concept-url-username">username</a>,
+     <a href="#concept-url-password">password</a>,
+     <a href="#concept-url-host">host</a>,
+     <a href="#concept-url-port">port</a>
+   }
+
    Initialize $result to an empty object, then modify it as follows:
 
      * If @User is present, set $result.username to its value.
@@ -499,6 +545,8 @@ Authority
   }
 
 /*
+  returns: String
+
   Consume all code points until either 
   a solidus (U+002F),
   a reverse solidus (U+005C),
@@ -517,6 +565,8 @@ User
   }
 
 /*
+  returns: String
+
   Consume all code points until either 
   a solidus (U+002F),
   a reverse solidus (U+005C),
@@ -534,6 +584,8 @@ Password
   }
 
 /*
+  returns: String
+
    If the input contains an @IPv6Addr, 
    the result returned by @IPv6Addr.
 
@@ -649,6 +701,8 @@ Host
   }
 
 /*
+  returns: String
+
    Let $pre, $post, and $last be the @H16 values before the double colon if
    present,  the remaining @H16 before the last value, and the trailing
    @H16 or @LS32 value, respectively.
@@ -718,6 +772,8 @@ IPv6Addr
   }
 
 /*
+  returns: String
+
   If any but the last @Number is greater or equal to 256, terminate processing
   with a <a>parse exception</a>.
 
@@ -795,6 +851,8 @@ IPv4Addr
 }
 
 /*
+  returns: Integer
+
    Three production rules, with uppercase and lowercase variants, are
    defined for numbers.
    Parse the values as hexadecimal, octal, and decimal integers respectively.
@@ -822,6 +880,8 @@ Number
 }
 
 /*
+  returns: String
+
   Return up to four <a>ASCII hex digits</a> as a string.
 */
 H16
@@ -831,6 +891,8 @@ H16
   }
 
 /*
+  returns: String
+
   Return four decimal <a title='IPv4 piece'>8-bit pieces</a> separated by full
   stop code points as a string.
 */
@@ -841,6 +903,8 @@ LS32
   }
 
 /*
+  returns: String
+
   Decimal bytes are a string of up to three decimal digits.  If the results
   converted to an integer are greater than 255, terminate processing with
   a <a>parse exception</a>.
@@ -852,6 +916,8 @@ DecimalByte
   }
 
 /*
+  returns: String
+
   Consume all code points until either 
   a solidus (U+002F),
   a reverse solidus (U+005C),
@@ -900,6 +966,8 @@ Port
   }
 
 /*
+  returns: Array of Strings
+
   If any of the path separators are a reverse solidus ("\"), indicate
   a <a>conformance error</a>.
 
@@ -968,6 +1036,8 @@ Path
   }
 
 /*
+  returns: String
+
   Consume all code points until either a question mark (U+003F), a
   number sign (U+0023), or the end of string is encountered.
   Return the <a title=cleanse>cleansed</a> result using <var>null</var> as
@@ -984,6 +1054,8 @@ SchemeData
   }
 
 /*
+  returns: String
+
   Consume all code points until either a 
   number sign (U+0023) or the end of string is encountered.
   Return the <a title=cleanse>cleansed</a> result using the
@@ -1000,6 +1072,8 @@ Query
   }
 
 /*
+  returns: String
+
   Consume all remaining code points in the input.  
   Return the <a title=cleanse>cleansed</a> result using the
   <a>simple encode set</a>.

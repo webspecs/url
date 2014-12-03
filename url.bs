@@ -460,7 +460,8 @@ variables isn't specified by this specification, instead the names used in the
 railroad diagrams are referenced.
 
 If a given input doesn't match the railroad diagram, failure is returned
-instead.
+instead.  If failure is returned by an alternative, evaluation continues
+with the next alternative.
 
 The following conventions are used in descriptions of parsing logic for
 clarity and conciseness:
@@ -484,11 +485,11 @@ clarity and conciseness:
 Note: extracting the railroad diagrams from this specification and
 interpreting them in isolation will produce incorrect results.  In particular,
 the definitions provided in the prose modifies these parsing algorithms in
-important ways including early termination and preconditions for subparts of a
-given diagram.
+important ways including returning failure and early termination.
 
 
 <h4 id=url class=no-toc>url(input)</h4>
+
 returns: { 
   <a href="#concept-url-scheme">scheme</a>,
   <a href="#concept-url-scheme-data">scheme-data</a>,
@@ -532,6 +533,7 @@ Sequence:
 </ol>
 
 <h4 id=file-url class=no-toc>file-url(input)</h4>
+
 returns: { 
    <a href="#concept-url-scheme">scheme</a>,
    <a href="#concept-url-host">host</a>,
@@ -574,7 +576,7 @@ Choice:
     N: path
 </pre>
 
- <em>"<code>file</code>" is to be matched case insensitively.</em>
+ <em>"<code><code>file</code></code>" is to be matched case insensitively.</em>
 
  <ol>
  <li><a>Parse <code>input</code></a> according to the above railroad diagram.
@@ -637,6 +639,12 @@ comments to
 
 <h4 id=non-relative-url class=no-toc>non-relative-url(input)</h4>
 
+returns: { 
+   <a href="#concept-url-scheme">scheme</a>,
+   <a href="#concept-url-scheme-data">scheme-data</a>
+ }
+
+
 <pre class=railroad>
 Sequence:
   N: scheme
@@ -644,17 +652,20 @@ Sequence:
   N: scheme-data
 </pre>
 
-<div class=example><code>javascript:alert("Hello, world!");</code></div>
+ <div class=example><code>javascript:alert("Hello, world!");</code></div>
 
-<li><em>This rule is only to be evaluated if the value of <code class=grammar-rule><a href=#scheme>scheme</a></code> does not
-match any <a>relative scheme</a></em>.
+<ol>
+<li><a>Parse <code>input</code></a> according to the above railroad diagram.
+<li>If the <a>value of</a> <code class=grammar-rule><a href=#scheme>scheme</a></code> does not
+match any <a>relative scheme</a> then return failure.
 
-Set <code>encoding override</code> to "<code>utf-<code>8</code></code>".
+<li>Set <code>encoding override</code> to "<code>utf-<code>8</code></code>".
 
-Initialize <code>result</code> to be a JSON object with <code>scheme</code>
+<li>Initialize <code>result</code> to be a JSON object with <code>scheme</code>
 set to be the result returned by <code class=grammar-rule><a href=#scheme>scheme</a></code>, and
-<code>schemeData</code> set to the result returned by <code class=grammar-rule><a href=#scheme-data>scheme-data</a></code>.
-Return <code>result</code>.
+<code>schemeData</code> set to the <a>value of</a> <code class=grammar-rule><a href=#scheme-data>scheme-data</a></code>.
+<li>Return <code>result</code>.
+</ol>
 
 <p class=XXX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug <code>26338</code></a>
@@ -665,6 +676,16 @@ may change how encoding override is handled.
 may add support for relative URLs for unknown schemes.
 
 <h4 id=relative-url class=no-toc>relative-url(input)</h4>
+
+returns: { 
+   <a href="#concept-url-scheme">scheme</a>,
+   <a href="#concept-url-username">username</a>,
+   <a href="#concept-url-password">password</a>,
+   <a href="#concept-url-host">host</a>,
+   <a href="#concept-url-port">port</a>,
+   <a href="#concept-url-path">path</a>
+ }
+
 
 <pre class=railroad>
 Choice:
@@ -707,69 +728,86 @@ Choice:
   N: path
 </pre>
 
-Four production rules are defined for relative URLs, numbered from top to
-bottom.
+  <ol>
+ <li><a>Parse <code>input</code></a> according to the above railroad diagram.
 
-Examples and evaluation instructions for each:
+ <li>Four rows of production rules are defined for relative URLs, numbered
+ from top to bottom.  Examples and evaluation instructions for each:
 
-<ol>
-<li><div class=example><code>http://user:pass@example.org:<code>21</code>/foo/bar</code></div>
+ <ol>
+ <li><div class=example><code>http://user:pass@example.org:<code>21</code>/foo/bar</code></div>
 
-  If anything other than two forward solidus code points ("<code>//</code>") immediately
-  follows the first colon in the input, indicate a <a>conformance error</a>.
+   <ol>
+   <li>If anything other than two forward solidus code points ("<code>//</code>")
+   immediately follows the first colon in the input, indicate a
+   <a>conformance error</a>.
 
-  Initialize <code>result</code> to the value returned by <code class=grammar-rule><a href=#authority>authority</a></code>.
-  Modify <code>result</code> as follows:
+   <li>Let <code>result</code> be the <a>value of</a> <code class=grammar-rule><a href=#authority>authority</a></code>.
 
-  * If <code class=grammar-rule><a href=#non-file-relative-scheme>non-file-relative-scheme</a></code> is present in the input, then
-    set <code>result.scheme</code> to this value.
-  * If <code class=grammar-rule><a href=#non-file-relative-scheme>non-file-relative-scheme</a></code> is not present in the input, then
-    set <code>result.scheme</code> to the value of <code>base.scheme</code>.
-  * If <code class=grammar-rule><a href=#path>path</a></code> is present in the input, set <code>result.path</code> to its value.
+   <li>If <code class=grammar-rule><a href=#non-file-relative-scheme>non-file-relative-scheme</a></code> <a>is present</a> in the input, then
+   set <code>result.scheme</code> to the <a>value of</a> <code class=grammar-rule><a href=#non-file-relative-scheme>non-file-relative-scheme</a></code>.
 
-<li><em>This rule is only to be evaluated if the value of
- <code class=grammar-rule><a href=#scheme>scheme</a></code> does not match <code>base.scheme</code></em>.
+   <li>If <code class=grammar-rule><a href=#non-file-relative-scheme>non-file-relative-scheme</a></code> <a title='is present'>is not present</a>,
+   then set <code>result.scheme</code> to the value of <code>base.scheme</code>.
 
- <p class=example><code>ftp:/example.com/</code> parsed using a base of
- <code>http://example.org/foo/bar</code></p>
+   <li>If <code class=grammar-rule><a href=#path>path</a></code> <a>is present</a>, set <code>result.path</code> to the <a>value of</a>
+   <code class=grammar-rule><a href=#path>path</a></code>.
+   </ol>
 
- Indicate a <a>conformance error</a>.
+ <li><div class=example><code>ftp:/example.com/</code> parsed using a base of
+  <code>http://example.org/foo/bar</code></div>
 
- Initialize <code>result</code> to the value returned by <code class=grammar-rule><a href=#authority>authority</a></code>.
- Modify <code>result</code> as follows:
+  <ol>
 
-  * Set <code>result.scheme</code> to the value returned by <code class=grammar-rule><a href=#non-file-relative-scheme>non-file-relative-scheme</a></code>.
-  * if <code>result.host</code> is either an empty string or contains a
-      colon, then terminate parsing with a <a>parse exception</a>.
-  * If <code class=grammar-rule><a href=#path>path</a></code> is present in the input, set <code>result.path</code> to its value.
+  <li>If the <a>value of</a> <code class=grammar-rule><a href=#scheme>scheme</a></code> equals <code>base.scheme</code> then return failure.
 
-<li><div class=example><code>http:foo/bar</code></div>
+  <li>Indicate a <a>conformance error</a>.
 
- Indicate a <a>conformance error</a>.
+  <li>Let <code>result</code> be the <a>value of</a> <code class=grammar-rule><a href=#authority>authority</a></code>.
 
- Initialize <code>result</code> to be an empty object.  Modify <code>result</code> as follows:
+  <li>Set <code>result.scheme</code> to the <a>value of</a> <code class=grammar-rule><a href=#non-file-relative-scheme>non-file-relative-scheme</a></code>.
 
-  * Set <code>result.scheme</code> to the value returned by <code class=grammar-rule><a href=#non-file-relative-scheme>non-file-relative-scheme</a></code>.
-  * Set <code>result.scheme</code> to the value returned by <code class=grammar-rule><a href=#scheme>scheme</a></code>.
-  * Set <code>result.host</code> to <code>base.host</code>
-  * Set <code>result.path</code> by the <a>path concatenation</a> of 
-      <code>base.path</code> and <code class=grammar-rule><a href=#path>path</a></code>.
+  <li>If <code>result.host</code> is either an empty string or contains a
+  colon, then terminate parsing with a <a>parse exception</a>.
 
-<li><div class=example><code>/foo/bar</code></div>
+  <li>If <code class=grammar-rule><a href=#path>path</a></code> <a>is present</a>, set <code>result.path</code> to the <a>value of</a>
+  <code class=grammar-rule><a href=#path>path</a></code>.
+  </ol>
 
- Initialize <code>result</code> to be an empty object.  Modify <code>result</code> as follows:
+ <li><div class=example><code>http:foo/bar</code></div>
 
-  * Set <code>result.scheme</code> to <code>base.scheme</code>.
-  * Set <code>result.host</code> to <code>base.host</code>.
-  * Set <code>result.path</code> to <code class=grammar-rule><a href=#path>path</a></code>
-  * Replace <code>result.path</code> by the <a>path concatenation</a> of <code>base.path</code> and
-    <code>result.Path</code>.
+  <ol>
+  <li>Indicate a <a>conformance error</a>.
 
+  <li>Let <code>result</code> be an empty object.
+
+   <li>Set <code>result.scheme</code> to the <a>value of</a> <code class=grammar-rule><a href=#non-file-relative-scheme>non-file-relative-scheme</a></code>.
+   <li>Set <code>result.scheme</code> to the <a>value of</a> <code class=grammar-rule><a href=#scheme>scheme</a></code>.
+   <li>Set <code>result.host</code> to <code>base.host</code>.
+   <li>Set <code>result.path</code> by the <a>path concatenation</a> of 
+       <code>base.path</code> and <code class=grammar-rule><a href=#path>path</a></code>.
+   </ol>
+
+ <li><div class=example><code>/foo/bar</code></div>
+
+  <ol>
+  <li>Let <code>result</code> be an empty object.
+  <li>Set <code>result.scheme</code> to <code>base.scheme</code>.
+  <li>Set <code>result.host</code> to <code>base.host</code>.
+  <li>Set <code>result.path</code> to <code class=grammar-rule><a href=#path>path</a></code>
+  <li>Replace <code>result.path</code> with the <a>path concatenation</a> of <code>base.path</code>
+  and <code>result.Path</code>.
+  </ol>
+
+ </ol>
+
+ <li>Return <code>result</code>.
 </ol>
 
-Return <code>result</code>.
-
 <h4 id=non-file-relative-scheme class=no-toc>non-file-relative-scheme(input)</h4>
+
+returns: String
+
 
 <pre class=railroad>
 Choice:
@@ -781,18 +819,25 @@ Choice:
   T: ws
 </pre>
 
-Schemes are to be matched against the input in a case insensitive manner.
+<em>Schemes are to be matched against the input in a case insensitive
+manner.</em>
 
-Set <code>encoding override</code> to "<code>utf-<code>8</code></code>" if the scheme matches
+<ol>
+<li><a>Parse <code>input</code></a> according to the above railroad diagram.
+<li>Set <code>encoding override</code> to "<code>utf-<code>8</code></code>" if the scheme matches
 "<code>wss</code>" or "<code>ws</code>".
 
-Return the scheme as a lowercased string.
+<li>Return the scheme as a lowercased string.
+</ol>
 
 <p class=XXX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug <code>26338</code></a>
 may change how encoding override is handled.
 
 <h4 id=scheme class=no-toc>scheme(input)</h4>
+
+returns: String
+
 
 <pre class=railroad>
 Sequence:
@@ -808,6 +853,14 @@ code points: hyphen-minus (<code>U+002D</code>), plus sign (<code>U+002B</code>)
 Return the results as a lowercased string.
 
 <h4 id=authority class=no-toc>authority(input)</h4>
+
+returns: { 
+  <a href="#concept-url-username">username</a>,
+  <a href="#concept-url-password">password</a>,
+  <a href="#concept-url-host">host</a>,
+  <a href="#concept-url-port">port</a>
+}
+
 
 <pre class=railroad>
 Sequence:
@@ -851,6 +904,9 @@ Return <code>result</code>.
 
 <h4 id=user class=no-toc>user(input)</h4>
 
+returns: String
+
+
 <pre class=railroad>
 ZeroOrMore:
   T: any except [/\?#@:]
@@ -869,6 +925,9 @@ Return the <a title=cleanse>cleansed</a> result using the
 
 <h4 id=password class=no-toc>password(input)</h4>
 
+returns: String
+
+
 <pre class=railroad>
 ZeroOrMore:
   T: any except [/\?#@]
@@ -886,6 +945,9 @@ Return the <a title=cleanse>cleansed</a> result using the
 
 <h4 id=host class=no-toc>host(input)</h4>
 
+returns: String
+
+
 <pre class=railroad>
 Choice:
   Sequence:
@@ -896,41 +958,44 @@ Choice:
     T: any except [:/\?#]
 </pre>
 
-If the input contains an <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code>, 
-the result returned by <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code>.
+ If the input contains an <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code>, 
+ the result returned by <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code>.
 
-If the input contains an <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>, return 
-the result returned by <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>.
+ If the input contains an <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>, return 
+ the result returned by <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>.
 
-Otherwise:
+ Otherwise:
 
-  * If any <code>U+<code>0009</code></code>, <code>U+000A</code>, <code>U+000D</code>, <code>U+200B</code>, <code>U+<code>2060</code></code>, or <code>U+FEFF</code> code points are
-    present in the input, remove those code points and indicate a
-    <a>conformance error</a>.
-  * Let <code>domain</code> be the result of
-    <a href=#concept-host-parser>host
-    parsing</a> the value.  If this results in a failure,
-    terminate processing with a <a>parse exception</a>.  If 
-    <a href=#concept-host-parser>host
-    parsing</a> returned a value that was different than what was
-    provided as input, indicate a <a>conformance error</a>.
-  * Try parsing <code>domain</code> as an <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>. If this succeeds, replace <code>domain</code>
-    with the result.
-  * Validate the <code>domain</code> as follows:
-     * split the string at <code>U+002E</code> (full stop) code points
-     * If any of the pieces, other than the first one, are empty strings,
-         indicate a <a>conformance error</a>.
-  * Return <code>domain</code>.
+   * If any <code>U+<code>0009</code></code>, <code>U+000A</code>, <code>U+000D</code>, <code>U+200B</code>, <code>U+<code>2060</code></code>, or <code>U+FEFF</code> code points are
+     present in the input, remove those code points and indicate a
+     <a>conformance error</a>.
+   * Let <code>domain</code> be the result of
+     <a href=#concept-host-parser>host
+     parsing</a> the value.  If this results in a failure,
+     terminate processing with a <a>parse exception</a>.  If 
+     <a href=#concept-host-parser>host
+     parsing</a> returned a value that was different than what was
+     provided as input, indicate a <a>conformance error</a>.
+   * Try parsing <code>domain</code> as an <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>. If this succeeds, replace <code>domain</code>
+     with the result.
+   * Validate the <code>domain</code> as follows:
+      * split the string at <code>U+002E</code> (full stop) code points
+      * If any of the pieces, other than the first one, are empty strings,
+          indicate a <a>conformance error</a>.
+   * Return <code>domain</code>.
 
-<p class=XXX>The resolution of
-<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25334">bug <code>25334</code></a>
-may change what codepoints are allowed in a domain.
+ <p class=XXX>The resolution of
+ <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25334">bug <code>25334</code></a>
+ may change what codepoints are allowed in a domain.
 
-<p class=XXX>The resolution of
-<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27266">bug <code>27266</code></a>
-may change the way domain names and trailing dots are handled.
+ <p class=XXX>The resolution of
+ <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27266">bug <code>27266</code></a>
+ may change the way domain names and trailing dots are handled.
 
 <h4 id=ipv6addr class=no-toc>ipv6addr(input)</h4>
+
+returns: String
+
 
 <pre class=railroad>
 Sequence:
@@ -985,6 +1050,9 @@ may add support for link-local addresses.
 
 <h4 id=ipv4addr class=no-toc>ipv4addr(input)</h4>
 
+returns: String
+
+
 <pre class=railroad>
 Sequence:
   Optional:
@@ -1034,6 +1102,9 @@ may change this definition.
 
 <h4 id=number class=no-toc>number(input)</h4>
 
+returns: Integer
+
+
 <pre class=railroad>
 Choice:
   Sequence:
@@ -1051,13 +1122,16 @@ Choice:
     T: any of [0-9]
 </pre>
 
-Three production rules, with uppercase and lowercase variants, are
-defined for numbers.
-Parse the values as hexadecimal, octal, and decimal integers respectively.
-Indicate a <a>conformance error</a> if the value is hexadecimal or octal.
-Return the result as an integer.
+ Three production rules, with uppercase and lowercase variants, are
+ defined for numbers.
+ Parse the values as hexadecimal, octal, and decimal integers respectively.
+ Indicate a <a>conformance error</a> if the value is hexadecimal or octal.
+ Return the result as an integer.
 
 <h4 id=h16 class=no-toc>h16(input)</h4>
+
+returns: String
+
 
 <pre class=railroad>
 Sequence:
@@ -1073,6 +1147,9 @@ Sequence:
 Return up to four <a>ASCII hex digits</a> as a string.
 
 <h4 id=ls32 class=no-toc>ls32(input)</h4>
+
+returns: String
+
 
 <pre class=railroad>
 Sequence:
@@ -1090,6 +1167,9 @@ stop code points as a string.
 
 <h4 id=decimal-byte class=no-toc>decimal-byte(input)</h4>
 
+returns: String
+
+
 <pre class=railroad>
 Sequence:
   Optional:
@@ -1104,6 +1184,9 @@ converted to an integer are greater than <code>255</code>, terminate processing 
 a <a>parse exception</a>.
 
 <h4 id=port class=no-toc>port(input)</h4>
+
+returns: String
+
 
 <pre class=railroad>
 ZeroOrMore:
@@ -1134,6 +1217,9 @@ Return the result as a string.
 may change port from a string to a number.
 
 <h4 id=path class=no-toc>path(input)</h4>
+
+returns: Array of Strings
+
 
 <pre class=railroad>
 Sequence:
@@ -1177,6 +1263,9 @@ may change what code points to escape in the path.
 
 <h4 id=scheme-data class=no-toc>scheme-data(input)</h4>
 
+returns: String
+
+
 <pre class=railroad>
 ZeroOrMore:
   T: any except [?#]
@@ -1193,6 +1282,9 @@ may change what code points to escape in the scheme data.
 
 <h4 id=query class=no-toc>query(input)</h4>
 
+returns: String
+
+
 <pre class=railroad>
 ZeroOrMore:
   T: any except [#]
@@ -1208,6 +1300,9 @@ the result using the <a>query encode set</a>.
 may change how code points < <code>0x20</code> are handled.
 
 <h4 id=fragment class=no-toc>fragment(input)</h4>
+
+returns: String
+
 
 <pre class=railroad>
 ZeroOrMore:

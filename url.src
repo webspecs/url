@@ -473,7 +473,8 @@ variables isn't specified by this specification, instead the names used in the
 railroad diagrams are referenced.
 
 If a given input doesn't match the railroad diagram, failure is returned
-instead.
+instead.  If failure is returned by an alternative, evaluation continues
+with the next alternative.
 
 The following conventions are used in descriptions of parsing logic for
 clarity and conciseness:
@@ -497,8 +498,7 @@ clarity and conciseness:
 Note: extracting the railroad diagrams from this specification and
 interpreting them in isolation will produce incorrect results.  In particular,
 the definitions provided in the prose modifies these parsing algorithms in
-important ways including early termination and preconditions for subparts of a
-given diagram.
+important ways including returning failure and early termination.
 
 #include <url.pegjs>
 
