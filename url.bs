@@ -879,28 +879,32 @@ Sequence:
       N: port
 </pre>
 
-Initialize <code>result</code> to an empty object, then modify it as follows:
-
-  * If <code class=grammar-rule><a href=#user>user</a></code> is present, set <code>result.username</code> to its value.
-  * If <code class=grammar-rule><a href=#password>password</a></code> is present, set <code>result.password</code> to its value.
-  * Set <code>result.host</code> to the value returned by
-    <code class=grammar-rule><a href=#host>host</a></code> up to the first "<code>@</code>" sign, if any.  If no
-    "<code>@</code>" signs are present in the return value from the
-    <code class=grammar-rule><a href=#host>host</a></code> production, then set <code>result.host</code> to the
-    entire value.
-  * If one or more "<code>@</code>" signs are present in the value returned
-    by the <code class=grammar-rule><a href=#host>host</a></code> production, then perform the following steps:
-    * Indicate a <a>conformance error</a>.
-    * Initialize <code>info</code> to the value of '%<code>40</code>' plus the remainder of the
+<ol>
+<li><a>Parse <code>input</code></a> according to the above railroad diagram.
+<li>Let <code>result</code> be an empty object.
+<li>If <code class=grammar-rule><a href=#user>user</a></code> <a>is present</a>, set <code>result.username</code> to the <a>value of</a>
+    <code class=grammar-rule><a href=#user>user</a></code>.
+<li>If <code class=grammar-rule><a href=#password>password</a></code> <a>is present</a>, set <code>result.password</code> to the
+    <a>value of</a> <code class=grammar-rule><a href=#password>password</a></code>.
+<li>Set <code>result.host</code> to the <a>value of</a> <code class=grammar-rule><a href=#host>host</a></code> up to the first "<code>@</code>" sign,
+    if any.  If no "<code>@</code>" signs are present in the <a>value of</a> <code class=grammar-rule><a href=#host>host</a></code>, then
+    set <code>result.host</code> to the <a>value of</a> <code class=grammar-rule><a href=#host>host</a></code>.
+<li>If one or more "<code>@</code>" signs are present in the <a>value of</a> <code class=grammar-rule><a href=#host>host</a></code>,
+    then perform the following steps:
+    <ol>
+    <li>Indicate a <a>conformance error</a>.
+    <li>Initialize <code>info</code> to the value of "<code>%<code>40</code></code>" plus the remainder of the
         <code class=grammar-rule><a href=#host>host</a></code> after the first "<code>@</code>" sign.  Replace all remaining "<code>@</code>" signs in
         <code>info</code>, with the string "<code>%<code>40</code></code>".
-    * If <code class=grammar-rule><a href=#password>password</a></code> is present in the input, append <code>info</code> to <code>result.password</code>.
-    * If <code class=grammar-rule><a href=#password>password</a></code> is not present in input and <code class=grammar-rule><a href=#user>user</a></code> is present,
-        append <code>info</code> to <code>result.username</code>.
-    * If <code class=grammar-rule><a href=#user>user</a></code> is not present in input, set <code>result.username</code> to <code>info</code>.
-  * If <code class=grammar-rule><a href=#port>port</a></code> is present, set <code>result.port</code> to its value.
-
-Return <code>result</code>.
+    <li>If <code class=grammar-rule><a href=#password>password</a></code> <a>is present</a>, append <code>info</code> to <code>result.password</code>.
+    <li>If <code class=grammar-rule><a href=#password>password</a></code> <a title="is present">is not present</a> and <code class=grammar-rule><a href=#user>user</a></code>
+        <a>is present</a>, append <code>info</code> to <code>result.username</code>.
+    <li>If <code class=grammar-rule><a href=#user>user</a></code> <a title="is present">is not present</a>, set
+        <code>result.username</code> to <code>info</code>.
+    </ol>
+<li>If <code class=grammar-rule><a href=#port>port</a></code> <a>is present</a>, set <code>result.port</code> to its value.
+<li>Return <code>result</code>.
+</ol>
 
 <h4 id=user class=no-toc>user(input)</h4>
 
@@ -912,7 +916,7 @@ ZeroOrMore:
   T: any except [/\?#@:]
 </pre>
 
-Consume all code points until either 
+Consume all code points until either
 a solidus (<code>U+002F</code>),
 a reverse solidus (<code>U+005C</code>),
 a question mark (<code>U+003F</code>),
@@ -933,7 +937,7 @@ ZeroOrMore:
   T: any except [/\?#@]
 </pre>
 
-Consume all code points until either 
+Consume all code points until either
 a solidus (<code>U+002F</code>),
 a reverse solidus (<code>U+005C</code>),
 a question mark (<code>U+003F</code>),
@@ -958,39 +962,38 @@ Choice:
     T: any except [:/\?#]
 </pre>
 
- If the input contains an <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code>, 
- the result returned by <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code>.
+<ol>
+<li><a>Parse <code>input</code></a> according to the above railroad diagram.
+<li>If <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code> <a>is present</a>, return the <a>value of</a> <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code>.
+<li>If <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code> <a>is present</a>, return the <a>value of</a> <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>.
+<li>Let <code>result</code> be the characters matched by the railroad diagram.
+<li>If any <code>U+<code>0009</code></code>, <code>U+000A</code>, <code>U+000D</code>, <code>U+200B</code>, <code>U+<code>2060</code></code>, or <code>U+FEFF</code> code points are
+    present in <code>result</code>, remove those code points and indicate a
+    <a>conformance error</a>.
+<li>Let <code>domain</code> be the result of
+    <a href=#concept-host-parser>host parsing</a> <code>result</code>.  If this results
+    in a failure, terminate processing with a <a>parse exception</a>.  If <a
+    href=#concept-host-parser>host parsing</a> returned a value that was
+    different than what was provided as input, indicate a <a>conformance
+    error</a>.
+<li>Try parsing <code>domain</code> as an <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>. If this succeeds, replace <code>domain</code>
+    with the result.
+<li>Validate <code>domain</code> as follows:
+     <ol>
+     <li>split the string at <code>U+002E</code> (full stop) code points
+     <li>If any of the pieces, other than the first one, are empty strings,
+         indicate a <a>conformance error</a>.
+	</ol>
+<li>Return <code>domain</code>.
+</ol>
 
- If the input contains an <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>, return 
- the result returned by <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>.
+<p class=XXX>The resolution of
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25334">bug <code>25334</code></a>
+may change what codepoints are allowed in a domain.
 
- Otherwise:
-
-   * If any <code>U+<code>0009</code></code>, <code>U+000A</code>, <code>U+000D</code>, <code>U+200B</code>, <code>U+<code>2060</code></code>, or <code>U+FEFF</code> code points are
-     present in the input, remove those code points and indicate a
-     <a>conformance error</a>.
-   * Let <code>domain</code> be the result of
-     <a href=#concept-host-parser>host
-     parsing</a> the value.  If this results in a failure,
-     terminate processing with a <a>parse exception</a>.  If 
-     <a href=#concept-host-parser>host
-     parsing</a> returned a value that was different than what was
-     provided as input, indicate a <a>conformance error</a>.
-   * Try parsing <code>domain</code> as an <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>. If this succeeds, replace <code>domain</code>
-     with the result.
-   * Validate the <code>domain</code> as follows:
-      * split the string at <code>U+002E</code> (full stop) code points
-      * If any of the pieces, other than the first one, are empty strings,
-          indicate a <a>conformance error</a>.
-   * Return <code>domain</code>.
-
- <p class=XXX>The resolution of
- <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25334">bug <code>25334</code></a>
- may change what codepoints are allowed in a domain.
-
- <p class=XXX>The resolution of
- <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27266">bug <code>27266</code></a>
- may change the way domain names and trailing dots are handled.
+<p class=XXX>The resolution of
+<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27266">bug <code>27266</code></a>
+may change the way domain names and trailing dots are handled.
 
 <h4 id=ipv6addr class=no-toc>ipv6addr(input)</h4>
 
@@ -1018,31 +1021,31 @@ Sequence:
   T: ]
 </pre>
 
- Let <code>pre</code>, <code>post</code>, and <code>last</code> be the <code class=grammar-rule><a href=#h16>h16</a></code> values before the double colon if
- present,  the remaining <code class=grammar-rule><a href=#h16>h16</a></code> before the last value, and the trailing
- <code class=grammar-rule><a href=#h16>h16</a></code> or <code class=grammar-rule><a href=#ls32>ls32</a></code> value, respectively.
+<ol>
+<li>Let <code>pre</code> before the double colon, if present.
+<li>Let <code>post</code> be the remaining <code class=grammar-rule><a href=#h16>h16</a></code> before the last value
+<li>Let <code>last</code> be the trailing <code class=grammar-rule><a href=#h16>h16</a></code> or <code class=grammar-rule><a href=#ls32>ls32</a></code> value.
  
- Perform the following validation checks:
- * If there are no consecutive colon code points in the input string, indicate
-     a <a>parse exception</a> and terminate processing unless there are
-     exactly six <code class=grammar-rule><a href=#h16>h16</a></code> values and one <code class=grammar-rule><a href=#ls32>ls32</a></code> value.
- * If there are consecutive colon code points present in the input, indicate a
-     <a>parse exception</a> and terminate processing if the total number of
-     values (<code class=grammar-rule><a href=#h16>h16</a></code> or <code class=grammar-rule><a href=#ls32>ls32</a></code>) is more than six.
- * Unless there is a <code class=grammar-rule><a href=#ls32>ls32</a></code> value present, indicate a <a>parse exception</a>
-     and terminate processing if consecutive colon code points are present in
-     the input or if there are more than one <code class=grammar-rule><a href=#ls32>ls32</a></code> value after the
-     consecutive colons.
+<li>If there are no consecutive colon code points in the input string,
+    indicate a <a>parse exception</a> and terminate processing unless there
+    are exactly six <code class=grammar-rule><a href=#h16>h16</a></code> values and one <code class=grammar-rule><a href=#ls32>ls32</a></code> value.
+<li>If there are consecutive colon code points present in the input,
+    indicate a <a>parse exception</a> and terminate processing if the total
+    number of values (<code class=grammar-rule><a href=#h16>h16</a></code> or <code class=grammar-rule><a href=#ls32>ls32</a></code>) is more than six.
+<li>Unless there is a <code class=grammar-rule><a href=#ls32>ls32</a></code> value present, indicate a <a>parse exception</a>
+    and terminate processing if consecutive colon code points are present in
+    the input or if there are more than one <code class=grammar-rule><a href=#ls32>ls32</a></code> value after the
+    consecutive colons.
 
- Perform the following steps:
- * Append "<code><code>0</code></code>" values to <code>pre</code> while the sum of the lengths of the <code>pre</code> and
+ <li>Append "<code><code>0</code></code>" values to <code>pre</code> while the sum of the lengths of the <code>pre</code> and
      <code>post</code> arrays is less than six.
- * Append a "<code><code>0</code></code>" value to <code>pre</code> if no <code class=grammar-rule><a href=#ls32>ls32</a></code> item is present in the input and
+ <li>Append a "<code><code>0</code></code>" value to <code>pre</code> if no <code class=grammar-rule><a href=#ls32>ls32</a></code> item is present in the input and
      the sum of the lengths of the <code>pre</code> and <code>post</code> array is seven.
- * Append <code>last</code> to <code>pre</code>.
+ <li>Append <code>last</code> to <code>pre</code>.
 
- Return '[' plus the <a href=#concept-ipv6-serializer>ipv6
+ <li>Return '[' plus the <a href=#concept-ipv6-serializer>ipv6
  serialized</a> value of <code>pre</code> as a string, plus ']'.
+ </ol>
 
 <p class=XXX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27234">bug <code>27234</code></a>
@@ -1070,31 +1073,39 @@ Sequence:
   N: number
 </pre>
 
-If any but the last <code class=grammar-rule><a href=#number>number</a></code> is greater or equal to <code>256</code>, terminate processing
+<ol>
+<li>If any but the last <code class=grammar-rule><a href=#number>number</a></code> is greater or equal to <code>256</code>, terminate
+processing with a <a>parse exception</a>.
+
+<li>If the last <code class=grammar-rule><a href=#number>number</a></code> is greater than or equal to <code>256</code> to the power of (<code>5</code>
+minus the number of <code class=grammar-rule><a href=#number>number</a></code>s present in the input), terminate processing
 with a <a>parse exception</a>.
 
-If the last <code class=grammar-rule><a href=#number>number</a></code> is greater than or equal to <code>256</code> to the power of (<code>5</code> minus
-the number of <code class=grammar-rule><a href=#number>number</a></code>s present in the input), terminate processing with a
-<a>parse exception</a>.
+<li>Unless four <code class=grammar-rule><a href=#number>number</a></code>s <a title='is present'>are present</a>, indicate a
+<a>conformance error</a>.
 
-Unless four <code class=grammar-rule><a href=#number>number</a></code>s are present, indicate a <a>conformance error</a>.
+<li>Let <code>n</code> be the last <code class=grammar-rule><a href=#number>number</a></code>.
 
-Initialize <code>n</code> to the last <code class=grammar-rule><a href=#number>number</a></code>.
+<li>If the first <code class=grammar-rule><a href=#number>number</a></code> <a>is present</a>, add it's 
+<a title='value of'>value</a> times <code>256</code>**<code>3</code> to <code>n</code>.
 
-If the first <code class=grammar-rule><a href=#number>number</a></code> is present, add it's value times <code>256</code>**<code>3</code> to <code>n</code>.
+<li>If the second <code class=grammar-rule><a href=#number>number</a></code> <a>is present</a>, add it's 
+<a title='value of'>value</a> times <code>256</code>**<code>2</code> to <code>n</code>.
 
-If the second <code class=grammar-rule><a href=#number>number</a></code> is present, add it's value times <code>256</code>**<code>2</code> to <code>n</code>.
+<li>If the third <code class=grammar-rule><a href=#number>number</a></code> <a>is present</a>, add it's <a title='value
+of'>value</a> times <code>256</code> to <code>n</code>.
 
-If the third <code class=grammar-rule><a href=#number>number</a></code> is present, add it's value times <code>256</code> to <code>n</code>.
+<li>Let <code>result</code> be an empty array.
 
-Initialize <code>result</code> to an empty array.
+<li>Four times do the following:
+  <ol>
+  <li>Prepend the value of <code>n</code> modulo <code>256</code> to <code>result</code>.
+  <li>Set <code>n</code> to the value of the integer quotient of <code>n</code> divided by <code>256</code>.
+  </ol>
 
-Four times do the following:
-  * Prepend the value of <code>n</code> modulo <code>256</code> to <code>result</code>.
-  * Set <code>n</code> to the value of the integer quotient of <code>n</code> divided by <code>256</code>.
-
-Join the values in <code>result</code> with a Full Stop (<code>U+002E</code>) code point, and
+<li>Join the values in <code>result</code> with a Full Stop (<code>U+002E</code>) code point, and
 return the results as a string.
+</ol>
 
 <p class=XXX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug <code>26431</code></a>
@@ -1193,24 +1204,29 @@ ZeroOrMore:
   T: any except [/\?#]
 </pre>
 
-Consume all code points until either 
+<ol>
+<li>Consume all code points until either
 a solidus (<code>U+002F</code>),
 a reverse solidus (<code>U+005C</code>),
 a question mark (<code>U+003F</code>),
 or the end of string is encountered.
-<a title=cleanse>Cleanse</a> result using <var>null</var> as
-the encode set.
-Remove leading <code>U+<code>0030</code></code> code points from result
-until either the leading code point is not <code>U+<code>0030</code></code> or result is
-one code point. 
 
-If any code points that remain are not decimal digits:
-  * If <code>input</code> was not set, terminate processing with a
+<li>Let <code>result</code> be the <a title=cleanse>cleansed</a> set of code points using
+<var>null</var> as the encode set.
+
+<li>Remove leading <code>U+<code>0030</code></code> code points from <code>result</code> until either the leading
+code point is not <code>U+<code>0030</code></code> or <code>result</code> consists of exactly one code point. 
+
+<li>If any code points in <code>result</code> are not <a>ASCII digits</a>:
+  <ol>
+  <li>If <code>input</code> was not set, terminate processing with a
     <a>parse exception</a>.
-  * Truncate <code>result</code> starting with the first non-digit code point.
-  * Indicate a <a>conformance error</a>.
+  <li>Truncate <code>result</code> starting with the first non-digit code point.
+  <li>Indicate a <a>conformance error</a>.
+  </ol>
 
-Return the result as a string.
+<li>Return the result as a string.
+</ol>
 
 <p class=XXX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26446">bug <code>26446</code></a>
@@ -1234,28 +1250,36 @@ Sequence:
     T: any except [/\?#]
 </pre>
 
-If any of the path separators are a reverse solidus ("<code>\</code>"), indicate
+<ol>
+<li>If any of the path separators are a reverse solidus ("<code>\</code>"), indicate
 a <a>conformance error</a>.
 
-Extract all the pathnames into an array.  Process each name as follows:
+<li>Extract all the pathnames into an array.  Process each name as follows:
 
-  * <a title=cleanse>Cleanse</a> the name using the
+  <ol>
+  <li><a title=cleanse>Cleanse</a> the name using the
     <a>default encode set</a> as the encode set.
-  * If the name is "<code>.</code>" or "<code>%2e</code>" (case insensitive),
+  <li>If the name is "<code>.</code>" or "<code>%2e</code>" (case insensitive),
     then process this name based on the position in the array:
-      * If the position is other than the last, remove the name from the list.
-      * If the array is of length <code>1</code>, replace the entry with an empty string.
-      * Otherwise, leave the entry as is.
-  * If the name is "<code>..</code>", "<code>.%2e</code>", "<code>%2e.</code>",
+      <ol>
+      <li>If the position is other than the last, remove the name from the
+          list.
+      <li>If the array is of length <code>1</code>, replace the entry with an empty string.
+      <li>Otherwise, leave the entry as is.
+      </ol>
+  <li>If the name is "<code>..</code>", "<code>.%2e</code>", "<code>%2e.</code>",
     or "<code>%2e%2e</code>" (all to be compared in a case insensitive manner),
     then process this name based on the position in the array:
-      * If the position is the first, then remove it.
-      * If the position is other than the last, then remove it and the
+      <ol>
+      <li>If the position is the first, then remove it.
+      <li>If the position is other than the last, then remove it and the
           one before it.
-      * If the position is the last, then remove it and the one before it,
+      <li>If the position is the last, then remove it and the one before it,
           then append an empty string.
+      </ol>
 
-Return the array.
+<li>Return the array.
+</ol>
 
 <p class=XXX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=24163">bug <code>24163</code></a>

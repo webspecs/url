@@ -485,28 +485,32 @@ Scheme
      <a href="#concept-url-port">port</a>
    }
 
-   Initialize $result to an empty object, then modify it as follows:
-
-     * If @User is present, set $result.username to its value.
-     * If @Password is present, set $result.password to its value.
-     * Set $result.host to the value returned by
-       @Host up to the first "@" sign, if any.  If no
-       "@" signs are present in the return value from the
-       @Host production, then set $result.host to the
-       entire value.
-     * If one or more "@" signs are present in the value returned
-       by the @Host production, then perform the following steps:
-       * Indicate a <a>conformance error</a>.
-       * Initialize $info to the value of '%40' plus the remainder of the
+   <ol>
+   <li><a>Parse $input</a> according to the above railroad diagram.
+   <li>Let $result be an empty object.
+   <li>If @User <a>is present</a>, set $result.username to the <a>value of</a>
+       @User.
+   <li>If @Password <a>is present</a>, set $result.password to the
+       <a>value of</a> @Password.
+   <li>Set $result.host to the <a>value of</a> @Host up to the first "@" sign,
+       if any.  If no "@" signs are present in the <a>value of</a> @Host, then
+       set $result.host to the <a>value of</a> @Host.
+   <li>If one or more "@" signs are present in the <a>value of</a> @Host,
+       then perform the following steps:
+       <ol>
+       <li>Indicate a <a>conformance error</a>.
+       <li>Initialize $info to the value of "%40" plus the remainder of the
            @Host after the first "@" sign.  Replace all remaining "@" signs in
            $info, with the string "%40".
-       * If @Password is present in the input, append $info to $result.password.
-       * If @Password is not present in input and @User is present,
-           append $info to $result.username.
-       * If @User is not present in input, set $result.username to $info.
-     * If @Port is present, set $result.port to its value.
-
-   Return $result.
+       <li>If @Password <a>is present</a>, append $info to $result.password.
+       <li>If @Password <a title="is present">is not present</a> and @User
+           <a>is present</a>, append $info to $result.username.
+       <li>If @User <a title="is present">is not present</a>, set
+           $result.username to $info.
+       </ol>
+   <li>If @Port <a>is present</a>, set $result.port to its value.
+   <li>Return $result.
+   </ol>
 */
 Authority
   = userpass:( User (':' Password)? '@' )?
@@ -547,7 +551,7 @@ Authority
 /*
   returns: String
 
-  Consume all code points until either 
+  Consume all code points until either
   a solidus (U+002F),
   a reverse solidus (U+005C),
   a question mark (U+003F),
@@ -567,7 +571,7 @@ User
 /*
   returns: String
 
-  Consume all code points until either 
+  Consume all code points until either
   a solidus (U+002F),
   a reverse solidus (U+005C),
   a question mark (U+003F),
@@ -584,33 +588,32 @@ Password
   }
 
 /*
-  returns: String
+   returns: String
 
-   If the input contains an @IPv6Addr, 
-   the result returned by @IPv6Addr.
-
-   If the input contains an @IPv4Addr, return 
-   the result returned by @IPv4Addr.
-
-   Otherwise:
-
-     * If any U+0009, U+000A, U+000D, U+200B, U+2060, or U+FEFF code points are
-       present in the input, remove those code points and indicate a
+   <ol>
+   <li><a>Parse $input</a> according to the above railroad diagram.
+   <li>If @IPv6Addr <a>is present</a>, return the <a>value of</a> @IPv6Addr.
+   <li>If @IPv4Addr <a>is present</a>, return the <a>value of</a> @IPv4Addr.
+   <li>Let $result be the characters matched by the railroad diagram.
+   <li>If any U+0009, U+000A, U+000D, U+200B, U+2060, or U+FEFF code points are
+       present in $result, remove those code points and indicate a
        <a>conformance error</a>.
-     * Let $domain be the result of
-       <a href=#concept-host-parser>host
-       parsing</a> the value.  If this results in a failure,
-       terminate processing with a <a>parse exception</a>.  If 
-       <a href=#concept-host-parser>host
-       parsing</a> returned a value that was different than what was
-       provided as input, indicate a <a>conformance error</a>.
-     * Try parsing $domain as an @IPv4Addr. If this succeeds, replace $domain
+   <li>Let $domain be the result of
+       <a href=#concept-host-parser>host parsing</a> $result.  If this results
+       in a failure, terminate processing with a <a>parse exception</a>.  If <a
+       href=#concept-host-parser>host parsing</a> returned a value that was
+       different than what was provided as input, indicate a <a>conformance
+       error</a>.
+   <li>Try parsing $domain as an @IPv4Addr. If this succeeds, replace $domain
        with the result.
-     * Validate the $domain as follows:
-        * split the string at U+002E (full stop) code points
-        * If any of the pieces, other than the first one, are empty strings,
+   <li>Validate $domain as follows:
+        <ol>
+        <li>split the string at U+002E (full stop) code points
+        <li>If any of the pieces, other than the first one, are empty strings,
             indicate a <a>conformance error</a>.
-     * Return $domain.
+	</ol>
+   <li>Return $domain.
+   </ol>
 
    <p class=XXX>The resolution of
    <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=25334">bug 25334</a>
@@ -703,31 +706,31 @@ Host
 /*
   returns: String
 
-   Let $pre, $post, and $last be the @H16 values before the double colon if
-   present,  the remaining @H16 before the last value, and the trailing
-   @H16 or @LS32 value, respectively.
+  <ol>
+  <li>Let $pre before the double colon, if present.
+  <li>Let $post be the remaining @H16 before the last value
+  <li>Let $last be the trailing @H16 or @LS32 value.
    
-   Perform the following validation checks:
-   * If there are no consecutive colon code points in the input string, indicate
-       a <a>parse exception</a> and terminate processing unless there are
-       exactly six @H16 values and one @LS32 value.
-   * If there are consecutive colon code points present in the input, indicate a
-       <a>parse exception</a> and terminate processing if the total number of
-       values (@H16 or @LS32) is more than six.
-   * Unless there is a @LS32 value present, indicate a <a>parse exception</a>
-       and terminate processing if consecutive colon code points are present in
-       the input or if there are more than one @LS32 value after the
-       consecutive colons.
+  <li>If there are no consecutive colon code points in the input string,
+      indicate a <a>parse exception</a> and terminate processing unless there
+      are exactly six @H16 values and one @LS32 value.
+  <li>If there are consecutive colon code points present in the input,
+      indicate a <a>parse exception</a> and terminate processing if the total
+      number of values (@H16 or @LS32) is more than six.
+  <li>Unless there is a @LS32 value present, indicate a <a>parse exception</a>
+      and terminate processing if consecutive colon code points are present in
+      the input or if there are more than one @LS32 value after the
+      consecutive colons.
 
-   Perform the following steps:
-   * Append "0" values to $pre while the sum of the lengths of the $pre and
+   <li>Append "0" values to $pre while the sum of the lengths of the $pre and
        $post arrays is less than six.
-   * Append a "0" value to $pre if no @LS32 item is present in the input and
+   <li>Append a "0" value to $pre if no @LS32 item is present in the input and
        the sum of the lengths of the $pre and $post array is seven.
-   * Append $last to $pre.
+   <li>Append $last to $pre.
 
-   Return '[' plus the <a href=#concept-ipv6-serializer>ipv6
+   <li>Return '[' plus the <a href=#concept-ipv6-serializer>ipv6
    serialized</a> value of $pre as a string, plus ']'.
+   </ol>
 
   <p class=XXX>The resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27234">bug 27234</a>
@@ -774,31 +777,39 @@ IPv6Addr
 /*
   returns: String
 
-  If any but the last @Number is greater or equal to 256, terminate processing
+  <ol>
+  <li>If any but the last @Number is greater or equal to 256, terminate
+  processing with a <a>parse exception</a>.
+
+  <li>If the last @Number is greater than or equal to 256 to the power of (5
+  minus the number of @Number's present in the input), terminate processing
   with a <a>parse exception</a>.
 
-  If the last @Number is greater than or equal to 256 to the power of (5 minus
-  the number of @Number's present in the input), terminate processing with a
-  <a>parse exception</a>.
+  <li>Unless four @Number's <a title='is present'>are present</a>, indicate a
+  <a>conformance error</a>.
 
-  Unless four @Number's are present, indicate a <a>conformance error</a>.
+  <li>Let $n be the last @Number.
 
-  Initialize $n to the last @Number.
+  <li>If the first @Number <a>is present</a>, add it's 
+  <a title='value of'>value</a> times 256**3 to $n.
 
-  If the first @Number is present, add it's value times 256**3 to $n.
+  <li>If the second @Number <a>is present</a>, add it's 
+  <a title='value of'>value</a> times 256**2 to $n.
 
-  If the second @Number is present, add it's value times 256**2 to $n.
+  <li>If the third @Number <a>is present</a>, add it's <a title='value
+  of'>value</a> times 256 to $n.
 
-  If the third @Number is present, add it's value times 256 to $n.
+  <li>Let $result be an empty array.
 
-  Initialize $result to an empty array.
+  <li>Four times do the following:
+    <ol>
+    <li>Prepend the value of $n modulo 256 to $result.
+    <li>Set $n to the value of the integer quotient of $n divided by 256.
+    </ol>
 
-  Four times do the following:
-    * Prepend the value of $n modulo 256 to $result.
-    * Set $n to the value of the integer quotient of $n divided by 256.
-
-  Join the values in $result with a Full Stop (U+002E) code point, and
+  <li>Join the values in $result with a Full Stop (U+002E) code point, and
   return the results as a string.
+  </ol>
 
   <p class=XXX>The resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug 26431</a>
@@ -918,24 +929,29 @@ DecimalByte
 /*
   returns: String
 
-  Consume all code points until either 
+  <ol>
+  <li>Consume all code points until either
   a solidus (U+002F),
   a reverse solidus (U+005C),
   a question mark (U+003F),
   or the end of string is encountered.
-  <a title=cleanse>Cleanse</a> result using <var>null</var> as
-  the encode set.
-  Remove leading U+0030 code points from result
-  until either the leading code point is not U+0030 or result is
-  one code point. 
 
-  If any code points that remain are not decimal digits:
-    * If $input was not set, terminate processing with a
+  <li>Let $result be the <a title=cleanse>cleansed</a> set of code points using
+  <var>null</var> as the encode set.
+
+  <li>Remove leading U+0030 code points from $result until either the leading
+  code point is not U+0030 or $result consists of exactly one code point. 
+
+  <li>If any code points in $result are not <a>ASCII digits</a>:
+    <ol>
+    <li>If $input was not set, terminate processing with a
       <a>parse exception</a>.
-    * Truncate $result starting with the first non-digit code point.
-    * Indicate a <a>conformance error</a>.
+    <li>Truncate $result starting with the first non-digit code point.
+    <li>Indicate a <a>conformance error</a>.
+    </ol>
 
-  Return the result as a string.
+  <li>Return the result as a string.
+  </ol>
 
   <p class=XXX>The resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26446">bug 26446</a>
@@ -968,28 +984,36 @@ Port
 /*
   returns: Array of Strings
 
-  If any of the path separators are a reverse solidus ("\"), indicate
+  <ol>
+  <li>If any of the path separators are a reverse solidus ("\"), indicate
   a <a>conformance error</a>.
 
-  Extract all the pathnames into an array.  Process each name as follows:
+  <li>Extract all the pathnames into an array.  Process each name as follows:
 
-    * <a title=cleanse>Cleanse</a> the name using the
+    <ol>
+    <li><a title=cleanse>Cleanse</a> the name using the
       <a>default encode set</a> as the encode set.
-    * If the name is "." or "%2e" (case insensitive),
+    <li>If the name is "." or "%2e" (case insensitive),
       then process this name based on the position in the array:
-        * If the position is other than the last, remove the name from the list.
-        * If the array is of length 1, replace the entry with an empty string.
-        * Otherwise, leave the entry as is.
-    * If the name is "..", ".%2e", "%2e.",
+        <ol>
+        <li>If the position is other than the last, remove the name from the
+            list.
+        <li>If the array is of length 1, replace the entry with an empty string.
+        <li>Otherwise, leave the entry as is.
+        </ol>
+    <li>If the name is "..", ".%2e", "%2e.",
       or "%2e%2e" (all to be compared in a case insensitive manner),
       then process this name based on the position in the array:
-        * If the position is the first, then remove it.
-        * If the position is other than the last, then remove it and the
+        <ol>
+        <li>If the position is the first, then remove it.
+        <li>If the position is other than the last, then remove it and the
             one before it.
-        * If the position is the last, then remove it and the one before it,
+        <li>If the position is the last, then remove it and the one before it,
             then append an empty string.
+        </ol>
 
-  Return the array.
+  <li>Return the array.
+  </ol>
 
   <p class=XXX>The resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=24163">bug 24163</a>
