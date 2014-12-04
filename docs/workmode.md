@@ -46,15 +46,21 @@ The [URL Living Standard](https://url.spec.whatwg.org/) is effectively an [Publi
 
 There have been discussions concerning having a W3C Working Group such as WebApps "sponsor" this effort; such a decision would be an entirely voluntary one by the WebApps working group.
 
-This would involve the Working Group producing [Transition Requests](http://www.w3.org/2005/08/01-transitions.html#transreq).  Items that would need to be worked:
+This would involve the Working Group producing [Transition Requests](http://www.w3.org/2005/08/01-transitions.html#transreq).  This would involve producing stable snapshots.
 
-  * How and if snapshots are made and where they are to be hosted.
-  * Stylesheets, or lack thereof
-  * Pubrules changed needed to make this work.
-  * Possible differences in normative references - [W3C Normative References Policy](http://www.w3.org/2013/09/normative-references)
-  * License under which the snapshot is made available.
+The first such snapshot is available at [http://www.w3.org/TR/2014/WD-url-1-20141209/](http://www.w3.org/TR/2014/WD-url-1-20141209/).  This snapshot is hosted by the W3C, using standard W3C stylesheets.  It is licensed under the terms permitted by the [WebApps charter](http://www.w3.org/2014/06/webapps-charter.html#deliverables).  It refers to the [WHATWG URL Standard](https://url.spec.whatwg.org/) as the editor's draft.  The [Acknowledgments](http://www.w3.org/TR/2014/WD-url-1-20141209/#acknowledgments) section lists the editors, refers to the WHATWG standard as the upstream draft, and mentions the license under which the WHATWG standard is made available.  There are a number of minor [PubRules violations](http://lists.w3.org/Archives/Public/public-webapps/2014OctDec/0547.html) that did not prevent this from being published.
+
+There are no technical content differences.  The content is pulled from the [whatwg GitHub repository](https://github.com/whatwg/url) into the [Develop branch of the w3ctag GitHub repository](https://github.com/w3ctag/url/tree/develop).
+
+Later in the process, the proposal is to adopt the [Public Permissive version 3](http://dev.w3.org/html5/decision-policy/public-permissive-exit-criteria.html) exit criteria in order to satisfy the need for demonstrating [Implementation Experience](http://www.w3.org/2014/Process-20140801/#implementation-experience).  Any changes needed to the specification to meet this exit criteria will be done in the whatwg GitHub repository, if necessary in a branch.
+
+Also later in the process there may be possible differences in the normative references, primarily to meet the [W3C Normative References Policy](http://www.w3.org/2013/09/normative-references).  Those changes, if any, will be done in the w3ctag GitHub repository.
 
 The WebApps Working Group would also need to record and present [Formal Objections](http://www.w3.org/2014/Process-20140801/#FormalObjection).  It is conceivable that the resolution of such a Formal Objection could result in a fork.  The process by which such a potential fork would be managed is outside of the scope of this document.
+
+By the end of 1Q 2015, there will be a meeting with the W3C Director to review
+all of this and determine if the WHATWG URL Living Standard can be referenced
+directly instead.
 
 Editors
 ---
