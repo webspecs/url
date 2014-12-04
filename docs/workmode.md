@@ -40,7 +40,7 @@ All technical communications are to take place on a publicly archived list.  As 
 The Technical Reports Process (What is an Editor's Draft?)
 ---
 
-[Prior efforts](http://www.w3.org/TR/url/) to participate in the [W3C Technical Report process](http://www.w3.org/2014/Process-20140801/#Reports) have stalled.
+[Prior efforts](http://www.w3.org/TR/2012/WD-url-20120524/) to participate in the [W3C Technical Report process](http://www.w3.org/2014/Process-20140801/#Reports) stalled.
 
 The [URL Living Standard](https://url.spec.whatwg.org/) is effectively an [Public Working Draft](http://www.w3.org/2014/Process-20140801/#revised-wd) and matches the description of an [Editor's draft](http://www.w3.org/2008/webapps/wiki/WorkMode#The_Technical_Reports_Process_.28What_is_an_Editor.27s_Draft.3F.29) as practiced by the WebApps WG.
 
@@ -115,7 +115,11 @@ URL has been a topic of discussion at F2F meetings such as TPAC.  As is the cust
 Consensus and Call for Consensus
 ---
 
-The only Calls for Consensus by the WebApps working group relating to URL will be for process related items: decisions to "sponsor" this work, decisions related to transition requests, and decisions to host a fork of this product.  Going into this agreement, everybody agrees that such a fork is a measure of last resort.
+The only Calls for Consensus by the WebApps working group relating to URL will
+be for process related items: decisions to "sponsor" this work, decisions
+related to exit criteria and transition requests, and decisions to host a fork
+of this product.  Going into this agreement, everybody agrees that such a fork
+is a measure of last resort.
 
 Mail List Policy
 ---
