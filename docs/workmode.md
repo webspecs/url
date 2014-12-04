@@ -67,9 +67,24 @@ This would primarily involve the Working Group producing
 [Transition Requests](http://www.w3.org/2005/08/01-transitions.html#transreq).
 As a part of doing so,  stable snapshots would be made.
 
-The first such snapshot is available at [http://www.w3.org/TR/2014/WD-url-1-20141209/](http://www.w3.org/TR/2014/WD-url-1-20141209/).  This snapshot is hosted by the W3C, using standard W3C stylesheets.  It is licensed under the terms permitted by the [WebApps charter](http://www.w3.org/2014/06/webapps-charter.html#deliverables).  It refers to the [WHATWG URL Standard](https://url.spec.whatwg.org/) as the editor's draft.  The [Acknowledgments](http://www.w3.org/TR/2014/WD-url-1-20141209/#acknowledgments) section lists the editors, refers to the WHATWG standard as the upstream draft, and mentions the license under which the WHATWG standard is made available.  There are a number of minor [PubRules violations](http://lists.w3.org/Archives/Public/public-webapps/2014OctDec/0547.html) that did not prevent this from being published.
+The first such snapshot is available at
+[http://www.w3.org/TR/2014/WD-url-1-20141209/](http://www.w3.org/TR/2014/WD-url-1-20141209/).
+This snapshot is hosted by the W3C, using standard W3C stylesheets.  It is
+licensed under the terms required by the
+[WebApps charter](http://www.w3.org/2014/06/webapps-charter.html#deliverables).
+It refers to the [WHATWG URL Standard](https://url.spec.whatwg.org/) as the
+editor's draft.  The
+[Acknowledgments](http://www.w3.org/TR/2014/WD-url-1-20141209/#acknowledgments)
+section lists the editors, refers to the WHATWG standard as the upstream
+draft, and mentions the license under which the WHATWG standard is made
+available.  There are a number of minor
+[PubRules violations](http://lists.w3.org/Archives/Public/public-webapps/2014OctDec/0547.html)
+that did not prevent this working draft from being published.
 
-There are no technical content differences.  The content is pulled from the [whatwg GitHub repository](https://github.com/whatwg/url) into the [Develop branch of the w3ctag GitHub repository](https://github.com/w3ctag/url/tree/develop).
+There are no technical content differences.  The content is pulled from the
+[master branch of the whatwg GitHub repository](https://github.com/whatwg/url)
+into the
+[develop branch of the w3ctag GitHub repository](https://github.com/w3ctag/url/tree/develop).
 
 Later in the process, the proposal is to adopt the [Public Permissive version 3](http://dev.w3.org/html5/decision-policy/public-permissive-exit-criteria.html) exit criteria in order to satisfy the need for demonstrating [Implementation Experience](http://www.w3.org/2014/Process-20140801/#implementation-experience).  Any changes needed to the specification to meet this exit criteria will be done in the whatwg GitHub repository, if necessary in a branch.
 
@@ -164,6 +179,10 @@ Version Control
 ---
 
 [whatwg/url](https://github.com/whatwg/url) and [webspecs/url](https://github.com/webspecs/url) repositories on GitHub are currently being actively used.  Neither consistently are "upstream" from each other, and the plans are to actively keep them in sync.
+
+The [develop branch of the w3ctag GitHub
+repository](https://github.com/w3ctag/url/tree/develop) will contain the
+content from which drafts published on the W3C TR page are produced.
 
 Links to Group Resources
 ---
