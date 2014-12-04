@@ -45,9 +45,9 @@ The Technical Reports Process (What is an Editor's Draft?)
 The [URL Living Standard](https://url.spec.whatwg.org/) is effectively an [Public Working Draft](http://www.w3.org/2014/Process-20140801/#revised-wd) and matches the description of an [Editor's draft](http://www.w3.org/2008/webapps/wiki/WorkMode#The_Technical_Reports_Process_.28What_is_an_Editor.27s_Draft.3F.29) as practiced by the WebApps WG.
 
 There have been discussions concerning having a W3C Working Group such as
-WebApps "sponsor" this effort; by agreeing to the workmode as described by
-this page.  Such a decision would be an entirely voluntary one by the WebApps
-working group.
+WebApps "sponsor" this effort, and do so by agreeing to the workmode as
+described by this page.  Such a decision would be an entirely voluntary one by
+the WebApps working group.
 
 This would primarily involve the Working Group producing 
 [Transition Requests](http://www.w3.org/2005/08/01-transitions.html#transreq).
