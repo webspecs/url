@@ -7,6 +7,20 @@ Please read this proposal carefully.
 
   * It may contain elements that strongly resemble proposals made within the past few weeks.  It may also be missing crucial elements from those proposals.  I ask that everybody evaluate this proposal as a standalone proposal.
 
+Key elements of the proposal described below:
+
+  * Participants will join the
+    [W3C Web Applications Working Group](http://www.w3.org/2008/webapps/).
+  * All technical work will be done by the
+    [WHATWG](https://wiki.whatwg.org/wiki/FAQ#What_is_the_WHATWG.3F).
+    The work will be informed by
+    [implementation experience](http://www.w3.org/2014/Process-20140801/#implementation-experience).
+  * The Web Applications Working Group will be primarily concerned with
+    [transition requests](http://www.w3.org/2005/08/01-transitions.html#transreq).
+  * This will result in updates to the
+    [URL Technical Report](http://www.w3.org/TR/url/) published on the
+    [W3C site](http://www.w3.org/TR/).
+
 For reference purposes only, here are some related links:
 
   * [WHATWG/W3C Collaboration](http://intertwingly.net/blog/2014/11/20/WHATWG-W3C-Collaboration) - [no process change required](http://lists.w3.org/Archives/Public/public-w3process/2014Nov/0148.html)
