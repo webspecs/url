@@ -23,13 +23,12 @@ Key elements of the proposal described below:
 
 For reference purposes only, here are some related links:
 
-  * [WHATWG/W3C Collaboration](http://intertwingly.net/blog/2014/11/20/WHATWG-W3C-Collaboration) - [no process change required](http://lists.w3.org/Archives/Public/public-w3process/2014Nov/0148.html)
-  * [web specifications](http://lists.w3.org/Archives/Public/public-w3process/2014Nov/0177.html) - [draft](https://specs.webplatform.org/url/webspecs/develop/), [github](https://github.com/webspecs/url), [issues](https://github.com/webspecs/url/issues), [discourse](http://discourse.specifiction.org/t/about-the-url-category/691)
-  * [consortium product](http://lists.w3.org/Archives/Public/www-archive/2014Nov/0056.html) - [member agreement](http://lists.w3.org/Archives/Public/public-w3process/2014Nov/0169.html)
-  * [Decision by consensus or by informed editor; which is better?](http://www.w3.org/blog/2014/10/decision-by-consensus-or-by-informed-editor-which-is-better/)
   * [synchronization and consistency](http://lists.w3.org/Archives/Public/public-w3process/2014Dec/0004.html)
+  * [Decision by consensus or by informed editor; which is better?](http://www.w3.org/blog/2014/10/decision-by-consensus-or-by-informed-editor-which-is-better/)
+  * [Commit-Then-Review and snapshots](http://lists.w3.org/Archives/Public/public-w3process/2014Nov/0185.html)
+  * [WHATWG/W3C Collaboration](http://intertwingly.net/blog/2014/11/20/WHATWG-W3C-Collaboration) - [no process change required](http://lists.w3.org/Archives/Public/public-w3process/2014Nov/0148.html)
+  * [web specifications](http://lists.w3.org/Archives/Public/public-w3process/2014Nov/0177.html) - [draft](https://specs.webplatform.org/url/webspecs/develop/), [github](https://github.com/webspecs/url), [issues](https://github.com/webspecs/url/issues), [discourse](http://discourse.specifiction.org/c/url)
   * [attempt to engage the TAG and IETF](http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Nov/0000.html) - [follow up](http://lists.w3.org/Archives/Public/www-tag/2014Nov/0051.html)
-  * [attempt to engage the WebApps WG](http://lists.w3.org/Archives/Public/public-webapps/2014OctDec/0315.html) - [follow up](http://lists.w3.org/Archives/Public/public-webapps/2014OctDec/0429.html)
 
 WorkMode
 ===
@@ -41,7 +40,7 @@ Participation and Communication
 
 The primary place for work on the URL standard has been, and continues to be:
 
-  * [WHATWG Mailing list](http://lists.w3.org/Archives/Public/public-whatwg-archive/) hosted by the W3C
+  * [WHATWG mailing list](http://lists.w3.org/Archives/Public/public-whatwg-archive/) hosted by the W3C
   * [WHATWG/URL component in Bugzilla](https://www.w3.org/Bugs/Public/buglist.cgi?component=URL&list_id=48297&product=WHATWG&resolution=---) hosted by the W3C
   * [whatwg/url repository](https://github.com/whatwg/url) hosted by GitHub
   * [#whatwg IRC channel](https://wiki.whatwg.org/wiki/IRC) hosted by freenode
@@ -49,18 +48,16 @@ The primary place for work on the URL standard has been, and continues to be:
 All technical communications are to take place on a publicly archived list.  As an example, this includes [www-archive](http://lists.w3.org/Archives/Public/www-archive/).  In general, the editors intend to aggressively follow up with any individual or group that has technical input and will bring the results of those efforts back to the venues mentioned above.  The current list of alternate venues being evaluated:
 
   * [webspecs/url repository](https://github.com/webspecs/url) hosted by GitHub
-  * [public webapps Mailing list](http://lists.w3.org/Archives/Public/public-webapps/) hosted by the W3C
+  * [public webapps mailing list](http://lists.w3.org/Archives/Public/public-webapps/) hosted by the W3C
 
 The Technical Reports Process (What is an Editor's Draft?)
 ---
 
-[Prior efforts](http://www.w3.org/TR/2012/WD-url-20120524/) to participate in the [W3C Technical Report process](http://www.w3.org/2014/Process-20140801/#Reports) stalled.
-
 The [URL Living Standard](https://url.spec.whatwg.org/) is effectively an [Public Working Draft](http://www.w3.org/2014/Process-20140801/#revised-wd) and matches the description of an [Editor's draft](http://www.w3.org/2008/webapps/wiki/WorkMode#The_Technical_Reports_Process_.28What_is_an_Editor.27s_Draft.3F.29) as practiced by the WebApps WG.
 
 There have been discussions concerning having a W3C Working Group such as
-WebApps "sponsor" this effort, and do so by agreeing to the workmode as
-described by this page.  Such a decision would be an entirely voluntary one by
+WebApps "sponsor" this effort; the proposal is that the WG would do so according to the workmode as
+described by this page.  A decision to adopt this workmode be an entirely voluntary one by
 the WebApps working group.
 
 This would primarily involve the Working Group producing 
@@ -69,32 +66,42 @@ As a part of doing so,  stable snapshots would be made.
 
 The first such snapshot is available at
 [http://www.w3.org/TR/2014/WD-url-1-20141209/](http://www.w3.org/TR/2014/WD-url-1-20141209/).
-This snapshot is hosted by the W3C, using standard W3C stylesheets.  It is
-licensed under the terms required by the
+This snapshot is hosted by the W3C, using standard W3C stylesheets and
+[logo](https://github.com/w3ctag/url/blob/develop/logo.include).  It is
+[licensed](https://github.com/w3ctag/url/blob/develop/copyright.include) under the terms required by the
 [WebApps charter](http://www.w3.org/2014/06/webapps-charter.html#deliverables).
+It includes a [status](https://github.com/w3ctag/url/blob/develop/status.include) section.
 It refers to the [WHATWG URL Standard](https://url.spec.whatwg.org/) as the
 editor's draft.  The
 [Acknowledgments](http://www.w3.org/TR/2014/WD-url-1-20141209/#acknowledgments)
 section lists the editors, refers to the WHATWG standard as the upstream
 draft, and mentions the license under which the WHATWG standard is made
-available.  There are a number of minor
-[PubRules violations](http://lists.w3.org/Archives/Public/public-webapps/2014OctDec/0547.html)
-that did not prevent this working draft from being published.
+available.
 
 There are no technical content differences.  The content is pulled from the
 [master branch of the whatwg GitHub repository](https://github.com/whatwg/url)
 into the
 [develop branch of the w3ctag GitHub repository](https://github.com/w3ctag/url/tree/develop).
+The complete list of
+[changes](https://github.com/w3ctag/url/compare/develop#diff-5) is available online.
 
-Later in the process, the proposal is to adopt the [Public Permissive version 3](http://dev.w3.org/html5/decision-policy/public-permissive-exit-criteria.html) exit criteria in order to satisfy the need for demonstrating [Implementation Experience](http://www.w3.org/2014/Process-20140801/#implementation-experience).  Any changes needed to the specification to meet this exit criteria will be done in the whatwg GitHub repository, if necessary in a branch.
+Later in the process, the proposal is to adopt the
+[Public Permissive version 3](http://dev.w3.org/html5/decision-policy/public-permissive-exit-criteria.html)
+exit criteria in order to satisfy the need for demonstrating 
+[Implementation Experience](http://www.w3.org/2014/Process-20140801/#implementation-experience).
+Any changes needed to the specification to meet this exit criteria will be done in the 
+[whatwg GitHub repository](https://github.com/whatwg/url), if necessary in a branch.
 
-Also later in the process there may be possible differences in the normative references, primarily to meet the [W3C Normative References Policy](http://www.w3.org/2013/09/normative-references).  Those changes, if any, will be done in the w3ctag GitHub repository.
+Also later in the process there may be possible differences in the normative references, primarily to meet the 
+[W3C Normative References Policy](http://www.w3.org/2013/09/normative-references).  Those changes, if any, will be
+done in the [w3ctag GitHub repository](https://github.com/w3ctag/url/tree/develop).
 
 The WebApps Working Group would also need to record and present [Formal Objections](http://www.w3.org/2014/Process-20140801/#FormalObjection).  It is conceivable that the resolution of such a Formal Objection could result in a fork.  The process by which such a potential fork would be managed is outside of the scope of this document.
 
 By the end of 1Q 2015, there will be a meeting with the W3C Director to review
 all of this and determine if the WHATWG URL Living Standard can be referenced
-directly instead.
+directly instead.  The need for each of the changes listed above (logo, license,
+status, references, acknowledgements) will be explored and challenged.
 
 Editors
 ---
