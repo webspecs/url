@@ -186,9 +186,14 @@ Url
   interoperable, and therefore are effectively implementation defined.
   Furthermore, the parsing rules in this section have not enjoyed wide review,
   and therefore are more likely to be subject to change than other parts of this
-  specification.  People with input on this matter are encourage to add
-  comments to
-  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=23550">bug 23550</a>.  
+  specification.  
+  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27518">bug 27518</a>
+  proposes to remove all normative definitions for file URLs that are not
+  known to be interoperable.  
+  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=23550">Bug 23550</a>  
+  and
+  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=23717">bug 23717</a>
+  suggest less drastic changes.  
 */
 FileUrl
   = 'file'i ':' 

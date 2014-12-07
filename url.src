@@ -1319,6 +1319,11 @@ must run these steps:
  <li><p>Return <a title='URL password'>password</a>.
 </ol>
 
+<p class=XXX>The resolution of
+<a href=https://www.w3.org/Bugs/Public/show_bug.cgi?id=27516>bug 27516</a>
+may remove the ability to access passwords from scripts.
+
+
 <p>The <code><a attribute for=URLUtils>password</a></code> attribute's setter must
 run these steps:
 
