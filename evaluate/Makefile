@@ -1,6 +1,7 @@
 # Prereqs:
-#    install jdk, rust, cargo
+#    install jdk, rust, cargo, pel
 #    gem install addressable
+#    cpan URI JSON
 #    clean make in parent directory
 
 all: useragent-results testdata
@@ -15,6 +16,7 @@ urlsettest.json: ../reference-implementation/test/yml2test.rb \
 useragent-results: \
 	useragent-results/galimatias \
 	useragent-results/nodejs \
+	useragent-results/perl \
 	useragent-results/rusturl \
 	useragent-results/refimpl
 
@@ -43,6 +45,9 @@ useragent-results/refimpl: testrefimpl.js \
 	../reference-implementation/urlparser.js \
 	../reference-implementation/test/urltestdata.txt
 	node testrefimpl.js > $@
+
+useragent-results/perl: testuri.pl urltestdata.json
+	perl testuri.pl > $@
 
 testgalimatias.class: testgalimatias.java \
 	icu4j-54.1.1.jar galimatias-0.2.0.jar json-20140107.jar

@@ -15,6 +15,7 @@ agents = {
   ie: {hash: 'ie'},
   nodejs: {hash: 'nodejs'},
   opera: {hash: 'opera'},
+  perl: {hash: 'perl'},
   rust: {hash: 'rusturl'},
   safari: {hash: 'safari'},
 }

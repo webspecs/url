@@ -1,5 +1,5 @@
 {
-  "useragent": "reference-implementation @ Sun Nov 23 2014 19:12:30 GMT-0500 (EST)",
+  "useragent": "reference-implementation @ Sat Dec 06 2014 22:03:08 GMT-0500 (EST)",
   "constructor": [
     {
       "input": "http://example\t.\norg",
