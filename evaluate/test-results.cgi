@@ -99,8 +99,8 @@ _html do
   _script do
     results = {}
 
-    AGENTS = %w(refimpl chrome firefox galimatias ie nodejs opera perl
-      rusturl safari)
+    AGENTS = %w(refimpl addressable chrome firefox galimatias ie nodejs opera
+      perl rusturl safari)
     PROPERTIES = %w(href protocol hostname port username password pathname
       search hash)
 

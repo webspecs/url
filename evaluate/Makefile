@@ -14,6 +14,7 @@ urlsettest.json: ../reference-implementation/test/yml2test.rb \
 	ruby ../reference-implementation/test/yml2test.rb --json > $@
 
 useragent-results: \
+	useragent-results/addressable \
 	useragent-results/galimatias \
 	useragent-results/nodejs \
 	useragent-results/perl \
@@ -27,6 +28,7 @@ softerror: softerror.rb \
 
 clean:
 	rm -rf target *.class Cargo.lock urltestdata.json urlsettest.json \
+	useragent-results/addressable \
 	useragent-results/galimatias \
 	useragent-results/nodejs \
 	useragent-results/rusturl \
@@ -53,6 +55,9 @@ testgalimatias.class: testgalimatias.java \
 	icu4j-54.1.1.jar galimatias-0.2.0.jar json-20140107.jar
 	export CLASSPATH=.:icu4j-54.1.1.jar:galimatias-0.2.0.jar:json-20140107.jar; \
 	javac testgalimatias.java
+
+useragent-results/addressable: testaddressable.rb urltestdata.json
+	ruby testaddressable.rb > $@
 
 useragent-results/galimatias: testgalimatias.class urltestdata.json
 	export CLASSPATH=.:icu4j-54.1.1.jar:galimatias-0.2.0.jar:json-20140107.jar; \

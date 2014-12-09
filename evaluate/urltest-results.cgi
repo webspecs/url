@@ -4,11 +4,10 @@ require 'json'
 require 'digest/md5'
 require 'wunderbar/script'
 require 'ruby2js/filter/functions'
-require 'addressable/uri'
 
 agents = {
   refimpl: {hash: 'refimpl'},
-  addressable: {useragent: `gem list addressable`[/addressable \([.\d]+/]+')'},
+  addressable: {hash: 'addressable'},
   chrome: {hash: 'chrome'},
   firefox: {hash: 'firefox'},
   galimatias: {hash: 'galimatias'},
@@ -22,8 +21,6 @@ agents = {
 
 results = {}
 agents.keys.each do |agent|
-  next if agent == :addressable
-
   hash = agents[agent][:hash]
   File.open("useragent-results/#{hash}") do |file|
     json = JSON.parse(file.read)
@@ -39,26 +36,6 @@ agents.keys.each do |agent|
         result['pathname'] = result.delete('path') if result['path']
         result.delete('query')
         result.delete('fragment')
-
-        input,base = result['input'],result['base']
-        result = {}
-        begin
-          uri = Addressable::URI.parse(input)
-          uri = Addressable::URI.join(base, uri)
-        rescue Addressable::URI::InvalidURIError => e
-          result['exception'] =  e.message
-          uri = Addressable::URI.parse('')
-        end
-
-        result['href'] = uri.to_s
-        result['protocol'] = "#{uri.scheme}:"
-        result['port'] = uri.port.to_s
-        result['hostname'] = uri.host
-        result['pathname'] = uri.path
-        result['search']   = "?#{uri.query}" unless uri.query.to_s.empty?
-        result['hash']     = "##{uri.fragment}" unless uri.fragment.to_s.empty?
-
-        results[hash][:addressable] = result
       end
     end
   end
