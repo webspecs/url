@@ -13,6 +13,7 @@ _html do
     .fail {background-color: #FFFF00}
     #status {font-size: medium}
     #index tr:hover {color: #428bca; cursor: pointer; text-decoration: underline}
+    .navlink:hover {text-decoration: none; cursor: pointer}
   }
 
   _div.index! do
@@ -43,7 +44,7 @@ _html do
           _th 'Test'
           _th 'Input'
           _th 'Base'
-          _th 'href'
+          _th 'User Agents with differences'
         end
       end
 
@@ -97,7 +98,8 @@ _html do
   end
 
   _script do
-    results = {}
+    agents = []
+    tests = {}
 
     PROPERTIES = %w(href protocol hostname port username password pathname
       search hash)
@@ -136,26 +138,50 @@ _html do
     navLeft = document.querySelector('a.left')
     navRight = document.querySelector('a.right')
 
+    def findRow(index)
+      row = undefined
+      tests.each_with_index do |test, i|
+        row = i if test.index[0...index.length] == index
+      end
+      return row
+    end
+
     def detailView(index)
       document.querySelector('#index').style.display = 'none'
       document.querySelector('#detail').style.display = 'block'
+
+      index = findRow(index)
+
       document.querySelector('#detail h2 span').textContent = "Test #{index}"
 
-      navLeft.setAttribute('data-index', index-1)
-      navRight.setAttribute('data-index', index+1)
+      return if index === undefined
+
+      if index > 0
+        navLeft.setAttribute('data-index', tests[index-1].index[0..9])
+        navLeft.style.display = 'inline'
+      else
+        navLeft.style.display = 'none'
+      end
+
+      if index < tests.length-1
+        navRight.setAttribute('data-index', tests[index+1].index[0..9])
+        navRight.style.display = 'inline'
+      else
+        navRight.style.display = 'none'
+      end
 
       rows = []
-      refimpl = results.refimpl.constructor[index]
+      test = tests[index]
+      refimpl = test.results.refimpl
       document.querySelector('#input span').textContent = refimpl.input
       document.querySelector('#base span').textContent = refimpl.base
 
       tbody = document.querySelector('#results tbody')
       tbody.removeChild(tbody.firstChild) while tbody.hasChildNodes()
-      AGENTS.forEach do |agent|
-        row = rows[agent] = results[agent].constructor[index]
+      agents.each do |agent|
         tr = document.createElement('tr')
         addCol tr, 'th', agent
-        addCol tr, 'td', row.href, refimpl.href || ''
+        addCol tr, 'td', test.results[agent].href, refimpl.href || ''
         tbody.appendChild(tr)
       end
 
@@ -163,8 +189,8 @@ _html do
       thead.removeChild(thead.firstChild) while thead.hasChildNodes()
       addCol thead, 'th', 'Agent'
       visible = []
-      PROPERTIES.forEach do |prop|
-        if prop != 'href' and AGENTS.any? {|agent| rows[agent][prop]}
+      PROPERTIES.each do |prop|
+        if prop != 'href' and agents.any? {|agent| test.results[agent][prop]}
           visible << prop 
           addCol thead, 'th', prop
         end
@@ -173,30 +199,30 @@ _html do
       tbody = document.querySelector('#properties tbody')
       tbody.removeChild(tbody.firstChild) while tbody.hasChildNodes()
 
-      AGENTS.forEach do |agent|
-        row = results[agent].constructor[index]
+      agents.each do |agent|
+        row = test.results[agent]
         tr = document.createElement('tr')
         addCol tr, 'th', agent
-        visible.forEach do |prop|
+        visible.each do |prop|
           addCol tr, 'td', row[prop], refimpl[prop] || ''
         end
         tbody.appendChild(tr)
       end
     end
 
-    def loadTable(data)
+    def loadTable()
       document.querySelector('#index').style.display = 'block'
       document.querySelector('#detail').style.display = 'none'
 
       tbody = document.querySelector('#index tbody')
       tbody.removeChild(tbody.firstChild) while tbody.hasChildNodes()
-      for i in 0...data.length
+      for i in 0...tests.length
         tr = document.createElement('tr')
         addCol tr, 'th', i
-        addCol tr, 'td', JSON.stringify(data[i].input)
-        addCol tr, 'td', data[i].base
-        addCol tr, 'td', data[i].href
-        tr.setAttribute('data-index', i);
+        addCol tr, 'td', JSON.stringify(tests[i].input)
+        addCol tr, 'td', tests[i].base
+        addCol tr, 'td', ''
+        tr.setAttribute('data-index', tests[i].index[0..9]);
         tr.addEventListener('click') do |event|
           navigate(event.target.parentNode.getAttribute('data-index'))
         end
@@ -204,16 +230,17 @@ _html do
       end
     end
 
-    def navigate(index) if not history.state or history.state.index == index
+    def navigate(index)
+      if not history.state or history.state.index == index
         history.replaceState({index: index}, "index", index)
       else
         history.pushState({index: index}, "index", index)
       end
 
       if index == ''
-        loadTable(results.refimpl.constructor)
+        loadTable()
       else
-        detailView(index.to_i)
+        detailView(index)
       end
     end
 
@@ -232,7 +259,7 @@ _html do
       if event.keyCode == 37
         document.querySelector('.navlink.left').click()
       elsif event.keyCode == 38
-        loadTable(results.refimpl.constructor)
+        loadTable()
       elsif event.keyCode == 39
         document.querySelector('.navlink.right').click()
       end
@@ -240,24 +267,36 @@ _html do
 
     firstPage = location.pathname.split('/').slice(-1)[0]
 
-    def fetchAgents(list)
+    def fetchAgents(list, index)
       if list.length
         agent = list.shift()
         statusArea.textContent = "... loading #{agent}"
         fetch("../useragent-results/#{agent}").then do |response|
-          results[agent] = response.json()
-          fetchAgents(list)
-          navigate('') if firstPage == '' and agent == 'refimpl'
+          response.json().constructor.each do |result|
+            index["#{result.input} #{result.base}"].results[agent] = result
+          end
+          fetchAgents(list, index)
         end
       else
         statusArea.style.display = 'none'
-        navigate(firstPage.to_i) if firstPage != ''
+        navigate(firstPage) if firstPage != ''
       end
     end
 
     statusArea.textContent = "... loading index"
     fetch("../useragent-results/index").then do |response|
-      fetchAgents(response.json().index)
+      json = response.json()
+      tests = json.tests
+      agents = json.agents
+
+      index = {}
+      tests.each do |test|
+        index["#{test.input} #{test.base}"] = test
+        test.results = {}
+      end
+
+      navigate('') if firstPage == ''
+      fetchAgents(agents.slice(), index)
     end
   end
 end
