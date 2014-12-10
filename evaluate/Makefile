@@ -4,7 +4,7 @@
 #    cpan URI JSON
 #    clean make in parent directory
 
-all: useragent-results testdata
+all: useragent-results/index testdata
 
 testdata: \
 	urlsettest.json
@@ -13,13 +13,14 @@ urlsettest.json: ../reference-implementation/test/yml2test.rb \
 	../reference-implementation/test/urlsettest.yml
 	ruby ../reference-implementation/test/yml2test.rb --json > $@
 
-useragent-results: \
+useragent-results/index: resultindex.rb \
 	useragent-results/addressable \
 	useragent-results/galimatias \
 	useragent-results/nodejs \
 	useragent-results/perl \
 	useragent-results/rusturl \
 	useragent-results/refimpl
+	ruby resultindex.rb > $@
 
 softerror: softerror.rb \
 	useragent-results/galimatias \
@@ -28,6 +29,7 @@ softerror: softerror.rb \
 
 clean:
 	rm -rf target *.class Cargo.lock urltestdata.json urlsettest.json \
+	useragent-results/index \
 	useragent-results/addressable \
 	useragent-results/galimatias \
 	useragent-results/nodejs \

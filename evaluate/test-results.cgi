@@ -99,8 +99,6 @@ _html do
   _script do
     results = {}
 
-    AGENTS = %w(refimpl addressable chrome firefox galimatias ie nodejs opera
-      perl rusturl safari)
     PROPERTIES = %w(href protocol hostname port username password pathname
       search hash)
 
@@ -257,6 +255,9 @@ _html do
       end
     end
 
-    fetchAgents(AGENTS.slice())
+    statusArea.textContent = "... loading index"
+    fetch("../useragent-results/index").then do |response|
+      fetchAgents(response.json().index)
+    end
   end
 end
