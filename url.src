@@ -452,6 +452,8 @@ optionally with an <a>encoding</a>
  <li>Invoke <code class=grammar-rule><a href=#url>url</a></code>
  on the <var>input</var> passing <var>url</var>, <var>base</var> and
  <var>encoding override</var>.
+
+ <li><p>Return <var>url</var>.
 </ol>
 
 
