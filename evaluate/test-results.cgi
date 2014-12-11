@@ -15,6 +15,7 @@ _html do
     #status {font-size: medium}
     #index tr:hover {color: #428bca; cursor: pointer; text-decoration: underline}
     .navlink:hover {text-decoration: none; cursor: pointer}
+    .exception {background-color: HotPink}
   }
 
   _div.index! do
@@ -26,9 +27,9 @@ _html do
     _div do
       _ 'For '
       _select.domain! do
-        _option 'all user agents'
-        _option 'all browsers'
-        _option 'all current browsers'
+        _option 'all user agents', value: 'all'
+        _option 'all browsers', value: 'browsers'
+        _option 'all current browsers', value: 'current'
       end
       _ ' using '
       _select.baseline!
@@ -94,6 +95,7 @@ _html do
         _tr do
           _th 'Agent'
           _th 'href'
+          _th.exception 'exception'
         end
       end
       _tbody
@@ -149,6 +151,7 @@ _html do
       if not expected === undefined
         element.className = ((value || '')== expected ? 'pass' : 'fail')
       end
+      return element
     end
 
     navLeft = document.querySelector('a.left')
@@ -186,18 +189,27 @@ _html do
         navRight.style.display = 'none'
       end
 
-      rows = []
       test = tests[index]
-      refimpl = test.results.refimpl
-      document.querySelector('#input span').textContent = refimpl.input
-      document.querySelector('#base span').textContent = refimpl.base
+      expected = test.results[baseline]
+      document.querySelector('#input span').textContent = test.input
+      document.querySelector('#base span').textContent = test.base
+
+      rows = domain.slice()
+      rows.unshift baseline unless rows.include? baseline
 
       tbody = document.querySelector('#results tbody')
       tbody.removeChild(tbody.firstChild) while tbody.hasChildNodes()
-      domain.each do |agent|
+      document.querySelector('th.exception').style.display = 'none'
+      rows.each do |agent|
+        next unless test.results[agent]
         tr = document.createElement('tr')
         addCol tr, 'th', agent
-        addCol tr, 'td', test.results[agent].href, refimpl.href || ''
+        addCol tr, 'td', test.results[agent].href, expected.href || ''
+        if test.results[agent].exception
+          exception = addCol tr, 'td', test.results[agent].exception
+          exception.className = 'exception'
+          document.querySelector('th.exception').style.display = 'block'
+        end
         tbody.appendChild(tr)
       end
 
@@ -206,7 +218,9 @@ _html do
       addCol thead, 'th', 'Agent'
       visible = []
       PROPERTIES.each do |prop|
-        if prop != 'href' and domain.any? {|agent| test.results[agent][prop]}
+        if prop != 'href' and 
+          rows.any? {|agent| test.results[agent] and test.results[agent][prop]}
+        then
           visible << prop 
           addCol thead, 'th', prop
         end
@@ -215,12 +229,17 @@ _html do
       tbody = document.querySelector('#properties tbody')
       tbody.removeChild(tbody.firstChild) while tbody.hasChildNodes()
 
-      domain.each do |agent|
+      rows.each do |agent|
         row = test.results[agent]
         tr = document.createElement('tr')
         addCol tr, 'th', agent
         visible.each do |prop|
-          addCol tr, 'td', row[prop], refimpl[prop] || ''
+          if row["#{prop}-exception"]
+            exception = addCol tr, 'td', row["#{prop}-exception"]
+            exception.className = 'exception'
+          else
+            addCol tr, 'td', row[prop], expected[prop] || ''
+          end
         end
         tbody.appendChild(tr)
       end
@@ -229,6 +248,9 @@ _html do
     def loadTable()
       document.querySelector('#index').style.display = 'block'
       document.querySelector('#detail').style.display = 'none'
+
+      navRight.setAttribute('data-index', tests[0].index[0..9])
+      navLeft.setAttribute('data-index', tests[tests.length-1].index[0..9])
 
       tbody = document.querySelector('#index tbody')
       tbody.removeChild(tbody.firstChild) while tbody.hasChildNodes()
@@ -273,10 +295,10 @@ _html do
     end
 
     def navigate(index)
-      if not history.state or history.state.index == index
-        history.replaceState({index: index}, "index", index)
+      if history.state == null or history.state.index == index
+        history.replaceState({index: index}, "index", index || '.')
       else
-        history.pushState({index: index}, "index", index)
+        history.pushState({index: index}, "index", index || '.')
       end
 
       if index == ''
@@ -353,11 +375,12 @@ _html do
       end
 
       selectDomain.addEventListener('change') do |event|
-        if event.target.value == 'all user agents'
+        case event.target.value
+        when 'all'
           domain = agents
-        elsif event.target.value == 'all browsers'
+        when 'browsers'
           domain = %w(chrome ie firefox opera safari)
-        elsif event.target.value == 'all current browsers'
+        when 'current'
           domain = %w(chrome ie firefox safari)
         else
           domain = [event.target.value]
