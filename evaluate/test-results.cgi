@@ -6,11 +6,12 @@ require 'wunderbar/script'
 require 'ruby2js/filter/functions'
 
 _html do
+  _title 'URL test results'
   _link rel: 'stylesheet', href: '../bootstrap.min.css'
   _link rel: 'stylesheet', href: '../analysis.css'
   _style %{
     th, td {padding-left: 1em}
-    .fail {background-color: #FFFF00}
+    td.fail, .fail td {background-color: #FFFF00}
     #status {font-size: medium}
     #index tr:hover {color: #428bca; cursor: pointer; text-decoration: underline}
     .navlink:hover {text-decoration: none; cursor: pointer}
@@ -20,6 +21,18 @@ _html do
     _h1! do
       _ 'URL test results'
       _span.status!
+    end
+
+    _div do
+      _ 'For '
+      _select.domain! do
+        _option 'all user agents'
+        _option 'all browsers'
+        _option 'all current browsers'
+      end
+      _ ' using '
+      _select.baseline!
+      _ ' as a baseline'
     end
 
     _h3 'Related'
@@ -101,6 +114,9 @@ _html do
     agents = []
     tests = {}
 
+    baseline = 'refimpl'
+    domain = agents
+
     PROPERTIES = %w(href protocol hostname port username password pathname
       search hash)
 
@@ -178,7 +194,7 @@ _html do
 
       tbody = document.querySelector('#results tbody')
       tbody.removeChild(tbody.firstChild) while tbody.hasChildNodes()
-      agents.each do |agent|
+      domain.each do |agent|
         tr = document.createElement('tr')
         addCol tr, 'th', agent
         addCol tr, 'td', test.results[agent].href, refimpl.href || ''
@@ -190,7 +206,7 @@ _html do
       addCol thead, 'th', 'Agent'
       visible = []
       PROPERTIES.each do |prop|
-        if prop != 'href' and agents.any? {|agent| test.results[agent][prop]}
+        if prop != 'href' and domain.any? {|agent| test.results[agent][prop]}
           visible << prop 
           addCol thead, 'th', prop
         end
@@ -199,7 +215,7 @@ _html do
       tbody = document.querySelector('#properties tbody')
       tbody.removeChild(tbody.firstChild) while tbody.hasChildNodes()
 
-      agents.each do |agent|
+      domain.each do |agent|
         row = test.results[agent]
         tr = document.createElement('tr')
         addCol tr, 'th', agent
@@ -230,6 +246,32 @@ _html do
       end
     end
 
+    def showDiffs()
+      tbody = document.querySelector('#index tbody')
+      trs = tbody.querySelectorAll('tr')
+      for i in 0...trs.length
+        tr = trs[i]
+        results = tests[i].results
+        diffs = []
+        domain.each do |agent|
+          if PROPERTIES.any? {|prop| (results[agent][prop]||'') !=
+            (results[baseline][prop]||'')}
+          then
+            diffs << agent
+          end
+        end
+
+        td = tr.querySelector('td:last-child')
+        td.textContent = diffs.join(', ')
+
+        if diffs.length == 0 or domain.length - diffs.length >= 2
+          tr.className = ''
+        else
+          tr.className = 'fail'
+        end
+      end
+    end
+
     def navigate(index)
       if not history.state or history.state.index == index
         history.replaceState({index: index}, "index", index)
@@ -239,6 +281,7 @@ _html do
 
       if index == ''
         loadTable()
+        showDiffs()
       else
         detailView(index)
       end
@@ -259,7 +302,7 @@ _html do
       if event.keyCode == 37
         document.querySelector('.navlink.left').click()
       elsif event.keyCode == 38
-        loadTable()
+        navigate('')
       elsif event.keyCode == 39
         document.querySelector('.navlink.right').click()
       end
@@ -280,6 +323,7 @@ _html do
       else
         statusArea.style.display = 'none'
         navigate(firstPage) if firstPage != ''
+        showDiffs() if firstPage == ''
       end
     end
 
@@ -289,6 +333,39 @@ _html do
       tests = json.tests
       agents = json.agents
 
+      selectBaseline = document.getElementById('baseline')
+      selectDomain = document.getElementById('domain')
+      agents.each do |agent|
+        option = document.createElement('option')
+        option.textContent = agent
+        selectBaseline.appendChild(option)
+        option.selected = true if agent == 'refimpl'
+
+        option = document.createElement('option')
+        option.textContent = agent
+        selectDomain.appendChild(option)
+        option.selected = true if agent == 'all user agents'
+      end
+
+      selectBaseline.addEventListener('change') do |event|
+        baseline = event.target.value
+        showDiffs()
+      end
+
+      selectDomain.addEventListener('change') do |event|
+        if event.target.value == 'all user agents'
+          domain = agents
+        elsif event.target.value == 'all browsers'
+          domain = %w(chrome ie firefox opera safari)
+        elsif event.target.value == 'all current browsers'
+          domain = %w(chrome ie firefox safari)
+        else
+          domain = [event.target.value]
+        end
+
+        showDiffs()
+      end
+
       index = {}
       tests.each do |test|
         index["#{test.input} #{test.base}"] = test
@@ -297,6 +374,7 @@ _html do
 
       navigate('') if firstPage == ''
       fetchAgents(agents.slice(), index)
+      domain = agents
     end
   end
 end
