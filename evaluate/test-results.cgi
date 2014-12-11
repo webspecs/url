@@ -123,6 +123,8 @@ _html do
       search hash)
 
     statusArea = document.getElementById('status')
+    selectBaseline = document.getElementById('baseline')
+    selectDomain = document.getElementById('domain')
 
     def fetch(url)
       xhr = XMLHttpRequest.new()
@@ -142,6 +144,16 @@ _html do
       xhr.send nil
 
       return xhr
+    end
+
+    def searchGet(name)
+      vars = location.search.substring(1).split('&')
+      for i in 0...vars.length
+        equal = vars[i].indexOf('=')
+        if equal > -1 and decodeURIComponent(vars[i][0...equal]) == name
+          return decodeURIComponent(vars[i].substring(equal+1))
+        end
+      end
     end
 
     def addCol(tr, name, value, expected)
@@ -276,6 +288,7 @@ _html do
         results = tests[i].results
         diffs = []
         domain.each do |agent|
+          next unless results[agent] and results[baseline]
           if PROPERTIES.any? {|prop| (results[agent][prop]||'') !=
             (results[baseline][prop]||'')}
           then
@@ -295,16 +308,24 @@ _html do
     end
 
     def navigate(index)
-      if history.state == null or history.state.index == index
-        history.replaceState({index: index}, "index", index || '.')
-      else
-        history.pushState({index: index}, "index", index || '.')
+      state = {index: index, select: selectDomain.value, baseline:
+        selectBaseline.value}
+      query = []
+      query << "select=#{state.select}" unless state.select == 'all'
+      query << "baseline=#{state.baseline}" unless state.baseline == 'refimpl'
+      newloc = index || '.'
+      newloc = "#{newloc}?#{query.join('&')}" if query.length > 0
+
+      if history.state == null
+        history.replaceState(state, "URL Test Results", newloc)
+      elsif %w(index select baseline).any? {|prop| history.state[prop] != state[prop]}
+        history.pushState(state, "URL Test Results", newloc)
       end
 
       if index == ''
         loadTable()
         showDiffs()
-      else
+      elsif index
         detailView(index)
       end
     end
@@ -344,6 +365,8 @@ _html do
         end
       else
         statusArea.style.display = 'none'
+        selectBaseline.dispatchEvent(Event.new('change'))
+        selectDomain.dispatchEvent(Event.new('change'))
         navigate(firstPage) if firstPage != ''
         showDiffs() if firstPage == ''
       end
@@ -355,8 +378,6 @@ _html do
       tests = json.tests
       agents = json.agents
 
-      selectBaseline = document.getElementById('baseline')
-      selectDomain = document.getElementById('domain')
       agents.each do |agent|
         option = document.createElement('option')
         option.textContent = agent
@@ -371,6 +392,7 @@ _html do
 
       selectBaseline.addEventListener('change') do |event|
         baseline = event.target.value
+        navigate()
         showDiffs()
       end
 
@@ -386,7 +408,20 @@ _html do
           domain = [event.target.value]
         end
 
+        navigate()
         showDiffs()
+      end
+
+      value = searchGet('select')
+      options = document.querySelectorAll('#domain option')
+      for i in 0...options.length
+        options[i].selected = true if options[i].value == value
+      end
+
+      value = searchGet('baseline')
+      options = document.querySelectorAll('#baseline option')
+      for i in 0...options.length
+        options[i].selected = true if options[i].value == value
       end
 
       index = {}
