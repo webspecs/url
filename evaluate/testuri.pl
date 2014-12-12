@@ -9,7 +9,7 @@ my %optionals = (
 );
 
 open TESTDATA, "urltestdata.json";
-my $testdata = decode_json(<TESTDATA>);
+my $testdata = decode_json(join("", <TESTDATA>));
 my @constructor_results=();
 
 foreach (@$testdata) {
