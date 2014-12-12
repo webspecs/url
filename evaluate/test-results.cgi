@@ -80,13 +80,13 @@ _html do
     _p!.input! do
       _b 'Input'
       _ ': '
-      _span
+      _a
     end
 
     _p!.base! do
       _b 'Base'
       _ ': '
-      _span
+      _a
     end
 
     _h2_ 'Results'
@@ -156,6 +156,12 @@ _html do
       end
     end
 
+    def dispatchEvent(element, eventName)
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName,true,true);
+      element.dispatchEvent(event);
+    end
+
     def addCol(tr, name, value, expected)
       element = document.createElement(name)
       element.textContent = value
@@ -203,8 +209,13 @@ _html do
 
       test = tests[index]
       expected = test.results[baseline]
-      document.querySelector('#input span').textContent = test.input
-      document.querySelector('#base span').textContent = test.base
+      document.querySelector('#input a').textContent = test.input
+      document.querySelector('#base a').textContent = test.base
+
+      liveview2 = '../../reference-implementation/liveview2.html#' +
+        encodeURIComponent(test.base + ' ' + test.input)
+      document.querySelector('#input a').href = liveview2
+      document.querySelector('#base a').href = liveview2
 
       rows = domain.slice()
       rows.unshift baseline unless rows.include? baseline
@@ -365,8 +376,8 @@ _html do
         end
       else
         statusArea.style.display = 'none'
-        selectBaseline.dispatchEvent(Event.new('change'))
-        selectDomain.dispatchEvent(Event.new('change'))
+        dispatchEvent(selectBaseline, 'change')
+        dispatchEvent(selectDomain, 'change')
         navigate(firstPage) if firstPage != ''
         showDiffs() if firstPage == ''
       end

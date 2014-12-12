@@ -183,6 +183,18 @@
         compare(urlPathname, domPathname);
         compare(urlSearch, domSearch);
         compare(urlHash, domHash);
+
+        var hash;
+        if (location.pathname.indexOf('2') != -1) {
+          hash = document.baseURI + ' ' + document.getElementById("url").value;
+        } else if (location.pathname.indexOf('3') == -1) {
+          hash = document.getElementById("url").value;
+        }
+
+        if (hash) {
+          history.replaceState(history.state, '',
+            location.href.split('#')[0] + '#' + encodeURIComponent(hash));
+        }
       }
 
       function parseDom(input) {
@@ -313,6 +325,7 @@
 
       target.value = location.href;
       rebase(base.value);
+      input.oninput();
       input.focus();
     </script>
   </body>
