@@ -18,6 +18,7 @@ useragent-results/index: resultindex.rb \
 	useragent-results/galimatias \
 	useragent-results/nodejs \
 	useragent-results/perl \
+	useragent-results/python \
 	useragent-results/rusturl \
 	useragent-results/refimpl
 	ruby resultindex.rb > $@
@@ -33,6 +34,8 @@ clean:
 	useragent-results/addressable \
 	useragent-results/galimatias \
 	useragent-results/nodejs \
+	useragent-results/perl \
+	useragent-results/python \
 	useragent-results/rusturl \
 	useragent-results/refimpl
 
@@ -52,6 +55,9 @@ useragent-results/refimpl: testrefimpl.js \
 
 useragent-results/perl: testuri.pl urltestdata.json
 	perl testuri.pl > $@
+
+useragent-results/python: testurllib.py urltestdata.json
+	python3 testurllib.py > $@
 
 testgalimatias.class: testgalimatias.java \
 	icu4j-54.1.1.jar galimatias-0.2.0.jar json-20140107.jar
