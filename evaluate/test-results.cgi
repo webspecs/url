@@ -81,6 +81,11 @@ _html do
       _b 'Input'
       _ ': '
       _a
+      _span.inspect! do
+        _ ' ('
+        _a
+        _ ')'
+      end
     end
 
     _p!.base! do
@@ -210,12 +215,20 @@ _html do
 
       test = tests[index]
       expected = test.results[baseline]
-      document.querySelector('#input a').textContent = test.input
-      document.querySelector('#base a').textContent = test.base
+      document.querySelector('#input a').textContent =
+        JSON.stringify(test.input)
+      document.querySelector('#base a').textContent =
+        JSON.stringify(test.base)
+      document.querySelector('#inspect a').textContent =
+        test.inspect
+      document.querySelector('#inspect').style.display =
+        (JSON.stringify(test.input) == test.inspect ? 'none' : 'inline')
+
 
       liveview2 = '../../reference-implementation/liveview2.html#' +
         encodeURIComponent(test.base + ' ' + test.input)
       document.querySelector('#input a').href = liveview2
+      document.querySelector('#inspect a').href = liveview2
       document.querySelector('#base a').href = liveview2
 
       rows = domain.slice()

@@ -13,6 +13,9 @@ agents.each do |agent|
       tests << {
         input: result['input'],
         base: result['base'],
+        inspect: result['input'].inspect.gsub(/[^\x20-\x7E]/)  do |c|
+          "\\u#{c.ord.to_s(16).upcase.rjust(4,'0')}"
+        end
       }
     end
   end
