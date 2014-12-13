@@ -115,6 +115,7 @@ _html do
   _script do
     agents = []
     tests = {}
+    title = {}
 
     baseline = 'refimpl'
     domain = agents
@@ -226,7 +227,8 @@ _html do
       rows.each do |agent|
         next unless test.results[agent]
         tr = document.createElement('tr')
-        addCol tr, 'th', agent
+        th = addCol tr, 'th', agent
+        th.setAttribute('title', title[agent])
         addCol tr, 'td', test.results[agent].href, expected.href || ''
         if test.results[agent].exception
           exception = addCol tr, 'td', test.results[agent].exception
@@ -255,7 +257,8 @@ _html do
       rows.each do |agent|
         row = test.results[agent]
         tr = document.createElement('tr')
-        addCol tr, 'th', agent
+        th = addCol tr, 'th', agent
+        th.setAttribute('title', title[agent])
         visible.each do |prop|
           if row["#{prop}-exception"]
             exception = addCol tr, 'td', row["#{prop}-exception"]
@@ -319,6 +322,7 @@ _html do
     end
 
     def navigate(index)
+      index = history.state.index || '' if history.state and not index
       state = {index: index, select: selectDomain.value, baseline:
         selectBaseline.value}
       query = []
@@ -329,7 +333,7 @@ _html do
 
       if history.state == null
         history.replaceState(state, "URL Test Results", newloc)
-      elsif %w(index select baseline).any? {|prop| history.state[prop] != state[prop]}
+      elsif history.state.index != index
         history.pushState(state, "URL Test Results", newloc)
       end
 
@@ -369,7 +373,9 @@ _html do
         agent = list.shift()
         statusArea.textContent = "... loading #{agent}"
         fetch("../useragent-results/#{agent}").then do |response|
-          response.json().constructor.each do |result|
+          json = response.json()
+          title[agent] = json.useragent
+          json.constructor.each do |result|
             index["#{result.input} #{result.base}"].results[agent] = result
           end
           fetchAgents(list, index)
