@@ -13,18 +13,24 @@ The URL Standard is being developed at two locations:
     [github.com/webspecs](https://github.com/webspecs/url).
     For more information, see [Web Platform Specs](https://specs.webplatform.org/docs/).
 
+See [workmode](docs/workmode.md#preface) for a [proposal for W3C sponsored snapshots](http://www.w3.org/TR/url/).
+
 Contents
 ---
 
-   * [reference implementation](reference-implementation#readme)
+   * Specification.  Source is contained in [url.src](url.src) and [url.pegjs](url.pegjs).
+   * [Reference implementation](reference-implementation#readme)
      in JavaScript.  This directory also contains web pages that demonstate
-     live parsing of URLs entered in an HTML input field.
-   * [evaluate](evaluate) programs
-     and scripts which capture and compare test results against a number
-     of implementations.
-
-Tests can be found in the `url/` directory of
-[`w3c/web-platform-tests`](https://github.com/w3c/web-platform-tests).
+     live parsing of URLs entered in an HTML input field.  The latest version is deployed live:
+       * [liveview](https://url.spec.whatwg.org/reference-implementation/liveview.html) - parse a single URL.
+       * [liveview2](https://url.spec.whatwg.org/reference-implementation/liveview2.html) - parse a single URL against a base you provide.
+       * [liveview3](https://url.spec.whatwg.org/reference-implementation/liveview3.html) - parse a single URL and then interactively invoke setters against the result.
+   * [Evaluate](evaluate) programs
+     and scripts.  Source for the tests is the
+     [web-platform-tests](https://github.com/w3c/web-platform-tests/tree/master/url) GitHub repository.
+     Captured [test results](evaluate/useragent-results) against a number of implementations
+     are available.  These results can be [explored interactively](https://url.spec.whatwg.org/interop/test-results/)
+     online.
 
 Running `make` at the top level will build the spec, build the reference
 implementation, and run the tests against the reference implementation.  See
