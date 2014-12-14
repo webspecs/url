@@ -11,11 +11,12 @@ _html do
   _link rel: 'stylesheet', href: '../analysis.css'
   _style %{
     th, td {padding-left: 1em}
-    td.fail, .fail td {background-color: #FFFF00}
+    td.fail, .fail td, legend .fail {background-color: #FFFF00}
     #status {font-size: medium}
     #index tr:hover {color: #428bca; cursor: pointer; text-decoration: underline}
     .navlink:hover {text-decoration: none; cursor: pointer}
     .exception {background-color: HotPink}
+    legend {font-size: medium; margin-top: 1em}
   }
 
   _div.index! do
@@ -26,17 +27,23 @@ _html do
 
     _div do
       _ 'For '
-      _select.domain! do
+      _select_.domain! do
         _option 'all user agents', value: 'all'
         _option 'all browsers', value: 'browsers'
         _option 'all current browsers', value: 'current'
       end
       _ ' using '
-      _select.baseline!
-      _ ' as a baseline'
+      _select_.baseline!
+      _ ' as a baseline, showing '
+      _select_.filter! do
+        _option 'all'
+        _option 'only valid', value: 'valid'
+        _option 'only invalid', value: 'invalid'
+      end
+      _ ' inputs'
     end
 
-    _h3 'Related'
+    _h3_ 'Related'
     _ul do
       _li! do
         _ 'Test data: '
@@ -67,6 +74,13 @@ _html do
           _td 'Loading...'
         end
       end
+    end
+
+    _legend_! do
+      _span.fail 'Highlighted'
+      _ ' rows indicate '
+      _span.highlight! 'less than two passes'
+      _ '.  Click on any row to see detailed results.'
     end
   end
 
@@ -115,6 +129,14 @@ _html do
       end
       _tbody
     end
+
+    _legend_! do
+      _span.fail 'Highlighted'
+      _ ' cells indicate differences.  Exceptions are shown in '
+      _span.exception 'hot pink'
+      _ '.  Click on input or base to explore this test results with the '
+      _ 'Live DOM URL Viewer.'
+    end
   end
 
   _script do
@@ -124,6 +146,7 @@ _html do
 
     baseline = 'refimpl'
     domain = agents
+    filter = 'all'
 
     PROPERTIES = %w(href protocol hostname port username password pathname
       search hash)
@@ -131,6 +154,7 @@ _html do
     statusArea = document.getElementById('status')
     selectBaseline = document.getElementById('baseline')
     selectDomain = document.getElementById('domain')
+    selectFilter = document.getElementById('filter')
 
     def fetch(url)
       xhr = XMLHttpRequest.new()
@@ -199,15 +223,29 @@ _html do
 
       return if index === undefined
 
-      if index > 0
-        navLeft.setAttribute('data-index', tests[index-1].index[0..9])
+      link = index - 1
+      if filter == 'valid'
+        link = link - 1 while link >= 0 and tests[link].invalid
+      elsif filter == 'invalid'
+        link = link - 1 while link >= 0 and tests[link].valid
+      end
+
+      if link >= 0
+        navLeft.setAttribute('data-index', tests[link].index[0..9])
         navLeft.style.display = 'inline'
       else
         navLeft.style.display = 'none'
       end
 
-      if index < tests.length-1
-        navRight.setAttribute('data-index', tests[index+1].index[0..9])
+      link = index + 1
+      if filter == 'valid'
+        link = link + 1 while link <= tests.length-1 and tests[link].invalid
+      elsif filter == 'invalid'
+        link = link + 1 while link < tests.length-1 and tests[link].valid
+      end
+
+      if link <= tests.length - 1
+        navRight.setAttribute('data-index', tests[link].index[0..9])
         navRight.style.display = 'inline'
       else
         navRight.style.display = 'none'
@@ -284,7 +322,7 @@ _html do
       end
     end
 
-    def loadTable()
+    def indexView()
       document.querySelector('#index').style.display = 'block'
       document.querySelector('#detail').style.display = 'none'
 
@@ -313,6 +351,7 @@ _html do
       for i in 0...trs.length
         tr = trs[i]
         results = tests[i].results
+
         diffs = []
         domain.each do |agent|
           next unless results[agent] and results[baseline]
@@ -326,32 +365,31 @@ _html do
         td = tr.querySelector('td:last-child')
         td.textContent = diffs.join(', ')
 
-        if diffs.length == 0 or domain.length - diffs.length >= 2
-          tr.className = ''
-        else
-          tr.className = 'fail'
+        if diffs.length != 0 and domain.length - diffs.length < 2
+          tr.classList.add 'fail'
         end
       end
     end
 
     def navigate(index)
       index = history.state.index || '' if history.state and not index
-      state = {index: index, select: selectDomain.value, baseline:
-        selectBaseline.value}
+      state = {index: index, select: selectDomain.value,
+        baseline: selectBaseline.value, filter: selectFilter.value}
       query = []
       query << "select=#{state.select}" unless state.select == 'all'
       query << "baseline=#{state.baseline}" unless state.baseline == 'refimpl'
-      newloc = index || '.'
-      newloc = "#{newloc}?#{query.join('&')}" if query.length > 0
+      query << "filter=#{state.filter}" unless state.filter == 'all'
+      state.subpath = index || '.'
+      state.subpath = "#{state.subpath}?#{query.join('&')}" if query.length > 0
 
-      if history.state == null
-        history.replaceState(state, "URL Test Results", newloc)
-      elsif history.state.index != index
-        history.pushState(state, "URL Test Results", newloc)
+      if not history.state or not history.state.subpath
+        history.replaceState(state, "URL Test Results", state.subpath)
+      elsif history.state.subpath != state.subpath
+        history.pushState(state, "URL Test Results", state.subpath)
       end
 
       if index == ''
-        loadTable()
+        indexView()
         showDiffs()
       elsif index
         detailView(index)
@@ -359,6 +397,15 @@ _html do
     end
 
     def window.onpopstate(event)
+      selectDomain.value = event.state.select || 'all'
+      dispatchEvent(selectDomain, 'change')
+
+      selectBaseline.value = event.state.baseline || 'refimpl'
+      dispatchEvent(selectBaseline, 'change')
+
+      selectFilter.value = event.state.filter || 'all'
+      dispatchEvent(selectFilter, 'change')
+
       navigate(event.state ? event.state.index : '')
     end
 
@@ -391,12 +438,24 @@ _html do
           json.constructor.each do |result|
             index["#{result.input} #{result.base}"].results[agent] = result
           end
+
           fetchAgents(list, index)
         end
       else
+        tests.each do |test|
+          if test.results.refimpl
+            if test.results.refimpl.exception
+              test.invalid = true
+            else
+              test.valid = true
+            end
+          end
+        end
+
         statusArea.style.display = 'none'
         dispatchEvent(selectBaseline, 'change')
         dispatchEvent(selectDomain, 'change')
+        dispatchEvent(selectFilter, 'change')
         navigate(firstPage) if firstPage != ''
         showDiffs() if firstPage == ''
       end
@@ -440,6 +499,27 @@ _html do
 
         navigate()
         showDiffs()
+
+        document.getElementById('highlight').textContent = 
+          (domain.length == 1 ? 'differences' : 'less than two passes')
+      end
+
+      selectFilter.addEventListener('change') do |event|
+        filter = event.target.value
+
+        navigate()
+
+        trs = document.querySelectorAll('#index tbody tr')
+        for i in 0...trs.length
+          tr = trs[i]
+          if filter == 'valid' and tests[i].invalid
+            tr.style.display = 'none'
+          elsif filter == 'invalid' and tests[i].valid
+            tr.style.display = 'none'
+          else
+            tr.style.display = 'table-row'
+          end
+        end
       end
 
       value = searchGet('select')
@@ -450,6 +530,12 @@ _html do
 
       value = searchGet('baseline')
       options = document.querySelectorAll('#baseline option')
+      for i in 0...options.length
+        options[i].selected = true if options[i].value == value
+      end
+
+      value = searchGet('filter')
+      options = document.querySelectorAll('#filter option')
       for i in 0...options.length
         options[i].selected = true if options[i].value == value
       end
