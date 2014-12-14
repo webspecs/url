@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!-- based on draft-davies-template-bare.txt -->
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+<?rfc strict="yes" ?>
+<?rfc toc="yes"?>
+<?rfc tocdepth="4"?>
+<?rfc symrefs="yes"?>
+<?rfc sortrefs="yes" ?>
+<?rfc compact="yes" ?>
+<?rfc subcompact="no" ?>
+
+<rfc category="info" docName="draft-ruby-url-problem-00" ipr="trust200902">
+
+  <front>
+    <title>Problem Statement: URL</title>
+
+    <author fullname="Larry Masinter" initials="L.M."
+            surname="Masinter">
+      <organization>Adobe</organization>
+
+      <address>
+        <postal>
+          <street></street>
+          <city>San Jose</city>
+          <region></region>
+          <code></code>
+          <country>USA</country>
+        </postal>
+
+        <email>LMM@acm.org</email>
+        <uri>http://larry.masinter.net/</uri>
+      </address>
+    </author>
+
+    <author fullname="Sam Ruby" initials="S.R." role="editor"
+            surname="Ruby">
+      <organization>IBM</organization>
+
+      <address>
+        <postal>
+          <street></street>
+          <city>Raleigh</city>
+          <region></region>
+          <code></code>
+          <country>USA</country>
+        </postal>
+
+        <email>rubys@intertwingly.net</email>
+        <uri>http://intertwingly.net/</uri>
+      </address>
+    </author>
+
+    <date/>
+
+    <area>Application</area>
+
+    <workgroup>Internet Engineering Task Force</workgroup>
+
+    <keyword>URI</keyword>
+    <keyword>URL</keyword>
+    <keyword>IRI</keyword>
+
+    <abstract>
+      <t>From a user or developer point of view, it makes no sense for there to
+      be a proliferation of definitions of URL nor for there to be a
+      proliferation of incompatible implementations.  This shouldn't be a
+      competitive feature.  Therefore there is a need for the organizations
+      involved to update and reconcile the various Internet Drafts,
+      Recommendations, and Standards in this area.</t>
+    </abstract>
+  </front>
+
+  <middle>
+    <section title="History">
+      <t>This section contains a very compressed history of URLs.</t>
+
+      <t><xref target="RFC1738"/> defined URLs as ASCII only.  Although it was
+      quickly determined that it was desirable to allow non-ASCII characters,
+      shoehorning utf-8 into ASCII-only systems was unacceptable; at the time
+      Unicode was not so widely deployed, and there were other issues.  The tack
+      was taken to leave "URI" alone and define a new protocol element, "IRI";
+      <xref target="RFC3987"/> was published in 2005 (in sync with the 
+      <xref target="RFC3986"/> update to the URI definition).</t>
+
+      <t>The IRI-to-URI transformation specified in <xref target="RFC3987"/> had
+      options; it wasn't a deterministic path. The URI-to-IRI transformation was
+      also heuristic, since there was no guarantee that %xx-encoded bytes in the
+      URI were actually meant to be %xx percent-hex-encoded bytes of a utf8
+      encoding of a Unicode string.</t>
+
+      <t>To address issues and to fix URL for HTML5, a new IRI working group
+      &lt;<eref target="https://tools.ietf.org/wg/iri/charters">https://tools.ietf.org/wg/iri/charters</eref>&gt;
+      was established in IETF in 2009.  Despite years of development, the group
+      didn't get the attention of those active in WHATWG, W3C or Unicode
+      consortium, and the IRI group was closed in 2014, with the consolation
+      that the documents that were being developed in the IRI working group
+      could be updated as individual submissions or within the "applications
+      area" working group.  In particular, one of the IRI working group items
+      was to update <xref target="appsawg-uri-scheme-reg"/>,
+      which is currently under development in IETF's application area.</t>
+
+      <t>Independently, the HTML specifications in the WHATWG and W3C redefined
+      "URL" in an attempt to match what some of the browsers were doing. This
+      definition (mainly a published parsing algorithm) was moved out into
+      <xref target="URL-LS"/> .</t>
+
+      <t>The world has also moved on. ICANN has approved non-ASCII top level
+      domains, and neither <xref target="RFC3490"/> and <xref target="RFC5895"/>
+      fully addressed IRI Encoding.  Subsequently, the Unicode consortium
+      produced <xref target="UTS-46"/>.</t>
+    </section>
+
+    <section title="Landscape">
+      <t>There are multiple umbrella organizations which have
+      produced multiple documents, and it's unclear whether
+      there's a trajectory to make them consistent.</t>
+
+      <section title="IETF">
+        <t><xref target="appsawg-uri-scheme-reg"/> and
+        <xref target="kerwin-file-scheme"/> are under active development.</t>
+
+        <t>The IRI working group closed, but work can continue in the APPS
+        area working group. Documents sitting needing update, abandoned now,
+        are three drafts (<xref target="iri-3987bis"/>, 
+        <xref target="iri-comparison"/>, and
+        <xref target="iri-bidi-guidelines"/>)
+        intended originally to obsolete <xref target="RFC3987"/>.</t>
+
+        <t>In addition, there's quite a bit of activity around URNs and
+        library identifiers in the URN working group, work that is largely
+        ignored by other organizations.</t>
+      </section>
+
+      <section title="WHATWG">
+        <t>The <xref target="URL-LS"/> focuses on specifying what is important
+        for browsers, leaving out may of the topics in the IETF
+        specifications.  Registration is not yet defined.  This work
+        is based on <xref target="RFC3490"/> instead of
+        <xref target="RFC5895"/>, and is intented to obsolete both
+        <xref target="RFC3986"/> and <xref target="RFC3987"/>.</t>
+      </section>
+
+      <section title="W3C">
+        <t>The Web Applications Working Group, in conjuction with the TAG,
+        sporadically have been republishing the WHATWG work with no
+        technical content differences as <xref target="W3C-URL"/>.  There is a
+        <eref target="https://github.com/webspecs/url/blob/develop/docs/workmode.md#preface">workmode</eref>
+        proposal to formalize this relationship.</t>
+      </section>
+
+      <section title="WebPlatform">
+        <t><eref target="https://specs.webplatform.org/docs/">Web Platform
+        Specs</eref> is not a standards organization, but rather a place
+        to enable collaboration on work that may ultimately be standardized
+        elsewhere.  <xref target="WP-URL"/> currently contains work that has
+        yet to be folded back into the WHATWG Living Standard.</t>
+      </section>
+
+      <section title="Unicode Consortium">
+        <t><xref target="UTS-46"/> defines parameterized functions for
+        mapping domain names.  <xref target="URL-LS"/> builds upon this work,
+        specifying particular values to be used for these parameters.</t>
+      </section>
+    </section>
+
+    <section title="Problem Statement">
+      <t>The following are issues that need to be resolves to make URL
+      processing unambiguous and stable.</t>
+
+      <t><list style="symbols">
+        <t>Nomenclature: over the years, a number of different sets of
+        terminology has been used.  URL / URI / IRI is not the only difference.
+        <xref target="tantek-slice"/> chronicles a number of differences.</t>
+
+        <t>Parameterization: standards in this area need to define such
+        matters as normalization forms and values for parameters such as
+        UseSTD3ASCIIRules.</t>
+
+        <t>Interoperability: even after accounting for the above, there
+        is a demonstrable lack of interoperability across popular libraries
+        and browsers.  <xref target="whatwg-interop"/> identifies a number
+        of such differences.</t>
+      </list></t>
+    </section>
+
+    <section anchor="IANA" title="IANA Considerations">
+      <t>This memo includes no request to IANA.</t>
+    </section>
+
+    <section anchor="Security" title="Security Considerations">
+      <t>All of the security considerations defined in <xref target="RFC3490"/>,
+      <xref target="RFC3986"/>, <xref target="RFC3987"/>, and
+      <xref target="RFC5895"/> apply to URLs.</t>
+    </section>
+  </middle>
+
+  <back>
+    <references title="Normative References">
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml"?>
+    </references>
+
+    <references title="Informative References">
+
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.1738.xml"?>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3490.xml"?>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3552.xml"?>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3986.xml"?>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3987.xml"?>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.5895.xml"?>
+
+      <reference anchor="appsawg-uri-scheme-reg"
+                 target="https://tools.ietf.org/html/draft-ietf-appsawg-uri-scheme-reg">
+        <front>
+          <title>Guidelines and Registration Procedures for New URI Schemes</title>
+
+          <author initials="D.T." surname="Thaler">
+            <organization>Microsoft</organization>
+          </author>
+
+          <author initials="T.H." surname="Hansen">
+            <organization>AT&amp;T Laboratories</organization>
+          </author>
+
+          <author initials="T.H." surname="Hardie">
+            <organization>Google</organization>
+          </author>
+
+          <author initials="L.M." surname="Masinter">
+            <organization>Adobe</organization>
+          </author>
+
+          <date year="2014" />
+        </front>
+      </reference>
+
+      <reference anchor="iri-3987bis"
+                 target="https://tools.ietf.org/html/draft-ietf-iri-3987bis-13">
+        <front>
+          <title>Internationalized Resource Identifiers (IRIs)</title>
+
+          <author initials="M.D." surname="Duerst">
+            <organization>Aoyama Gakuin University</organization>
+          </author>
+
+          <author initials="M.S." surname="Suignard">
+            <organization>Unicode Consortium</organization>
+          </author>
+
+          <author initials="L.M." surname="Masinter">
+            <organization>Adobe</organization>
+          </author>
+
+          <date year="2012" />
+        </front>
+      </reference>
+
+      <reference anchor="iri-comparison"
+                 target="https://tools.ietf.org/html/draft-ietf-iri-comparison">
+        <front>
+          <title>Comparison, Equivalence and Canonicalization of
+          Internationalized Resource Identifiers</title>
+
+          <author initials="L.M." surname="Masinter">
+            <organization>Adobe</organization>
+          </author>
+
+          <author initials="M.D." surname="Duerst">
+            <organization>Aoyama Gakuin University</organization>
+          </author>
+
+          <date year="2012" />
+        </front>
+      </reference>
+
+      <reference anchor="iri-bidi-guidelines"
+                 target="https://tools.ietf.org/html/draft-ietf-iri-bidi-guidelines">
+        <front>
+          <title>Guidelines for Internationalized Resource Identifiers with
+          Bi-directional Characters (Bidi IRIs)</title>
+
+          <author initials="M.D." surname="Duerst">
+            <organization>Aoyama Gakuin University</organization>
+          </author>
+
+          <author initials="L.M." surname="Masinter">
+            <organization>Adobe</organization>
+          </author>
+
+          <author initials="A.A." surname="Allawi">
+            <organization>Diwan Software Limited</organization>
+          </author>
+
+          <date year="2012" />
+        </front>
+      </reference>
+
+      <reference anchor="kerwin-file-scheme"
+                 target="https://tools.ietf.org/html/draft-kerwin-file-scheme-13">
+        <front>
+          <title>The file URI Scheme</title>
+
+          <author initials="M.K." surname="Kerwin">
+            <organization>QUT</organization>
+          </author>
+
+          <date year="2014" />
+        </front>
+      </reference>
+
+      <reference anchor="tantek-slice"
+                 target="http://tantek.com/2011/238/b1/many-ways-slice-url-name-pieces">
+        <front>
+          <title>How many ways can you slice a URL and name the pieces?</title>
+
+          <author initials="T.C." surname="Celik">
+            <organization>Mozilla</organization>
+          </author>
+
+          <date year="2011" />
+        </front>
+      </reference>
+
+      <reference anchor="URL-LS"
+                 target="https://url.spec.whatwg.org/">
+        <front>
+          <title>URL Living Standard</title>
+
+          <author initials="A.K." surname="van Kesteren">
+            <organization></organization>
+          </author>
+
+          <author initials="S.R." surname="Ruby">
+            <organization></organization>
+          </author>
+
+          <date year="2014" />
+        </front>
+      </reference>
+
+      <reference anchor="UTS-46"
+                 target="http://unicode.org/reports/tr46/">
+        <front>
+          <title>Unicode IDNA Compatibility Processing</title>
+
+          <author initials="M.D." surname="Davis">
+            <organization></organization>
+          </author>
+
+          <author initials="M.S." surname="Suignard">
+            <organization></organization>
+          </author>
+
+          <date year="2014" />
+        </front>
+      </reference>
+
+      <reference anchor="W3C-URL"
+                 target="http://www.w3.org/TR/url/">
+        <front>
+          <title>URL Working Draft</title>
+
+          <author initials="A.K." surname="van Kesteren">
+            <organization></organization>
+          </author>
+
+          <author initials="S.R." surname="Ruby">
+            <organization></organization>
+          </author>
+
+          <date year="2014" />
+        </front>
+      </reference>
+
+      <reference anchor="whatwg-interop"
+                 target="https://url.spec.whatwg.org/interop/test-results/">
+        <front>
+          <title>URL test results</title>
+
+          <author initials="S.R." surname="Ruby">
+            <organization>IBM</organization>
+          </author>
+
+          <date year="2014" />
+        </front>
+      </reference>
+
+      <reference anchor="WP-URL"
+                 target="https://specs.webplatform.org/url/webspecs/develop/">
+        <front>
+          <title>URL Standard</title>
+
+          <author initials="A.K." surname="van Kesteren">
+            <organization></organization>
+          </author>
+
+          <author initials="S.R." surname="Ruby">
+            <organization></organization>
+          </author>
+
+          <date year="2014" />
+        </front>
+      </reference>
+    </references>
+
+    <!-- Change Log
+v00 2014-12-14 SAR   Initial version
+    -->
+  </back>
+</rfc>
