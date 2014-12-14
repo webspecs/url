@@ -17,6 +17,7 @@ _html do
     .navlink:hover {text-decoration: none; cursor: pointer}
     .exception {background-color: HotPink}
     legend {font-size: medium; margin-top: 1em}
+    table {margin-top: 1.5em}
   }
 
   _div.index! do
@@ -43,22 +44,6 @@ _html do
       _ ' inputs'
     end
 
-    _h3_ 'Related'
-    _ul do
-      _li! do
-        _ 'Test data: '
-        _a 'urltestdata.txt', href: 'https://github.com/w3c/' +
-          'web-platform-tests/blob/master/url/urltestdata.txt'
-      end
-      _li! do
-        _ 'Test results: '
-        _a 'all', href: 'http://w3c.github.io/test-results/url/all.html'
-        _ ', '
-        _a 'less than 2 passes', href:
-          'http://w3c.github.io/test-results/url/less-than-2.html'
-      end
-    end
-
     _table_ do
       _thead do
         _tr do
@@ -80,7 +65,10 @@ _html do
       _span.fail 'Highlighted'
       _ ' rows indicate '
       _span.highlight! 'less than two passes'
-      _ '.  Click on any row to see detailed results.'
+      _ '.  Click on any row to see detailed results. '
+      _a 'Evaluation programs and results', href:
+        'https://github.com/webspecs/url/tree/develop/evaluate#evaluation-programs-and-results'
+      _ ' are available on GitHub.'
     end
   end
 

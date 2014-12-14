@@ -25,8 +25,8 @@ Contents
        * [liveview](https://url.spec.whatwg.org/reference-implementation/liveview.html) - parse a single URL.
        * [liveview2](https://url.spec.whatwg.org/reference-implementation/liveview2.html) - parse a single URL against a base you provide.
        * [liveview3](https://url.spec.whatwg.org/reference-implementation/liveview3.html) - parse a single URL and then interactively invoke setters against the result.
-   * [Evaluate](evaluate) programs
-     and scripts.  Source for the tests is the
+   * [Evaluate](evaluate#evaluation-programs-and-results) programs
+     and results.  Source for the tests is the
      [web-platform-tests](https://github.com/w3c/web-platform-tests/tree/master/url) GitHub repository.
      Captured [test results](evaluate/useragent-results) against a number of implementations
      are available.  These results can be [explored interactively](https://url.spec.whatwg.org/interop/test-results/)
