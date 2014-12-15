@@ -142,7 +142,9 @@
       </section>
 
       <section title="WHATWG">
-        <t>The <xref target="URL-LS"/> focuses on specifying what is important
+        <t>The <xref target="URL-LS"/> is being developed as a
+        <eref target="https://wiki.whatwg.org/wiki/FAQ#What_does_.22Living_Standard.22_mean.3F">living standard</eref>.
+        It primarily focuses on specifying what is important
         for browsers, leaving out may of the topics in the IETF
         specifications.  Registration is not yet defined.  This work
         is based on <xref target="RFC3490"/> instead of
@@ -159,10 +161,14 @@
       </section>
 
       <section title="WebPlatform">
-        <t><xref target="WP-URL"/> is based on <xref target="URL-LS"/> and
+        <t><xref target="WP-URL"/> is being developed on a
+        <eref target="https://specs.webplatform.org/#how">develop</eref>
+        branch based on <xref target="URL-LS"/>.  It
         currently contains work that has yet to be folded back into the
-        <xref target="URL-LS"/>.  The intent is to so do once the work is
-        ready, and to actively work to keep the two versions in sync.</t>
+        <xref target="URL-LS"/>, primarily to rewrite the parser logic
+        in a way that is more understandable and approachable.  The intent is
+        to merge this work once it is ready, and to actively work to keep the
+        two versions in sync.</t>
       </section>
 
       <section title="Unicode Consortium">
@@ -220,6 +226,12 @@
           no changes to any Unicode Consortium product is required.</t>
       </list></t>
     </section>
+
+    <section anchor="Acknowledgements" title="Acknowledgements">
+      <t>Helpful comments and improvements to this document have
+      come from Graham Klyne.</t>
+    </section>
+
 
     <section anchor="IANA" title="IANA Considerations">
       <t>This memo includes no request to IANA.</t>
