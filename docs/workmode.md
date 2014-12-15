@@ -28,7 +28,7 @@ For reference purposes only, here are some related links:
   * [Commit-Then-Review and snapshots](http://lists.w3.org/Archives/Public/public-w3process/2014Nov/0185.html)
   * [WHATWG/W3C Collaboration](http://intertwingly.net/blog/2014/11/20/WHATWG-W3C-Collaboration) - [no process change required](http://lists.w3.org/Archives/Public/public-w3process/2014Nov/0148.html)
   * [web specifications](http://lists.w3.org/Archives/Public/public-w3process/2014Nov/0177.html) - [draft](https://specs.webplatform.org/url/webspecs/develop/), [github](https://github.com/webspecs/url), [issues](https://github.com/webspecs/url/issues), [discourse](http://discourse.specifiction.org/c/url)
-  * [attempt to engage the TAG and IETF](http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Nov/0000.html) - [follow up](http://lists.w3.org/Archives/Public/www-tag/2014Nov/0051.html)
+  * [attempt to engage the TAG and IETF](http://lists.w3.org/Archives/Public/public-whatwg-archive/2014Nov/0000.html) - [problem statement](http://intertwingly.net/projects/pegurl/url-problem-statement.html)
 
 WorkMode
 ===
