@@ -16,24 +16,6 @@
   <front>
     <title>Problem Statement: URL</title>
 
-    <author fullname="Larry Masinter" initials="L.M."
-            surname="Masinter">
-      <organization>Adobe</organization>
-
-      <address>
-        <postal>
-          <street></street>
-          <city>San Jose</city>
-          <region></region>
-          <code></code>
-          <country>USA</country>
-        </postal>
-
-        <email>LMM@acm.org</email>
-        <uri>http://larry.masinter.net/</uri>
-      </address>
-    </author>
-
     <author fullname="Sam Ruby" initials="S.R." role="editor"
             surname="Ruby">
       <organization>IBM</organization>
@@ -49,6 +31,24 @@
 
         <email>rubys@intertwingly.net</email>
         <uri>http://intertwingly.net/</uri>
+      </address>
+    </author>
+
+    <author fullname="Larry Masinter" initials="L.M."
+            surname="Masinter">
+      <organization>Adobe</organization>
+
+      <address>
+        <postal>
+          <street></street>
+          <city>San Jose</city>
+          <region></region>
+          <code></code>
+          <country>USA</country>
+        </postal>
+
+        <email>LMM@acm.org</email>
+        <uri>http://larry.masinter.net/</uri>
       </address>
     </author>
 
@@ -73,7 +73,7 @@
   </front>
 
   <middle>
-    <section title="History">
+    <section title="Brief History of URL standards">
       <t>This section contains a very compressed history of URLs.</t>
 
       <t><xref target="RFC1738"/> defined URLs as ASCII only.  Although it was
@@ -112,10 +112,18 @@
       produced <xref target="UTS-46"/>.</t>
     </section>
 
-    <section title="Landscape">
+    <section title="Current Organizations and Specs in Development">
       <t>There are multiple umbrella organizations which have
       produced multiple documents, and it's unclear whether
-      there's a trajectory to make them consistent.</t>
+      there's a trajectory to make them consistent.  This includes
+      the <eref target="https://www.ietf.org/about/">IETF</eref>,
+      the <eref target="https://wiki.whatwg.org/wiki/FAQ#What_is_the_WHATWG.3F">WHATWG</eref>, 
+      the <eref target="http://www.w3.org/Consortium/">W3C</eref>,
+      <eref target="https://specs.webplatform.org/docs/">Web
+      Platform.org</eref>, and
+      the <eref target="http://www.unicode.org/consortium/consort.html">Unicode
+      Consortium</eref>.
+      </t>
 
       <section title="IETF">
         <t><xref target="appsawg-uri-scheme-reg"/> and
@@ -146,16 +154,15 @@
         <t>The Web Applications Working Group, in conjuction with the TAG,
         sporadically have been republishing the WHATWG work with no
         technical content differences as <xref target="W3C-URL"/>.  There is a
-        <eref target="https://github.com/webspecs/url/blob/develop/docs/workmode.md#preface">workmode</eref>
-        proposal to formalize this relationship.</t>
+        <xref target="url-workmode"/> proposal to formalize this
+        relationship.</t>
       </section>
 
       <section title="WebPlatform">
-        <t><eref target="https://specs.webplatform.org/docs/">Web Platform
-        Specs</eref> is not a standards organization, but rather a place
-        to enable collaboration on work that may ultimately be standardized
-        elsewhere.  <xref target="WP-URL"/> currently contains work that has
-        yet to be folded back into the WHATWG Living Standard.</t>
+        <t><xref target="WP-URL"/> is based on <xref target="URL-LS"/> and
+        currently contains work that has yet to be folded back into the
+        <xref target="URL-LS"/>.  The intent is to so do once the work is
+        ready, and to actively work to keep the two versions in sync.</t>
       </section>
 
       <section title="Unicode Consortium">
@@ -166,8 +173,10 @@
     </section>
 
     <section title="Problem Statement">
-      <t>The following are issues that need to be resolves to make URL
-      processing unambiguous and stable.</t>
+      <t>The main problem is conflicting specifications that don't match
+        each other and overlap.</t>
+      <t>Additionally, the following are issues that need to be resolves to
+        make URL processing unambiguous and stable.</t>
 
       <t><list style="symbols">
         <t>Nomenclature: over the years, a number of different sets of
@@ -185,22 +194,46 @@
       </list></t>
     </section>
 
+    <section title="Outline of Potential Solution">
+      <t>This problem clearly requires a cross-organizational solution,
+        specifically:</t>
+      <t><list style="symbols">
+        <t>Build a plan to update or obsolete <xref target="RFC3986"/>,
+          <xref target="RFC3987"/>, <xref target="RFC5895"/>, and
+          <xref target="kerwin-file-scheme"/> to be consistent with
+          <xref target="URL-LS"/> and <xref target="UTS-46"/>.  This
+          may involve working to get the other specifications updated.</t>
+        <t>Change the <xref target="URL-LS"/> goals to only obsolete
+          specifications listed above that are not updated.  Presuming that
+          <xref target="RFC3986"/> is updated, explicitly state that 
+          canonical URLs (i.e., the outout of the URL parser) not only
+          round trip, but also are valid URIs.</t>
+        <t>Reconcile how <xref target="appsawg-uri-scheme-reg"/> and
+          <xref target="URL-LS"/> handle currently unknown schemes,
+          update <xref target="appsawg-uri-scheme-reg"/> to state that
+          registration applies to both URIs and URLs, and update
+          <xref target="URL-LS"/> to indicate that
+          <xref target="appsawg-uri-scheme-reg"/> is how you register
+          schemes.</t>
+        <t>Have the W3C adopt <xref target="url-workmode"/>.</t>
+        <t>Other than responsing to any feedback that may be provided,
+          no changes to any Unicode Consortium product is required.</t>
+      </list></t>
+    </section>
+
     <section anchor="IANA" title="IANA Considerations">
       <t>This memo includes no request to IANA.</t>
     </section>
 
     <section anchor="Security" title="Security Considerations">
-      <t>All of the security considerations defined in <xref target="RFC3490"/>,
-      <xref target="RFC3986"/>, <xref target="RFC3987"/>, and
-      <xref target="RFC5895"/> apply to URLs.</t>
+      <t>In addition to the security exposures created when URLs work
+      differently in different systems, all of the security considerations
+      defined in <xref target="RFC3490"/>, <xref target="RFC3986"/>, 
+      <xref target="RFC3987"/>, and <xref target="RFC5895"/> apply to URLs.</t>
     </section>
   </middle>
 
   <back>
-    <references title="Normative References">
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml"?>
-    </references>
-
     <references title="Informative References">
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.1738.xml"?>
@@ -377,6 +410,19 @@
                  target="https://url.spec.whatwg.org/interop/test-results/">
         <front>
           <title>URL test results</title>
+
+          <author initials="S.R." surname="Ruby">
+            <organization>IBM</organization>
+          </author>
+
+          <date year="2014" />
+        </front>
+      </reference>
+
+      <reference anchor="url-workmode"
+                 target="https://github.com/webspecs/url/blob/develop/docs/workmode.md#preface">
+        <front>
+          <title>URL WorkMode</title>
 
           <author initials="S.R." surname="Ruby">
             <organization>IBM</organization>
