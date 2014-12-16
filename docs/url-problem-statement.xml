@@ -79,7 +79,7 @@
       <t><xref target="RFC1738"/> defined URLs as ASCII only.  Although it was
       quickly determined that it was desirable to allow non-ASCII characters,
       shoehorning utf-8 into ASCII-only systems was unacceptable; at the time
-      Unicode was not so widely deployed, and there were other issues.  The tack
+      Unicode was not so widely deployed.  The tack
       was taken to leave "URI" alone and define a new protocol element, "IRI";
       <xref target="RFC3987"/> was published in 2005 (in sync with the 
       <xref target="RFC3986"/> update to the URI definition).</t>
@@ -92,14 +92,18 @@
 
       <t>To address issues and to fix URL for HTML5, a new IRI working group
       &lt;<eref target="https://tools.ietf.org/wg/iri/charters">https://tools.ietf.org/wg/iri/charters</eref>&gt;
-      was established in IETF in 2009.  Despite years of development, the group
-      didn't get the attention of those active in WHATWG, W3C or Unicode
-      consortium, and the IRI group was closed in 2014, with the consolation
+      was established in IETF in 2009.  Despite years of development, 
+      the IRI group was closed in 2014, with the consolation
       that the documents that were being developed in the IRI working group
       could be updated as individual submissions or within the "applications
       area" working group.  In particular, one of the IRI working group items
       was to update <xref target="appsawg-uri-scheme-reg"/>,
       which is currently under development in IETF's application area.</t>
+      <!--
+      Examples of feedback:
+        http://lists.w3.org/Archives/Public/public-iri/2009Aug/0000.html
+        http://lists.w3.org/Archives/Public/public-iri/2010Apr/0008.html
+      -->
 
       <t>Independently, the HTML specifications in the WHATWG and W3C redefined
       "URL" in an attempt to match what some of the browsers were doing. This
@@ -147,8 +151,7 @@
         It primarily focuses on specifying what is important
         for browsers, leaving out may of the topics in the IETF
         specifications.  Registration is not yet defined.  This work
-        is based on <xref target="RFC3490"/> instead of
-        <xref target="RFC5895"/>, and is intented to obsolete both
+        is based on <xref target="UTS-46"/>, and is intented to obsolete both
         <xref target="RFC3986"/> and <xref target="RFC3987"/>.</t>
       </section>
 

@@ -1648,6 +1648,16 @@
       "href": "http://www.google.com/foo?bar=baz# %C2%BB"
     },
     {
+      "username": "",
+      "protocol": "data:",
+      "input": "data:test# »",
+      "hash": "# %C2%BB",
+      "search": "",
+      "exception": "Illegal character in path segment: not a URL code point",
+      "base": "about:blank",
+      "href": "data:test# %C2%BB"
+    },
+    {
       "port": "",
       "username": "",
       "protocol": ":",

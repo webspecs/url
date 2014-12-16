@@ -358,7 +358,8 @@ U+100000 to U+10FFFD.
 
 <p class=note>Code points higher than U+009F will be converted to
 <a title="percent-encoded byte">percent-encoded bytes</a> by the
-<a>URL parser</a>.
+<a>URL parser</a>, except for code points appearing in
+<a title="URL fragment">fragments</a>.
 
 <p>The <dfn>URL units</dfn> are <a>URL code points</a> and
 <a title="percent-encoded byte">percent-encoded bytes</a>.
@@ -1340,13 +1341,24 @@ ZeroOrMore:
   T: any
 </pre>
 
-Consume all remaining code points in the input.  
-Return the <a title=cleanse>cleansed</a> result using the
-<a>simple encode set</a>.
+<ol>
+<li>Let <code>result</code> be the remaining code points in the input.  
+<li>If any <code>U+<code>0000</code></code> characters are present in <code>result</code>, remove those
+characters from <code>result</code> and indicate a
+<a data-link-type="<code>dfn</code>" href="#conformance-error">conformance error</a>.
+<li>If any characters in <code>result</code> are neither a Percent Sign (<code>U+<code>0025</code></code>) nor
+a <a>URL code point</a>, indicate a
+<a data-link-type="<code>dfn</code>" href="#conformance-error">conformance error</a>.
+<li>Return the <a title=cleanse>cleansed</a> result using <var>null</var>
+as the encode set.
+</ol>
 
-<p class=XXX>The resolution of
-<a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27252">bug <code>27252</code></a>
-may change what code points to escape in the fragment.
+<p class=note>Unfortunately not using 
+<a title="percent encode">percent-encoding</a> is intentional as
+implementations with majority market share exhibit this behavior.
+
+<!-- Chrome does percent-encoding if the scheme is not a relative scheme,
+     hopefully that can be aligned since flip-flopping is not great. -->
 
 <p class=XXX>The resolution of
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26988">bug <code>26988</code></a>
@@ -2180,7 +2192,7 @@ representation?
 not exposed on the global object. They are meant to augment other interfaces, such as
 <code><a interface>URL</a></code>.
 
-<p>The <dfn stringifier dfn-for=URLUtilsReadOnly><dfn stringifier dfn-for=URLUtils><code>href</code></dfn></dfn> attribute's getter must run
+<p>The <dfn attribute dfn-for=URLUtilsReadOnly><dfn attribute dfn-for=URLUtils><code>href</code></dfn></dfn> attribute's getter must run
 these steps:
 
 <ol>
@@ -2191,7 +2203,7 @@ these steps:
  of <a title='URLUtils URL'>url</a>.
 </ol>
 
-<p>The <code><a stringifier for=URLUtils>href</a></code> attribute's setter must run these steps:
+<p>The <code><a attribute for=URLUtils>href</a></code> attribute's setter must run these steps:
 
 <ol>
  <li><p>Let <var>input</var> be the given value.
@@ -2228,7 +2240,7 @@ these steps:
   </ol>
 
   <div class=example>
-   <p>This means that if the <code><a stringifier for=URLUtils>href</a></code> attribute is set to
+   <p>This means that if the <code><a attribute for=URLUtils>href</a></code> attribute is set to
    value that would cause the <a>URL parser</a> to return
    failure, that value is still passed through unchanged. This is one of those unfortunate
    legacy incidents.
@@ -2710,7 +2722,7 @@ otherwise.
 <a title='URLSearchParams list'>list</a> name-value pairs with the key being
 the name and the value the value.
 
-<p>The <dfn stringifier dfn-for=URLSearchParams>stringifier</dfn> must return the
+<p>The <dfn dfn dfn-for=URLSearchParams>stringifier</dfn> must return the
 <a title='urlencoded serializer'>serialization</a> of the
 <code><a interface>URLSearchParams</a></code> object's
 <a title='URLSearchParams list'>list</a>.
@@ -2719,12 +2731,11 @@ the name and the value the value.
 <h3 id=url-apis-elsewhere>URL APIs elsewhere</h3>
 
 <p>A standard that exposes <a title='URL'>URLs</a>, should expose the
-<a>URL</a> as a string (by
-<a title='URL serializer'>serializing</a> an internal
-<a>URL</a>). A standard should not expose a
-<code><a>URL</a> using a <a interface>URL</a></code> object. <code><a interface>URL</a></code>
-objects are meant for <a>URL</a> manipulation. In IDL the
-USVString type should be used.
+<a>URL</a> as a string (by <a title='URL serializer'>serializing</a> an
+internal <a>URL</a>). A standard should not expose a <a>URL</a> using a
+<code><a interface>URL</a></code> object. <code><a interface>URL</a></code>
+objects are meant for <a>URL</a> manipulation. In IDL the USVString type
+should be used.
 
 <p class=note>The higher-level notion here is that values are to be exposed as immutable
 data structures.

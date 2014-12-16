@@ -1,5 +1,5 @@
 {
-  "useragent": "reference-implementation @ Fri Dec 12 2014 15:48:35 GMT-0500 (EST)",
+  "useragent": "reference-implementation @ Tue Dec 16 2014 10:53:37 GMT-0500 (EST)",
   "constructor": [
     {
       "input": "http://example\t.\norg",
@@ -756,11 +756,11 @@
     {
       "input": "#β",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/bar#%CE%B2",
+      "href": "http://example.org/foo/bar#β",
       "protocol": "http:",
       "hostname": "example.org",
       "pathname": "/foo/bar",
-      "hash": "#%CE%B2"
+      "hash": "#β"
     },
     {
       "input": "data:text/html,test#test",
@@ -1228,12 +1228,21 @@
     {
       "input": "http://www.google.com/foo?bar=baz# »",
       "base": "about:blank",
-      "href": "http://www.google.com/foo?bar=baz# %C2%BB",
+      "href": "http://www.google.com/foo?bar=baz# »",
       "protocol": "http:",
       "hostname": "www.google.com",
       "pathname": "/foo",
       "search": "?bar=baz",
-      "hash": "# %C2%BB",
+      "hash": "# »",
+      "exception": "Illegal character in fragment"
+    },
+    {
+      "input": "data:test# »",
+      "base": "about:blank",
+      "href": "data:test# »",
+      "protocol": "data:",
+      "pathname": "test",
+      "hash": "# »",
       "exception": "Illegal character in fragment"
     },
     {

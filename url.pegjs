@@ -1103,13 +1103,24 @@ Query
 /*
   returns: String
 
-  Consume all remaining code points in the input.  
-  Return the <a title=cleanse>cleansed</a> result using the
-  <a>simple encode set</a>.
+  <ol>
+  <li>Let $result be the remaining code points in the input.  
+  <li>If any U+0000 characters are present in $result, remove those
+  characters from $result and indicate a
+  <a data-link-type="dfn" href="#conformance-error">conformance error</a>.
+  <li>If any characters in $result are neither a Percent Sign (U+0025) nor
+  a <a>URL code point</a>, indicate a
+  <a data-link-type="dfn" href="#conformance-error">conformance error</a>.
+  <li>Return the <a title=cleanse>cleansed</a> result using <var>null</var>
+  as the encode set.
+  </ol>
 
-  <p class=XXX>The resolution of
-  <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27252">bug 27252</a>
-  may change what code points to escape in the fragment.
+  <p class=note>Unfortunately not using 
+  <a title="percent encode">percent-encoding</a> is intentional as
+  implementations with majority market share exhibit this behavior.
+
+  <!-- Chrome does percent-encoding if the scheme is not a relative scheme,
+       hopefully that can be aligned since flip-flopping is not great. -->
 
   <p class=XXX>The resolution of
   <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26988">bug 26988</a>
@@ -1118,7 +1129,17 @@ Query
 Fragment 
   = fragment:.*
   {
-    return cleanse(fragment, Url.SIMPLE_ENCODE_SET, 'fragment')
+    for (var i=0; i<fragment.length; i++) {
+      var c = fragment[i];
+      if (c == "\u0000") {
+        warn = "Null character in fragment";
+        fragment.splice(i--, 1)
+      } else if (c != '%' && !Url.URL_CODE_POINTS.test(c)) {
+        warn = "Illegal character in fragment";
+      }
+    }
+
+    return cleanse(fragment, null, 'fragment')
   }
 
 /**

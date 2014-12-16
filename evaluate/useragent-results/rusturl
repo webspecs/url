@@ -1,5 +1,5 @@
 {
-  "useragent": "url 0.2.3 (git+https://github.com/servo/rust-url)",
+  "useragent": "url 0.2.5 (git+https://github.com/servo/rust-url)",
   "constructor": [
     {
       "input": "http://example\t.\norg",
@@ -2084,6 +2084,20 @@
       "port": null,
       "pathname": "/foo",
       "search": "?bar=baz",
+      "hash": "# %C2%BB",
+      "exception": null
+    },
+    {
+      "input": "data:test# »",
+      "base": "about:blank",
+      "href": "data:test# %C2%BB",
+      "protocol": "data:",
+      "username": null,
+      "password": null,
+      "hostname": null,
+      "port": null,
+      "pathname": null,
+      "search": null,
       "hash": "# %C2%BB",
       "exception": null
     },

@@ -2396,6 +2396,22 @@
       "base": "about:blank"
     },
     {
+      "protocol": "data:",
+      "slashes": null,
+      "auth": null,
+      "host": "test",
+      "port": null,
+      "hostname": "test",
+      "hash": "#%20»",
+      "search": null,
+      "query": null,
+      "pathname": null,
+      "path": null,
+      "href": "data:test#%20»",
+      "input": "data:test# »",
+      "base": "about:blank"
+    },
+    {
       "protocol": "http:",
       "slashes": true,
       "auth": null,

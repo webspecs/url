@@ -909,6 +909,12 @@
       "index": "64ccb0a586f86259452af4da4d398df3"
     },
     {
+      "input": "data:test# »",
+      "base": "about:blank",
+      "inspect": "\"data:test# \\u00BB\"",
+      "index": "34219ff51bb3c49aa7a1dccf10bada47"
+    },
+    {
       "input": "http://[www.google.com]/",
       "base": "about:blank",
       "inspect": "\"http://[www.google.com]/\"",

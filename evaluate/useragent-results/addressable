@@ -1376,6 +1376,16 @@
       "hash": "# »"
     },
     {
+      "input": "data:test# »",
+      "base": "about:blank",
+      "href": "data:test# »",
+      "protocol": "data:",
+      "port": "",
+      "hostname": null,
+      "pathname": "test",
+      "hash": "# »"
+    },
+    {
       "input": "http://[www.google.com]/",
       "base": "about:blank",
       "href": "http://[www.google.com]/",
