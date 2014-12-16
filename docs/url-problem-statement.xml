@@ -149,8 +149,7 @@
         <t>The <xref target="URL-LS"/> is being developed as a
         <eref target="https://wiki.whatwg.org/wiki/FAQ#What_does_.22Living_Standard.22_mean.3F">living standard</eref>.
         It primarily focuses on specifying what is important
-        for browsers, leaving out may of the topics in the IETF
-        specifications.  Registration is not yet defined.  This work
+        for browsers.   Registration is not yet defined.  This work
         is based on <xref target="UTS-46"/>, and is intented to obsolete both
         <xref target="RFC3986"/> and <xref target="RFC3987"/>.</t>
       </section>
