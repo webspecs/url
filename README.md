@@ -15,6 +15,9 @@ The URL Standard is being developed at two locations:
 
 See [workmode](docs/workmode.md#preface) for a [proposal for W3C sponsored snapshots](http://www.w3.org/TR/url/).
 
+See [draft-ruby-url-problem](http://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc.cgi?url=https%3A%2F%2Fraw.githubusercontent.com%2Fwebspecs%2Furl%2Fdevelop%2Fdocs%2Furl-problem-statement.xml&modeAsFormat=html%2Fascii) ([plain text](http://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc.cgi?url=https%3A%2F%2Fraw.githubusercontent.com%2Fwebspecs%2Furl%2Fdevelop%2Fdocs%2Furl-problem-statement.xml&modeAsFormat=txt%2Fascii&type%3Dascii)) for both a problem statement as well as a proposed plan for integration with IETF standards.
+
+
 Contents
 ---
 
