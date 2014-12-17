@@ -40,14 +40,14 @@
 
       <address>
         <postal>
-          <street></street>
+          <street>345 Park Ave</street>
           <city>San Jose</city>
-          <region></region>
-          <code></code>
+          <region>CA</region>
+          <code>95110</code>
           <country>USA</country>
         </postal>
 
-        <email>LMM@acm.org</email>
+        <email>masinter@adobe.com</email>
         <uri>http://larry.masinter.net/</uri>
       </address>
     </author>
@@ -63,7 +63,10 @@
     <keyword>IRI</keyword>
 
     <abstract>
-      <t>From a user or developer point of view, it makes no sense for there to
+      <t>This document lays out the problem space of possibly conflicting
+      standards between multiple organizations for URLs and things like
+      them, and proposes some actions to resolve the conflicts.
+      From a user or developer point of view, it makes no sense for there to
       be a proliferation of definitions of URL nor for there to be a
       proliferation of incompatible implementations.  This shouldn't be a
       competitive feature.  Therefore there is a need for the organizations
@@ -74,9 +77,13 @@
 
   <middle>
     <section title="Brief History of URL standards">
-      <t>This section contains a very compressed history of URLs.</t>
+      <t>This section contains a very compressed history of URL standards,
+        in sufficient detail to set some context.
+      </t>
 
-      <t><xref target="RFC1738"/> defined URLs as ASCII only.  Although it was
+      <t>The first standards-track specification for URLs was <xref target="RFC1738"/>
+      in 1994. (That spec contains more background material.)
+      It defined URLs as ASCII only. Although it was
       quickly determined that it was desirable to allow non-ASCII characters,
       shoehorning utf-8 into ASCII-only systems was unacceptable; at the time
       Unicode was not so widely deployed.  The tack
@@ -107,19 +114,22 @@
 
       <t>Independently, the HTML specifications in the WHATWG and W3C redefined
       "URL" in an attempt to match what some of the browsers were doing. This
-      definition (mainly a published parsing algorithm) was moved out into
+      definition was moved out into the "URL - Living Standard"
       <xref target="URL-LS"/> .</t>
 
       <t>The world has also moved on. ICANN has approved non-ASCII top level
-      domains, and neither <xref target="RFC3490"/> and <xref target="RFC5895"/>
-      fully addressed IRI Encoding.  Subsequently, the Unicode consortium
+      domains, but IDNA specs (<xref target="RFC3490"/> and <xref target="RFC5895"/>)
+      did not fully addressed IRI processing.  Subsequently, the Unicode consortium
       produced <xref target="UTS-46"/>.</t>
     </section>
 
     <section title="Current Organizations and Specs in Development">
       <t>There are multiple umbrella organizations which have
       produced multiple documents, and it's unclear whether
-      there's a trajectory to make them consistent.  This includes
+      there's a trajectory to make them consistent.  This section
+      tries to enumerate currently active organizations and specs.
+      </t>
+      <t></t>Organizations include
       the <eref target="https://www.ietf.org/about/">IETF</eref>,
       the <eref target="https://wiki.whatwg.org/wiki/FAQ#What_is_the_WHATWG.3F">WHATWG</eref>, 
       the <eref target="http://www.w3.org/Consortium/">W3C</eref>,
@@ -127,35 +137,40 @@
       Platform.org</eref>, and
       the <eref target="http://www.unicode.org/consortium/consort.html">Unicode
       Consortium</eref>.
-      </t>
+      Relevant specs under development in each organization include:</t>
 
       <section title="IETF">
         <t><xref target="appsawg-uri-scheme-reg"/> and
         <xref target="kerwin-file-scheme"/> are under active development.</t>
 
-        <t>The IRI working group closed, but work can continue in the APPS
-        area working group. Documents sitting needing update, abandoned now,
+        <t>The IRI working group closed, but work can continue in the Applications
+        Area working group. Documents sitting needing update, abandoned now,
         are three drafts (<xref target="iri-3987bis"/>, 
         <xref target="iri-comparison"/>, and
-        <xref target="iri-bidi-guidelines"/>)
-        intended originally to obsolete <xref target="RFC3987"/>.</t>
+        <xref target="iri-bidi-guidelines"/>), which were
+        originally intended to obsolete <xref target="RFC3987"/>.</t>
 
         <t>In addition, there's quite a bit of activity around URNs and
-        library identifiers in the URN working group, work that is largely
-        ignored by other organizations.</t>
+        library identifiers in the URN working group, including
+        some expressions of desire to update RFC 3986 to better accomodate
+        desired URN semantics.
+        </t>
       </section>
 
       <section title="WHATWG">
         <t>The <xref target="URL-LS"/> is being developed as a
         <eref target="https://wiki.whatwg.org/wiki/FAQ#What_does_.22Living_Standard.22_mean.3F">living standard</eref>.
         It primarily focuses on specifying what is important
-        for browsers.   Registration is not yet defined.  This work
+        for browsers.   The means by which new schemes might be
+        registered is not yet defined.  This work
         is based on <xref target="UTS-46"/>, and is intented to obsolete both
         <xref target="RFC3986"/> and <xref target="RFC3987"/>.</t>
       </section>
 
       <section title="W3C">
-        <t>The Web Applications Working Group, in conjuction with the TAG,
+        <t>The <eref target="http://www.w3.org/2014/06/webapps-charter.html">Web 
+        Applications Working Group</eref>, in conjuction with the 
+        <eref target="http://www.w3.org/2001/tag/">W3C TAG</eref>,
         sporadically have been republishing the WHATWG work with no
         technical content differences as <xref target="W3C-URL"/>.  There is a
         <xref target="url-workmode"/> proposal to formalize this
@@ -165,7 +180,7 @@
       <section title="WebPlatform">
         <t><xref target="WP-URL"/> is being developed on a
         <eref target="https://specs.webplatform.org/#how">develop</eref>
-        branch based on <xref target="URL-LS"/>.  It
+        GitHub branch based on <xref target="URL-LS"/>.  It
         currently contains work that has yet to be folded back into the
         <xref target="URL-LS"/>, primarily to rewrite the parser logic
         in a way that is more understandable and approachable.  The intent is
@@ -180,9 +195,9 @@
       </section>
     </section>
 
-    <section title="Problem Statement">
-      <t>The main problem is conflicting specifications that don't match
-        each other and overlap.</t>
+    <section title="Problem Statements">
+      <t>The main problem is conflicting specifications that overlap
+      but don't match each other.</t>
       <t>Additionally, the following are issues that need to be resolves to
         make URL processing unambiguous and stable.</t>
 
@@ -199,6 +214,13 @@
         is a demonstrable lack of interoperability across popular libraries
         and browsers.  <xref target="whatwg-interop"/> identifies a number
         of such differences.</t>
+        
+        <t>Specific scheme definitions: some UR* scheme definitions are woefully
+          out of date, incomplete, or don't correspond to current practice,
+          but updating their definitions is unclear. This includes "file:",
+          for which there is a current effort, but there are others which
+          need review (including 'ftp:', 'data').
+        </t>
       </list></t>
     </section>
 
@@ -210,7 +232,9 @@
           <xref target="RFC3987"/>, <xref target="RFC5895"/>, and
           <xref target="kerwin-file-scheme"/> to be consistent with
           <xref target="URL-LS"/> and <xref target="UTS-46"/>.  This
-          may involve working to get the other specifications updated.</t>
+          may involve working to get the other specifications updated,
+            if only to clarify nomenclature.
+          </t>
         <t>Change the <xref target="URL-LS"/> goals to only obsolete
           specifications listed above that are not updated.  Presuming that
           <xref target="RFC3986"/> is updated, explicitly state that 
@@ -236,7 +260,14 @@
 
 
     <section anchor="IANA" title="IANA Considerations">
-      <t>This memo includes no request to IANA.</t>
+      <t>This memo currently includes no request to IANA,
+        although an updated <xref target="appsawg-uri-scheme-reg"/>
+        might add some additional requirements and information to
+        <eref target="http://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml">IANA
+          URI scheme registry</eref> to make clear that the
+          schemes serve as URL schemes and IRI schemes as well as
+          URI schemes.
+      </t>
     </section>
 
     <section anchor="Security" title="Security Considerations">
@@ -344,7 +375,7 @@
       </reference>
 
       <reference anchor="kerwin-file-scheme"
-                 target="https://tools.ietf.org/html/draft-kerwin-file-scheme-13">
+                 target="https://tools.ietf.org/html/draft-kerwin-file-scheme">
         <front>
           <title>The file URI Scheme</title>
 
