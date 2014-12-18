@@ -250,7 +250,7 @@
 
     <section anchor="Acknowledgements" title="Acknowledgements">
       <t>Helpful comments and improvements to this document have
-      come from Anne van Kesteren and Graham Klyne.</t>
+      come from Anne van Kesteren, Graham Klyne, and Julian Reschke.</t>
     </section>
 
 
@@ -484,6 +484,8 @@
 
     <!-- Change Log
 v00 2014-12-14 SAR   Initial version
+v01 ***TBD***  SAR   fix ID references, fix WG element, fix AREA element,
+                     remove unneeded empty elements
     -->
   </back>
 </rfc>
