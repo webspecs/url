@@ -142,7 +142,8 @@ requirements.  The proposal is therefore to:
     W3C Process, and therefore nothing in Section 7 of Appendix 1 of the
     Member agreement would inhibit this WorkMode being adopted.
   * Modify section 2.2 of the Invited Expert agreement to align it with the
-    Member Agreement.
+    Member Agreement.  See also [issue 150](http://www.w3.org/community/w3process/track/issues/150)
+    in the w3process CG.
 
 Meetings
 ---
