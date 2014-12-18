@@ -22,10 +22,7 @@
 
       <address>
         <postal>
-          <street></street>
           <city>Raleigh</city>
-          <region></region>
-          <code></code>
           <country>USA</country>
         </postal>
 
@@ -54,9 +51,7 @@
 
     <date/>
 
-    <area>Application</area>
-
-    <workgroup>Internet Engineering Task Force</workgroup>
+    <area>Applications</area>
 
     <keyword>URI</keyword>
     <keyword>URL</keyword>
@@ -288,8 +283,7 @@
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3987.xml"?>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.5895.xml"?>
 
-      <reference anchor="appsawg-uri-scheme-reg"
-                 target="https://tools.ietf.org/html/draft-ietf-appsawg-uri-scheme-reg">
+      <reference anchor="appsawg-uri-scheme-reg">
         <front>
           <title>Guidelines and Registration Procedures for New URI Schemes</title>
 
@@ -309,12 +303,12 @@
             <organization>Adobe</organization>
           </author>
 
-          <date year="2014" />
+          <date year="2014" month="October"/>
         </front>
+        <seriesInfo name="Internet-Draft" value="draft-ietf-appsawg-uri-scheme-reg-04"/>
       </reference>
 
-      <reference anchor="iri-3987bis"
-                 target="https://tools.ietf.org/html/draft-ietf-iri-3987bis-13">
+      <reference anchor="iri-3987bis">
         <front>
           <title>Internationalized Resource Identifiers (IRIs)</title>
 
@@ -330,12 +324,12 @@
             <organization>Adobe</organization>
           </author>
 
-          <date year="2012" />
+          <date year="2012" month="October"/>
         </front>
+        <seriesInfo name="Internet-Draft" value="draft-ietf-iri-3987bis-13"/>
       </reference>
 
-      <reference anchor="iri-comparison"
-                 target="https://tools.ietf.org/html/draft-ietf-iri-comparison">
+      <reference anchor="iri-comparison">
         <front>
           <title>Comparison, Equivalence and Canonicalization of
           Internationalized Resource Identifiers</title>
@@ -348,12 +342,12 @@
             <organization>Aoyama Gakuin University</organization>
           </author>
 
-          <date year="2012" />
+          <date year="2012" month="October"/>
         </front>
+        <seriesInfo name="Internet-Draft" value="draft-ietf-iri-comparison-02"/>
       </reference>
 
-      <reference anchor="iri-bidi-guidelines"
-                 target="https://tools.ietf.org/html/draft-ietf-iri-bidi-guidelines">
+      <reference anchor="iri-bidi-guidelines">
         <front>
           <title>Guidelines for Internationalized Resource Identifiers with
           Bi-directional Characters (Bidi IRIs)</title>
@@ -370,12 +364,12 @@
             <organization>Diwan Software Limited</organization>
           </author>
 
-          <date year="2012" />
+          <date year="2012" month="October"/>
         </front>
+        <seriesInfo name="Internet-Draft" value="draft-ietf-iri-bidi-guidelines-03"/>
       </reference>
 
-      <reference anchor="kerwin-file-scheme"
-                 target="https://tools.ietf.org/html/draft-kerwin-file-scheme">
+      <reference anchor="kerwin-file-scheme">
         <front>
           <title>The file URI Scheme</title>
 
@@ -383,8 +377,9 @@
             <organization>QUT</organization>
           </author>
 
-          <date year="2014" />
+          <date year="2014" month="September"/>
         </front>
+        <seriesInfo name="Internet-Draft" value="draft-kerwin-file-scheme-13"/>
       </reference>
 
       <reference anchor="tantek-slice"
@@ -406,11 +401,9 @@
           <title>URL Living Standard</title>
 
           <author initials="A.K." surname="van Kesteren">
-            <organization></organization>
           </author>
 
           <author initials="S.R." surname="Ruby">
-            <organization></organization>
           </author>
 
           <date year="2014" />
@@ -423,11 +416,9 @@
           <title>Unicode IDNA Compatibility Processing</title>
 
           <author initials="M.D." surname="Davis">
-            <organization></organization>
           </author>
 
           <author initials="M.S." surname="Suignard">
-            <organization></organization>
           </author>
 
           <date year="2014" />
@@ -440,11 +431,9 @@
           <title>URL Working Draft</title>
 
           <author initials="A.K." surname="van Kesteren">
-            <organization></organization>
           </author>
 
           <author initials="S.R." surname="Ruby">
-            <organization></organization>
           </author>
 
           <date year="2014" />
@@ -483,11 +472,9 @@
           <title>URL Standard</title>
 
           <author initials="A.K." surname="van Kesteren">
-            <organization></organization>
           </author>
 
           <author initials="S.R." surname="Ruby">
-            <organization></organization>
           </author>
 
           <date year="2014" />
