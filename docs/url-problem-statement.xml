@@ -73,7 +73,7 @@
   </front>
 
   <middle>
-    <section title="Brief History of URL standards">
+    <section title="Brief History of URL Standards">
       <t>This section contains a very compressed history of URL standards,
         in sufficient detail to set some context.
       </t>
@@ -82,27 +82,30 @@
       in 1994. (That spec contains more background material.)
       It defined URLs as ASCII only. Although it was
       quickly determined that it was desirable to allow non-ASCII characters,
-      shoehorning utf-8 into ASCII-only systems was unacceptable; at the time
+      shoehorning UTF-8 into ASCII-only systems was unacceptable; at the time
       Unicode was not so widely deployed.  The tack
       was taken to leave "URI" alone and define a new protocol element, "IRI";
       <xref target="RFC3987"/> was published in 2005 (in sync with the 
-      <xref target="RFC3986"/> update to the URI definition).</t>
+      <xref target="RFC3986"/> update to the URI definition).
+      <!-- we probably should mention RFC2396 which separated the generic syntax from concrete scheme definitions -->
+      </t>
 
       <t>The IRI-to-URI transformation specified in <xref target="RFC3987"/> had
       options; it wasn't a deterministic path. The URI-to-IRI transformation was
       also heuristic, since there was no guarantee that %xx-encoded bytes in the
-      URI were actually meant to be %xx percent-hex-encoded bytes of a utf8
+      URI were actually meant to be %xx percent-hex-encoded bytes of a UTF-8
       encoding of a Unicode string.</t>
 
       <t>To address issues and to fix URL for HTML5, a new IRI working group
       &lt;<eref target="https://tools.ietf.org/wg/iri/charters">https://tools.ietf.org/wg/iri/charters</eref>&gt;
-      was established in IETF in 2009.  Despite years of development, 
+      was established in the IETF in 2009.  Despite years of development, 
       the IRI group was closed in 2014, with the consolation
       that the documents that were being developed in the IRI working group
       could be updated as individual submissions or within the "applications
       area" working group.  In particular, one of the IRI working group items
-      was to update <xref target="appsawg-uri-scheme-reg"/>,
-      which is currently under development in IETF's application area.</t>
+      was to update <xref target="RFC4395"/>,
+      which is currently under development in IETF's application area
+      (see <xref target="appsawg-uri-scheme-reg"/>).</t>
       <!--
       Examples of feedback:
         http://lists.w3.org/Archives/Public/public-iri/2009Aug/0000.html
@@ -112,7 +115,7 @@
       <t>Independently, the HTML specifications in the WHATWG and W3C redefined
       "URL" in an attempt to match what some of the browsers were doing. This
       definition was moved out into the "URL - Living Standard"
-      <xref target="URL-LS"/> .</t>
+      <xref target="URL-LS"/>.</t>
 
       <t>The world has also moved on. ICANN has approved non-ASCII top level
       domains, but IDNA specs (<xref target="RFC3490"/> and <xref target="RFC5895"/>)
@@ -195,7 +198,7 @@
     <section title="Problem Statements">
       <t>The main problem is conflicting specifications that overlap
       but don't match each other.</t>
-      <t>Additionally, the following are issues that need to be resolves to
+      <t>Additionally, the following are issues that need to be resolved to
         make URL processing unambiguous and stable.</t>
 
       <t><list style="symbols">
@@ -235,7 +238,7 @@
         <t>Change the <xref target="URL-LS"/> goals to only obsolete
           specifications listed above that are not updated.  Presuming that
           <xref target="RFC3986"/> is updated, explicitly state that 
-          canonical URLs (i.e., the outout of the URL parser) not only
+          canonical URLs (i.e., the output of the URL parser) not only
           round trip, but also are valid URIs.</t>
         <t>Reconcile how <xref target="appsawg-uri-scheme-reg"/> and
           <xref target="URL-LS"/> handle currently unknown schemes,
@@ -245,7 +248,7 @@
           <xref target="appsawg-uri-scheme-reg"/> is how you register
           schemes.</t>
         <t>Have the W3C adopt <xref target="url-workmode"/>.</t>
-        <t>Other than responsing to any feedback that may be provided,
+        <t>Other than responding to any feedback that may be provided,
           no changes to any Unicode Consortium product is required.</t>
       </list></t>
     </section>
@@ -282,6 +285,7 @@
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3490.xml"?>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3986.xml"?>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3987.xml"?>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.4395.xml"?>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.5895.xml"?>
 
       <reference anchor="appsawg-uri-scheme-reg">
