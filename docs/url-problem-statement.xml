@@ -240,6 +240,10 @@
           <xref target="RFC3986"/> is updated, explicitly state that 
           canonical URLs (i.e., the output of the URL parser) not only
           round trip, but also are valid URIs.</t>
+        <t>Update and incorporate (or reference) the content currently
+          present in <xref target="tantek-slice"/>, probably as an appendix
+          to <xref target="URL-LS"/>, so that readers will understand
+          what terms are in use and how they map.</t>
         <t>Reconcile how <xref target="appsawg-uri-scheme-reg"/> and
           <xref target="URL-LS"/> handle currently unknown schemes,
           update <xref target="appsawg-uri-scheme-reg"/> to state that
