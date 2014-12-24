@@ -919,6 +919,7 @@ on <a>URL</a>'s <a title='URL scheme'>scheme</a>:
 interface URL {
   static USVString domainToASCII(USVString domain);
   static USVString domainToUnicode(USVString domain);
+  static boolean inScope(USVString scopeURL, USVString targetURL);
 };
 URL implements URLUtils;
 
@@ -1174,6 +1175,20 @@ static method, when invoked, must run these steps:
 <p class=XXX>Add domainToUI() which follows the UA conventions for when to use the Unicode
 representation?
 
+<p>The 
+<dfn method dfn-for=URL><code>inScope(<var>scopeURL</var>,<var>targetURL</var>)</code></dfn>
+static method, when invoked, must run these steps:
+
+<ol>
+   <li>Let <var>scope</var> be a new URL using <var>scopeURL</var> as input.</li>
+   <li>Let <var>target</var> be a new URL using <var>targetURL</var> as input.</li>
+   <li>If during construction <var>scope<var> or <var>target</var> raises an exception <var>e</var>, 
+       throw <var>e</var> and terminate these steps.</li>  
+   <li>If <var>scope</var> is not same origin as <var>target</var>, return false.</li>
+   <li>If <var>target</var>'s <code><a attribute for=URLUtils>pathname</a></code> starts with 
+       <var>scope</var>'s <code><a attribute for=URLUtils>pathname</a></code>, return true.</li>
+   <li>Otherwise, return false.</li>
+</ol>
 
 <h3 id=urlutils-and-urlutilsreadonly-members><code><a interface>URLUtils</a></code> and <code><a interface>URLUtilsReadOnly</a></code> members</h3>
 
