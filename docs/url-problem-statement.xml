@@ -112,15 +112,19 @@
       </t>
 
       <t>The first standards-track specification for URLs was <xref target="RFC1738"/>
-      in 1994. (That spec contains more background material.)
-      It defined URLs as ASCII only. Although it was
-      quickly determined that it was desirable to allow non-ASCII characters,
-      shoehorning UTF-8 into ASCII-only systems was unacceptable; at the time
-      Unicode was not so widely deployed.  The tack
-      was taken to leave "URI" alone and define a new protocol element, "IRI";
-      <xref target="RFC3987"/> was published in 2005 (in sync with the 
-      <xref target="RFC3986"/> update to the URI definition).
-      <!-- we probably should mention RFC2396 which separated the generic syntax from concrete scheme definitions -->
+      in 1994. (That spec contains more background material.) It defined URLs
+      as ASCII only.  <xref target="RFC2396"/> later separated the generic
+      syntax from concrete scheme definitions which would be defined in
+      separate RFCs.  Many of those scheme definitions turned out not to get
+      the attention that they needed.</t>
+
+      <t>When it became clear that it was desirable to allow non-ASCII
+      characters, it was widely feared that support for UTF-8 by ASCII-only
+      systems would turn out to be problematic.  The tack was therefore taken
+      to leave "URI" alone and define a new protocol element,
+      "IRI"; <xref target="RFC3987"/> was published in 2005 (in sync with the
+      <xref target="RFC3986"/> update to the URI definition).  This also
+      turned out not to get the attention it needed.
       </t>
 
       <t>The IRI-to-URI transformation specified in <xref target="RFC3987"/> had
@@ -129,8 +133,8 @@
       URI were actually meant to be %xx percent-hex-encoded bytes of a UTF-8
       encoding of a Unicode string.</t>
 
-      <t>To address issues and to fix URL for HTML5, a new IRI working group
-      &lt;<eref target="https://tools.ietf.org/wg/iri/charters">https://tools.ietf.org/wg/iri/charters</eref>&gt;
+      <t>To address issues and to fix URL for HTML5, a new
+      <eref target="https://tools.ietf.org/wg/iri/charters">IRI working group</eref>
       was established in the IETF in 2009.  Despite years of development, 
       the IRI group was closed in 2014, with the consolation
       that the documents that were being developed in the IRI working group
@@ -147,7 +151,7 @@
 
       <t>Independently, the HTML specifications in the WHATWG and W3C redefined
       "URL" in an attempt to match what some of the browsers were doing. This
-      definition was moved out into the "URL - Living Standard"
+      definition was later moved out into the "URL - Living Standard"
       <xref target="URL-LS"/>.</t>
 
       <t>When W3C produced <eref target="http://www.w3.org/TR/html5/">the HTML5
@@ -204,12 +208,14 @@
 	
 	<t>The <eref target="http://datatracker.ietf.org/wg/urnbis/charter/">URNBis
 	working group</eref> has been working to update the definitions
-	of URNs, but has difficulty with some of the wording in RFC 3986.
-	In particular, <eref target="http://datatracker.ietf.org/doc/draft-ietf-urnbis-semantics-clarif/"/> updates RFC3986.
+	of URNs, but has difficulty with some of the wording in
+        <xref target="RFC3986"/>.  In particular, 
+        <eref target="http://datatracker.ietf.org/doc/draft-ietf-urnbis-semantics-clarif/"/>
+        updates <xref target="RFC3986"/>.
         </t>
 	
 	<t>The web security working group developed
-	RFC 6454 ("The Web Origin Concept"), which 
+	<xref target="RFC6454"/> ("The Web Origin Concept"), which 
 	<xref target="URL-LS"/> redefines. Updates
 	in the IETF were abandoned.
 	</t>
@@ -221,7 +227,7 @@
         It primarily focuses on specifying what is important
         for browsers.   The means by which new schemes might be
         registered is not yet defined.  This work
-        is based on <xref target="UTS-46"/>, and is intented to obsolete both
+        is based on <xref target="UTS-46"/>, and is intended to obsolete both
         <xref target="RFC3986"/> and <xref target="RFC3987"/>.</t>
       </section>
 
@@ -234,7 +240,7 @@
         relationship.</t>
 
 	<t>The W3C TAG developed
-	<eref target="http://www.w3.org/TR//fragid-best-practices/">
+	<eref target="http://www.w3.org/TR/fragid-best-practices/">
 	  Best Practices for Fragment Identifiers and Media Type Definitions
 	</eref>, which points out several problems with the definitions
 	for the 'fragment' part of URLs.  The TAG is working to
@@ -262,9 +268,11 @@
       </section>
 
       <section title="Unicode Consortium">
-        <t><xref target="UTS-46"/> defines parameterized functions for
-        mapping domain names.  <xref target="URL-LS"/> builds upon this work,
-        specifying particular values to be used for these parameters.</t>
+        <t><xref target="UTS-46"/> defines parameterized functions for mapping
+        domain names.  <xref target="URL-LS"/> builds upon this work, specifying
+        particular values to be used for these parameters.  The Unicode
+        Consortium plans to adapt UTS-46 as registries (e.g. DENIC) move from
+        IDNA2003 to IDNA2008.</t>
       </section>
     </section>
 
@@ -303,12 +311,12 @@
           out of date, incomplete, or don't correspond to current practice,
           but updating their definitions is unclear. This includes "file:",
           for which there is a current effort, but there are others which
-          need review (including 'ftp:', 'data').
+          need review (including 'ftp:', 'data:').
         </t>
       </list></t>
     </section>
 
-    <section anchor="nextsteps" title="Potential Solution">
+    <section anchor="nextsteps" title="Potential Solutions">
       <t>Many of the problem above require some cross-organizational collaboration.
       This section outlines alternatives and possible next steps.
       REVIEWERS: Neccessary? Sufficient? What are we missing, what
@@ -316,12 +324,12 @@
       </t>
       <section title="Leave, Update or Obsolete RFC 3986 (URI)">
 	<t>At various times, many have called for replacing
-	the IETF URI standard RFC 3986, or updating it. How
+	the IETF URI standard <xref target="RFC3986"/>, or updating it. How
 	to approach this is controversal, but at a minimum
 	the following are needed:
 	<list style="symbols">
-	  <t>Make it clear that ASCII-only URIs (as now defined
-	  by RFC 3986) are not what is mainly used on the web. </t>
+          <t>Make it clear that ASCII-only URIs (as now defined by
+          <xref target="RFC3986"/>) are not what is mainly used on the web.</t>
 	  <t>Updates for URN.</t>
 	  <t>Updates for fragment identifier semantics.</t>
 	  <t>Note terminology issue and resolution.</t>
@@ -330,9 +338,9 @@
       </section>
 
       <section title="Obsolete RFC 3987 (IRI)"> <t>
-	After insuring that topics covered in RFC 3987 are
+	After insuring that topics covered in <xref target="RFC3987"/> are
 	also covered by the W3C URL recommendation, then
-	mark 3987 as obsolete with a short RFC noting
+	mark <xref target="RFC3987"/> as obsolete with a short RFC noting
 	the conditions laid out in this document.
       </t>
       </section>
@@ -346,7 +354,7 @@
 	<t> 
 	  Coordinate 'file:' syntax in <xref target="URL-LS"/>
 	  and <xref target="kerwin-file-scheme"/>, possibly
-	  moving the file: Partr of URL-LS into a separate
+	  moving the file: part of URL-LS into a separate
 	  document.
 	</t>
       </section>
@@ -378,8 +386,9 @@
           <xref target="appsawg-uri-scheme-reg"/> is how you register
           schemes.</t>
         <t>Have the W3C adopt <xref target="url-workmode"/>.</t>
-        <t>Other than responding to any feedback that may be provided,
-          no changes to any Unicode Consortium product is required.</t>
+        <t>Other than keeping on top of <xref target="UTS-46"/> and responding
+          to any feedback that may be provided, no changes to any Unicode
+          Consortium product is required.</t>
       </list></t>
 
       </section>
@@ -415,11 +424,13 @@
     <references title="Informative References">
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.1738.xml"?>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2396.xml"?>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3490.xml"?>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3986.xml"?>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.3987.xml"?>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.4395.xml"?>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.5895.xml"?>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.6454.xml"?>
 
       <reference anchor="appsawg-uri-scheme-reg">
         <front>
