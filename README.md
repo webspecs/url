@@ -22,6 +22,7 @@ Contents
 ---
 
    * Specification.  Source is contained in [url.src](url.src) and [url.pegjs](url.pegjs).
+   * [IETF document(s)](docs#readme). (Source for) IETF Internet Draft laying out problems and some solutions.
    * [Reference implementation](reference-implementation#readme)
      in JavaScript.  This directory also contains web pages that demonstate
      live parsing of URLs entered in an HTML input field.  The latest version is deployed live:
@@ -50,3 +51,6 @@ Running `make` in the `evaluate` directory will capture test results for a
 number of non-web browser URL/URI implementations.  See the
 [Makefile](evaluate/Makefile) for a
 list of prerequisites.
+
+Running `make` in the `docs` directory will build the Internet
+Draft(s) in HTML and plain text, using xml2rfc.
