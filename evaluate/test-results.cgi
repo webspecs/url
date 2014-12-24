@@ -9,6 +9,7 @@ _html do
   _title 'URL test results'
   _link rel: 'stylesheet', href: '../bootstrap.min.css'
   _link rel: 'stylesheet', href: '../analysis.css'
+  _script src: '../rfc3986.js'
   _style %{
     th, td {padding-left: 1em}
     td.fail, .fail td, legend .fail {background-color: #FFFF00}
@@ -37,11 +38,12 @@ _html do
       _select_.baseline!
       _ ' as a baseline, showing '
       _select_.filter! do
-        _option 'all'
-        _option 'only valid', value: 'valid'
-        _option 'only invalid', value: 'invalid'
+        _option 'all inputs'
+        _option 'only valid URI references', value: 'valid'
+        _option 'only invalid URI references', value: 'invalid'
+        _option 'only conforming URLs', value: 'conforming'
+        _option 'only nonconforming URLs', value: 'nonconforming'
       end
-      _ ' inputs'
     end
 
     _table_ do
@@ -134,7 +136,7 @@ _html do
 
     baseline = 'refimpl'
     domain = agents
-    filter = 'all'
+    filter = 'all inputs'
 
     PROPERTIES = %w(href protocol hostname port username password pathname
       search hash)
@@ -216,6 +218,10 @@ _html do
         link = link - 1 while link >= 0 and tests[link].invalid
       elsif filter == 'invalid'
         link = link - 1 while link >= 0 and tests[link].valid
+      elsif filter == 'conforming'
+        link = link - 1 while link >= 0 and tests[link].nonconforming
+      elsif filter == 'nonconforming'
+        link = link - 1 while link >= 0 and tests[link].conforming
       end
 
       if link >= 0
@@ -230,6 +236,10 @@ _html do
         link = link + 1 while link <= tests.length-1 and tests[link].invalid
       elsif filter == 'invalid'
         link = link + 1 while link < tests.length-1 and tests[link].valid
+      elsif filter == 'conforming'
+        link = link + 1 while link <= tests.length-1 and tests[link].nonconforming
+      elsif filter == 'nonconforming'
+        link = link + 1 while link < tests.length-1 and tests[link].conforming
       end
 
       if link <= tests.length - 1
@@ -366,7 +376,7 @@ _html do
       query = []
       query << "select=#{state.select}" unless state.select == 'all'
       query << "baseline=#{state.baseline}" unless state.baseline == 'refimpl'
-      query << "filter=#{state.filter}" unless state.filter == 'all'
+      query << "filter=#{state.filter}" unless state.filter == 'all inputs'
       state.subpath = index || '.'
       state.subpath = "#{state.subpath}?#{query.join('&')}" if query.length > 0
 
@@ -391,7 +401,7 @@ _html do
       selectBaseline.value = event.state.baseline || 'refimpl'
       dispatchEvent(selectBaseline, 'change')
 
-      selectFilter.value = event.state.filter || 'all'
+      selectFilter.value = event.state.filter || 'all inputs'
       dispatchEvent(selectFilter, 'change')
 
       navigate(event.state ? event.state.index : '')
@@ -430,13 +440,21 @@ _html do
           fetchAgents(list, index)
         end
       else
+        rfc3986 = RFC3986.new()
+
         tests.each do |test|
           if test.results.refimpl
             if test.results.refimpl.exception
-              test.invalid = true
+              test.nonconforming = true
             else
-              test.valid = true
+              test.conforming = true
             end
+          end
+
+          if rfc3986.isURIReference(test.input)
+            test.valid = true
+          else
+            test.invalid = true
           end
         end
 
@@ -500,7 +518,11 @@ _html do
         trs = document.querySelectorAll('#index tbody tr')
         for i in 0...trs.length
           tr = trs[i]
-          if filter == 'valid' and tests[i].invalid
+          if filter == 'conforming' and tests[i].nonconforming
+            tr.style.display = 'none'
+          elsif filter == 'nonconforming' and tests[i].conforming
+            tr.style.display = 'none'
+          elsif filter == 'valid' and tests[i].invalid
             tr.style.display = 'none'
           elsif filter == 'invalid' and tests[i].valid
             tr.style.display = 'none'

@@ -5,6 +5,7 @@
 docs/url-problem-statement.html
 docs/url-problem-statement.txt
 
+evaluate/rfc3986.js
 evaluate/Cargo.lock
 evaluate/*.jar
 evaluate/target/

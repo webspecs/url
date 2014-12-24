@@ -4,7 +4,7 @@
 #    cpan URI JSON
 #    clean make in parent directory
 
-all: useragent-results/index testdata
+all: useragent-results/index testdata rfc3986.js
 
 testdata: \
 	urlsettest.json
@@ -30,6 +30,7 @@ softerror: softerror.rb \
 
 clean:
 	rm -rf target *.class Cargo.lock urltestdata.json urlsettest.json \
+	rfc9866.js \
 	useragent-results/index \
 	useragent-results/addressable \
 	useragent-results/galimatias \
@@ -93,3 +94,6 @@ galimatias-0.2.0.jar:
 
 json-20140107.jar:
 	wget http://central.maven.org/maven2/org/json/json/20140107/json-20140107.jar
+
+rfc3986.js:
+	wget http://vird2002.s8.xrea.com/javascript/rfc3986.js
