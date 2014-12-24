@@ -27,7 +27,7 @@ def expression(node, indent, output)
       expression(alternative, indent+2, output)
     end
   elsif node['type'] == 'rule_ref'
-    output.puts ''.ljust(indent) + 'N: ' + hyphenate(node['name'])
+    output.puts ''.ljust(indent) + 'N: rule-' + hyphenate(node['name'])
   elsif node['type'] == 'literal'
     output.puts ''.ljust(indent) + 'T: ' + node['value']
   elsif node['type'] == 'any'
@@ -78,7 +78,7 @@ prose = Hash[grammar.scan(/^\/\*\n?(.*?)\*\/\s*(\w+)/m).map { |text, name|
 
   indent = text.split("\n").map {|line| line[/^ */]}.reject(&:empty?).min
   text.gsub!(/@([A-Z][-\w]+)'?/) do
-    "<code class=grammar-rule><a href=##{hyphenate $1}>#{hyphenate $1}</a></code>"
+    "<code class=grammar-rule><a href=#rule-#{hyphenate $1}>#{hyphenate $1}</a></code>"
   end
   text.gsub!(/\$([a-z](\.\w|\w)*)/) do
     "<code>#{$1}</code>"
@@ -110,7 +110,7 @@ rules.each do |rule|
   name = hyphenate(rule['name'])
   output.puts header[rule['name']] if header[rule['name']]
   output.puts
-  output.puts "<h4 id=#{name} class=no-toc>#{name}(input)</h4>"
+  output.puts "<h4 id=rule-#{name} class=no-toc>#{name}(input)</h4>"
 
   returns = prose[rule['name']].slice! /returns: .*?\s*\n\n/m
 

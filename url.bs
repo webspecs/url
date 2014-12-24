@@ -6,6 +6,7 @@ Shortname: url
 Status: LS
 No Editor: true
 Abstract: The URL Standard defines URLs, domains, IP addresses, the <code title>application/x-www-form-urlencoded</code> format, and their APIs.
+Indent: 2
 </pre>
 
 <style>
@@ -491,7 +492,7 @@ the definitions provided in the prose modifies these parsing algorithms in
 important ways including returning failure and early termination.
 
 
-<h4 id=url class=no-toc>url(input)</h4>
+<h4 id=rule-url class=no-toc>url(input)</h4>
 
 returns: { 
   <a href="#concept-url-scheme">scheme</a>,
@@ -509,33 +510,33 @@ returns: {
 <pre class=railroad>
 Sequence:
   Choice:
-    N: file-url
-    N: non-relative-url
-    N: relative-url
+    N: rule-file-url
+    N: rule-non-relative-url
+    N: rule-relative-url
   Optional:
     Sequence:
       T: ?
-      N: query
+      N: rule-query
   Optional:
     Sequence:
       T: #
-      N: fragment
+      N: rule-fragment
 </pre>
 
 <ol>
 <li><a>Parse <code>input</code></a> according to the above railroad diagram.
-<li>Let <code>result</code> be the <a>value of</a> <code class=grammar-rule><a href=#file-url>file-url</a></code>, <code class=grammar-rule><a href=#non-relative-url>non-relative-url</a></code>,
-    or <code class=grammar-rule><a href=#relative-url>relative-url</a></code> depending on which <a>is present</a>.
-<li>If <code class=grammar-rule><a href=#query>query</a></code> <a>is present</a>, set <code>result.query</code> to the <a>value of</a>
-    <code class=grammar-rule><a href=#query>query</a></code>.
-<li>If <code class=grammar-rule><a href=#fragment>fragment</a></code> <a>is present</a>, set <code>result.fragment</code> to the 
-    <a>value of</a> <code class=grammar-rule><a href=#fragment>fragment</a></code>.
+<li>Let <code>result</code> be the <a>value of</a> <code class=grammar-rule><a href=#rule-file-url>file-url</a></code>, <code class=grammar-rule><a href=#rule-non-relative-url>non-relative-url</a></code>,
+    or <code class=grammar-rule><a href=#rule-relative-url>relative-url</a></code> depending on which <a>is present</a>.
+<li>If <code class=grammar-rule><a href=#rule-query>query</a></code> <a>is present</a>, set <code>result.query</code> to the <a>value of</a>
+    <code class=grammar-rule><a href=#rule-query>query</a></code>.
+<li>If <code class=grammar-rule><a href=#rule-fragment>fragment</a></code> <a>is present</a>, set <code>result.fragment</code> to the 
+    <a>value of</a> <code class=grammar-rule><a href=#rule-fragment>fragment</a></code>.
 <li>If <code>result.scheme</code> has a <a>default port</a>, and if <code>result.port</code> is
     equal to that default, then delete the <code>port</code> property from <code>result</code>.
 <li>Return <code>result</code>.
 </ol>
 
-<h4 id=file-url class=no-toc>file-url(input)</h4>
+<h4 id=rule-file-url class=no-toc>file-url(input)</h4>
 
 returns: { 
    <a href="#concept-url-scheme">scheme</a>,
@@ -557,7 +558,7 @@ Choice:
       Choice:
         T: \
         T: /
-    N: path
+    N: rule-path
   Sequence:
     ZeroOrMore:
       T: /
@@ -565,7 +566,7 @@ Choice:
     T: |
     Optional:
       T: /
-    N: path
+    N: rule-path
   Sequence:
     T: file
     T: :
@@ -573,10 +574,10 @@ Choice:
       Sequence:
         T: /
         T: /
-        N: host
+        N: rule-host
     ZeroOrMore:
       T: /
-    N: path
+    N: rule-path
 </pre>
 
  <em>"<code><code>file</code></code>" is to be matched case insensitively.</em>
@@ -593,7 +594,7 @@ Choice:
 
    <ol>
    <li>Set <code>result.scheme</code> to "<code>file</code>".
-   <li>Set <code>result.path</code> to the <a>value of</a> <code class=grammar-rule><a href=#path>path</a></code>.
+   <li>Set <code>result.path</code> to the <a>value of</a> <code class=grammar-rule><a href=#rule-path>path</a></code>.
    <li>Remove the first element from <code>result.path</code> if it is an empty
      string and if there is a second element which has a non-empty value.
    <li>Construct a string using the <a>ASCII alpha</a>
@@ -606,12 +607,12 @@ Choice:
 
    <ol>
    <li>Set <code>result.scheme</code> to "<code>file</code>".
-   <li>If the <code class=grammar-rule><a href=#host>host</a></code> <a>is present</a>, set <code>result.host</code>
-     to the <a>value of</a> <code class=grammar-rule><a href=#host>host</a></code>.
-   <li>If the <code class=grammar-rule><a href=#host>host</a></code> <a title='is present'>is not present</a> and no slashes
-     precede the <code class=grammar-rule><a href=#path>path</a></code> in the input, then prepend <code>base.path</code>
+   <li>If the <code class=grammar-rule><a href=#rule-host>host</a></code> <a>is present</a>, set <code>result.host</code>
+     to the <a>value of</a> <code class=grammar-rule><a href=#rule-host>host</a></code>.
+   <li>If the <code class=grammar-rule><a href=#rule-host>host</a></code> <a title='is present'>is not present</a> and no slashes
+     precede the <code class=grammar-rule><a href=#rule-path>path</a></code> in the input, then prepend <code>base.path</code>
      minus the last element to the <code>result.path</code>.
-   <li>Set <code>result.path</code> to the <a>value of</a> <code class=grammar-rule><a href=#path>path</a></code>.
+   <li>Set <code>result.path</code> to the <a>value of</a> <code class=grammar-rule><a href=#rule-path>path</a></code>.
    </ol>
 
  <li><div class=example><code>file:/example.com/</code></div>
@@ -619,7 +620,7 @@ Choice:
    <ol>
    <li>Indicate a <a>conformance error</a>.
    <li>Set <code>result.scheme</code> to "<code>file</code>".
-   <li>Set <code>result.path</code> to the <a>value of</a> <code class=grammar-rule><a href=#path>path</a></code>.
+   <li>Set <code>result.path</code> to the <a>value of</a> <code class=grammar-rule><a href=#rule-path>path</a></code>.
    <li>Remove the first element from <code>result.path</code> if it is an empty
      string and if there is a second element which has a non-empty value.
    <li>Construct a string consisting of the code point following
@@ -645,7 +646,7 @@ and
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=23717">bug <code>23717</code></a>
 suggest less drastic changes.  
 
-<h4 id=non-relative-url class=no-toc>non-relative-url(input)</h4>
+<h4 id=rule-non-relative-url class=no-toc>non-relative-url(input)</h4>
 
 returns: { 
    <a href="#concept-url-scheme">scheme</a>,
@@ -655,23 +656,23 @@ returns: {
 
 <pre class=railroad>
 Sequence:
-  N: scheme
+  N: rule-scheme
   T: :
-  N: scheme-data
+  N: rule-scheme-data
 </pre>
 
  <div class=example><code>javascript:alert("Hello, world!");</code></div>
 
 <ol>
 <li><a>Parse <code>input</code></a> according to the above railroad diagram.
-<li>If the <a>value of</a> <code class=grammar-rule><a href=#scheme>scheme</a></code> does not
+<li>If the <a>value of</a> <code class=grammar-rule><a href=#rule-scheme>scheme</a></code> does not
 match any <a>relative scheme</a> then return failure.
 
 <li>Set <code>encoding override</code> to "<code>utf-<code>8</code></code>".
 
 <li>Initialize <code>result</code> to be a JSON object with <code>scheme</code>
-set to be the result returned by <code class=grammar-rule><a href=#scheme>scheme</a></code>, and
-<code>schemeData</code> set to the <a>value of</a> <code class=grammar-rule><a href=#scheme-data>scheme-data</a></code>.
+set to be the result returned by <code class=grammar-rule><a href=#rule-scheme>scheme</a></code>, and
+<code>schemeData</code> set to the <a>value of</a> <code class=grammar-rule><a href=#rule-scheme-data>scheme-data</a></code>.
 <li>Return <code>result</code>.
 </ol>
 
@@ -683,7 +684,7 @@ may change how encoding override is handled.
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27233">bug <code>27233</code></a>
 may add support for relative URLs for unknown schemes.
 
-<h4 id=relative-url class=no-toc>relative-url(input)</h4>
+<h4 id=rule-relative-url class=no-toc>relative-url(input)</h4>
 
 returns: { 
    <a href="#concept-url-scheme">scheme</a>,
@@ -700,7 +701,7 @@ Choice:
   Sequence:
     Optional:
       Sequence:
-        N: non-file-relative-scheme
+        N: rule-non-file-relative-scheme
         T: :
     Choice:
       T: /
@@ -708,32 +709,32 @@ Choice:
     Choice:
       T: /
       T: \
-    N: authority
+    N: rule-authority
     Optional:
       Sequence:
         Choice:
           T: /
           T: \
-        N: path
+        N: rule-path
   Sequence:
-    N: non-file-relative-scheme
+    N: rule-non-file-relative-scheme
     T: :
     Optional:
       Choice:
         T: \
         T: /
-    N: authority
+    N: rule-authority
     Optional:
       Sequence:
         Choice:
           T: /
           T: \
-        N: path
+        N: rule-path
   Sequence:
-    N: non-file-relative-scheme
+    N: rule-non-file-relative-scheme
     T: :
-    N: path
-  N: path
+    N: rule-path
+  N: rule-path
 </pre>
 
   <ol>
@@ -750,16 +751,16 @@ Choice:
    immediately follows the first colon in the input, indicate a
    <a>conformance error</a>.
 
-   <li>Let <code>result</code> be the <a>value of</a> <code class=grammar-rule><a href=#authority>authority</a></code>.
+   <li>Let <code>result</code> be the <a>value of</a> <code class=grammar-rule><a href=#rule-authority>authority</a></code>.
 
-   <li>If <code class=grammar-rule><a href=#non-file-relative-scheme>non-file-relative-scheme</a></code> <a>is present</a> in the input, then
-   set <code>result.scheme</code> to the <a>value of</a> <code class=grammar-rule><a href=#non-file-relative-scheme>non-file-relative-scheme</a></code>.
+   <li>If <code class=grammar-rule><a href=#rule-non-file-relative-scheme>non-file-relative-scheme</a></code> <a>is present</a> in the input, then
+   set <code>result.scheme</code> to the <a>value of</a> <code class=grammar-rule><a href=#rule-non-file-relative-scheme>non-file-relative-scheme</a></code>.
 
-   <li>If <code class=grammar-rule><a href=#non-file-relative-scheme>non-file-relative-scheme</a></code> <a title='is present'>is not present</a>,
+   <li>If <code class=grammar-rule><a href=#rule-non-file-relative-scheme>non-file-relative-scheme</a></code> <a title='is present'>is not present</a>,
    then set <code>result.scheme</code> to the value of <code>base.scheme</code>.
 
-   <li>If <code class=grammar-rule><a href=#path>path</a></code> <a>is present</a>, set <code>result.path</code> to the <a>value of</a>
-   <code class=grammar-rule><a href=#path>path</a></code>.
+   <li>If <code class=grammar-rule><a href=#rule-path>path</a></code> <a>is present</a>, set <code>result.path</code> to the <a>value of</a>
+   <code class=grammar-rule><a href=#rule-path>path</a></code>.
    </ol>
 
  <li><div class=example><code>ftp:/example.com/</code> parsed using a base of
@@ -767,19 +768,19 @@ Choice:
 
   <ol>
 
-  <li>If the <a>value of</a> <code class=grammar-rule><a href=#scheme>scheme</a></code> equals <code>base.scheme</code> then return failure.
+  <li>If the <a>value of</a> <code class=grammar-rule><a href=#rule-scheme>scheme</a></code> equals <code>base.scheme</code> then return failure.
 
   <li>Indicate a <a>conformance error</a>.
 
-  <li>Let <code>result</code> be the <a>value of</a> <code class=grammar-rule><a href=#authority>authority</a></code>.
+  <li>Let <code>result</code> be the <a>value of</a> <code class=grammar-rule><a href=#rule-authority>authority</a></code>.
 
-  <li>Set <code>result.scheme</code> to the <a>value of</a> <code class=grammar-rule><a href=#non-file-relative-scheme>non-file-relative-scheme</a></code>.
+  <li>Set <code>result.scheme</code> to the <a>value of</a> <code class=grammar-rule><a href=#rule-non-file-relative-scheme>non-file-relative-scheme</a></code>.
 
   <li>If <code>result.host</code> is either an empty string or contains a
   colon, then terminate parsing with a <a>parse exception</a>.
 
-  <li>If <code class=grammar-rule><a href=#path>path</a></code> <a>is present</a>, set <code>result.path</code> to the <a>value of</a>
-  <code class=grammar-rule><a href=#path>path</a></code>.
+  <li>If <code class=grammar-rule><a href=#rule-path>path</a></code> <a>is present</a>, set <code>result.path</code> to the <a>value of</a>
+  <code class=grammar-rule><a href=#rule-path>path</a></code>.
   </ol>
 
  <li><div class=example><code>http:foo/bar</code></div>
@@ -789,11 +790,11 @@ Choice:
 
   <li>Let <code>result</code> be an empty object.
 
-   <li>Set <code>result.scheme</code> to the <a>value of</a> <code class=grammar-rule><a href=#non-file-relative-scheme>non-file-relative-scheme</a></code>.
-   <li>Set <code>result.scheme</code> to the <a>value of</a> <code class=grammar-rule><a href=#scheme>scheme</a></code>.
+   <li>Set <code>result.scheme</code> to the <a>value of</a> <code class=grammar-rule><a href=#rule-non-file-relative-scheme>non-file-relative-scheme</a></code>.
+   <li>Set <code>result.scheme</code> to the <a>value of</a> <code class=grammar-rule><a href=#rule-scheme>scheme</a></code>.
    <li>Set <code>result.host</code> to <code>base.host</code>.
    <li>Set <code>result.path</code> by the <a>path concatenation</a> of 
-       <code>base.path</code> and <code class=grammar-rule><a href=#path>path</a></code>.
+       <code>base.path</code> and <code class=grammar-rule><a href=#rule-path>path</a></code>.
    </ol>
 
  <li><div class=example><code>/foo/bar</code></div>
@@ -802,7 +803,7 @@ Choice:
   <li>Let <code>result</code> be an empty object.
   <li>Set <code>result.scheme</code> to <code>base.scheme</code>.
   <li>Set <code>result.host</code> to <code>base.host</code>.
-  <li>Set <code>result.path</code> to <code class=grammar-rule><a href=#path>path</a></code>
+  <li>Set <code>result.path</code> to <code class=grammar-rule><a href=#rule-path>path</a></code>
   <li>Replace <code>result.path</code> with the <a>path concatenation</a> of <code>base.path</code>
   and <code>result.Path</code>.
   </ol>
@@ -812,7 +813,7 @@ Choice:
  <li>Return <code>result</code>.
 </ol>
 
-<h4 id=non-file-relative-scheme class=no-toc>non-file-relative-scheme(input)</h4>
+<h4 id=rule-non-file-relative-scheme class=no-toc>non-file-relative-scheme(input)</h4>
 
 returns: String
 
@@ -842,7 +843,7 @@ manner.</em>
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26338">bug <code>26338</code></a>
 may change how encoding override is handled.
 
-<h4 id=scheme class=no-toc>scheme(input)</h4>
+<h4 id=rule-scheme class=no-toc>scheme(input)</h4>
 
 returns: String
 
@@ -860,7 +861,7 @@ code points: hyphen-minus (<code>U+002D</code>), plus sign (<code>U+002B</code>)
 (<code>U+002D</code>).
 Return the results as a lowercased string.
 
-<h4 id=authority class=no-toc>authority(input)</h4>
+<h4 id=rule-authority class=no-toc>authority(input)</h4>
 
 returns: { 
   <a href="#concept-url-username">username</a>,
@@ -874,47 +875,47 @@ returns: {
 Sequence:
   Optional:
     Sequence:
-      N: user
+      N: rule-user
       Optional:
         Sequence:
           T: :
-          N: password
+          N: rule-password
       T: @
-  N: host
+  N: rule-host
   Optional:
     Sequence:
       T: :
-      N: port
+      N: rule-port
 </pre>
 
 <ol>
 <li><a>Parse <code>input</code></a> according to the above railroad diagram.
 <li>Let <code>result</code> be an empty object.
-<li>If <code class=grammar-rule><a href=#user>user</a></code> <a>is present</a>, set <code>result.username</code> to the <a>value of</a>
-    <code class=grammar-rule><a href=#user>user</a></code>.
-<li>If <code class=grammar-rule><a href=#password>password</a></code> <a>is present</a>, set <code>result.password</code> to the
-    <a>value of</a> <code class=grammar-rule><a href=#password>password</a></code>.
-<li>Set <code>result.host</code> to the <a>value of</a> <code class=grammar-rule><a href=#host>host</a></code> up to the first "<code>@</code>" sign,
-    if any.  If no "<code>@</code>" signs are present in the <a>value of</a> <code class=grammar-rule><a href=#host>host</a></code>, then
-    set <code>result.host</code> to the <a>value of</a> <code class=grammar-rule><a href=#host>host</a></code>.
-<li>If one or more "<code>@</code>" signs are present in the <a>value of</a> <code class=grammar-rule><a href=#host>host</a></code>,
+<li>If <code class=grammar-rule><a href=#rule-user>user</a></code> <a>is present</a>, set <code>result.username</code> to the <a>value of</a>
+    <code class=grammar-rule><a href=#rule-user>user</a></code>.
+<li>If <code class=grammar-rule><a href=#rule-password>password</a></code> <a>is present</a>, set <code>result.password</code> to the
+    <a>value of</a> <code class=grammar-rule><a href=#rule-password>password</a></code>.
+<li>Set <code>result.host</code> to the <a>value of</a> <code class=grammar-rule><a href=#rule-host>host</a></code> up to the first "<code>@</code>" sign,
+    if any.  If no "<code>@</code>" signs are present in the <a>value of</a> <code class=grammar-rule><a href=#rule-host>host</a></code>, then
+    set <code>result.host</code> to the <a>value of</a> <code class=grammar-rule><a href=#rule-host>host</a></code>.
+<li>If one or more "<code>@</code>" signs are present in the <a>value of</a> <code class=grammar-rule><a href=#rule-host>host</a></code>,
     then perform the following steps:
     <ol>
     <li>Indicate a <a>conformance error</a>.
     <li>Initialize <code>info</code> to the value of "<code>%<code>40</code></code>" plus the remainder of the
-        <code class=grammar-rule><a href=#host>host</a></code> after the first "<code>@</code>" sign.  Replace all remaining "<code>@</code>" signs in
+        <code class=grammar-rule><a href=#rule-host>host</a></code> after the first "<code>@</code>" sign.  Replace all remaining "<code>@</code>" signs in
         <code>info</code>, with the string "<code>%<code>40</code></code>".
-    <li>If <code class=grammar-rule><a href=#password>password</a></code> <a>is present</a>, append <code>info</code> to <code>result.password</code>.
-    <li>If <code class=grammar-rule><a href=#password>password</a></code> <a title="is present">is not present</a> and <code class=grammar-rule><a href=#user>user</a></code>
+    <li>If <code class=grammar-rule><a href=#rule-password>password</a></code> <a>is present</a>, append <code>info</code> to <code>result.password</code>.
+    <li>If <code class=grammar-rule><a href=#rule-password>password</a></code> <a title="is present">is not present</a> and <code class=grammar-rule><a href=#rule-user>user</a></code>
         <a>is present</a>, append <code>info</code> to <code>result.username</code>.
-    <li>If <code class=grammar-rule><a href=#user>user</a></code> <a title="is present">is not present</a>, set
+    <li>If <code class=grammar-rule><a href=#rule-user>user</a></code> <a title="is present">is not present</a>, set
         <code>result.username</code> to <code>info</code>.
     </ol>
-<li>If <code class=grammar-rule><a href=#port>port</a></code> <a>is present</a>, set <code>result.port</code> to its value.
+<li>If <code class=grammar-rule><a href=#rule-port>port</a></code> <a>is present</a>, set <code>result.port</code> to its value.
 <li>Return <code>result</code>.
 </ol>
 
-<h4 id=user class=no-toc>user(input)</h4>
+<h4 id=rule-user class=no-toc>user(input)</h4>
 
 returns: String
 
@@ -935,7 +936,7 @@ or the end of string is encountered.
 Return the <a title=cleanse>cleansed</a> result using the
 <a>default encode set</a>.
 
-<h4 id=password class=no-toc>password(input)</h4>
+<h4 id=rule-password class=no-toc>password(input)</h4>
 
 returns: String
 
@@ -955,7 +956,7 @@ or the end of string is encountered.
 Return the <a title=cleanse>cleansed</a> result using the
 <a>default encode set</a>.
 
-<h4 id=host class=no-toc>host(input)</h4>
+<h4 id=rule-host class=no-toc>host(input)</h4>
 
 returns: String
 
@@ -963,17 +964,17 @@ returns: String
 <pre class=railroad>
 Choice:
   Sequence:
-    N: ipv6addr
+    N: rule-ipv6addr
   Sequence:
-    N: ipv4addr
+    N: rule-ipv4addr
   ZeroOrMore:
     T: any except [:/\?#]
 </pre>
 
 <ol>
 <li><a>Parse <code>input</code></a> according to the above railroad diagram.
-<li>If <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code> <a>is present</a>, return the <a>value of</a> <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code>.
-<li>If <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code> <a>is present</a>, return the <a>value of</a> <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>.
+<li>If <code class=grammar-rule><a href=#rule-ipv6addr>ipv6addr</a></code> <a>is present</a>, return the <a>value of</a> <code class=grammar-rule><a href=#rule-ipv6addr>ipv6addr</a></code>.
+<li>If <code class=grammar-rule><a href=#rule-ipv4addr>ipv4addr</a></code> <a>is present</a>, return the <a>value of</a> <code class=grammar-rule><a href=#rule-ipv4addr>ipv4addr</a></code>.
 <li>Let <code>result</code> be the characters matched by the railroad diagram.
 <li>If any <code>U+<code>0009</code></code>, <code>U+000A</code>, <code>U+000D</code>, <code>U+200B</code>, <code>U+<code>2060</code></code>, or <code>U+FEFF</code> code points are
     present in <code>result</code>, remove those code points and indicate a
@@ -984,7 +985,7 @@ Choice:
     href=#concept-host-parser>host parsing</a> returned a value that was
     different than what was provided as input, indicate a <a>conformance
     error</a>.
-<li>Try parsing <code>domain</code> as an <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code>. If this succeeds, replace <code>domain</code>
+<li>Try parsing <code>domain</code> as an <code class=grammar-rule><a href=#rule-ipv4addr>ipv4addr</a></code>. If this succeeds, replace <code>domain</code>
     with the result.
 <li>Validate <code>domain</code> as follows:
      <ol>
@@ -1003,7 +1004,7 @@ may change what codepoints are allowed in a domain.
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27266">bug <code>27266</code></a>
 may change the way domain names and trailing dots are handled.
 
-<h4 id=ipv6addr class=no-toc>ipv6addr(input)</h4>
+<h4 id=rule-ipv6addr class=no-toc>ipv6addr(input)</h4>
 
 returns: String
 
@@ -1016,38 +1017,38 @@ Sequence:
       Sequence:
         ZeroOrMore:
           Sequence:
-            N: h16
+            N: rule-h16
             T: :
         T: :
     ZeroOrMore:
       Sequence:
-        N: h16
+        N: rule-h16
         T: :
     Choice:
-      N: h16
-      N: ls32
+      N: rule-h16
+      N: rule-ls32
   T: ]
 </pre>
 
 <ol>
-<li>Let <code>pre</code> be the set of <code class=grammar-rule><a href=#h16>h16</a></code> values before the double colon, if present.
-<li>Let <code>post</code> be the remaining <code class=grammar-rule><a href=#h16>h16</a></code> value before the last value
-<li>Let <code>last</code> be the trailing <code class=grammar-rule><a href=#h16>h16</a></code> or <code class=grammar-rule><a href=#ls32>ls32</a></code> value.
+<li>Let <code>pre</code> be the set of <code class=grammar-rule><a href=#rule-h16>h16</a></code> values before the double colon, if present.
+<li>Let <code>post</code> be the remaining <code class=grammar-rule><a href=#rule-h16>h16</a></code> value before the last value
+<li>Let <code>last</code> be the trailing <code class=grammar-rule><a href=#rule-h16>h16</a></code> or <code class=grammar-rule><a href=#rule-ls32>ls32</a></code> value.
  
 <li>If there are no consecutive colon code points in the input string,
     indicate a <a>parse exception</a> and terminate processing unless there
-    are exactly six <code class=grammar-rule><a href=#h16>h16</a></code> values and one <code class=grammar-rule><a href=#ls32>ls32</a></code> value.
+    are exactly six <code class=grammar-rule><a href=#rule-h16>h16</a></code> values and one <code class=grammar-rule><a href=#rule-ls32>ls32</a></code> value.
 <li>If there are consecutive colon code points present in the input,
     indicate a <a>parse exception</a> and terminate processing if the total
-    number of values (<code class=grammar-rule><a href=#h16>h16</a></code> or <code class=grammar-rule><a href=#ls32>ls32</a></code>) is more than six.
-<li>Unless there is a <code class=grammar-rule><a href=#ls32>ls32</a></code> value present, indicate a <a>parse exception</a>
+    number of values (<code class=grammar-rule><a href=#rule-h16>h16</a></code> or <code class=grammar-rule><a href=#rule-ls32>ls32</a></code>) is more than six.
+<li>Unless there is a <code class=grammar-rule><a href=#rule-ls32>ls32</a></code> value present, indicate a <a>parse exception</a>
     and terminate processing if consecutive colon code points are present in
-    the input or if there are more than one <code class=grammar-rule><a href=#ls32>ls32</a></code> value after the
+    the input or if there are more than one <code class=grammar-rule><a href=#rule-ls32>ls32</a></code> value after the
     consecutive colons.
 
  <li>Append "<code><code>0</code></code>" values to <code>pre</code> while the sum of the lengths of the <code>pre</code> and
      <code>post</code> arrays is less than six.
- <li>Append a "<code><code>0</code></code>" value to <code>pre</code> if no <code class=grammar-rule><a href=#ls32>ls32</a></code> item is present in the input and
+ <li>Append a "<code><code>0</code></code>" value to <code>pre</code> if no <code class=grammar-rule><a href=#rule-ls32>ls32</a></code> item is present in the input and
      the sum of the lengths of the <code>pre</code> and <code>post</code> array is seven.
  <li>Append <code>last</code> to <code>pre</code>.
 
@@ -1059,7 +1060,7 @@ Sequence:
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27234">bug <code>27234</code></a>
 may add support for link-local addresses.
 
-<h4 id=ipv4addr class=no-toc>ipv4addr(input)</h4>
+<h4 id=rule-ipv4addr class=no-toc>ipv4addr(input)</h4>
 
 returns: String
 
@@ -1068,39 +1069,39 @@ returns: String
 Sequence:
   Optional:
     Sequence:
-      N: number
+      N: rule-number
       T: .
       Optional:
         Sequence:
-          N: number
+          N: rule-number
           T: .
           Optional:
             Sequence:
-              N: number
+              N: rule-number
               T: .
-  N: number
+  N: rule-number
 </pre>
 
 <ol>
-<li>If any but the last <code class=grammar-rule><a href=#number>number</a></code> is greater or equal to <code>256</code>, terminate
+<li>If any but the last <code class=grammar-rule><a href=#rule-number>number</a></code> is greater or equal to <code>256</code>, terminate
 processing with a <a>parse exception</a>.
 
-<li>If the last <code class=grammar-rule><a href=#number>number</a></code> is greater than or equal to <code>256</code> to the power of (<code>5</code>
-minus the number of <code class=grammar-rule><a href=#number>number</a></code>s present in the input), terminate processing
+<li>If the last <code class=grammar-rule><a href=#rule-number>number</a></code> is greater than or equal to <code>256</code> to the power of (<code>5</code>
+minus the number of <code class=grammar-rule><a href=#rule-number>number</a></code>s present in the input), terminate processing
 with a <a>parse exception</a>.
 
-<li>Unless four <code class=grammar-rule><a href=#number>number</a></code>s <a title='is present'>are present</a>, indicate a
+<li>Unless four <code class=grammar-rule><a href=#rule-number>number</a></code>s <a title='is present'>are present</a>, indicate a
 <a>conformance error</a>.
 
-<li>Let <code>n</code> be the last <code class=grammar-rule><a href=#number>number</a></code>.
+<li>Let <code>n</code> be the last <code class=grammar-rule><a href=#rule-number>number</a></code>.
 
-<li>If the first <code class=grammar-rule><a href=#number>number</a></code> <a>is present</a>, add it's 
+<li>If the first <code class=grammar-rule><a href=#rule-number>number</a></code> <a>is present</a>, add it's 
 <a title='value of'>value</a> times <code>256</code>**<code>3</code> to <code>n</code>.
 
-<li>If the second <code class=grammar-rule><a href=#number>number</a></code> <a>is present</a>, add it's 
+<li>If the second <code class=grammar-rule><a href=#rule-number>number</a></code> <a>is present</a>, add it's 
 <a title='value of'>value</a> times <code>256</code>**<code>2</code> to <code>n</code>.
 
-<li>If the third <code class=grammar-rule><a href=#number>number</a></code> <a>is present</a>, add it's <a title='value
+<li>If the third <code class=grammar-rule><a href=#rule-number>number</a></code> <a>is present</a>, add it's <a title='value
 of'>value</a> times <code>256</code> to <code>n</code>.
 
 <li>Let <code>result</code> be an empty array.
@@ -1119,7 +1120,7 @@ return the results as a string.
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26431">bug <code>26431</code></a>
 may change this definition.
 
-<h4 id=number class=no-toc>number(input)</h4>
+<h4 id=rule-number class=no-toc>number(input)</h4>
 
 returns: Integer
 
@@ -1147,7 +1148,7 @@ Choice:
  Indicate a <a>conformance error</a> if the value is hexadecimal or octal.
  Return the result as an integer.
 
-<h4 id=h16 class=no-toc>h16(input)</h4>
+<h4 id=rule-h16 class=no-toc>h16(input)</h4>
 
 returns: String
 
@@ -1165,26 +1166,26 @@ Sequence:
 
 Return up to four <a>ASCII hex digits</a> as a string.
 
-<h4 id=ls32 class=no-toc>ls32(input)</h4>
+<h4 id=rule-ls32 class=no-toc>ls32(input)</h4>
 
 returns: String
 
 
 <pre class=railroad>
 Sequence:
-  N: decimal-byte
+  N: rule-decimal-byte
   T: .
-  N: decimal-byte
+  N: rule-decimal-byte
   T: .
-  N: decimal-byte
+  N: rule-decimal-byte
   T: .
-  N: decimal-byte
+  N: rule-decimal-byte
 </pre>
 
 Return four decimal <a title='IPv4 piece'><code>8</code>-bit pieces</a> separated by full
 stop code points as a string.
 
-<h4 id=decimal-byte class=no-toc>decimal-byte(input)</h4>
+<h4 id=rule-decimal-byte class=no-toc>decimal-byte(input)</h4>
 
 returns: String
 
@@ -1202,7 +1203,7 @@ Decimal bytes are a string of up to three decimal digits.  If the results
 converted to an integer are greater than <code>255</code>, terminate processing with
 a <a>parse exception</a>.
 
-<h4 id=port class=no-toc>port(input)</h4>
+<h4 id=rule-port class=no-toc>port(input)</h4>
 
 returns: String
 
@@ -1240,7 +1241,7 @@ code point is not <code>U+<code>0030</code></code> or <code>result</code> consis
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=26446">bug <code>26446</code></a>
 may change port from a string to a number.
 
-<h4 id=path class=no-toc>path(input)</h4>
+<h4 id=rule-path class=no-toc>path(input)</h4>
 
 returns: Array of Strings
 
@@ -1293,7 +1294,7 @@ a <a>conformance error</a>.
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=24163">bug <code>24163</code></a>
 may change what code points to escape in the path.
 
-<h4 id=scheme-data class=no-toc>scheme-data(input)</h4>
+<h4 id=rule-scheme-data class=no-toc>scheme-data(input)</h4>
 
 returns: String
 
@@ -1312,7 +1313,7 @@ the encode set.
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=24246">bug <code>24246</code></a>
 may change what code points to escape in the scheme data.
 
-<h4 id=query class=no-toc>query(input)</h4>
+<h4 id=rule-query class=no-toc>query(input)</h4>
 
 returns: String
 
@@ -1331,7 +1332,7 @@ the result using the <a>query encode set</a>.
 <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=27280">bug <code>27280</code></a>
 may change how code points < <code>0x20</code> are handled.
 
-<h4 id=fragment class=no-toc>fragment(input)</h4>
+<h4 id=rule-fragment class=no-toc>fragment(input)</h4>
 
 returns: String
 
@@ -1370,20 +1371,20 @@ Setter Rules {#setter-rules}
 URLUtilsReadOnly members</a> invoke the following setter
 rules with <code>url</code> set to a non-<code>null</code> value.
 
-<h4 id=set-protocol class=no-toc>set-protocol(input)</h4>
+<h4 id=rule-set-protocol class=no-toc>set-protocol(input)</h4>
 
 <pre class=railroad>
 Sequence:
-  N: scheme
+  N: rule-scheme
   Optional:
     T: :
   ZeroOrMore:
     T: any
 </pre>
 
-Set <code>url.scheme</code> to value returned by <code class=grammar-rule><a href=#scheme>scheme</a></code>.
+Set <code>url.scheme</code> to value returned by <code class=grammar-rule><a href=#rule-scheme>scheme</a></code>.
 
-<h4 id=set-username class=no-toc>set-username(input)</h4>
+<h4 id=rule-set-username class=no-toc>set-username(input)</h4>
 
 <pre class=railroad>
 ZeroOrMore:
@@ -1397,7 +1398,7 @@ Set <code>url.username</code> to the
 value using the
 <a>username encode set</a>.
 
-<h4 id=set-password class=no-toc>set-password(input)</h4>
+<h4 id=rule-set-password class=no-toc>set-password(input)</h4>
 
 <pre class=railroad>
 ZeroOrMore:
@@ -1411,15 +1412,15 @@ Set <code>url.password</code> to the
 using the
 <a>password encode set</a>.
 
-<h4 id=set-host class=no-toc>set-host(input)</h4>
+<h4 id=rule-set-host class=no-toc>set-host(input)</h4>
 
 <pre class=railroad>
 Sequence:
-  N: host
+  N: rule-host
   Optional:
     Sequence:
       T: :
-      N: port
+      N: rule-port
   Optional:
     Sequence:
       Optional:
@@ -1430,15 +1431,15 @@ Sequence:
 
 If <code>url.scheme_data</code> is not null, return.
 
-Set <code>url.host</code> to the value returned by <code class=grammar-rule><a href=#host>host</a></code>.
+Set <code>url.host</code> to the value returned by <code class=grammar-rule><a href=#rule-host>host</a></code>.
 
-If <code class=grammar-rule><a href=#port>port</a></code> is present, set <code>result.port</code> to its value.
+If <code class=grammar-rule><a href=#rule-port>port</a></code> is present, set <code>result.port</code> to its value.
 
-<h4 id=set-hostname class=no-toc>set-hostname(input)</h4>
+<h4 id=rule-set-hostname class=no-toc>set-hostname(input)</h4>
 
 <pre class=railroad>
 Sequence:
-  N: host
+  N: rule-host
   Optional:
     T: any of [:/\?#]
   ZeroOrMore:
@@ -1447,13 +1448,13 @@ Sequence:
 
 If <code>url.scheme_data</code> is not null, return.
 
-Set <code>url.host</code> to the value returned by <code class=grammar-rule><a href=#host>host</a></code>.
+Set <code>url.host</code> to the value returned by <code class=grammar-rule><a href=#rule-host>host</a></code>.
 
-<h4 id=set-port class=no-toc>set-port(input)</h4>
+<h4 id=rule-set-port class=no-toc>set-port(input)</h4>
 
 <pre class=railroad>
 Sequence:
-  N: port
+  N: rule-port
   Optional:
     T: any of [/\?#]
   ZeroOrMore:
@@ -1462,12 +1463,12 @@ Sequence:
 
 If <code>url.scheme_data</code> is not null or <code>url.scheme</code> is "<code>file</code>", return.
 
-If <code>url.scheme</code> has a <a>default port</a>, and if <code class=grammar-rule><a href=#port>port</a></code> is equal to that
+If <code>url.scheme</code> has a <a>default port</a>, and if <code class=grammar-rule><a href=#rule-port>port</a></code> is equal to that
 default, then set the <code>port</code> property of <code>url</code> to the empty string.
 
-Otherwise, set <code>url.port</code> to the value returned by <code class=grammar-rule><a href=#port>port</a></code>.
+Otherwise, set <code>url.port</code> to the value returned by <code class=grammar-rule><a href=#rule-port>port</a></code>.
 
-<h4 id=set-pathname class=no-toc>set-pathname(input)</h4>
+<h4 id=rule-set-pathname class=no-toc>set-pathname(input)</h4>
 
 <pre class=railroad>
 Sequence:
@@ -1475,7 +1476,7 @@ Sequence:
     Choice:
       T: /
       T: \
-  N: path
+  N: rule-path
   Optional:
     T: any of [/\?#]
   ZeroOrMore:
@@ -1484,9 +1485,9 @@ Sequence:
 
 If <code>url.scheme_data</code> is not null, return.
 
-Set <code>url.path</code> to the value returned by <code class=grammar-rule><a href=#path>path</a></code>.
+Set <code>url.path</code> to the value returned by <code class=grammar-rule><a href=#rule-path>path</a></code>.
 
-<h4 id=set-search class=no-toc>set-search(input)</h4>
+<h4 id=rule-set-search class=no-toc>set-search(input)</h4>
 
 <pre class=railroad>
 Sequence:
@@ -1501,7 +1502,7 @@ Set <code>url.query</code> to the
 after the initial question mark (<code>U+003F</code>), if any, using the <a>query encode
 set</a>.
 
-<h4 id=set-hash class=no-toc>set-hash(input)</h4>
+<h4 id=rule-set-hash class=no-toc>set-hash(input)</h4>
 
 <pre class=railroad>
 Sequence:
@@ -1697,7 +1698,7 @@ To <dfn>cleanse</dfn> a string given an <var>encode set</var>, run these steps:
     a <a>conformance error</a>.
 
 <li>if the <var>encode set</var> is non-null,
-    first <a function>encode</a> the
+    first <a>encode</a> the
     result using the <code>encoding override</code>, then
     <a>percent encode</a>
     that result using the provided <var>encode set</var>.
@@ -2158,12 +2159,12 @@ static method, when invoked, must run these steps:
 
 <ol>
  <li><p>Let <var>asciiDomain</var> be the result of
- invoking <code class=grammar-rule><a href=#host>host</a></code> with
+ invoking <code class=grammar-rule><a href=#rule-host>host</a></code> with
  <var>domain</var> as input.
 
  <li><p>If <var>asciiDomain</var> matches
- <code class=grammar-rule><a href=#ipv6addr>ipv6addr</a></code> or
- <code class=grammar-rule><a href=#ipv4addr>ipv4addr</a></code> or
+ <code class=grammar-rule><a href=#rule-ipv6addr>ipv6addr</a></code> or
+ <code class=grammar-rule><a href=#rule-ipv4addr>ipv4addr</a></code> or
  failure, return the empty string.
 
  <li><p>Return <var>asciiDomain</var>.
@@ -2287,7 +2288,7 @@ run these steps:
  <li><p>If <a title='URLUtils URL'>url</a> is null, terminate
  these steps.
 
- <li>Invoke <code class=grammar-rule><a href=#set-protocol>set-protocol</a></code>
+ <li>Invoke <code class=grammar-rule><a href=#rule-set-protocol>set-protocol</a></code>
  on the <var>input</var> with
  <a title='URLUtils URL'>url</a> as <var>url</var>.
 
@@ -2388,7 +2389,7 @@ steps:
  <li><p>If <a title='URLUtils URL'>url</a> is null, or its
  <a title='URL scheme data'>scheme data</a> is set, terminate these steps.
 
- <li>Invoke <code class=grammar-rule><a href=#set-host>set-host</a></code>
+ <li>Invoke <code class=grammar-rule><a href=#rule-set-host>set-host</a></code>
  on the <var>input</var> with
  <a title='URLUtils URL'>url</a> as <var>url</var>.
 
@@ -2413,7 +2414,7 @@ run these steps:
  <li><p>If <a title='URLUtils URL'>url</a> is null, or its
  <a title='URL scheme data'>scheme data</a> is set, terminate these steps.
 
- <li>Invoke <code class=grammar-rule><a href=#set-hostname>set-hostname</a></code>
+ <li>Invoke <code class=grammar-rule><a href=#rule-set-hostname>set-hostname</a></code>
  on the <var>input</var> with
  <a title='URLUtils URL'>url</a> as <var>url</var>.
 
@@ -2438,7 +2439,7 @@ these steps:
  <a title='URL scheme'>scheme</a> is "<code>file</code>",
  terminate these steps.
 
- <li>Otherwise, invoke <code class=grammar-rule><a href=#set-port>set-port</a></code>
+ <li>Otherwise, invoke <code class=grammar-rule><a href=#rule-set-port>set-port</a></code>
   on the <var>input</var> with <a title='URLUtils URL'>url</a> as
   <var>url</var>.
 
@@ -2469,7 +2470,7 @@ run these steps:
 
  <li><p>Empty <a title='URL path'>path</a>.
 
- <li>Invoke <code class=grammar-rule><a href=#set-pathname>set-pathname</a></code>
+ <li>Invoke <code class=grammar-rule><a href=#rule-set-pathname>set-pathname</a></code>
  on the <var>input</var> with
  <a title='URLUtils URL'>url</a> as <var>url</var>.
 
@@ -2505,7 +2506,7 @@ run these steps:
 
  <li><p>Set <a title='URL query'>query</a> to the empty string.
 
- <li>Invoke <code class=grammar-rule><a href=#set-search>set-search</a></code>
+ <li>Invoke <code class=grammar-rule><a href=#rule-set-search>set-search</a></code>
  on the <var>input</var>
  with <a title='URLUtils URL'>url</a> as <var>url</var>, and the
  associated <a title='URLUtils query encoding'>query encoding</a> as
@@ -2580,7 +2581,7 @@ these steps:
  <li><p>Set <a title='URL fragment'>fragment</a> to
  the empty string.
 
- <li>Invoke <code class=grammar-rule><a href=#set-hash>set-hash</a></code>
+ <li>Invoke <code class=grammar-rule><a href=#rule-set-hash>set-hash</a></code>
  on the <var>input</var>
  with <a title='URLUtils URL'>url</a> as <var>url</var>.
 
@@ -2745,8 +2746,8 @@ should name such a feature "url" (i.e. lowercase and with an "l" at the end). Na
 as "URL", "URI", and "IRI" should not be used. However, if the name is a compound, "URL"
 (i.e. uppercase) is preferred, e.g. "newURL" and "oldURL".
 
-<p class=note>The <code><a>EventSource</a></code> and
-<code><a>HashChangeEvent</a></code> interfaces in HTML are examples of
+<p class=note>The {{EventSource}} and
+{{HashChangeEvent}} interfaces in HTML are examples of
 proper naming. [[!HTML]]
 
 
@@ -2917,7 +2918,7 @@ takes a list of name-value pairs <var>pairs</var>, optionally with an
    <li><p>Let <var>outputPair</var> be a copy of <var>pair</var>.
 
    <li><p>Replace <var>outputPair</var>'s name and value with the result of running
-   <a function>encode</a> on them using
+   <a>encode</a> on them using
    <var>encoding override</var>, respectively.
 
    <li><p>Replace <var>outputPair</var>'s name and value with their
@@ -3109,7 +3110,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 </script>
 
-<pre class="biblio"
+<pre class="biblio">
 {
     "IDNA": {
         "authors": [
@@ -3168,131 +3169,37 @@ document.addEventListener("DOMContentLoaded", function(event) {
 </pre>
 
 <pre class="anchors">
-[
-    {
-        "linkingText": "ascii whitespace",
-        "url": "https://encoding.spec.whatwg.org/#ascii-whitespace",
-        "shortname": "encoding", "type": "dfn", "level": 2, "status": "current"
-    },
-    {
-        "linkingText": "blob",
-        "url": "http://dev.w3.org/2006/webapi/FileAPI/#blob",
-        "shortname": "fileapi", "type": "dfn", "level": 2, "status": "current"
-    },
-    {
-        "linkingText": "blob url store",
-        "url": "http://dev.w3.org/2006/webapi/FileAPI/#BlobURLStore",
-        "shortname": "fileapi", "type": "dfn", "level": 2, "status": "current"
-    },
-    {
-        "linkingText": "concept-attribute-value",
-        "url": "https://dom.spec.whatwg.org/#concept-attribute-value",
-        "shortname": "webidl", "type": "dfn", "level": 2, "status": "current"
-    },
-    {
-        "linkingText": "concept-document",
-        "url": "https://dom.spec.whatwg.org/#concept-document",
-        "shortname": "dom", "type": "dfn", "level": 1, "status": "current"
-    },
-    {
-        "linkingText": "concept-encoding-get",
-        "url": "https://encoding.spec.whatwg.org/#concept-encoding-get",
-        "shortname": "encoding", "type": "dfn", "level": 1, "status": "current"
-    },
-    {
-        "linkingText": "context object",
-        "url": "https://dom.spec.whatwg.org/#context-object",
-        "shortname": "dom", "type": "dfn", "level": 1, "status": "current"
-    },
-    {
-        "linkingText": "decoder",
-        "url": "https://encoding.spec.whatwg.org/#decoder",
-        "shortname": "encoding", "type": "dfn", "level": 1, "status": "current"
-    },
-    {
-        "linkingText": "dom-node-baseuri",
-        "url": "https://dom.spec.whatwg.org/#dom-node-baseuri",
-        "shortname": "dom", "type": "dfn", "level": 1, "status": "current"
-    },
-    {
-        "linkingText": "encode",
-        "url": "https://encoding.spec.whatwg.org/#encode",
-        "shortname": "encode", "type": "function", "level": 1, "status": "current"
-    },
-    {
-        "linkingText": "encoding",
-        "url": "https://encoding.spec.whatwg.org/#encoding",
-        "shortname": "encoding", "type": "dfn", "level": 1, "status": "current"
-    },
-    {
-        "linkingText": "error",
-        "url": "https://encoding.spec.whatwg.org/#error",
-        "shortname": "encoding", "type": "dfn", "level": 1, "status": "current"
-    },
-    {
-        "linkingText": "eventsource",
-        "url": "https://html.spec.whatwg.org/multipage/comms.html#eventsource",
-        "shortname": "html", "type": "dfn", "level": 1, "status": "current"
-    },
-    {
-        "linkingText": "hashchangeevent",
-        "url": "https://html.spec.whatwg.org/multipage/comms.html#hashchangeevent",
-        "shortname": "html", "type": "dfn", "level": 1, "status": "current"
-    },
-    {
-        "linkingText": "origin",
-        "url": "https://html.spec.whatwg.org/multipage/browsers.html#origin",
-        "shortname": "html", "type": "dfn", "level": 1, "status": "current"
-    },
-    {
-        "linkingText": "structured clone",
-        "url": "https://html.spec.whatwg.org/multipage/infrastructure.html#structured-clone",
-        "shortname": "html", "type": "dfn", "level": 1, "status": "current"
-    },
-    {
-        "linkingText": "throw",
-        "url": "http://heycam.github.io/webidl/#dfn-throw",
-        "shortname": "webidl", "type": "dfn", "level": 2, "status": "current"
-    },
-    {
-        "linkingText": "toascii",
-        "url": "http://www.unicode.org/reports/tr46/#ToASCII",
-        "shortname": "idna", "type": "dfn", "level": 1, "status": "current"
-    },
-    {
-        "linkingText": "tounicode",
-        "url": "http://www.unicode.org/reports/tr46/#ToUnicode",
-        "shortname": "idna", "type": "dfn", "level": 1, "status": "current"
-    },
-    {
-        "linkingText": "utf-8",
-        "url": "https://encoding.spec.whatwg.org/#utf-8",
-        "shortname": "encoding", "type": "dfn", "level": 1, "status": "current"
-    },
-    {
-        "linkingText": "utf-8 decode without bom",
-        "url": "https://encoding.spec.whatwg.org/#utf-8-decode-without-bom",
-        "shortname": "encoding", "type": "dfn", "level": 1, "status": "current"
-    },
-    {
-        "linkingText": "utf-8 encode",
-        "url": "https://encoding.spec.whatwg.org/#utf-8-encode",
-        "shortname": "encoding", "type": "dfn", "level": 1, "status": "current"
-    },
-    {
-        "linkingText": "utf-8 decoder",
-        "url": "https://encoding.spec.whatwg.org/#utf-8-decoder",
-        "shortname": "encoding", "type": "dfn", "level": 1, "status": "current"
-    },
-    {
-        "linkingText": "unicode serialization of an origin",
-        "url": "https://html.spec.whatwg.org/multipage/browsers.html#unicode-serialisation-of-an-origin",
-        "shortname": "html", "type": "dfn", "level": 1, "status": "current"
-    },
-    {
-        "linkingText": "value pairs to iterate over",
-        "url": "http://heycam.github.io/webidl/#dfn-value-pairs-to-iterate-over",
-        "shortname": "webidl", "type": "dfn", "level": 2, "status": "current"
-    }
-]
+urlPrefix: http://dev.w3.org/2006/webapi/FileAPI/; type: dfn
+  text: blob
+  text: blob url store; url: #BlobURLStore
+urlPrefix: https://dom.spec.whatwg.org/; type: dfn
+  text: concept-attribute-value
+  text: concept-document
+  text: context object
+  text: dom-node-baseuri
+urlPrefix: https://encoding.spec.whatwg.org/; type: dfn
+  text: ascii whitespace
+  text: concept-encoding-get
+  text: decoder
+  text: encode
+  text: encoding
+  text: error
+  text: utf-8
+  text: utf-8 decode without bom
+  text: utf-8 encode
+  text: utf-8 decoder
+urlPrefix: https://html.spec.whatwg.org/multipage/
+  urlPrefix: comms.html; type: interface;
+    text: EventSource
+    text: HashChangeEvent
+  urlPrefix: browsers.html; type: dfn;
+    text: origin
+    text: unicode serialization of an origin
+  urlPrefix: infrastructure.html; type: dfn;
+    text: structured clone
+urlPrefix: http://heycam.github.io/webidl/#dfn-; type: dfn;
+  text: throw
+  text: value pairs to iterate over
+url: http://www.unicode.org/reports/tr46/#ToASCII; type: dfn; text: toascii
+url: http://www.unicode.org/reports/tr46/#ToUnicode; type: dfn; text: tounicode
 </pre>
