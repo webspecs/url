@@ -1,12 +1,19 @@
+# emacs detritus
+*~
+*#
+
 docs/url-problem-statement.html
 docs/url-problem-statement.txt
+
 evaluate/Cargo.lock
 evaluate/*.jar
 evaluate/target/
 evaluate/*.class
 evaluate/urlsettest.json
 evaluate/urltestdata.json
+
 parser.pegjs
+
 reference-implementation/IdnaMappingTable.txt
 reference-implementation/punycode.js
 reference-implementation/unorm.js
@@ -18,4 +25,5 @@ reference-implementation/test/urltestparser.js
 reference-implementation/test/urlsettest.js
 url.html
 url.pegjson
+
 node_modules/
