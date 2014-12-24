@@ -74,8 +74,8 @@
 
   <middle>
     <section title="Introduction">
-      <t>This document lays out the problem space of possibly conflicting
-      standards between multiple organizations for URLs and things like
+      <t>This document lays out the problem space around
+      standards for URLs and things like
       them, and proposes some actions to resolve the conflicts.
       From a user or developer point of view, it makes no sense for there to
       be a proliferation of definitions of URL nor for there to be a
@@ -86,16 +86,29 @@
       <t>Currently, this document is for discussion purposes, with
       possible next steps discussed in <xref target="nextsteps"/>. 
       </t>
+      <t>Discussions have taken place on <eref target="mailto:public-ietf-w3c@w3.org"/>
+      and <eref target="apps-discuss@w3.org"/>. The W3C TAG
+      has discussed these issues in meetings and on their mailing list,
+      There has been limited discussion on the WebApps mailing list.(?)
+      </t>
       <t>This document, test suite, reference implementation, and 
       (the WebPlatform specification are being developed at
       <eref target="https://github.com/webspecs/url"/>, including
       an issue tracker, Wiki, and related resources.
-      'Pull' requests for edits to doocuments or tests are welcome.
+      'Pull' requests for edits to doocuments or tests are most welcome.
+      Raising issues in <eref target="https://github.com/webspecs/url/issues">the
+      GitHub tracker</eref> is also helpful.
+      Comments to the editors or on those mailing list in email
+      are also welcome.
       </t>
+
+
     </section>
     <section title="Brief History of URL Standards">
       <t>This section contains a very compressed history of URL standards,
         in sufficient detail to set some context.
+	REVIEWERS: history is necessarily incomplete, but please
+	note incorrect or missing essential facts.
       </t>
 
       <t>The first standards-track specification for URLs was <xref target="RFC1738"/>
@@ -158,6 +171,10 @@
       produced multiple documents, and it's unclear whether
       there's a trajectory to make them consistent.  This section
       tries to enumerate currently active organizations and specs.
+      REVIEWERS: are there important ongoing activities we've missed
+      or gotten wrong? Who are the stakeholders whose current
+      work might be affected? (This is to scope organizational
+      coordination needed.)
       </t>
       <t>Organizations include
       the <eref target="https://www.ietf.org/about/">IETF</eref>,
@@ -170,8 +187,13 @@
       Relevant specs under development in each organization include:</t>
 
       <section title="IETF">
-        <t><xref target="appsawg-uri-scheme-reg"/> and
-        <xref target="kerwin-file-scheme"/> are under active development.</t>
+        <t><xref target="appsawg-uri-scheme-reg"/> has
+	passed working group last call and entered IESG 
+	review.</t>
+
+	<t>New schemes and updates to old ones continue, including 
+	'file:' <xref target="kerwin-file-scheme"/> 
+	and 'urn:'. </t>
 
         <t>The IRI working group closed, but work can continue in the Applications
         Area working group. Documents sitting needing update, abandoned now,
@@ -179,12 +201,18 @@
         <xref target="iri-comparison"/>, and
         <xref target="iri-bidi-guidelines"/>), which were
         originally intended to obsolete <xref target="RFC3987"/>.</t>
-
+	
 	<t>The <eref target="http://datatracker.ietf.org/wg/urnbis/charter/">URNBis
 	working group</eref> has been working to update the definitions
 	of URNs, but has difficulty with some of the wording in RFC 3986.
 	In particular, <eref target="http://datatracker.ietf.org/doc/draft-ietf-urnbis-semantics-clarif/"/> updates RFC3986.
         </t>
+	
+	<t>The web security working group developed
+	RFC 6454 ("The Web Origin Concept"), which 
+	<xref target="URL-LS"/> redefines. Updates
+	in the IETF were abandoned.
+	</t>
       </section>
 
       <section title="WHATWG">
@@ -199,13 +227,19 @@
 
       <section title="W3C">
         <t>The <eref target="http://www.w3.org/2014/06/webapps-charter.html">Web 
-        Applications Working Group</eref>, in conjuction with the 
-        <eref target="http://www.w3.org/2001/tag/">W3C TAG</eref>,
+        Applications Working Group</eref>
         sporadically have been republishing the WHATWG work with no
         technical content differences as <xref target="W3C-URL"/>.  There is a
         <xref target="url-workmode"/> proposal to formalize this
         relationship.</t>
 
+	<t>The W3C TAG developed
+	<eref target="http://www.w3.org/TR//fragid-best-practices/">
+	  Best Practices for Fragment Identifiers and Media Type Definitions
+	</eref>, which points out several problems with the definitions
+	for the 'fragment' part of URLs.  The TAG is working to
+	insure liaison exchange happens.</t>
+	
 	<t>Note also the interim solution for <eref
 	target="http://www.w3.org/TR/2014/REC-html5-20141028/references.html#refsURL">the
 	HTML5 reference to [URL]</eref>, which should be updated by
@@ -215,7 +249,9 @@
       </section>
 
       <section title="WebPlatform">
-        <t><xref target="WP-URL"/> is being developed on a
+        <t>WebPlatform.org is an activity sponsored by <eref 
+	target="http://www.webplatform.org">W3C and web vendors</eref>.
+	<xref target="WP-URL"/> is being developed on a
         <eref target="https://specs.webplatform.org/#how">develop</eref>
         GitHub branch based on <xref target="URL-LS"/>.  It
         currently contains work that has yet to be folded back into the
@@ -233,16 +269,20 @@
     </section>
 
     <section title="Problem Statements">
-      <t>The main problem is conflicting specifications that overlap
-      but don't match each other.</t>
-      <t>Additionally, the following are issues that need to be resolved to
-        make URL processing unambiguous and stable.</t>
+      <t>This section lays out the problems we see need a coordinated
+       solution. REVIEWERS: have we missed some things? Are any of these
+       non-problems or not worth solving? </t>
 
+       <t>The main problem is conflicting specifications that overlap
+       but don't match each other.</t>
+       <t>Additionally, the following are issues that need to be resolved to
+       make URL processing unambiguous and stable.</t>
+       
       <t><list style="symbols">
         <t>Nomenclature: over the years, a number of different sets of
         terminology has been used.  URL / URI / IRI is not the only difference.
         <xref target="tantek-slice"/> chronicles a number of differences.</t>
-
+	
         <t>Parameterization: standards in this area need to define such
         matters as normalization forms and values for parameters such as
         UseSTD3ASCIIRules.</t>
@@ -252,6 +292,13 @@
         and browsers.  <xref target="whatwg-interop"/> identifies a number
         of such differences.</t>
         
+	<t>IDNA: RFC 3490 (IDNA) defines processing for 'IDN-aware
+	domain name slots' (where "the host portion of the URI in the
+	src attribute of an HTML &lt;IMG&gt; tag" is given as an
+	example. Later, "IDNA is applicable to all domain names in all
+	domain name slots". So in mailto:user@host, is the host a
+	IDN-aware domain name slot? A domain name slot at all?  </t>
+
         <t>Specific scheme definitions: some UR* scheme definitions are woefully
           out of date, incomplete, or don't correspond to current practice,
           but updating their definitions is unclear. This includes "file:",
@@ -262,18 +309,59 @@
     </section>
 
     <section anchor="nextsteps" title="Potential Solution">
-      <t>These problems require some cross-organizational collaboration.
+      <t>Many of the problem above require some cross-organizational collaboration.
       This section outlines alternatives and possible next steps.
+      REVIEWERS: Neccessary? Sufficient? What are we missing, what
+      did we get wrong?
       </t>
-      <t><list style="symbols">
-        <t>Build a plan to update or obsolete <xref target="RFC3986"/>,
-          <xref target="RFC3987"/>, <xref target="RFC5895"/>, and
-          <xref target="kerwin-file-scheme"/> to be consistent with
+      <section title="Leave, Update or Obsolete RFC 3986 (URI)">
+	<t>At various times, many have called for replacing
+	the IETF URI standard RFC 3986, or updating it. How
+	to approach this is controversal, but at a minimum
+	the following are needed:
+	<list style="symbols">
+	  <t>Make it clear that ASCII-only URIs (as now defined
+	  by RFC 3986) are not what is mainly used on the web. </t>
+	  <t>Updates for URN.</t>
+	  <t>Updates for fragment identifier semantics.</t>
+	  <t>Note terminology issue and resolution.</t>
+	</list>
+	</t>
+      </section>
+
+      <section title="Obsolete RFC 3987 (IRI)"> <t>
+	After insuring that topics covered in RFC 3987 are
+	also covered by the W3C URL recommendation, then
+	mark 3987 as obsolete with a short RFC noting
+	the conditions laid out in this document.
+      </t>
+      </section>
+
+      <section title="Obsolete RFC 6454 (Origin)">
+	<t>
+	  Replaced by <xref target="URL-LS"/>.
+	</t>
+      </section>
+      <section title="file: URI scheme">
+	<t> 
+	  Coordinate 'file:' syntax in <xref target="URL-LS"/>
+	  and <xref target="kerwin-file-scheme"/>, possibly
+	  moving the file: Partr of URL-LS into a separate
+	  document.
+	</t>
+      </section>
+      <section title="Other actions">
+	
+	<t><list style="symbols">
+          <t>Update <xref target="RFC5895"/>, and
+          to be consistent with
           <xref target="URL-LS"/> and <xref target="UTS-46"/>.  This
           may involve working to get the other specifications updated,
-            if only to clarify nomenclature.
+          if only to clarify nomenclature.
           </t>
-        <t>Change the <xref target="URL-LS"/> goals to only obsolete
+	  <t>Obsolete any previous definition of x-url-encoded. </t>
+	    
+          <t>Change the <xref target="URL-LS"/> goals to only obsolete
           specifications listed above that are not updated.  Presuming that
           <xref target="RFC3986"/> is updated, explicitly state that 
           canonical URLs (i.e., the output of the URL parser) not only
@@ -289,7 +377,9 @@
         <t>Other than responding to any feedback that may be provided,
           no changes to any Unicode Consortium product is required.</t>
       </list></t>
-      
+
+      </section>
+
     </section>
 
     <section anchor="Acknowledgements" title="Acknowledgements">
