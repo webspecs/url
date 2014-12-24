@@ -86,6 +86,12 @@
       <t>Currently, this document is for discussion purposes, with
       possible next steps discussed in <xref target="nextsteps"/>. 
       </t>
+      <t>This document, test suite, reference implementation, and 
+      (the WebPlatform specification are being developed at
+      <eref target="https://github.com/webspecs/url"/>, including
+      an issue tracker, Wiki, and related resources.
+      'Pull' requests for edits to doocuments or tests are welcome.
+      </t>
     </section>
     <section title="Brief History of URL Standards">
       <t>This section contains a very compressed history of URL standards,
@@ -131,11 +137,6 @@
       definition was moved out into the "URL - Living Standard"
       <xref target="URL-LS"/>.</t>
 
-      <t>The world has also moved on. ICANN has approved non-ASCII top level
-      domains, but IDNA specs (<xref target="RFC3490"/> and <xref target="RFC5895"/>)
-      did not fully addressed IRI processing.  Subsequently, the Unicode consortium
-      produced <xref target="UTS-46"/>.</t>
-
       <t>When W3C produced <eref target="http://www.w3.org/TR/html5/">the HTML5
       recommendation</eref>, the normative
       reference to the WHATWG URL standard was a gating issue, and
@@ -143,6 +144,12 @@
       unusual compromised was reached</eref>, where the [URL] reference is given a descriptive
       paragraph rather than a single document reference.
       </t>
+
+      <t>The world has moved on in other ways. ICANN has approved non-ASCII top level
+      domains, but IDNA specs (<xref target="RFC3490"/> and <xref target="RFC5895"/>)
+      did not fully addressed IRI processing.  Subsequently, the Unicode consortium
+      produced <xref target="UTS-46"/>.</t>
+
 
     </section>
 
@@ -173,10 +180,10 @@
         <xref target="iri-bidi-guidelines"/>), which were
         originally intended to obsolete <xref target="RFC3987"/>.</t>
 
-        <t>In addition, there's quite a bit of activity around URNs and
-        library identifiers in the URN working group, including
-        some expressions of desire to update RFC 3986 to better accomodate
-        desired URN semantics.
+	<t>The <eref target="http://datatracker.ietf.org/wg/urnbis/charter/">URNBis
+	working group</eref> has been working to update the definitions
+	of URNs, but has difficulty with some of the wording in RFC 3986.
+	In particular, <eref target="http://datatracker.ietf.org/doc/draft-ietf-urnbis-semantics-clarif/"/> updates RFC3986.
         </t>
       </section>
 
