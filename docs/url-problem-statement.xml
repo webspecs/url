@@ -14,7 +14,7 @@
 <rfc category="info" docName="draft-ruby-url-problem-01" ipr="trust200902">
 
   <front>
-    <title>Problem Statement: URL</title>
+    <title>URL Problem Statement and Directions</title>
 
     <author fullname="Sam Ruby" initials="S.R." role="editor"
             surname="Ruby">
@@ -73,6 +73,20 @@
   </front>
 
   <middle>
+    <section title="Introduction">
+      <t>This document lays out the problem space of possibly conflicting
+      standards between multiple organizations for URLs and things like
+      them, and proposes some actions to resolve the conflicts.
+      From a user or developer point of view, it makes no sense for there to
+      be a proliferation of definitions of URL nor for there to be a
+      proliferation of incompatible implementations.  This shouldn't be a
+      competitive feature.  Therefore there is a need for the organizations
+      involved to update and reconcile the various Internet Drafts,
+      Recommendations, and Standards in this area.</t>
+      <t>Currently, this document is for discussion purposes, with
+      possible next steps discussed in <xref target="nextsteps"/>. 
+      </t>
+    </section>
     <section title="Brief History of URL Standards">
       <t>This section contains a very compressed history of URL standards,
         in sufficient detail to set some context.
@@ -121,6 +135,15 @@
       domains, but IDNA specs (<xref target="RFC3490"/> and <xref target="RFC5895"/>)
       did not fully addressed IRI processing.  Subsequently, the Unicode consortium
       produced <xref target="UTS-46"/>.</t>
+
+      <t>When W3C produced <eref target="http://www.w3.org/TR/html5/">the HTML5
+      recommendation</eref>, the normative
+      reference to the WHATWG URL standard was a gating issue, and
+      <eref target="http://www.w3.org/TR/2014/REC-html5-20141028/references.html#refsURL">an
+      unusual compromised was reached</eref>, where the [URL] reference is given a descriptive
+      paragraph rather than a single document reference.
+      </t>
+
     </section>
 
     <section title="Current Organizations and Specs in Development">
@@ -175,6 +198,13 @@
         technical content differences as <xref target="W3C-URL"/>.  There is a
         <xref target="url-workmode"/> proposal to formalize this
         relationship.</t>
+
+	<t>Note also the interim solution for <eref
+	target="http://www.w3.org/TR/2014/REC-html5-20141028/references.html#refsURL">the
+	HTML5 reference to [URL]</eref>, which should be updated by
+	<eref target="http://www.w3.org/html/wg/">the HTML working
+	group </eref>.</t>
+
       </section>
 
       <section title="WebPlatform">
@@ -224,9 +254,10 @@
       </list></t>
     </section>
 
-    <section title="Outline of Potential Solution">
-      <t>This problem clearly requires a cross-organizational solution,
-        specifically:</t>
+    <section anchor="nextsteps" title="Potential Solution">
+      <t>These problems require some cross-organizational collaboration.
+      This section outlines alternatives and possible next steps.
+      </t>
       <t><list style="symbols">
         <t>Build a plan to update or obsolete <xref target="RFC3986"/>,
           <xref target="RFC3987"/>, <xref target="RFC5895"/>, and
@@ -251,6 +282,7 @@
         <t>Other than responding to any feedback that may be provided,
           no changes to any Unicode Consortium product is required.</t>
       </list></t>
+      
     </section>
 
     <section anchor="Acknowledgements" title="Acknowledgements">
