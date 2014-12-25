@@ -83,22 +83,24 @@
       competitive feature.  Therefore there is a need for the organizations
       involved to update and reconcile the various Internet Drafts,
       Recommendations, and Standards in this area.</t>
+
       <t>Currently, this document is for discussion purposes, with
-      possible next steps discussed in <xref target="nextsteps"/>. 
-      </t>
-      <t>Discussions have taken place on <eref target="mailto:public-ietf-w3c@w3.org"/>
-      and <eref target="apps-discuss@w3.org"/>. The W3C TAG
-      has discussed these issues in meetings and on their mailing list,
-      There has been limited discussion on the WebApps mailing list.(?)
-      </t>
+      possible next steps discussed in <xref target="nextsteps"/>.</t>
+
+      <t>Discussions have taken place on 
+      <eref target="mailto:public-ietf-w3c@w3.org">public-ietf-w3c@w3.org</eref>
+      and <eref target="apps-discuss@w3.org">public-ietf-w3c@w3.org</eref>. The
+      W3C TAG has discussed these issues in meetings and on their mailing
+      list.</t>
+
       <t>This document, test suite, reference implementation, and 
-      (the WebPlatform specification are being developed at
+      the WebPlatform specification are being developed at
       <eref target="https://github.com/webspecs/url"/>, including
       an issue tracker, Wiki, and related resources.
       'Pull' requests for edits to doocuments or tests are most welcome.
       Raising issues in <eref target="https://github.com/webspecs/url/issues">the
       GitHub tracker</eref> is also helpful.
-      Comments to the editors or on those mailing list in email
+      Comments to the editors or on those mailing lists in email
       are also welcome.
       </t>
 
@@ -114,7 +116,7 @@
       <t>The first standards-track specification for URLs was <xref target="RFC1738"/>
       in 1994. (That spec contains more background material.) It defined URLs
       as ASCII only.  <xref target="RFC2396"/> later separated the generic
-      syntax from concrete scheme definitions which would be defined in
+      syntax from concrete scheme definitions which are defined in
       separate RFCs.  Many of those scheme definitions turned out not to get
       the attention that they needed.</t>
 
@@ -122,10 +124,9 @@
       characters, it was widely feared that support for UTF-8 by ASCII-only
       systems would turn out to be problematic.  The tack was therefore taken
       to leave "URI" alone and define a new protocol element,
-      "IRI"; <xref target="RFC3987"/> was published in 2005 (in sync with the
+      "IRI".  <xref target="RFC3987"/> was published in 2005 (in sync with the
       <xref target="RFC3986"/> update to the URI definition).  This also
-      turned out not to get the attention it needed.
-      </t>
+      turned out not to get the attention it needed.</t>
 
       <t>The IRI-to-URI transformation specified in <xref target="RFC3987"/> had
       options; it wasn't a deterministic path. The URI-to-IRI transformation was
@@ -151,7 +152,7 @@
 
       <t>Independently, the HTML specifications in the WHATWG and W3C redefined
       "URL" in an attempt to match what some of the browsers were doing. This
-      definition was later moved out into the "URL - Living Standard"
+      definition was later moved out into the "URL Living Standard"
       <xref target="URL-LS"/>.</t>
 
       <t>When W3C produced <eref target="http://www.w3.org/TR/html5/">the HTML5
@@ -167,6 +168,14 @@
       did not fully addressed IRI processing.  Subsequently, the Unicode consortium
       produced <xref target="UTS-46"/>.</t>
 
+	
+      <t>The web security working group developed
+      <xref target="RFC6454"/> ("The Web Origin Concept"), which 
+      was refined in the W3C <xref target="CORS"/> specification,
+      which <xref target="URL-LS"/> redefines.  Updates
+      in the IETF were abandoned.  Work continues in the WHATWG in
+      the <xref target="FETCH"/> specification.
+      </t>
 
     </section>
 
@@ -213,12 +222,6 @@
         <eref target="http://datatracker.ietf.org/doc/draft-ietf-urnbis-semantics-clarif/"/>
         updates <xref target="RFC3986"/>.
         </t>
-	
-	<t>The web security working group developed
-	<xref target="RFC6454"/> ("The Web Origin Concept"), which 
-	<xref target="URL-LS"/> redefines. Updates
-	in the IETF were abandoned.
-	</t>
       </section>
 
       <section title="WHATWG">
@@ -455,6 +458,30 @@
           <date year="2014" month="October"/>
         </front>
         <seriesInfo name="Internet-Draft" value="draft-ietf-appsawg-uri-scheme-reg-04"/>
+      </reference>
+
+      <reference anchor="CORS"
+                 target="http://www.w3.org/TR/cors/">
+        <front>
+          <title>Cross-Origin Resource Sharing</title>
+
+          <author initials="A.K." surname="van Kesteren">
+          </author>
+
+          <date year="2014" />
+        </front>
+      </reference>
+
+      <reference anchor="FETCH"
+                 target="https://fetch.spec.whatwg.org/">
+        <front>
+          <title>Fetch Living Standard</title>
+
+          <author initials="A.K." surname="van Kesteren">
+          </author>
+
+          <date year="2014" />
+        </front>
       </reference>
 
       <reference anchor="iri-3987bis">
