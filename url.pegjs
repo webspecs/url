@@ -322,7 +322,7 @@ NonRelativeUrl
     <li>Set $result.scheme to the <a>value of</a> @NonFileRelativeScheme.
 
     <li>If $result.host is either an empty string or contains a
-    colon, then terminate parsing with a <a>parse exception</a>.
+    colon (U+003A), then terminate parsing with a <a>parse exception</a>.
 
     <li>If @Path <a>is present</a>, set $result.path to the <a>value of</a>
     @Path.
@@ -348,9 +348,10 @@ NonRelativeUrl
     <li>Let $result be an empty object.
     <li>Set $result.scheme to $base.scheme.
     <li>Set $result.host to $base.host.
-    <li>Set $result.path to @Path
+    <li>if the length of @Path is greater than zero, and the first segment
+      in @Path contains a colon (U+003A), indicate a <a>conformance error</a>.
     <li>Replace $result.path with the <a>path concatenation</a> of $base.path
-    and $result.Path.
+    and @Path.
     </ol>
 
    </ol>
@@ -428,6 +429,11 @@ RelativeUrl
     var result = copy({path: path}, path);
     result.scheme = base.scheme;
     result.host = base.host; 
+
+    if (result.path.length > 0 && result.path[0].indexOf(':') != -1) {
+      result.exception = 'leading segment in a relative path contains a colon';
+    }
+
     result.path = Url.pathConcat(base.path, result.path)
 
     return result

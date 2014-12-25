@@ -438,11 +438,15 @@ optionally with an <a>encoding</a>
   <p>If <var>url</var> is not given:
 
   <ol>
-   <li><p>Set <var>url</var> to a new <a>URL</a>.
+    <li><p>Set <var>url</var> to a new <a>URL</a>.
 
-   <li><p>Remove any leading and trailing
-   <a>ASCII whitespace</a> from
-   <var>input</var>.
+    <li><p>If leading or trailing <a>ASCII whitespace</a> codepoints are
+    present in the <var>input</var>:</p>
+    <ol>
+      <li><p>Indicate a <a>conformance error</a>.</p></li>
+      <li><p>Remove leading and trailing <a>ASCII whitespace</a> from
+        <var>input</var>.<p></li>
+    </ol>
   </ol>
 
  <li><p>If <var>base</var> is not given, set it a new <a>URL</a> with

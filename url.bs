@@ -425,11 +425,15 @@ optionally with an <a>encoding</a>
   <p>If <var>url</var> is not given:
 
   <ol>
-   <li><p>Set <var>url</var> to a new <a>URL</a>.
+    <li><p>Set <var>url</var> to a new <a>URL</a>.
 
-   <li><p>Remove any leading and trailing
-   <a>ASCII whitespace</a> from
-   <var>input</var>.
+    <li><p>If leading or trailing <a>ASCII whitespace</a> codepoints are
+    present in the <var>input</var>:</p>
+    <ol>
+      <li><p>Indicate a <a>conformance error</a>.</p></li>
+      <li><p>Remove leading and trailing <a>ASCII whitespace</a> from
+        <var>input</var>.<p></li>
+    </ol>
   </ol>
 
  <li><p>If <var>base</var> is not given, set it a new <a>URL</a> with
@@ -510,17 +514,17 @@ returns: {
 <pre class=railroad>
 Sequence:
   Choice:
-    N: rule-file-url
-    N: rule-non-relative-url
-    N: rule-relative-url
+    N: file-url
+    N: non-relative-url
+    N: relative-url
   Optional:
     Sequence:
       T: ?
-      N: rule-query
+      N: query
   Optional:
     Sequence:
       T: #
-      N: rule-fragment
+      N: fragment
 </pre>
 
 <ol>
@@ -558,7 +562,7 @@ Choice:
       Choice:
         T: \
         T: /
-    N: rule-path
+    N: path
   Sequence:
     ZeroOrMore:
       T: /
@@ -566,7 +570,7 @@ Choice:
     T: |
     Optional:
       T: /
-    N: rule-path
+    N: path
   Sequence:
     T: file
     T: :
@@ -574,10 +578,10 @@ Choice:
       Sequence:
         T: /
         T: /
-        N: rule-host
+        N: host
     ZeroOrMore:
       T: /
-    N: rule-path
+    N: path
 </pre>
 
  <em>"<code><code>file</code></code>" is to be matched case insensitively.</em>
@@ -656,9 +660,9 @@ returns: {
 
 <pre class=railroad>
 Sequence:
-  N: rule-scheme
+  N: scheme
   T: :
-  N: rule-scheme-data
+  N: scheme-data
 </pre>
 
  <div class=example><code>javascript:alert("Hello, world!");</code></div>
@@ -701,7 +705,7 @@ Choice:
   Sequence:
     Optional:
       Sequence:
-        N: rule-non-file-relative-scheme
+        N: non-file-relative-scheme
         T: :
     Choice:
       T: /
@@ -709,32 +713,32 @@ Choice:
     Choice:
       T: /
       T: \
-    N: rule-authority
+    N: authority
     Optional:
       Sequence:
         Choice:
           T: /
           T: \
-        N: rule-path
+        N: path
   Sequence:
-    N: rule-non-file-relative-scheme
+    N: non-file-relative-scheme
     T: :
     Optional:
       Choice:
         T: \
         T: /
-    N: rule-authority
+    N: authority
     Optional:
       Sequence:
         Choice:
           T: /
           T: \
-        N: rule-path
+        N: path
   Sequence:
-    N: rule-non-file-relative-scheme
+    N: non-file-relative-scheme
     T: :
-    N: rule-path
-  N: rule-path
+    N: path
+  N: path
 </pre>
 
   <ol>
@@ -777,7 +781,7 @@ Choice:
   <li>Set <code>result.scheme</code> to the <a>value of</a> <code class=grammar-rule><a href=#rule-non-file-relative-scheme>non-file-relative-scheme</a></code>.
 
   <li>If <code>result.host</code> is either an empty string or contains a
-  colon, then terminate parsing with a <a>parse exception</a>.
+  colon (<code>U+003A</code>), then terminate parsing with a <a>parse exception</a>.
 
   <li>If <code class=grammar-rule><a href=#rule-path>path</a></code> <a>is present</a>, set <code>result.path</code> to the <a>value of</a>
   <code class=grammar-rule><a href=#rule-path>path</a></code>.
@@ -803,9 +807,10 @@ Choice:
   <li>Let <code>result</code> be an empty object.
   <li>Set <code>result.scheme</code> to <code>base.scheme</code>.
   <li>Set <code>result.host</code> to <code>base.host</code>.
-  <li>Set <code>result.path</code> to <code class=grammar-rule><a href=#rule-path>path</a></code>
+  <li>if the length of <code class=grammar-rule><a href=#rule-path>path</a></code> is greater than zero, and the first segment
+    in <code class=grammar-rule><a href=#rule-path>path</a></code> contains a colon (<code>U+003A</code>), indicate a <a>conformance error</a>.
   <li>Replace <code>result.path</code> with the <a>path concatenation</a> of <code>base.path</code>
-  and <code>result.Path</code>.
+  and <code class=grammar-rule><a href=#rule-path>path</a></code>.
   </ol>
 
  </ol>
@@ -875,17 +880,17 @@ returns: {
 Sequence:
   Optional:
     Sequence:
-      N: rule-user
+      N: user
       Optional:
         Sequence:
           T: :
-          N: rule-password
+          N: password
       T: @
-  N: rule-host
+  N: host
   Optional:
     Sequence:
       T: :
-      N: rule-port
+      N: port
 </pre>
 
 <ol>
@@ -964,9 +969,9 @@ returns: String
 <pre class=railroad>
 Choice:
   Sequence:
-    N: rule-ipv6addr
+    N: ipv6addr
   Sequence:
-    N: rule-ipv4addr
+    N: ipv4addr
   ZeroOrMore:
     T: any except [:/\?#]
 </pre>
@@ -1017,16 +1022,16 @@ Sequence:
       Sequence:
         ZeroOrMore:
           Sequence:
-            N: rule-h16
+            N: h16
             T: :
         T: :
     ZeroOrMore:
       Sequence:
-        N: rule-h16
+        N: h16
         T: :
     Choice:
-      N: rule-h16
-      N: rule-ls32
+      N: h16
+      N: ls32
   T: ]
 </pre>
 
@@ -1069,17 +1074,17 @@ returns: String
 Sequence:
   Optional:
     Sequence:
-      N: rule-number
+      N: number
       T: .
       Optional:
         Sequence:
-          N: rule-number
+          N: number
           T: .
           Optional:
             Sequence:
-              N: rule-number
+              N: number
               T: .
-  N: rule-number
+  N: number
 </pre>
 
 <ol>
@@ -1173,13 +1178,13 @@ returns: String
 
 <pre class=railroad>
 Sequence:
-  N: rule-decimal-byte
+  N: decimal-byte
   T: .
-  N: rule-decimal-byte
+  N: decimal-byte
   T: .
-  N: rule-decimal-byte
+  N: decimal-byte
   T: .
-  N: rule-decimal-byte
+  N: decimal-byte
 </pre>
 
 Return four decimal <a title='IPv4 piece'><code>8</code>-bit pieces</a> separated by full
@@ -1375,7 +1380,7 @@ rules with <code>url</code> set to a non-<code>null</code> value.
 
 <pre class=railroad>
 Sequence:
-  N: rule-scheme
+  N: scheme
   Optional:
     T: :
   ZeroOrMore:
@@ -1416,11 +1421,11 @@ using the
 
 <pre class=railroad>
 Sequence:
-  N: rule-host
+  N: host
   Optional:
     Sequence:
       T: :
-      N: rule-port
+      N: port
   Optional:
     Sequence:
       Optional:
@@ -1439,7 +1444,7 @@ If <code class=grammar-rule><a href=#rule-port>port</a></code> is present, set <
 
 <pre class=railroad>
 Sequence:
-  N: rule-host
+  N: host
   Optional:
     T: any of [:/\?#]
   ZeroOrMore:
@@ -1454,7 +1459,7 @@ Set <code>url.host</code> to the value returned by <code class=grammar-rule><a h
 
 <pre class=railroad>
 Sequence:
-  N: rule-port
+  N: port
   Optional:
     T: any of [/\?#]
   ZeroOrMore:
@@ -1476,7 +1481,7 @@ Sequence:
     Choice:
       T: /
       T: \
-  N: rule-path
+  N: path
   Optional:
     T: any of [/\?#]
   ZeroOrMore:

@@ -290,8 +290,15 @@ class Url
   def initialize(input, base)
     begin
       base = UrlParser.parse(base) if base
-      input.sub! /^[\u0009\u000A\u000C\u000D\u0020]+/, ''
-      input.sub! /[\u0009\u000A\u000C\u000D\u0020]+$/, ''
+
+      if input =~ /^[\u0009\u000A\u000C\u000D\u0020] |
+                    [\u0009\u000A\u000C\u000D\u0020]$/x
+      then
+        this._exception = 'invalid leading/trailing whitespace characters'
+        input.sub! /^[\u0009\u000A\u000C\u000D\u0020]+/, ''
+        input.sub! /[\u0009\u000A\u000C\u000D\u0020]+$/, ''
+      end
+
       url = UrlParser.parse(input, base: base)
 
       @scheme = nil

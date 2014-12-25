@@ -27,7 +27,7 @@ def expression(node, indent, output)
       expression(alternative, indent+2, output)
     end
   elsif node['type'] == 'rule_ref'
-    output.puts ''.ljust(indent) + 'N: rule-' + hyphenate(node['name'])
+    output.puts ''.ljust(indent) + 'N: ' + hyphenate(node['name'])
   elsif node['type'] == 'literal'
     output.puts ''.ljust(indent) + 'T: ' + node['value']
   elsif node['type'] == 'any'
