@@ -10,6 +10,7 @@ evaluate/Cargo.lock
 evaluate/*.jar
 evaluate/target/
 evaluate/*.class
+evaluate/*.exe
 evaluate/urlsettest.json
 evaluate/urltestdata.json
 

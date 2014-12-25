@@ -15,6 +15,7 @@ urlsettest.json: ../reference-implementation/test/yml2test.rb \
 
 useragent-results/index: resultindex.rb \
 	useragent-results/addressable \
+	useragent-results/csharp \
 	useragent-results/galimatias \
 	useragent-results/nodejs \
 	useragent-results/perl \
@@ -33,6 +34,7 @@ clean:
 	rfc9866.js \
 	useragent-results/index \
 	useragent-results/addressable \
+	useragent-results/csharp \
 	useragent-results/galimatias \
 	useragent-results/nodejs \
 	useragent-results/perl \
@@ -60,13 +62,20 @@ useragent-results/perl: testuri.pl urltestdata.json
 useragent-results/python: testurllib.py urltestdata.json
 	python3 testurllib.py > $@
 
+useragent-results/addressable: testaddressable.rb urltestdata.json
+	ruby testaddressable.rb > $@
+
+testuri.exe: testuri.cs
+	mcs testuri.cs /reference:System.Json
+
+useragent-results/csharp: testuri.exe urltestdata.json
+	./testuri.exe urltestdata.json | \
+        ruby -r json -e "puts JSON.pretty_generate(JSON.parse(STDIN.read))" > $@
+
 testgalimatias.class: testgalimatias.java \
 	icu4j-54.1.1.jar galimatias-0.2.0.jar json-20140107.jar
 	export CLASSPATH=.:icu4j-54.1.1.jar:galimatias-0.2.0.jar:json-20140107.jar; \
 	javac testgalimatias.java
-
-useragent-results/addressable: testaddressable.rb urltestdata.json
-	ruby testaddressable.rb > $@
 
 useragent-results/galimatias: testgalimatias.class urltestdata.json
 	export CLASSPATH=.:icu4j-54.1.1.jar:galimatias-0.2.0.jar:json-20140107.jar; \

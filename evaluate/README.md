@@ -7,6 +7,7 @@ The source for tests is contained in the [url](https://github.com/w3c/web-platfo
 Browser results can be obtained by deploying [urltest.cgi](urltest.cgi), and visiting that page using a variety
 of browsers.  A number of evaluation programs are also included:
 
+   * [C#](testuri.cs) - [System.URI](http://msdn.microsoft.com/en-us/library/system.uri)
    * [Java](testgalimatis.java) - [galimatias](https://github.com/smola/galimatias#galimatias)
    * [JavaScript](testrefimpl.js) - [reference implementation](https://github.com/webspecs/url/tree/develop/reference-implementation#reference-implementation-and-tests)
    * [Node.js](testnodejs.js) - [URL](http://nodejs.org/api/url.html)

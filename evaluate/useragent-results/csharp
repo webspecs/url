@@ -1,0 +1,2188 @@
+{
+  "useragent": "System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+  "constructor": [
+    {
+      "input": "http://example\t.\norg",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/http://example\t.\norg",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/http://example%09.%0Aorg"
+    },
+    {
+      "input": "http://user:pass@foo:21/bar;par?b#c",
+      "base": "http://example.org/foo/bar",
+      "href": "http://user:pass@foo:21/bar;par?b#c",
+      "protocol": "http:",
+      "username": "user",
+      "password": "pass",
+      "hostname": "foo",
+      "port": 21,
+      "pathname": "/bar;par",
+      "search": "?b",
+      "hash": "#c"
+    },
+    {
+      "input": "http:foo.com",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/foo.com",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/foo.com"
+    },
+    {
+      "input": "\t   :foo.com   \n",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/\t   :foo.com   \n",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/%09%20%20%20:foo.com%20%20%20%0A"
+    },
+    {
+      "input": " foo.com  ",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/ foo.com  ",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/%20foo.com%20%20"
+    },
+    {
+      "input": "a:\t foo.com",
+      "base": "http://example.org/foo/bar",
+      "exception": "Relative file path is not allowed."
+    },
+    {
+      "input": "http://f:21/ b ? d # e ",
+      "base": "http://example.org/foo/bar",
+      "href": "http://f:21/ b ? d # e",
+      "protocol": "http:",
+      "hostname": "f",
+      "port": 21,
+      "pathname": "/%20b%20",
+      "search": "?%20d%20",
+      "hash": "#%20e"
+    },
+    {
+      "input": "http://f:/c",
+      "base": "http://example.org/foo/bar",
+      "href": "http://f/c",
+      "protocol": "http:",
+      "hostname": "f",
+      "pathname": "/c"
+    },
+    {
+      "input": "http://f:0/c",
+      "base": "http://example.org/foo/bar",
+      "href": "http://f:0/c",
+      "protocol": "http:",
+      "hostname": "f",
+      "port": 0,
+      "pathname": "/c"
+    },
+    {
+      "input": "http://f:00000000000000/c",
+      "base": "http://example.org/foo/bar",
+      "href": "http://f:0/c",
+      "protocol": "http:",
+      "hostname": "f",
+      "port": 0,
+      "pathname": "/c"
+    },
+    {
+      "input": "http://f:00000000000000000000080/c",
+      "base": "http://example.org/foo/bar",
+      "href": "http://f/c",
+      "protocol": "http:",
+      "hostname": "f",
+      "pathname": "/c"
+    },
+    {
+      "input": "http://f:b/c",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/http://f:b/c",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/http://f:b/c"
+    },
+    {
+      "input": "http://f: /c",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/http://f: /c",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/http://f:%20/c"
+    },
+    {
+      "input": "http://f:\n/c",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/http://f:\n/c",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/http://f:%0A/c"
+    },
+    {
+      "input": "http://f:fifty-two/c",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/http://f:fifty-two/c",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/http://f:fifty-two/c"
+    },
+    {
+      "input": "http://f:999999/c",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/http://f:999999/c",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/http://f:999999/c"
+    },
+    {
+      "input": "http://f: 21 / b ? d # e ",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/http://f: 21 / b ? d # e ",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/http://f:%2021%20/%20b%20",
+      "search": "?%20d%20",
+      "hash": "#%20e%20"
+    },
+    {
+      "input": "",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/bar",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/bar"
+    },
+    {
+      "input": "  \t",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/  \t",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/%20%20%09"
+    },
+    {
+      "input": ":foo.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/foo.com/",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/foo.com/"
+    },
+    {
+      "input": ":foo.com\\",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/foo.com/",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/foo.com%5C"
+    },
+    {
+      "input": ":",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/bar",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/bar"
+    },
+    {
+      "input": ":a",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/a",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/a"
+    },
+    {
+      "input": ":/",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/:/",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/:/"
+    },
+    {
+      "input": ":\\",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo//",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/%5C"
+    },
+    {
+      "input": ":#",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/bar#",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/bar",
+      "hash": "#"
+    },
+    {
+      "input": "#",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/bar#",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/bar",
+      "hash": "#"
+    },
+    {
+      "input": "#/",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/bar#/",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/bar",
+      "hash": "#/"
+    },
+    {
+      "input": "#\\",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/bar#\\",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/bar",
+      "hash": "#%5C"
+    },
+    {
+      "input": "#;?",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/bar#;?",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/bar",
+      "hash": "#;?"
+    },
+    {
+      "input": "?",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/bar?",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/bar",
+      "search": "?"
+    },
+    {
+      "input": "/",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/"
+    },
+    {
+      "input": ":23",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/23",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/23"
+    },
+    {
+      "input": "/:23",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/:23",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/:23"
+    },
+    {
+      "input": "::",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/:",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/:"
+    },
+    {
+      "input": "::23",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/:23",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/:23"
+    },
+    {
+      "input": "foo://",
+      "base": "http://example.org/foo/bar",
+      "href": "foo:///",
+      "protocol": "foo:",
+      "hostname": "",
+      "pathname": "/"
+    },
+    {
+      "input": "http://a:b@c:29/d",
+      "base": "http://example.org/foo/bar",
+      "href": "http://a:b@c:29/d",
+      "protocol": "http:",
+      "username": "a",
+      "password": "b",
+      "hostname": "c",
+      "port": 29,
+      "pathname": "/d"
+    },
+    {
+      "input": "http::@c:29",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/:@c:29",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/:@c:29"
+    },
+    {
+      "input": "http://&a:foo(b]c@d:2/",
+      "base": "http://example.org/foo/bar",
+      "href": "http://&a:foo(b]c@d:2/",
+      "protocol": "http:",
+      "username": "&a",
+      "password": "foo(b]c",
+      "hostname": "d",
+      "port": 2,
+      "pathname": "/"
+    },
+    {
+      "input": "http://::@c@d:2",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/http://::@c@d:2",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/http://::@c@d:2"
+    },
+    {
+      "input": "http://foo.com:b@d/",
+      "base": "http://example.org/foo/bar",
+      "href": "http://foo.com:b@d/",
+      "protocol": "http:",
+      "username": "foo.com",
+      "password": "b",
+      "hostname": "d",
+      "pathname": "/"
+    },
+    {
+      "input": "http://foo.com/\\@",
+      "base": "http://example.org/foo/bar",
+      "href": "http://foo.com//@",
+      "protocol": "http:",
+      "hostname": "foo.com",
+      "pathname": "//@"
+    },
+    {
+      "input": "http:\\\foo.com\\",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo///foo.com/",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/%5C%5Cfoo.com%5C"
+    },
+    {
+      "input": "http:\\a\\b:c\\d@foo.com\\",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo///a/b:c/d@foo.com/",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/%5C%5Ca%5Cb:c%5Cd@foo.com%5C"
+    },
+    {
+      "input": "foo:/",
+      "base": "http://example.org/foo/bar",
+      "href": "foo:/",
+      "protocol": "foo:",
+      "hostname": "",
+      "pathname": "/"
+    },
+    {
+      "input": "foo:/bar.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "foo:/bar.com/",
+      "protocol": "foo:",
+      "hostname": "",
+      "pathname": "/bar.com/"
+    },
+    {
+      "input": "foo://///////",
+      "base": "http://example.org/foo/bar",
+      "href": "foo://///////",
+      "protocol": "foo:",
+      "hostname": "",
+      "pathname": "///////"
+    },
+    {
+      "input": "foo://///////bar.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "foo://///////bar.com/",
+      "protocol": "foo:",
+      "hostname": "",
+      "pathname": "///////bar.com/"
+    },
+    {
+      "input": "foo:////://///",
+      "base": "http://example.org/foo/bar",
+      "href": "foo:////://///",
+      "protocol": "foo:",
+      "hostname": "",
+      "pathname": "//://///"
+    },
+    {
+      "input": "c:/foo",
+      "base": "http://example.org/foo/bar",
+      "href": "file:///c:/foo",
+      "protocol": "file:",
+      "hostname": "",
+      "pathname": "/c:/foo"
+    },
+    {
+      "input": "//foo/bar",
+      "base": "http://example.org/foo/bar",
+      "href": "http://foo/bar",
+      "protocol": "http:",
+      "hostname": "foo",
+      "pathname": "/bar"
+    },
+    {
+      "input": "http://foo/path;a??e#f#g",
+      "base": "http://example.org/foo/bar",
+      "href": "http://foo/path;a??e#f%23g",
+      "protocol": "http:",
+      "hostname": "foo",
+      "pathname": "/path;a",
+      "search": "??e",
+      "hash": "#f%23g"
+    },
+    {
+      "input": "http://foo/abcd?efgh?ijkl",
+      "base": "http://example.org/foo/bar",
+      "href": "http://foo/abcd?efgh?ijkl",
+      "protocol": "http:",
+      "hostname": "foo",
+      "pathname": "/abcd",
+      "search": "?efgh?ijkl"
+    },
+    {
+      "input": "http://foo/abcd#foo?bar",
+      "base": "http://example.org/foo/bar",
+      "href": "http://foo/abcd#foo?bar",
+      "protocol": "http:",
+      "hostname": "foo",
+      "pathname": "/abcd",
+      "hash": "#foo?bar"
+    },
+    {
+      "input": "[61:24:74]:98",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/[61:24:74]:98",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/%5B61:24:74%5D:98"
+    },
+    {
+      "input": "http:[61:27]/:foo",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/[61:27]/:foo",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/%5B61:27%5D/:foo"
+    },
+    {
+      "input": "http://[1::2]:3:4",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/http://[1::2]:3:4",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/http://%5B1::2%5D:3:4"
+    },
+    {
+      "input": "http://2001::1",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/http://2001::1",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/http://2001::1"
+    },
+    {
+      "input": "http://2001::1]",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/http://2001::1]",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/http://2001::1%5D"
+    },
+    {
+      "input": "http://2001::1]:80",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/http://2001::1]:80",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/http://2001::1%5D:80"
+    },
+    {
+      "input": "http://[2001::1]",
+      "base": "http://example.org/foo/bar",
+      "href": "http://[2001:0000:0000:0000:0000:0000:0000:0001]/",
+      "protocol": "http:",
+      "hostname": "[2001:0000:0000:0000:0000:0000:0000:0001]",
+      "pathname": "/"
+    },
+    {
+      "input": "http://[2001::1]:80",
+      "base": "http://example.org/foo/bar",
+      "href": "http://[2001:0000:0000:0000:0000:0000:0000:0001]/",
+      "protocol": "http:",
+      "hostname": "[2001:0000:0000:0000:0000:0000:0000:0001]",
+      "pathname": "/"
+    },
+    {
+      "input": "http:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/http:/example.com/",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/http:/example.com/"
+    },
+    {
+      "input": "ftp:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/ftp:/example.com/",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/ftp:/example.com/"
+    },
+    {
+      "input": "https:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/https:/example.com/",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/https:/example.com/"
+    },
+    {
+      "input": "madeupscheme:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "madeupscheme:/example.com/",
+      "protocol": "madeupscheme:",
+      "hostname": "",
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "file:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/file:/example.com/",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/file:/example.com/"
+    },
+    {
+      "input": "ftps:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "ftps:/example.com/",
+      "protocol": "ftps:",
+      "hostname": "",
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "gopher:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/gopher:/example.com/",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/gopher:/example.com/"
+    },
+    {
+      "input": "ws:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "ws:/example.com/",
+      "protocol": "ws:",
+      "hostname": "",
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "wss:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "wss:/example.com/",
+      "protocol": "wss:",
+      "hostname": "",
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "data:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "data:/example.com/",
+      "protocol": "data:",
+      "hostname": "",
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "javascript:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "javascript:/example.com/",
+      "protocol": "javascript:",
+      "hostname": "",
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "mailto:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "mailto:/example.com/",
+      "protocol": "mailto:",
+      "hostname": "",
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "http:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/example.com/",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/example.com/"
+    },
+    {
+      "input": "ftp:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "ftp://example.com/",
+      "protocol": "ftp:",
+      "hostname": "example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "https:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "https://example.com/",
+      "protocol": "https:",
+      "hostname": "example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "madeupscheme:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "madeupscheme:example.com/",
+      "protocol": "madeupscheme:",
+      "hostname": "",
+      "pathname": "example.com/"
+    },
+    {
+      "input": "ftps:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "ftps:example.com/",
+      "protocol": "ftps:",
+      "hostname": "",
+      "pathname": "example.com/"
+    },
+    {
+      "input": "gopher:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "gopher://example.com/",
+      "protocol": "gopher:",
+      "hostname": "example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "ws:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "ws:example.com/",
+      "protocol": "ws:",
+      "hostname": "",
+      "pathname": "example.com/"
+    },
+    {
+      "input": "wss:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "wss:example.com/",
+      "protocol": "wss:",
+      "hostname": "",
+      "pathname": "example.com/"
+    },
+    {
+      "input": "data:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "data:example.com/",
+      "protocol": "data:",
+      "hostname": "",
+      "pathname": "example.com/"
+    },
+    {
+      "input": "javascript:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "javascript:example.com/",
+      "protocol": "javascript:",
+      "hostname": "",
+      "pathname": "example.com/"
+    },
+    {
+      "input": "mailto:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "mailto:example.com/",
+      "protocol": "mailto:",
+      "hostname": "example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "/a/b/c",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/a/b/c",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/a/b/c"
+    },
+    {
+      "input": "/a/ /c",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/a/ /c",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/a/%20/c"
+    },
+    {
+      "input": "/a%2fc",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/a/c",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/a%2fc"
+    },
+    {
+      "input": "/a/%2f/c",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/a///c",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/a/%2f/c"
+    },
+    {
+      "input": "#β",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/bar#β",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/bar",
+      "hash": "#%CE%B2"
+    },
+    {
+      "input": "data:text/html,test#test",
+      "base": "http://example.org/foo/bar",
+      "href": "data:text/html,test#test",
+      "protocol": "data:",
+      "hostname": "",
+      "pathname": "text/html,test",
+      "hash": "#test"
+    },
+    {
+      "input": "file:c:\\foo\\bar.html",
+      "base": "file:///tmp/mock/path",
+      "href": "file:///tmp/mock/c:/foo/bar.html",
+      "protocol": "file:",
+      "hostname": "",
+      "pathname": "/tmp/mock/c:%5Cfoo%5Cbar.html"
+    },
+    {
+      "input": "  File:c|////foo\\bar.html",
+      "base": "file:///tmp/mock/path",
+      "href": "file:///tmp/mock/  File:c|////foo/bar.html",
+      "protocol": "file:",
+      "hostname": "",
+      "pathname": "/tmp/mock/%20%20File:c%7C////foo%5Cbar.html"
+    },
+    {
+      "input": "C|/foo/bar",
+      "base": "file:///tmp/mock/path",
+      "href": "file:///tmp/mock/C|/foo/bar",
+      "protocol": "file:",
+      "hostname": "",
+      "pathname": "/tmp/mock/C%7C/foo/bar"
+    },
+    {
+      "input": "/C|\\foo\\bar",
+      "base": "file:///tmp/mock/path",
+      "href": "file:///C|/foo/bar",
+      "protocol": "file:",
+      "hostname": "",
+      "pathname": "/C%7C%5Cfoo%5Cbar"
+    },
+    {
+      "input": "//C|/foo/bar",
+      "base": "file:///tmp/mock/path",
+      "exception": "Invalid URI: The hostname could not be parsed."
+    },
+    {
+      "input": "//server/file",
+      "base": "file:///tmp/mock/path",
+      "href": "file://server/file",
+      "protocol": "file:",
+      "hostname": "server",
+      "pathname": "/file"
+    },
+    {
+      "input": "\\server\\file",
+      "base": "file:///tmp/mock/path",
+      "href": "file://server/file",
+      "protocol": "file:",
+      "hostname": "server",
+      "pathname": "/file"
+    },
+    {
+      "input": "/\\server/file",
+      "base": "file:///tmp/mock/path",
+      "href": "file:////server/file",
+      "protocol": "file:",
+      "hostname": "",
+      "pathname": "/%5Cserver/file"
+    },
+    {
+      "input": "file:///foo/bar.txt",
+      "base": "file:///tmp/mock/path",
+      "href": "file:///foo/bar.txt",
+      "protocol": "file:",
+      "hostname": "",
+      "pathname": "/foo/bar.txt"
+    },
+    {
+      "input": "file:///home/me",
+      "base": "file:///tmp/mock/path",
+      "href": "file:///home/me",
+      "protocol": "file:",
+      "hostname": "",
+      "pathname": "/home/me"
+    },
+    {
+      "input": "//",
+      "base": "file:///tmp/mock/path",
+      "href": "file:///",
+      "protocol": "file:",
+      "hostname": "",
+      "pathname": "/"
+    },
+    {
+      "input": "///",
+      "base": "file:///tmp/mock/path",
+      "href": "file:///",
+      "protocol": "file:",
+      "hostname": "",
+      "pathname": "/"
+    },
+    {
+      "input": "///test",
+      "base": "file:///tmp/mock/path",
+      "href": "file:///test",
+      "protocol": "file:",
+      "hostname": "",
+      "pathname": "/test"
+    },
+    {
+      "input": "file://test",
+      "base": "file:///tmp/mock/path",
+      "href": "file://test/",
+      "protocol": "file:",
+      "hostname": "test",
+      "pathname": "/"
+    },
+    {
+      "input": "file://localhost",
+      "base": "file:///tmp/mock/path",
+      "href": "file://localhost/",
+      "protocol": "file:",
+      "hostname": "localhost",
+      "pathname": "/"
+    },
+    {
+      "input": "file://localhost/",
+      "base": "file:///tmp/mock/path",
+      "href": "file://localhost/",
+      "protocol": "file:",
+      "hostname": "localhost",
+      "pathname": "/"
+    },
+    {
+      "input": "file://localhost/test",
+      "base": "file:///tmp/mock/path",
+      "href": "file://localhost/test",
+      "protocol": "file:",
+      "hostname": "localhost",
+      "pathname": "/test"
+    },
+    {
+      "input": "test",
+      "base": "file:///tmp/mock/path",
+      "href": "file:///tmp/mock/test",
+      "protocol": "file:",
+      "hostname": "",
+      "pathname": "/tmp/mock/test"
+    },
+    {
+      "input": "file:test",
+      "base": "file:///tmp/mock/path",
+      "href": "file:///tmp/mock/test",
+      "protocol": "file:",
+      "hostname": "",
+      "pathname": "/tmp/mock/test"
+    },
+    {
+      "input": "http://example.com/././foo",
+      "base": "about:blank",
+      "href": "http://example.com/foo",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/foo"
+    },
+    {
+      "input": "http://example.com/./.foo",
+      "base": "about:blank",
+      "href": "http://example.com/.foo",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/.foo"
+    },
+    {
+      "input": "http://example.com/foo/.",
+      "base": "about:blank",
+      "href": "http://example.com/foo",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/foo"
+    },
+    {
+      "input": "http://example.com/foo/./",
+      "base": "about:blank",
+      "href": "http://example.com/foo/",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/foo/"
+    },
+    {
+      "input": "http://example.com/foo/bar/..",
+      "base": "about:blank",
+      "href": "http://example.com/foo",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/foo"
+    },
+    {
+      "input": "http://example.com/foo/bar/../",
+      "base": "about:blank",
+      "href": "http://example.com/foo/",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/foo/"
+    },
+    {
+      "input": "http://example.com/foo/..bar",
+      "base": "about:blank",
+      "href": "http://example.com/foo/..bar",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/foo/..bar"
+    },
+    {
+      "input": "http://example.com/foo/bar/../ton",
+      "base": "about:blank",
+      "href": "http://example.com/foo/ton",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/foo/ton"
+    },
+    {
+      "input": "http://example.com/foo/bar/../ton/../../a",
+      "base": "about:blank",
+      "href": "http://example.com/a",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/a"
+    },
+    {
+      "input": "http://example.com/foo/../../..",
+      "base": "about:blank",
+      "href": "http://example.com/",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "http://example.com/foo/../../../ton",
+      "base": "about:blank",
+      "href": "http://example.com/ton",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/ton"
+    },
+    {
+      "input": "http://example.com/foo/%2e",
+      "base": "about:blank",
+      "href": "http://example.com/foo",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/foo"
+    },
+    {
+      "input": "http://example.com/foo/%2e%2",
+      "base": "about:blank",
+      "href": "http://example.com/foo/.%252",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/foo/.%252"
+    },
+    {
+      "input": "http://example.com/foo/%2e./%2e%2e/.%2e/%2e.bar",
+      "base": "about:blank",
+      "href": "http://example.com/..bar",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/..bar"
+    },
+    {
+      "input": "http://example.com////../..",
+      "base": "about:blank",
+      "href": "http://example.com/",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "http://example.com/foo/bar//../..",
+      "base": "about:blank",
+      "href": "http://example.com/foo",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/foo"
+    },
+    {
+      "input": "http://example.com/foo/bar//..",
+      "base": "about:blank",
+      "href": "http://example.com/foo/bar",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/foo/bar"
+    },
+    {
+      "input": "http://example.com/foo",
+      "base": "about:blank",
+      "href": "http://example.com/foo",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/foo"
+    },
+    {
+      "input": "http://example.com/%20foo",
+      "base": "about:blank",
+      "href": "http://example.com/ foo",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/%20foo"
+    },
+    {
+      "input": "http://example.com/foo%",
+      "base": "about:blank",
+      "href": "http://example.com/foo%25",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/foo%25"
+    },
+    {
+      "input": "http://example.com/foo%2",
+      "base": "about:blank",
+      "href": "http://example.com/foo%252",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/foo%252"
+    },
+    {
+      "input": "http://example.com/foo%2zbar",
+      "base": "about:blank",
+      "href": "http://example.com/foo%252zbar",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/foo%252zbar"
+    },
+    {
+      "input": "http://example.com/foo%2Â©zbar",
+      "base": "about:blank",
+      "href": "http://example.com/foo%252Â©zbar",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/foo%252%C3%82%C2%A9zbar"
+    },
+    {
+      "input": "http://example.com/foo%41%7a",
+      "base": "about:blank",
+      "href": "http://example.com/fooAz",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/foo%41%7a"
+    },
+    {
+      "input": "http://example.com/foo\t%91",
+      "base": "about:blank",
+      "href": "http://example.com/foo\t",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/foo%09%C2%91%91"
+    },
+    {
+      "input": "http://example.com/foo%00%51",
+      "base": "about:blank",
+      "href": "http://example.com/foo\u0000Q",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/foo%00%51"
+    },
+    {
+      "input": "http://example.com/(%28:%3A%29)",
+      "base": "about:blank",
+      "href": "http://example.com/((::))",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/(%28:%3A%29)"
+    },
+    {
+      "input": "http://example.com/%3A%3a%3C%3c",
+      "base": "about:blank",
+      "href": "http://example.com/::<<",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/%3A%3a%3C%3c"
+    },
+    {
+      "input": "http://example.com/foo\tbar",
+      "base": "about:blank",
+      "href": "http://example.com/foo\tbar",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/foo%09bar"
+    },
+    {
+      "input": "http://example.com\\\foo\\\bar",
+      "base": "about:blank",
+      "href": "about:blankhttp://example.com%5C%5Cfoo%5C%5Cbar",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp://example.com%5C%5Cfoo%5C%5Cbar"
+    },
+    {
+      "input": "http://example.com/%7Ffp3%3Eju%3Dduvgw%3Dd",
+      "base": "about:blank",
+      "href": "http://example.com/fp3>ju=duvgw=d",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/%7Ffp3%3Eju%3Dduvgw%3Dd"
+    },
+    {
+      "input": "http://example.com/@asdf%40",
+      "base": "about:blank",
+      "href": "http://example.com/@asdf@",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/@asdf%40"
+    },
+    {
+      "input": "http://example.com/你好你好",
+      "base": "about:blank",
+      "href": "http://example.com/你好你好",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/%E4%BD%A0%E5%A5%BD%E4%BD%A0%E5%A5%BD"
+    },
+    {
+      "input": "http://example.com/‥/foo",
+      "base": "about:blank",
+      "href": "http://example.com/‥/foo",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/%E2%80%A5/foo"
+    },
+    {
+      "input": "http://example.com/﻿/foo",
+      "base": "about:blank",
+      "href": "http://example.com/﻿/foo",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/%EF%BB%BF/foo"
+    },
+    {
+      "input": "http://example.com/‮/foo/‭/bar",
+      "base": "about:blank",
+      "href": "http://example.com/‮/foo/‭/bar",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/%E2%80%AE/foo/%E2%80%AD/bar"
+    },
+    {
+      "input": "http://www.google.com/foo?bar=baz#",
+      "base": "about:blank",
+      "href": "http://www.google.com/foo?bar=baz#",
+      "protocol": "http:",
+      "hostname": "www.google.com",
+      "pathname": "/foo",
+      "search": "?bar=baz",
+      "hash": "#"
+    },
+    {
+      "input": "http://www.google.com/foo?bar=baz# »",
+      "base": "about:blank",
+      "href": "http://www.google.com/foo?bar=baz# »",
+      "protocol": "http:",
+      "hostname": "www.google.com",
+      "pathname": "/foo",
+      "search": "?bar=baz",
+      "hash": "#%20%C2%BB"
+    },
+    {
+      "input": "data:test# »",
+      "base": "about:blank",
+      "href": "data:test# »",
+      "protocol": "data:",
+      "hostname": "",
+      "pathname": "test",
+      "hash": "#%20%C2%BB"
+    },
+    {
+      "input": "http://[www.google.com]/",
+      "base": "about:blank",
+      "href": "about:blankhttp://[www.google.com]/",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp://%5Bwww.google.com%5D/"
+    },
+    {
+      "input": "http://www.google.com",
+      "base": "about:blank",
+      "href": "http://www.google.com/",
+      "protocol": "http:",
+      "hostname": "www.google.com",
+      "pathname": "/"
+    },
+    {
+      "input": "http://192.0x00A80001",
+      "base": "about:blank",
+      "href": "http://192.0x00a80001/",
+      "protocol": "http:",
+      "hostname": "192.0x00a80001",
+      "pathname": "/"
+    },
+    {
+      "input": "http://www/foo%2Ehtml",
+      "base": "about:blank",
+      "href": "http://www/foo.html",
+      "protocol": "http:",
+      "hostname": "www",
+      "pathname": "/foo.html"
+    },
+    {
+      "input": "http://www/foo/%2E/html",
+      "base": "about:blank",
+      "href": "http://www/foo/html",
+      "protocol": "http:",
+      "hostname": "www",
+      "pathname": "/foo/html"
+    },
+    {
+      "input": "http://user:pass@/",
+      "base": "about:blank",
+      "href": "about:blankhttp://user:pass@/",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp://user:pass@/"
+    },
+    {
+      "input": "http://%25DOMAIN:foobar@foodomain.com/",
+      "base": "about:blank",
+      "href": "http://%25DOMAIN:foobar@foodomain.com/",
+      "protocol": "http:",
+      "username": "%25DOMAIN",
+      "password": "foobar",
+      "hostname": "foodomain.com",
+      "pathname": "/"
+    },
+    {
+      "input": "http:\\www.google.com\\foo",
+      "base": "about:blank",
+      "href": "about:blankhttp:%5C%5Cwww.google.com%5Cfoo",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp:%5C%5Cwww.google.com%5Cfoo"
+    },
+    {
+      "input": "http://foo:80/",
+      "base": "about:blank",
+      "href": "http://foo/",
+      "protocol": "http:",
+      "hostname": "foo",
+      "pathname": "/"
+    },
+    {
+      "input": "http://foo:81/",
+      "base": "about:blank",
+      "href": "http://foo:81/",
+      "protocol": "http:",
+      "hostname": "foo",
+      "port": 81,
+      "pathname": "/"
+    },
+    {
+      "input": "httpa://foo:80/",
+      "base": "about:blank",
+      "href": "httpa://foo:80/",
+      "protocol": "httpa:",
+      "hostname": "foo",
+      "port": 80,
+      "pathname": "/"
+    },
+    {
+      "input": "http://foo:-80/",
+      "base": "about:blank",
+      "href": "about:blankhttp://foo:-80/",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp://foo:-80/"
+    },
+    {
+      "input": "https://foo:443/",
+      "base": "about:blank",
+      "href": "https://foo/",
+      "protocol": "https:",
+      "hostname": "foo",
+      "pathname": "/"
+    },
+    {
+      "input": "https://foo:80/",
+      "base": "about:blank",
+      "href": "https://foo:80/",
+      "protocol": "https:",
+      "hostname": "foo",
+      "port": 80,
+      "pathname": "/"
+    },
+    {
+      "input": "ftp://foo:21/",
+      "base": "about:blank",
+      "href": "ftp://foo/",
+      "protocol": "ftp:",
+      "hostname": "foo",
+      "pathname": "/"
+    },
+    {
+      "input": "ftp://foo:80/",
+      "base": "about:blank",
+      "href": "ftp://foo:80/",
+      "protocol": "ftp:",
+      "hostname": "foo",
+      "port": 80,
+      "pathname": "/"
+    },
+    {
+      "input": "gopher://foo:70/",
+      "base": "about:blank",
+      "href": "gopher://foo/",
+      "protocol": "gopher:",
+      "hostname": "foo",
+      "pathname": "/"
+    },
+    {
+      "input": "gopher://foo:443/",
+      "base": "about:blank",
+      "href": "gopher://foo:443/",
+      "protocol": "gopher:",
+      "hostname": "foo",
+      "port": 443,
+      "pathname": "/"
+    },
+    {
+      "input": "ws://foo:80/",
+      "base": "about:blank",
+      "href": "ws://foo:80/",
+      "protocol": "ws:",
+      "hostname": "foo",
+      "port": 80,
+      "pathname": "/"
+    },
+    {
+      "input": "ws://foo:81/",
+      "base": "about:blank",
+      "href": "ws://foo:81/",
+      "protocol": "ws:",
+      "hostname": "foo",
+      "port": 81,
+      "pathname": "/"
+    },
+    {
+      "input": "ws://foo:443/",
+      "base": "about:blank",
+      "href": "ws://foo:443/",
+      "protocol": "ws:",
+      "hostname": "foo",
+      "port": 443,
+      "pathname": "/"
+    },
+    {
+      "input": "ws://foo:815/",
+      "base": "about:blank",
+      "href": "ws://foo:815/",
+      "protocol": "ws:",
+      "hostname": "foo",
+      "port": 815,
+      "pathname": "/"
+    },
+    {
+      "input": "wss://foo:80/",
+      "base": "about:blank",
+      "href": "wss://foo:80/",
+      "protocol": "wss:",
+      "hostname": "foo",
+      "port": 80,
+      "pathname": "/"
+    },
+    {
+      "input": "wss://foo:81/",
+      "base": "about:blank",
+      "href": "wss://foo:81/",
+      "protocol": "wss:",
+      "hostname": "foo",
+      "port": 81,
+      "pathname": "/"
+    },
+    {
+      "input": "wss://foo:443/",
+      "base": "about:blank",
+      "href": "wss://foo:443/",
+      "protocol": "wss:",
+      "hostname": "foo",
+      "port": 443,
+      "pathname": "/"
+    },
+    {
+      "input": "wss://foo:815/",
+      "base": "about:blank",
+      "href": "wss://foo:815/",
+      "protocol": "wss:",
+      "hostname": "foo",
+      "port": 815,
+      "pathname": "/"
+    },
+    {
+      "input": "http:/example.com/",
+      "base": "about:blank",
+      "href": "about:blankhttp:/example.com/",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp:/example.com/"
+    },
+    {
+      "input": "ftp:/example.com/",
+      "base": "about:blank",
+      "href": "about:blankftp:/example.com/",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankftp:/example.com/"
+    },
+    {
+      "input": "https:/example.com/",
+      "base": "about:blank",
+      "href": "about:blankhttps:/example.com/",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttps:/example.com/"
+    },
+    {
+      "input": "madeupscheme:/example.com/",
+      "base": "about:blank",
+      "href": "madeupscheme:/example.com/",
+      "protocol": "madeupscheme:",
+      "hostname": "",
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "file:/example.com/",
+      "base": "about:blank",
+      "href": "about:blankfile:/example.com/",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankfile:/example.com/"
+    },
+    {
+      "input": "ftps:/example.com/",
+      "base": "about:blank",
+      "href": "ftps:/example.com/",
+      "protocol": "ftps:",
+      "hostname": "",
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "gopher:/example.com/",
+      "base": "about:blank",
+      "href": "about:blankgopher:/example.com/",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankgopher:/example.com/"
+    },
+    {
+      "input": "ws:/example.com/",
+      "base": "about:blank",
+      "href": "ws:/example.com/",
+      "protocol": "ws:",
+      "hostname": "",
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "wss:/example.com/",
+      "base": "about:blank",
+      "href": "wss:/example.com/",
+      "protocol": "wss:",
+      "hostname": "",
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "data:/example.com/",
+      "base": "about:blank",
+      "href": "data:/example.com/",
+      "protocol": "data:",
+      "hostname": "",
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "javascript:/example.com/",
+      "base": "about:blank",
+      "href": "javascript:/example.com/",
+      "protocol": "javascript:",
+      "hostname": "",
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "mailto:/example.com/",
+      "base": "about:blank",
+      "href": "mailto:/example.com/",
+      "protocol": "mailto:",
+      "hostname": "",
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "http:example.com/",
+      "base": "about:blank",
+      "href": "http://example.com/",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "ftp:example.com/",
+      "base": "about:blank",
+      "href": "ftp://example.com/",
+      "protocol": "ftp:",
+      "hostname": "example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "https:example.com/",
+      "base": "about:blank",
+      "href": "https://example.com/",
+      "protocol": "https:",
+      "hostname": "example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "madeupscheme:example.com/",
+      "base": "about:blank",
+      "href": "madeupscheme:example.com/",
+      "protocol": "madeupscheme:",
+      "hostname": "",
+      "pathname": "example.com/"
+    },
+    {
+      "input": "ftps:example.com/",
+      "base": "about:blank",
+      "href": "ftps:example.com/",
+      "protocol": "ftps:",
+      "hostname": "",
+      "pathname": "example.com/"
+    },
+    {
+      "input": "gopher:example.com/",
+      "base": "about:blank",
+      "href": "gopher://example.com/",
+      "protocol": "gopher:",
+      "hostname": "example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "ws:example.com/",
+      "base": "about:blank",
+      "href": "ws:example.com/",
+      "protocol": "ws:",
+      "hostname": "",
+      "pathname": "example.com/"
+    },
+    {
+      "input": "wss:example.com/",
+      "base": "about:blank",
+      "href": "wss:example.com/",
+      "protocol": "wss:",
+      "hostname": "",
+      "pathname": "example.com/"
+    },
+    {
+      "input": "data:example.com/",
+      "base": "about:blank",
+      "href": "data:example.com/",
+      "protocol": "data:",
+      "hostname": "",
+      "pathname": "example.com/"
+    },
+    {
+      "input": "javascript:example.com/",
+      "base": "about:blank",
+      "href": "javascript:example.com/",
+      "protocol": "javascript:",
+      "hostname": "",
+      "pathname": "example.com/"
+    },
+    {
+      "input": "mailto:example.com/",
+      "base": "about:blank",
+      "href": "mailto:example.com/",
+      "protocol": "mailto:",
+      "hostname": "example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "http:@www.example.com",
+      "base": "about:blank",
+      "href": "http://@www.example.com/",
+      "protocol": "http:",
+      "hostname": "www.example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "http:/@www.example.com",
+      "base": "about:blank",
+      "href": "about:blankhttp:/@www.example.com",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp:/@www.example.com"
+    },
+    {
+      "input": "http://@www.example.com",
+      "base": "about:blank",
+      "href": "http://@www.example.com/",
+      "protocol": "http:",
+      "hostname": "www.example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "http:a:b@www.example.com",
+      "base": "about:blank",
+      "href": "http://a:b@www.example.com/",
+      "protocol": "http:",
+      "username": "a",
+      "password": "b",
+      "hostname": "www.example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "http:/a:b@www.example.com",
+      "base": "about:blank",
+      "href": "about:blankhttp:/a:b@www.example.com",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp:/a:b@www.example.com"
+    },
+    {
+      "input": "http://a:b@www.example.com",
+      "base": "about:blank",
+      "href": "http://a:b@www.example.com/",
+      "protocol": "http:",
+      "username": "a",
+      "password": "b",
+      "hostname": "www.example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "http://@pple.com",
+      "base": "about:blank",
+      "href": "http://@pple.com/",
+      "protocol": "http:",
+      "hostname": "pple.com",
+      "pathname": "/"
+    },
+    {
+      "input": "http::b@www.example.com",
+      "base": "about:blank",
+      "href": "http://:b@www.example.com/",
+      "protocol": "http:",
+      "username": "",
+      "password": "b",
+      "hostname": "www.example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "http:/:b@www.example.com",
+      "base": "about:blank",
+      "href": "about:blankhttp:/:b@www.example.com",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp:/:b@www.example.com"
+    },
+    {
+      "input": "http://:b@www.example.com",
+      "base": "about:blank",
+      "href": "http://:b@www.example.com/",
+      "protocol": "http:",
+      "username": "",
+      "password": "b",
+      "hostname": "www.example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "http:/:@/www.example.com",
+      "base": "about:blank",
+      "href": "about:blankhttp:/:@/www.example.com",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp:/:@/www.example.com"
+    },
+    {
+      "input": "http://user@/www.example.com",
+      "base": "about:blank",
+      "href": "about:blankhttp://user@/www.example.com",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp://user@/www.example.com"
+    },
+    {
+      "input": "http:@/www.example.com",
+      "base": "about:blank",
+      "href": "about:blankhttp:@/www.example.com",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp:@/www.example.com"
+    },
+    {
+      "input": "http:/@/www.example.com",
+      "base": "about:blank",
+      "href": "about:blankhttp:/@/www.example.com",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp:/@/www.example.com"
+    },
+    {
+      "input": "http://@/www.example.com",
+      "base": "about:blank",
+      "href": "about:blankhttp://@/www.example.com",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp://@/www.example.com"
+    },
+    {
+      "input": "https:@/www.example.com",
+      "base": "about:blank",
+      "href": "about:blankhttps:@/www.example.com",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttps:@/www.example.com"
+    },
+    {
+      "input": "http:a:b@/www.example.com",
+      "base": "about:blank",
+      "href": "about:blankhttp:a:b@/www.example.com",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp:a:b@/www.example.com"
+    },
+    {
+      "input": "http:/a:b@/www.example.com",
+      "base": "about:blank",
+      "href": "about:blankhttp:/a:b@/www.example.com",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp:/a:b@/www.example.com"
+    },
+    {
+      "input": "http://a:b@/www.example.com",
+      "base": "about:blank",
+      "href": "about:blankhttp://a:b@/www.example.com",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp://a:b@/www.example.com"
+    },
+    {
+      "input": "http::@/www.example.com",
+      "base": "about:blank",
+      "href": "about:blankhttp::@/www.example.com",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp::@/www.example.com"
+    },
+    {
+      "input": "http:a:@www.example.com",
+      "base": "about:blank",
+      "href": "http://a:@www.example.com/",
+      "protocol": "http:",
+      "username": "a",
+      "password": "",
+      "hostname": "www.example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "http:/a:@www.example.com",
+      "base": "about:blank",
+      "href": "about:blankhttp:/a:@www.example.com",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp:/a:@www.example.com"
+    },
+    {
+      "input": "http://a:@www.example.com",
+      "base": "about:blank",
+      "href": "http://a:@www.example.com/",
+      "protocol": "http:",
+      "username": "a",
+      "password": "",
+      "hostname": "www.example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "http://www.@pple.com",
+      "base": "about:blank",
+      "href": "http://www.@pple.com/",
+      "protocol": "http:",
+      "username": "www.",
+      "hostname": "pple.com",
+      "pathname": "/"
+    },
+    {
+      "input": "http:@:www.example.com",
+      "base": "about:blank",
+      "href": "about:blankhttp:@:www.example.com",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp:@:www.example.com"
+    },
+    {
+      "input": "http:/@:www.example.com",
+      "base": "about:blank",
+      "href": "about:blankhttp:/@:www.example.com",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp:/@:www.example.com"
+    },
+    {
+      "input": "http://@:www.example.com",
+      "base": "about:blank",
+      "href": "about:blankhttp://@:www.example.com",
+      "protocol": "about:",
+      "hostname": "",
+      "pathname": "blankhttp://@:www.example.com"
+    },
+    {
+      "input": "http://:@www.example.com",
+      "base": "about:blank",
+      "href": "http://:@www.example.com/",
+      "protocol": "http:",
+      "username": "",
+      "password": "",
+      "hostname": "www.example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "/",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example.com/",
+      "protocol": "http:",
+      "hostname": "www.example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "/test.txt",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example.com/test.txt",
+      "protocol": "http:",
+      "hostname": "www.example.com",
+      "pathname": "/test.txt"
+    },
+    {
+      "input": ".",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example.com/",
+      "protocol": "http:",
+      "hostname": "www.example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "..",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example.com/",
+      "protocol": "http:",
+      "hostname": "www.example.com",
+      "pathname": "/.."
+    },
+    {
+      "input": "test.txt",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example.com/test.txt",
+      "protocol": "http:",
+      "hostname": "www.example.com",
+      "pathname": "/test.txt"
+    },
+    {
+      "input": "./test.txt",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example.com/test.txt",
+      "protocol": "http:",
+      "hostname": "www.example.com",
+      "pathname": "/test.txt"
+    },
+    {
+      "input": "../test.txt",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example.com/test.txt",
+      "protocol": "http:",
+      "hostname": "www.example.com",
+      "pathname": "/test.txt"
+    },
+    {
+      "input": "../aaa/test.txt",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example.com/aaa/test.txt",
+      "protocol": "http:",
+      "hostname": "www.example.com",
+      "pathname": "/aaa/test.txt"
+    },
+    {
+      "input": "../../test.txt",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example.com/test.txt",
+      "protocol": "http:",
+      "hostname": "www.example.com",
+      "pathname": "/test.txt"
+    },
+    {
+      "input": "中/test.txt",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example.com/中/test.txt",
+      "protocol": "http:",
+      "hostname": "www.example.com",
+      "pathname": "/%E4%B8%AD/test.txt"
+    },
+    {
+      "input": "http://www.example2.com",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example2.com/",
+      "protocol": "http:",
+      "hostname": "www.example2.com",
+      "pathname": "/"
+    },
+    {
+      "input": "//www.example2.com",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example2.com/",
+      "protocol": "http:",
+      "hostname": "www.example2.com",
+      "pathname": "/"
+    },
+    {
+      "input": "http://ExAmPlE.CoM",
+      "base": "http://other.com/",
+      "href": "http://example.com/",
+      "protocol": "http:",
+      "hostname": "example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "http://example example.com",
+      "base": "http://other.com/",
+      "href": "http://other.com/http://example example.com",
+      "protocol": "http:",
+      "hostname": "other.com",
+      "pathname": "/http://example%20example.com"
+    },
+    {
+      "input": "http://Goo%20 goo%7C|.com",
+      "base": "http://other.com/",
+      "href": "http://other.com/http://Goo  goo||.com",
+      "protocol": "http:",
+      "hostname": "other.com",
+      "pathname": "/http://Goo%20%20goo%7C%7C.com"
+    },
+    {
+      "input": "http://GOO 　goo.com",
+      "base": "http://other.com/",
+      "href": "http://other.com/http://GOO 　goo.com",
+      "protocol": "http:",
+      "hostname": "other.com",
+      "pathname": "/http://GOO%C2%A0%E3%80%80goo.com"
+    },
+    {
+      "input": "http://GOO​⁠﻿goo.com",
+      "base": "http://other.com/",
+      "href": "http://other.com/http://GOO​⁠﻿goo.com",
+      "protocol": "http:",
+      "hostname": "other.com",
+      "pathname": "/http://GOO%E2%80%8B%E2%81%A0%EF%BB%BFgoo.com"
+    },
+    {
+      "input": "http://www.foo。bar.com",
+      "base": "http://other.com/",
+      "href": "http://other.com/http://www.foo。bar.com",
+      "protocol": "http:",
+      "hostname": "other.com",
+      "pathname": "/http://www.foo%E3%80%82bar.com"
+    },
+    {
+      "input": "http://﷐zyx.com",
+      "base": "http://other.com/",
+      "href": "http://other.com/http://﷐zyx.com",
+      "protocol": "http:",
+      "hostname": "other.com",
+      "pathname": "/http://%EF%B7%90zyx.com"
+    },
+    {
+      "input": "http://%ef%b7%90zyx.com",
+      "base": "http://other.com/",
+      "href": "http://other.com/http://﷐zyx.com",
+      "protocol": "http:",
+      "hostname": "other.com",
+      "pathname": "/http://%ef%b7%90zyx.com"
+    },
+    {
+      "input": "http://Ｇｏ.com",
+      "base": "http://other.com/",
+      "href": "http://ｇｏ.com/",
+      "protocol": "http:",
+      "hostname": "ｇｏ.com",
+      "pathname": "/"
+    },
+    {
+      "input": "http://％４１.com",
+      "base": "http://other.com/",
+      "href": "http://other.com/http://％４１.com",
+      "protocol": "http:",
+      "hostname": "other.com",
+      "pathname": "/http://%EF%BC%85%EF%BC%94%EF%BC%91.com"
+    },
+    {
+      "input": "http://%ef%bc%85%ef%bc%94%ef%bc%91.com",
+      "base": "http://other.com/",
+      "href": "http://other.com/http://％４１.com",
+      "protocol": "http:",
+      "hostname": "other.com",
+      "pathname": "/http://%ef%bc%85%ef%bc%94%ef%bc%91.com"
+    },
+    {
+      "input": "http://％００.com",
+      "base": "http://other.com/",
+      "href": "http://other.com/http://％００.com",
+      "protocol": "http:",
+      "hostname": "other.com",
+      "pathname": "/http://%EF%BC%85%EF%BC%90%EF%BC%90.com"
+    },
+    {
+      "input": "http://%ef%bc%85%ef%bc%90%ef%bc%90.com",
+      "base": "http://other.com/",
+      "href": "http://other.com/http://％００.com",
+      "protocol": "http:",
+      "hostname": "other.com",
+      "pathname": "/http://%ef%bc%85%ef%bc%90%ef%bc%90.com"
+    },
+    {
+      "input": "http://你好你好",
+      "base": "http://other.com/",
+      "href": "http://你好你好/",
+      "protocol": "http:",
+      "hostname": "你好你好",
+      "pathname": "/"
+    },
+    {
+      "input": "http://%zz%66%a.com",
+      "base": "http://other.com/",
+      "href": "http://other.com/http://%25zzf%25a.com",
+      "protocol": "http:",
+      "hostname": "other.com",
+      "pathname": "/http://%25zz%66%25a.com"
+    },
+    {
+      "input": "http://%25",
+      "base": "http://other.com/",
+      "href": "http://other.com/http://%25",
+      "protocol": "http:",
+      "hostname": "other.com",
+      "pathname": "/http://%25"
+    },
+    {
+      "input": "http://hello%00",
+      "base": "http://other.com/",
+      "href": "http://other.com/http://hello\u0000",
+      "protocol": "http:",
+      "hostname": "other.com",
+      "pathname": "/http://hello%00"
+    },
+    {
+      "input": "http://%30%78%63%30%2e%30%32%35%30.01",
+      "base": "http://other.com/",
+      "href": "http://other.com/http://0xc0.0250.01",
+      "protocol": "http:",
+      "hostname": "other.com",
+      "pathname": "/http://%30%78%63%30%2e%30%32%35%30.01"
+    },
+    {
+      "input": "http://%30%78%63%30%2e%30%32%35%30.01%2e",
+      "base": "http://other.com/",
+      "href": "http://other.com/http://0xc0.0250.01.",
+      "protocol": "http:",
+      "hostname": "other.com",
+      "pathname": "/http://%30%78%63%30%2e%30%32%35%30.01%2e"
+    },
+    {
+      "input": "http://192.168.0.257",
+      "base": "http://other.com/",
+      "href": "http://192.168.0.257/",
+      "protocol": "http:",
+      "hostname": "192.168.0.257",
+      "pathname": "/"
+    },
+    {
+      "input": "http://%3g%78%63%30%2e%30%32%35%30%2E.01",
+      "base": "http://other.com/",
+      "href": "http://other.com/http://%253gxc0.0250..01",
+      "protocol": "http:",
+      "hostname": "other.com",
+      "pathname": "/http://%253g%78%63%30%2e%30%32%35%30%2E.01"
+    },
+    {
+      "input": "http://192.168.0.1 hello",
+      "base": "http://other.com/",
+      "href": "http://other.com/http://192.168.0.1 hello",
+      "protocol": "http:",
+      "hostname": "other.com",
+      "pathname": "/http://192.168.0.1%20hello"
+    },
+    {
+      "input": "http://０Ｘｃ０．０２５０．０１",
+      "base": "http://other.com/",
+      "href": "http://other.com/http://０Ｘｃ０．０２５０．０１",
+      "protocol": "http:",
+      "hostname": "other.com",
+      "pathname": "/http://%EF%BC%90%EF%BC%B8%EF%BD%83%EF%BC%90%EF%BC%8E%EF%BC%90%EF%BC%92%EF%BC%95%EF%BC%90%EF%BC%8E%EF%BC%90%EF%BC%91"
+    },
+    {
+      "input": "http://[google.com]",
+      "base": "http://other.com/",
+      "href": "http://other.com/http://[google.com]",
+      "protocol": "http:",
+      "hostname": "other.com",
+      "pathname": "/http://%5Bgoogle.com%5D"
+    },
+    {
+      "input": "http://foo:💩@example.com/bar",
+      "base": "http://other.com/",
+      "href": "http://foo:💩@example.com/bar",
+      "protocol": "http:",
+      "username": "foo",
+      "password": "💩",
+      "hostname": "example.com",
+      "pathname": "/bar"
+    },
+    {
+      "input": "x",
+      "base": "test:test",
+      "href": "test:testx",
+      "protocol": "test:",
+      "hostname": "",
+      "pathname": "testx"
+    }
+  ]
+}
