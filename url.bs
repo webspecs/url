@@ -304,7 +304,8 @@ start with "<code>/</code>".
 
 <p>A <dfn id=concept-path-relative-url title='path-relative URL'>path-relative URL</dfn> must be zero or
 more <a title="path segment">path segments</a> separated from each
-other by a "<code>/</code>".
+other by a "<code>/</code>".  The first segment (if any) of a <a>path-relative
+URL</a> must not contain a colon (<code>U+003A</code>).
 
 <p>A <dfn>path segment</dfn> must be zero or more <a>URL units</a>,
 excluding "<code>/</code>" and "<code>?</code>".
