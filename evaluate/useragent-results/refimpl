@@ -1,5 +1,5 @@
 {
-  "useragent": "reference-implementation @ Tue Dec 16 2014 10:53:37 GMT-0500 (EST)",
+  "useragent": "reference-implementation @ Wed Dec 24 2014 19:50:46 GMT-0500 (EST)",
   "constructor": [
     {
       "input": "http://example\t.\norg",
@@ -38,7 +38,8 @@
       "href": "http://example.org/foo/:foo.com",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/foo/:foo.com"
+      "pathname": "/foo/:foo.com",
+      "exception": "leading segment in a relative path contains a colon"
     },
     {
       "input": " foo.com  ",
@@ -46,7 +47,8 @@
       "href": "http://example.org/foo/foo.com",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/foo/foo.com"
+      "pathname": "/foo/foo.com",
+      "exception": "invalid leading/trailing whitespace characters"
     },
     {
       "input": "a:\t foo.com",
@@ -163,7 +165,8 @@
       "href": "http://example.org/foo/bar",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/foo/bar"
+      "pathname": "/foo/bar",
+      "exception": "invalid leading/trailing whitespace characters"
     },
     {
       "input": ":foo.com/",
@@ -171,7 +174,8 @@
       "href": "http://example.org/foo/:foo.com/",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/foo/:foo.com/"
+      "pathname": "/foo/:foo.com/",
+      "exception": "leading segment in a relative path contains a colon"
     },
     {
       "input": ":foo.com\\",
@@ -180,7 +184,7 @@
       "protocol": "http:",
       "hostname": "example.org",
       "pathname": "/foo/:foo.com/",
-      "exception": "Backslash (\"\\\") used as path segment delimiter"
+      "exception": "leading segment in a relative path contains a colon"
     },
     {
       "input": ":",
@@ -188,7 +192,8 @@
       "href": "http://example.org/foo/:",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/foo/:"
+      "pathname": "/foo/:",
+      "exception": "leading segment in a relative path contains a colon"
     },
     {
       "input": ":a",
@@ -196,7 +201,8 @@
       "href": "http://example.org/foo/:a",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/foo/:a"
+      "pathname": "/foo/:a",
+      "exception": "leading segment in a relative path contains a colon"
     },
     {
       "input": ":/",
@@ -204,7 +210,8 @@
       "href": "http://example.org/foo/:/",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/foo/:/"
+      "pathname": "/foo/:/",
+      "exception": "leading segment in a relative path contains a colon"
     },
     {
       "input": ":\\",
@@ -213,7 +220,7 @@
       "protocol": "http:",
       "hostname": "example.org",
       "pathname": "/foo/:/",
-      "exception": "Backslash (\"\\\") used as path segment delimiter"
+      "exception": "leading segment in a relative path contains a colon"
     },
     {
       "input": ":#",
@@ -221,7 +228,8 @@
       "href": "http://example.org/foo/:#",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/foo/:"
+      "pathname": "/foo/:",
+      "exception": "leading segment in a relative path contains a colon"
     },
     {
       "input": "#",
@@ -281,7 +289,8 @@
       "href": "http://example.org/foo/:23",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/foo/:23"
+      "pathname": "/foo/:23",
+      "exception": "leading segment in a relative path contains a colon"
     },
     {
       "input": "/:23",
@@ -297,7 +306,8 @@
       "href": "http://example.org/foo/::",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/foo/::"
+      "pathname": "/foo/::",
+      "exception": "leading segment in a relative path contains a colon"
     },
     {
       "input": "::23",
@@ -305,7 +315,8 @@
       "href": "http://example.org/foo/::23",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/foo/::23"
+      "pathname": "/foo/::23",
+      "exception": "leading segment in a relative path contains a colon"
     },
     {
       "input": "foo://",
@@ -480,7 +491,7 @@
       "protocol": "http:",
       "hostname": "example.org",
       "pathname": "/foo/[61:24:74]:98",
-      "exception": "Illegal character in path"
+      "exception": "leading segment in a relative path contains a colon"
     },
     {
       "input": "http:[61:27]/:foo",
