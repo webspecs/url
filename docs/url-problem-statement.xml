@@ -87,11 +87,16 @@
       <t>Currently, this document is for discussion purposes, with
       possible next steps discussed in <xref target="nextsteps"/>.</t>
 
-      <t>Discussions have taken place on 
-      <eref target="mailto:public-ietf-w3c@w3.org">public-ietf-w3c@w3.org</eref>
-      and <eref target="apps-discuss@w3.org">public-ietf-w3c@w3.org</eref>. The
-      W3C TAG has discussed these issues in meetings and on their mailing
-      list.</t>
+      <t>Discussions have taken place on <eref
+      target="mailto:public-ietf-w3c@w3.org">public-ietf-w3c@w3.org</eref>
+      (<eref
+      target="http://lists.w3.org/Archives/Public/public-ietf-w3c/">
+      archive</eref>) and <eref
+      target="apps-discuss@w3.org">public-ietf-w3c@w3.org</eref>
+      (<eref
+      target="http://www.ietf.org/mail-archive/web/apps-discuss/current/maillist.html">
+      archive</eref>). In addition, the W3C TAG has discussed these issues in
+      meetings and on their mailing list.</t>
 
       <t>This document, test suite, reference implementation, and 
       the WebPlatform specification are being developed at
@@ -121,29 +126,25 @@
       the attention that they needed.</t>
 
       <t>When it became clear that it was desirable to allow non-ASCII
-      characters, it was widely feared that support for UTF-8 by ASCII-only
+      characters, it was widely feared that support for Unicode by ASCII-only
       systems would turn out to be problematic.  The tack was therefore taken
       to leave "URI" alone and define a new protocol element,
       "IRI".  <xref target="RFC3987"/> was published in 2005 (in sync with the
       <xref target="RFC3986"/> update to the URI definition).  This also
       turned out not to get the attention it needed.</t>
 
-      <t>The IRI-to-URI transformation specified in <xref target="RFC3987"/> had
-      options; it wasn't a deterministic path. The URI-to-IRI transformation was
-      also heuristic, since there was no guarantee that %xx-encoded bytes in the
-      URI were actually meant to be %xx percent-hex-encoded bytes of a UTF-8
-      encoding of a Unicode string.</t>
-
-      <t>To address issues and to fix URL for HTML5, a new
-      <eref target="https://tools.ietf.org/wg/iri/charters">IRI working group</eref>
-      was established in the IETF in 2009.  Despite years of development, 
-      the IRI group was closed in 2014, with the consolation
-      that the documents that were being developed in the IRI working group
-      could be updated as individual submissions or within the "applications
-      area" working group.  In particular, one of the IRI working group items
-      was to update <xref target="RFC4395"/>,
-      which is currently under development in IETF's application area
-      (see <xref target="appsawg-uri-scheme-reg"/>).</t>
+      <t>To address issues raised both in IETF and for HTML5 (see
+      <xref target="problems"/> for more details), the <eref
+      target="https://tools.ietf.org/wg/iri/charters">IRI working
+      group</eref> was established in the IETF in 2009.  However,
+      primarily due to lack of engagement, the IRI group was closed in
+      2014, with the plan that the documents that had been under
+      development in the IRI working group could be updated as
+      individual submissions or within the IETF applications area
+      working group.  In particular, one of the IRI working group
+      items was to update <xref target="RFC4395"/>, which is currently
+      under development in IETF's application area (see <xref
+      target="appsawg-uri-scheme-reg"/>).</t>
       <!--
       Examples of feedback:
         http://lists.w3.org/Archives/Public/public-iri/2009Aug/0000.html
@@ -166,9 +167,8 @@
       <t>The world has moved on in other ways. ICANN has approved non-ASCII top level
       domains, but IDNA specs (<xref target="RFC3490"/> and <xref target="RFC5895"/>)
       did not fully addressed IRI processing.  Subsequently, the Unicode consortium
-      produced <xref target="UTS-46"/>.</t>
+      produced <xref target="UTS-46"/>, which mentions URL processing in passing.</t>
 
-	
       <t>The web security working group developed
       <xref target="RFC6454"/> ("The Web Origin Concept"), which 
       was refined in the W3C <xref target="CORS"/> specification,
@@ -225,13 +225,14 @@
       </section>
 
       <section title="WHATWG">
-        <t>The <xref target="URL-LS"/> is being developed as a
-        <eref target="https://wiki.whatwg.org/wiki/FAQ#What_does_.22Living_Standard.22_mean.3F">living standard</eref>.
-        It primarily focuses on specifying what is important
-        for browsers.   The means by which new schemes might be
-        registered is not yet defined.  This work
-        is based on <xref target="UTS-46"/>, and is intended to obsolete both
-        <xref target="RFC3986"/> and <xref target="RFC3987"/>.</t>
+        <t>The <xref target="URL-LS"/> is being developed as a <eref
+        target="https://wiki.whatwg.org/wiki/FAQ#What_does_.22Living_Standard.22_mean.3F">living
+        standard</eref>.  It primarily focuses on specifying what is
+        important for browsers.  The means by which new schemes might
+        be registered is not yet defined.  This work claims to be
+        based on <xref target="UTS-46"/>, and to be intended to
+        obsolete both <xref target="RFC3986"/> and <xref
+        target="RFC3987"/>.</t>
       </section>
 
       <section title="W3C">
@@ -279,7 +280,7 @@
       </section>
     </section>
 
-    <section title="Problem Statements">
+    <section anchor="problems" title="Problem Statements">
       <t>This section lays out the problems we see need a coordinated
        solution. REVIEWERS: have we missed some things? Are any of these
        non-problems or not worth solving? </t>
@@ -294,6 +295,16 @@
         terminology has been used.  URL / URI / IRI is not the only difference.
         <xref target="tantek-slice"/> chronicles a number of differences.</t>
 	
+	<t>Deterministic parsing and transformation: The IRI-to-URI
+	transformation specified in <xref target="RFC3987"/> had
+	options; it wasn't a deterministic path; in particular, which
+	substrings of which URLs of which Unicode, for strings were to
+	be transformed to Punycode or to %-escaped-utf8.  The
+	URI-to-IRI transformation was also heuristic, since there was
+	no guarantee that %xx-encoded bytes in the URI were actually
+	meant to be %xx percent-hex-encoded bytes of a UTF-8 encoding
+	of a Unicode string.</t>
+      
         <t>Parameterization: standards in this area need to define such
         matters as normalization forms and values for parameters such as
         UseSTD3ASCIIRules.</t>
@@ -310,6 +321,13 @@
 	domain name slots". So in mailto:user@host, is the host a
 	IDN-aware domain name slot? A domain name slot at all?  </t>
 
+	<t>Bidi URLs: The problems with writing URLs using characters
+	from right-to-left languages are well-known among experts;
+	what is not known is a solution for these problems.  The
+	solution given in RFC 3987 has some obvious errors (how to
+	handle combining marks); it's general approach also probably
+	can be improved on, but it's not sure why.</t>
+
         <t>Specific scheme definitions: some UR* scheme definitions are woefully
           out of date, incomplete, or don't correspond to current practice,
           but updating their definitions is unclear. This includes "file:",
@@ -319,17 +337,52 @@
       </list></t>
     </section>
 
-    <section anchor="nextsteps" title="Potential Solutions">
-      <t>Many of the problem above require some cross-organizational collaboration.
-      This section outlines alternatives and possible next steps.
-      REVIEWERS: Neccessary? Sufficient? What are we missing, what
-      did we get wrong?
-      </t>
+    <section anchor="nextsteps" title="Next Steps, Solutions">
+      
+      <t>Many of the problem above require some cross-organizational
+      collaboration.  This section outlines alternatives and possible
+      next steps, both in terms of documents and possible updates and
+      also procedural issues.</t>
+
+      <t>REVIEWERS: Neccessary? Sufficient? What are we missing, what
+      did we get wrong?</t>
+
+      <section title="Working Groups and Discussion Venues">
+	<t>It is possibly necessary for some organizational assignment
+	of responsibility in IETF and W3C to working groups in each
+	organization.</t>
+	
+	<t>In IETF, the scope of changes proposed may determine how
+	IETF consensus can best be obtained.  It seems unlikely that
+	the scope of necessary changes to IETF documents could be
+	managed through individual submissions. Some opinions have
+	been that updating RFC 3986 and/or obsoleting RFC 3987 would
+	require a full IETF working group.  Unless and until another
+	group is chartered (perhaps using this document as the Problem
+	Statement / scope), use apps area. Previous venues for
+	discussion (public-iri@w3.org, uri@w3.org) are old 
+	enough that there is likely poor representation of
+	imporant communities, unless a concerted effort is made
+	to revive them.</t>
+
+	<t>In W3C, either W3C webapps, TAG, HTML or some new activity
+	might be necessary to manage changes, but the nature of the
+	group necessary to review depends on the extent of changes
+	needed. </t>
+
+	<t>At the moment, the most reliable way of giving feedback on
+	this document is to raise or comment on issues in <eref
+	target="https://github.com/webspecs/url/issues">the GitHub
+	issue list</eref>.</t>
+
+      </section>
+
       <section title="Leave, Update or Obsolete RFC 3986 (URI)">
-	<t>At various times, many have called for replacing
-	the IETF URI standard <xref target="RFC3986"/>, or updating it. How
-	to approach this is controversal, but at a minimum
-	the following are needed:
+	<t>At various times, many have called for replacing the IETF
+	URI standard <xref target="RFC3986"/>, or updating it. How to
+	approach this is controversal, but at a minimum the following
+	are needed:
+
 	<list style="symbols">
           <t>Make it clear that ASCII-only URIs (as now defined by
           <xref target="RFC3986"/>) are not what is mainly used on the web.</t>
@@ -338,14 +391,27 @@
 	  <t>Note terminology issue and resolution.</t>
 	</list>
 	</t>
+	<t>More controversial is whether this can be done on a
+	strictly "need-to" basis, or whether the merger of URI from
+	RFC3986 and IRI from RFC3987 would result in clearer
+	specifications for implementors. </t>
       </section>
 
-      <section title="Obsolete RFC 3987 (IRI)"> <t>
-	After insuring that topics covered in <xref target="RFC3987"/> are
-	also covered by the W3C URL recommendation, then
-	mark <xref target="RFC3987"/> as obsolete with a short RFC noting
-	the conditions laid out in this document.
-      </t>
+      <section title="Obsolete RFC 3987 (IRI)"> 
+
+	<t>There is somes sentiment to restart the work of updating
+	RFC 3987 by starting again, fixing errors and integrating
+	errata. However, this path doesn't seem to satisfy the desire
+	for a single spec that lays out deterministic processing for
+	URLs and references for browser and operating-system handling
+	of both.</t>
+
+	<t>After insuring that topics covered in <xref
+	target="RFC3987"/> are also covered by a W3C URL
+	recommendation, then mark <xref target="RFC3987"/> as obsolete
+	with a short RFC noting the conditions laid out in this
+	document.
+	</t>
       </section>
 
       <section title="Obsolete RFC 6454 (Origin)">
@@ -370,6 +436,7 @@
           may involve working to get the other specifications updated,
           if only to clarify nomenclature.
           </t>
+
 	  <t>Obsolete any previous definition of x-url-encoded. </t>
 	    
           <t>Change the <xref target="URL-LS"/> goals to only obsolete
@@ -377,32 +444,35 @@
           <xref target="RFC3986"/> is updated, explicitly state that 
           canonical URLs (i.e., the output of the URL parser) not only
           round trip, but also are valid URIs.</t>
-        <t>Update and incorporate (or reference) the content currently
+	  
+          <t>Update and incorporate (or reference) the content currently
           present in <xref target="tantek-slice"/>, probably as an appendix
           to <xref target="URL-LS"/>, so that readers will understand
           what terms are in use and how they map.</t>
-        <t>Reconcile how <xref target="appsawg-uri-scheme-reg"/> and
+
+          <t>Reconcile how <xref target="appsawg-uri-scheme-reg"/> and
           <xref target="URL-LS"/> handle currently unknown schemes,
           update <xref target="appsawg-uri-scheme-reg"/> to state that
           registration applies to both URIs and URLs, and update
           <xref target="URL-LS"/> to indicate that
           <xref target="appsawg-uri-scheme-reg"/> is how you register
           schemes.</t>
-        <t>Have the W3C adopt <xref target="url-workmode"/>.</t>
-        <t>Other than keeping on top of <xref target="UTS-46"/> and responding
+
+          <t>Have the W3C adopt <xref target="url-workmode"/>.</t>
+
+          <t>Other than keeping on top of <xref target="UTS-46"/> and responding
           to any feedback that may be provided, no changes to any Unicode
           Consortium product is required.</t>
-      </list></t>
-
+	</list></t>
       </section>
-
     </section>
 
     <section anchor="Acknowledgements" title="Acknowledgements">
-      <t>Helpful comments and improvements to this document have
-      come from Anne van Kesteren, Graham Klyne, and Julian Reschke.</t>
-    </section>
 
+      <t>Helpful comments and improvements to this document have
+      come from Anne van Kesteren, Graham Klyne, Julian Reschke,
+      Bjoern Hoehrmann and Martin Duerst.</t>
+    </section>
 
     <section anchor="IANA" title="IANA Considerations">
       <t>This memo currently includes no request to IANA,
