@@ -17,7 +17,7 @@
       "username": "user",
       "password": "pass",
       "hostname": "foo",
-      "port": 21,
+      "port": "21",
       "pathname": "/bar;par",
       "search": "?b",
       "hash": "#c"
@@ -57,7 +57,7 @@
       "href": "http://f:21/ b ? d # e",
       "protocol": "http:",
       "hostname": "f",
-      "port": 21,
+      "port": "21",
       "pathname": "/%20b%20",
       "search": "?%20d%20",
       "hash": "#%20e"
@@ -76,7 +76,7 @@
       "href": "http://f:0/c",
       "protocol": "http:",
       "hostname": "f",
-      "port": 0,
+      "port": "0",
       "pathname": "/c"
     },
     {
@@ -85,7 +85,7 @@
       "href": "http://f:0/c",
       "protocol": "http:",
       "hostname": "f",
-      "port": 0,
+      "port": "0",
       "pathname": "/c"
     },
     {
@@ -320,7 +320,7 @@
       "username": "a",
       "password": "b",
       "hostname": "c",
-      "port": 29,
+      "port": "29",
       "pathname": "/d"
     },
     {
@@ -339,7 +339,7 @@
       "username": "&a",
       "password": "foo(b]c",
       "hostname": "d",
-      "port": 2,
+      "port": "2",
       "pathname": "/"
     },
     {
@@ -369,7 +369,7 @@
       "pathname": "//@"
     },
     {
-      "input": "http:\\\foo.com\\",
+      "input": "http:\\\\foo.com\\",
       "base": "http://example.org/foo/bar",
       "href": "http://example.org/foo///foo.com/",
       "protocol": "http:",
@@ -377,7 +377,7 @@
       "pathname": "/foo/%5C%5Cfoo.com%5C"
     },
     {
-      "input": "http:\\a\\b:c\\d@foo.com\\",
+      "input": "http:\\\\a\\b:c\\d@foo.com\\",
       "base": "http://example.org/foo/bar",
       "href": "http://example.org/foo///a/b:c/d@foo.com/",
       "protocol": "http:",
@@ -812,7 +812,7 @@
       "pathname": "/file"
     },
     {
-      "input": "\\server\\file",
+      "input": "\\\\server\\file",
       "base": "file:///tmp/mock/path",
       "href": "file://server/file",
       "protocol": "file:",
@@ -1148,7 +1148,7 @@
       "pathname": "/foo%09bar"
     },
     {
-      "input": "http://example.com\\\foo\\\bar",
+      "input": "http://example.com\\\\foo\\\\bar",
       "base": "about:blank",
       "href": "about:blankhttp://example.com%5C%5Cfoo%5C%5Cbar",
       "protocol": "about:",
@@ -1291,7 +1291,7 @@
       "pathname": "/"
     },
     {
-      "input": "http:\\www.google.com\\foo",
+      "input": "http:\\\\www.google.com\\foo",
       "base": "about:blank",
       "href": "about:blankhttp:%5C%5Cwww.google.com%5Cfoo",
       "protocol": "about:",
@@ -1312,7 +1312,7 @@
       "href": "http://foo:81/",
       "protocol": "http:",
       "hostname": "foo",
-      "port": 81,
+      "port": "81",
       "pathname": "/"
     },
     {
@@ -1321,7 +1321,7 @@
       "href": "httpa://foo:80/",
       "protocol": "httpa:",
       "hostname": "foo",
-      "port": 80,
+      "port": "80",
       "pathname": "/"
     },
     {
@@ -1346,7 +1346,7 @@
       "href": "https://foo:80/",
       "protocol": "https:",
       "hostname": "foo",
-      "port": 80,
+      "port": "80",
       "pathname": "/"
     },
     {
@@ -1363,7 +1363,7 @@
       "href": "ftp://foo:80/",
       "protocol": "ftp:",
       "hostname": "foo",
-      "port": 80,
+      "port": "80",
       "pathname": "/"
     },
     {
@@ -1380,7 +1380,7 @@
       "href": "gopher://foo:443/",
       "protocol": "gopher:",
       "hostname": "foo",
-      "port": 443,
+      "port": "443",
       "pathname": "/"
     },
     {
@@ -1389,7 +1389,7 @@
       "href": "ws://foo:80/",
       "protocol": "ws:",
       "hostname": "foo",
-      "port": 80,
+      "port": "80",
       "pathname": "/"
     },
     {
@@ -1398,7 +1398,7 @@
       "href": "ws://foo:81/",
       "protocol": "ws:",
       "hostname": "foo",
-      "port": 81,
+      "port": "81",
       "pathname": "/"
     },
     {
@@ -1407,7 +1407,7 @@
       "href": "ws://foo:443/",
       "protocol": "ws:",
       "hostname": "foo",
-      "port": 443,
+      "port": "443",
       "pathname": "/"
     },
     {
@@ -1416,7 +1416,7 @@
       "href": "ws://foo:815/",
       "protocol": "ws:",
       "hostname": "foo",
-      "port": 815,
+      "port": "815",
       "pathname": "/"
     },
     {
@@ -1425,7 +1425,7 @@
       "href": "wss://foo:80/",
       "protocol": "wss:",
       "hostname": "foo",
-      "port": 80,
+      "port": "80",
       "pathname": "/"
     },
     {
@@ -1434,7 +1434,7 @@
       "href": "wss://foo:81/",
       "protocol": "wss:",
       "hostname": "foo",
-      "port": 81,
+      "port": "81",
       "pathname": "/"
     },
     {
@@ -1443,7 +1443,7 @@
       "href": "wss://foo:443/",
       "protocol": "wss:",
       "hostname": "foo",
-      "port": 443,
+      "port": "443",
       "pathname": "/"
     },
     {
@@ -1452,7 +1452,7 @@
       "href": "wss://foo:815/",
       "protocol": "wss:",
       "hostname": "foo",
-      "port": 815,
+      "port": "815",
       "pathname": "/"
     },
     {

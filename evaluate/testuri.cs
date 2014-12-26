@@ -1,15 +1,22 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
-using System.Json;
+using Newtonsoft.Json;
+
+public class Output {
+  public string useragent;
+  public List<Dictionary<string, string>> constructor;
+}
 
 class testuri {
   static void Main(string[] args) {
     var text = System.IO.File.ReadAllText(args[0]);
-    var json = (JsonArray)JsonValue.Parse(text);
-    var constructors = new JsonArray();
+    List<Dictionary<string, string>> tests =
+      JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(text);
+    var constructors = new List<Dictionary<string, string>>();
 
-    foreach (JsonObject test in json) {
-      var result = new JsonObject();
+    foreach (var test in tests) {
+      var result = new Dictionary<string, string>();
       result["input"] = test["input"];
       result["base"] = test["base"];
 
@@ -29,7 +36,7 @@ class testuri {
         result["hostname"] = uri.Host;
 
         if (!uri.IsDefaultPort && uri.Port != -1) {
-          result["port"] = uri.Port;
+          result["port"] = uri.Port.ToString();
         }
 
         result["pathname"] = String.Join("", uri.Segments);
@@ -48,19 +55,17 @@ class testuri {
       constructors.Add(result);
     }
 
-    var output = new JsonObject();
+    var output = new Output();
 
     var assembly = Assembly.GetExecutingAssembly();
     foreach (var name in assembly.GetReferencedAssemblies()) {
       if (name.Name == "System") {
-        output["useragent"] = name.ToString();
+        output.useragent = name.ToString();
       }
     }
 
-    output["constructor"] = constructors;
+    output.constructor = constructors;
 
-    // workaround System.Json bugs
-    Console.WriteLine(output.ToString().Replace("\n", "\\n").
-      Replace("\t", "\\t").Replace("\u0000", "\\u0000"));
+    Console.WriteLine(JsonConvert.SerializeObject(output, Formatting.Indented));
   }
 }

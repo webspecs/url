@@ -66,11 +66,10 @@ useragent-results/addressable: testaddressable.rb urltestdata.json
 	ruby testaddressable.rb > $@
 
 testuri.exe: testuri.cs
-	mcs testuri.cs /reference:System.Json
+	mcs testuri.cs /reference:/reference:/usr/lib/cli/Newtonsoft.Json-5.0/Newtonsoft.Json.dll
 
 useragent-results/csharp: testuri.exe urltestdata.json
-	./testuri.exe urltestdata.json | \
-        ruby -r json -e "puts JSON.pretty_generate(JSON.parse(STDIN.read))" > $@
+	./testuri.exe urltestdata.json > $@
 
 testgalimatias.class: testgalimatias.java \
 	icu4j-54.1.1.jar galimatias-0.2.0.jar json-20140107.jar
