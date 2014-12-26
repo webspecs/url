@@ -84,8 +84,7 @@
       involved to update and reconcile the various Internet Drafts,
       Recommendations, and Standards in this area.</t>
 
-      <t>Currently, this document is for discussion purposes, with
-      possible next steps discussed in <xref target="nextsteps"/>.</t>
+      <t>Possible next steps are discussed in <xref target="nextsteps"/>.</t>
 
       <t>Discussions have taken place on <eref
       target="mailto:public-ietf-w3c@w3.org">public-ietf-w3c@w3.org</eref>
@@ -98,11 +97,12 @@
       archive</eref>). In addition, the W3C TAG has discussed these issues in
       meetings and on their mailing list.</t>
 
-      <t>This document, test suite, reference implementation, and 
-      the WebPlatform specification are being developed at
+      <t>This document, as well as a test suite, reference implementation, and 
+      <xref target="WP-URL"/> are being developed at
       <eref target="https://github.com/webspecs/url"/>, including
       an issue tracker, Wiki, and related resources.
-      'Pull' requests for edits to doocuments or tests are most welcome.
+      <eref target="https://github.com/webspecs/url/pulls">Pull requests</eref>
+      for edits to doocuments or tests are most welcome.
       Raising issues in <eref target="https://github.com/webspecs/url/issues">the
       GitHub tracker</eref> is also helpful.
       Comments to the editors or on those mailing lists in email
@@ -115,7 +115,7 @@
       <t>This section contains a very compressed history of URL standards,
         in sufficient detail to set some context.
 	REVIEWERS: history is necessarily incomplete, but please
-	note incorrect or missing essential facts.
+	report incorrect or missing essential facts.
       </t>
 
       <t>The first standards-track specification for URLs was <xref target="RFC1738"/>
@@ -186,8 +186,8 @@
       tries to enumerate currently active organizations and specs.
       REVIEWERS: are there important ongoing activities we've missed
       or gotten wrong? Who are the stakeholders whose current
-      work might be affected? (This is to scope organizational
-      coordination needed.)
+      work might be affected? (This input will help determine the
+      organizational coordination needed.)
       </t>
       <t>Organizations include
       the <eref target="https://www.ietf.org/about/">IETF</eref>,
@@ -229,9 +229,9 @@
         target="https://wiki.whatwg.org/wiki/FAQ#What_does_.22Living_Standard.22_mean.3F">living
         standard</eref>.  It primarily focuses on specifying what is
         important for browsers.  The means by which new schemes might
-        be registered is not yet defined.  This work claims to be
-        based on <xref target="UTS-46"/>, and to be intended to
-        obsolete both <xref target="RFC3986"/> and <xref
+        be registered is not yet defined.  This work is
+        based on <xref target="UTS-46"/>, and includes an explicit goal of
+        obsoleting both <xref target="RFC3986"/> and <xref
         target="RFC3987"/>.</t>
       </section>
 
@@ -371,7 +371,8 @@
         <xref target="RFC3987"/> would
 	require a full IETF working group.  Unless and until another
 	group is chartered (perhaps using this document as the Problem
-	Statement / scope), use apps area. Previous venues for
+	Statement / scope), discussion is occuring in the IETF apps area.
+        Previous venues for
 	related topics (public-iri@w3.org, uri@w3.org) are old 
 	enough that there is likely poor representation of
 	important communities, unless a concerted effort is made
@@ -398,8 +399,8 @@
 	<list style="symbols">
           <t>Make it clear that ASCII-only URIs (as now defined by
           <xref target="RFC3986"/>) are not what is mainly used on the web.</t>
-	  <t>Updates for URN.</t>
-	  <t>Updates for fragment identifier semantics.</t>
+	  <t>Incorporate updates for URN.</t>
+	  <t>Incorporate updates for fragment identifier semantics.</t>
 	  <t>Note terminology issue and resolution.</t>
 	</list>
 	</t>
@@ -411,7 +412,7 @@
 
       <section title="Obsolete RFC 3987 (IRI)"> 
 
-	<t>There is somes sentiment to restart the work of updating
+	<t>There is some sentiment to restart the work of updating
         <xref target="RFC3987"/> by starting again, fixing errors and
         integrating errata. However, this path doesn't seem to satisfy the
         desire for a single spec that lays out deterministic processing for
@@ -420,7 +421,7 @@
 
 	<t>After insuring that topics covered in <xref
 	target="RFC3987"/> are also covered by a W3C URL
-	recommendation, then mark <xref target="RFC3987"/> as obsolete
+	recommendation, mark <xref target="RFC3987"/> as obsolete
 	with a short RFC noting the conditions laid out in this
 	document.
 	</t>
@@ -428,7 +429,8 @@
 
       <section title="Obsolete RFC 6454 (Origin)">
 	<t>
-	  Replaced by <xref target="URL-LS"/>.
+	  Replaced by <xref target="CORS"/>, <xref target="URL-LS"/>, and/or
+          <xref target="FETCH"/>.
 	</t>
       </section>
       <section title="file: URI scheme">
@@ -442,8 +444,7 @@
       <section title="Other actions">
 	
 	<t><list style="symbols">
-          <t>Update <xref target="RFC5895"/>, and
-          to be consistent with
+          <t>Update <xref target="RFC5895"/> to be consistent with
           <xref target="URL-LS"/> and <xref target="UTS-46"/>.  This
           may involve working to get the other specifications updated,
           if only to clarify nomenclature.
@@ -454,7 +455,8 @@
           <t>Change the <xref target="URL-LS"/> goals to only obsolete
           specifications listed above that are not updated.  Presuming that
           <xref target="RFC3986"/> is updated, explicitly state that 
-          canonical URLs (i.e., the output of the URL parser) not only
+          conforming URLs are a proper subset of valid URIs, and further state
+          that canonical URLs (i.e., the output of the URL parser) not only
           round trip, but also are valid URIs.</t>
 	  
           <t>Update and incorporate (or reference) the content currently
@@ -482,8 +484,13 @@
     <section anchor="Acknowledgements" title="Acknowledgements">
 
       <t>Helpful comments and improvements to this document have
-      come from Anne van Kesteren, Graham Klyne, Julian Reschke,
-      Bjoern Hoehrmann and Martin Duerst.</t>
+      come from 
+      Anne van Kesteren, 
+      Bjoern Hoehrmann,
+      Graham Klyne, 
+      Julian Reschke,
+      and Martin Duerst.
+      </t>
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
