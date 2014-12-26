@@ -313,7 +313,13 @@
         is a demonstrable lack of interoperability across popular libraries
         and browsers.  <xref target="whatwg-interop"/> identifies a number
         of such differences.</t>
-        
+
+	<t>Stability: Before any standard document can be marked as obsoleted,
+	the requirements other specs that normatively reference the
+	to-be-obsoleted standard need to be considered, to avoid
+	dangling references.
+	</t>
+      
 	<t>IDNA: RFC 3490 (IDNA) defines processing for 'IDN-aware
 	domain name slots' (where "the host portion of the URI in the
 	src attribute of an HTML &lt;IMG&gt; tag" is given as an
@@ -352,6 +358,11 @@
 	of responsibility in IETF and W3C to working groups in each
 	organization.</t>
 	
+	<t>There has been discussion of IETF/W3C liaison getting
+	involved, with the proposal that W3C liaison to IETF
+	making a formal liaison request to which IETF would respond.
+	Perhaps the liaison request might reference this document. </t>
+
 	<t>In IETF, the scope of changes proposed may determine how
 	IETF consensus can best be obtained.  It seems unlikely that
 	the scope of necessary changes to IETF documents could be
@@ -360,7 +371,7 @@
 	require a full IETF working group.  Unless and until another
 	group is chartered (perhaps using this document as the Problem
 	Statement / scope), use apps area. Previous venues for
-	discussion (public-iri@w3.org, uri@w3.org) are old 
+	related topics (public-iri@w3.org, uri@w3.org) are old 
 	enough that there is likely poor representation of
 	imporant communities, unless a concerted effort is made
 	to revive them.</t>
