@@ -1604,36 +1604,6 @@
       "base": "test:test",
       "inspect": "\"x\"",
       "index": "f332d9850a06d2c8cfbee40b7348696e"
-    },
-    {
-      "input": "http:\\\foo.com\\",
-      "base": "http://example.org/foo/bar",
-      "inspect": "\"http:\\\\\\foo.com\\\\\"",
-      "index": "995b07ce957f34a1ffcd149b3ede2ff9"
-    },
-    {
-      "input": "http:\\a\\b:c\\d@foo.com\\",
-      "base": "http://example.org/foo/bar",
-      "inspect": "\"http:\\\\a\\\\b:c\\\\d@foo.com\\\\\"",
-      "index": "666faf6b26390da4bfd5a366477314dd"
-    },
-    {
-      "input": "\\server\\file",
-      "base": "file:///tmp/mock/path",
-      "inspect": "\"\\\\server\\\\file\"",
-      "index": "5e8d33b116eab48a9ef3205f863b76fc"
-    },
-    {
-      "input": "http://example.com\\\foo\\\bar",
-      "base": "about:blank",
-      "inspect": "\"http://example.com\\\\\\foo\\\\\\bar\"",
-      "index": "d48c484c7d92460206f6e9b7aaf377c3"
-    },
-    {
-      "input": "http:\\www.google.com\\foo",
-      "base": "about:blank",
-      "inspect": "\"http:\\\\www.google.com\\\\foo\"",
-      "index": "d6d3ea015146ba1f2603764ef836b3d1"
     }
   ]
 }

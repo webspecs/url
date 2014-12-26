@@ -1,5 +1,5 @@
 {
-  "useragent": "url 0.2.5 (git+https://github.com/servo/rust-url)",
+  "useragent": "url 0.2.8 (git+https://github.com/servo/rust-url)",
   "constructor": [
     {
       "input": "http://example\t.\norg",
