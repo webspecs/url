@@ -320,7 +320,7 @@
 	dangling references.
 	</t>
       
-	<t>IDNA: RFC 3490 (IDNA) defines processing for 'IDN-aware
+	<t>IDNA: <xref target="RFC3490"/> defines processing for 'IDN-aware
 	domain name slots' (where "the host portion of the URI in the
 	src attribute of an HTML &lt;IMG&gt; tag" is given as an
 	example. Later, "IDNA is applicable to all domain names in all
@@ -328,15 +328,15 @@
 	IDN-aware domain name slot? A domain name slot at all?  </t>
 
 	<t>Bidi URLs: The problems with writing URLs using characters
-	from right-to-left languages are well-known among experts;
-	what is not known is a solution for these problems.  The
-	solution given in RFC 3987 has some obvious errors (how to
-	handle combining marks); it's general approach also probably
-	can be improved on, but it's not sure why.</t>
+        from right-to-left languages are well-known among experts; what is not
+        known is a solution for these problems.  The solution given in 
+        <xref target="RFC3987"/> has some obvious errors (how to handle
+        combining marks); it's general approach also probably can be improved
+        on, but it's not sure how.</t>
 
         <t>Specific scheme definitions: some UR* scheme definitions are woefully
           out of date, incomplete, or don't correspond to current practice,
-          but updating their definitions is unclear. This includes "file:",
+          but updating their definitions is unclear. This includes 'file:',
           for which there is a current effort, but there are others which
           need review (including 'ftp:', 'data:').
         </t>
@@ -367,13 +367,14 @@
 	IETF consensus can best be obtained.  It seems unlikely that
 	the scope of necessary changes to IETF documents could be
 	managed through individual submissions. Some opinions have
-	been that updating RFC 3986 and/or obsoleting RFC 3987 would
+	been that updating <xref target="RFC3986"/> and/or obsoleting 
+        <xref target="RFC3987"/> would
 	require a full IETF working group.  Unless and until another
 	group is chartered (perhaps using this document as the Problem
 	Statement / scope), use apps area. Previous venues for
 	related topics (public-iri@w3.org, uri@w3.org) are old 
 	enough that there is likely poor representation of
-	imporant communities, unless a concerted effort is made
+	important communities, unless a concerted effort is made
 	to revive them.</t>
 
 	<t>In W3C, either W3C webapps, TAG, HTML or some new activity
@@ -411,10 +412,10 @@
       <section title="Obsolete RFC 3987 (IRI)"> 
 
 	<t>There is somes sentiment to restart the work of updating
-	RFC 3987 by starting again, fixing errors and integrating
-	errata. However, this path doesn't seem to satisfy the desire
-	for a single spec that lays out deterministic processing for
-	URLs and references for browser and operating-system handling
+        <xref target="RFC3987"/> by starting again, fixing errors and
+        integrating errata. However, this path doesn't seem to satisfy the
+        desire for a single spec that lays out deterministic processing for
+        URLs and references for browser and operating-system handling
 	of both.</t>
 
 	<t>After insuring that topics covered in <xref
@@ -434,7 +435,7 @@
 	<t> 
 	  Coordinate 'file:' syntax in <xref target="URL-LS"/>
 	  and <xref target="kerwin-file-scheme"/>, possibly
-	  moving the file: part of URL-LS into a separate
+	  moving the 'file:' part of URL-LS into a separate
 	  document.
 	</t>
       </section>
