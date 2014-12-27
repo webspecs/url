@@ -51,6 +51,8 @@ class testuri {
         }
       } catch(System.UriFormatException e) {
         result["exception"] = e.Message;
+        result["href"] = (string)test["input"];
+        result["protocol"] = ":";
       }
 
       constructors.Add(result);

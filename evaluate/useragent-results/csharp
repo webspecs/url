@@ -4,7 +4,9 @@
     {
       "input": "http://example\t.\norg",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://example\t.\norg",
+      "protocol": ":"
     },
     {
       "input": "http://user:pass@foo:21/bar;par?b#c",
@@ -46,7 +48,9 @@
     {
       "input": "a:\t foo.com",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: A Dos path must be rooted, for example, 'c:\\'."
+      "exception": "Invalid URI: A Dos path must be rooted, for example, 'c:\\'.",
+      "href": "a:\t foo.com",
+      "protocol": ":"
     },
     {
       "input": "http://f:21/ b ? d # e ",
@@ -96,32 +100,44 @@
     {
       "input": "http://f:b/c",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: Invalid port specified."
+      "exception": "Invalid URI: Invalid port specified.",
+      "href": "http://f:b/c",
+      "protocol": ":"
     },
     {
       "input": "http://f: /c",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: Invalid port specified."
+      "exception": "Invalid URI: Invalid port specified.",
+      "href": "http://f: /c",
+      "protocol": ":"
     },
     {
       "input": "http://f:\n/c",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: Invalid port specified."
+      "exception": "Invalid URI: Invalid port specified.",
+      "href": "http://f:\n/c",
+      "protocol": ":"
     },
     {
       "input": "http://f:fifty-two/c",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: Invalid port specified."
+      "exception": "Invalid URI: Invalid port specified.",
+      "href": "http://f:fifty-two/c",
+      "protocol": ":"
     },
     {
       "input": "http://f:999999/c",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: Invalid port specified."
+      "exception": "Invalid URI: Invalid port specified.",
+      "href": "http://f:999999/c",
+      "protocol": ":"
     },
     {
       "input": "http://f: 21 / b ? d # e ",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: Invalid port specified."
+      "exception": "Invalid URI: Invalid port specified.",
+      "href": "http://f: 21 / b ? d # e ",
+      "protocol": ":"
     },
     {
       "input": "",
@@ -322,7 +338,9 @@
     {
       "input": "http://::@c@d:2",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://::@c@d:2",
+      "protocol": ":"
     },
     {
       "input": "http://foo.com:b@d/",
@@ -345,12 +363,16 @@
     {
       "input": "http:\\\\foo.com\\",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http:\\\\foo.com\\",
+      "protocol": ":"
     },
     {
       "input": "http:\\\\a\\b:c\\d@foo.com\\",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http:\\\\a\\b:c\\d@foo.com\\",
+      "protocol": ":"
     },
     {
       "input": "foo:/",
@@ -455,22 +477,30 @@
     {
       "input": "http://[1::2]:3:4",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: Invalid port specified."
+      "exception": "Invalid URI: Invalid port specified.",
+      "href": "http://[1::2]:3:4",
+      "protocol": ":"
     },
     {
       "input": "http://2001::1",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: Invalid port specified."
+      "exception": "Invalid URI: Invalid port specified.",
+      "href": "http://2001::1",
+      "protocol": ":"
     },
     {
       "input": "http://2001::1]",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: Invalid port specified."
+      "exception": "Invalid URI: Invalid port specified.",
+      "href": "http://2001::1]",
+      "protocol": ":"
     },
     {
       "input": "http://2001::1]:80",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: Invalid port specified."
+      "exception": "Invalid URI: Invalid port specified.",
+      "href": "http://2001::1]:80",
+      "protocol": ":"
     },
     {
       "input": "http://[2001::1]",
@@ -499,12 +529,16 @@
     {
       "input": "ftp:/example.com/",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "ftp:/example.com/",
+      "protocol": ":"
     },
     {
       "input": "https:/example.com/",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "https:/example.com/",
+      "protocol": ":"
     },
     {
       "input": "madeupscheme:/example.com/",
@@ -517,7 +551,9 @@
     {
       "input": "file:/example.com/",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "file:/example.com/",
+      "protocol": ":"
     },
     {
       "input": "ftps:/example.com/",
@@ -530,17 +566,23 @@
     {
       "input": "gopher:/example.com/",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "gopher:/example.com/",
+      "protocol": ":"
     },
     {
       "input": "ws:/example.com/",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "ws:/example.com/",
+      "protocol": ":"
     },
     {
       "input": "wss:/example.com/",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "wss:/example.com/",
+      "protocol": ":"
     },
     {
       "input": "data:/example.com/",
@@ -577,12 +619,16 @@
     {
       "input": "ftp:example.com/",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "ftp:example.com/",
+      "protocol": ":"
     },
     {
       "input": "https:example.com/",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "https:example.com/",
+      "protocol": ":"
     },
     {
       "input": "madeupscheme:example.com/",
@@ -603,17 +649,23 @@
     {
       "input": "gopher:example.com/",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "gopher:example.com/",
+      "protocol": ":"
     },
     {
       "input": "ws:example.com/",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "ws:example.com/",
+      "protocol": ":"
     },
     {
       "input": "wss:example.com/",
       "base": "http://example.org/foo/bar",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "wss:example.com/",
+      "protocol": ":"
     },
     {
       "input": "data:example.com/",
@@ -1076,7 +1128,9 @@
     {
       "input": "http://example.com\\\\foo\\\\bar",
       "base": "about:blank",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://example.com\\\\foo\\\\bar",
+      "protocol": ":"
     },
     {
       "input": "http://example.com/%7Ffp3%3Eju%3Dduvgw%3Dd",
@@ -1149,7 +1203,9 @@
     {
       "input": "http://[www.google.com]/",
       "base": "about:blank",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://[www.google.com]/",
+      "protocol": ":"
     },
     {
       "input": "http://www.google.com",
@@ -1186,7 +1242,9 @@
     {
       "input": "http://user:pass@/",
       "base": "about:blank",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://user:pass@/",
+      "protocol": ":"
     },
     {
       "input": "http://%25DOMAIN:foobar@foodomain.com/",
@@ -1201,7 +1259,9 @@
     {
       "input": "http:\\\\www.google.com\\foo",
       "base": "about:blank",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http:\\\\www.google.com\\foo",
+      "protocol": ":"
     },
     {
       "input": "http://foo:80/",
@@ -1232,7 +1292,9 @@
     {
       "input": "http://foo:-80/",
       "base": "about:blank",
-      "exception": "Invalid URI: Invalid port specified."
+      "exception": "Invalid URI: Invalid port specified.",
+      "href": "http://foo:-80/",
+      "protocol": ":"
     },
     {
       "input": "https://foo:443/",
@@ -1358,17 +1420,23 @@
     {
       "input": "http:/example.com/",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "http:/example.com/",
+      "protocol": ":"
     },
     {
       "input": "ftp:/example.com/",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "ftp:/example.com/",
+      "protocol": ":"
     },
     {
       "input": "https:/example.com/",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "https:/example.com/",
+      "protocol": ":"
     },
     {
       "input": "madeupscheme:/example.com/",
@@ -1381,7 +1449,9 @@
     {
       "input": "file:/example.com/",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "file:/example.com/",
+      "protocol": ":"
     },
     {
       "input": "ftps:/example.com/",
@@ -1394,17 +1464,23 @@
     {
       "input": "gopher:/example.com/",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "gopher:/example.com/",
+      "protocol": ":"
     },
     {
       "input": "ws:/example.com/",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "ws:/example.com/",
+      "protocol": ":"
     },
     {
       "input": "wss:/example.com/",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "wss:/example.com/",
+      "protocol": ":"
     },
     {
       "input": "data:/example.com/",
@@ -1433,17 +1509,23 @@
     {
       "input": "http:example.com/",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "http:example.com/",
+      "protocol": ":"
     },
     {
       "input": "ftp:example.com/",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "ftp:example.com/",
+      "protocol": ":"
     },
     {
       "input": "https:example.com/",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "https:example.com/",
+      "protocol": ":"
     },
     {
       "input": "madeupscheme:example.com/",
@@ -1464,17 +1546,23 @@
     {
       "input": "gopher:example.com/",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "gopher:example.com/",
+      "protocol": ":"
     },
     {
       "input": "ws:example.com/",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "ws:example.com/",
+      "protocol": ":"
     },
     {
       "input": "wss:example.com/",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "wss:example.com/",
+      "protocol": ":"
     },
     {
       "input": "data:example.com/",
@@ -1503,12 +1591,16 @@
     {
       "input": "http:@www.example.com",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "http:@www.example.com",
+      "protocol": ":"
     },
     {
       "input": "http:/@www.example.com",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "http:/@www.example.com",
+      "protocol": ":"
     },
     {
       "input": "http://@www.example.com",
@@ -1521,12 +1613,16 @@
     {
       "input": "http:a:b@www.example.com",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "http:a:b@www.example.com",
+      "protocol": ":"
     },
     {
       "input": "http:/a:b@www.example.com",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "http:/a:b@www.example.com",
+      "protocol": ":"
     },
     {
       "input": "http://a:b@www.example.com",
@@ -1549,12 +1645,16 @@
     {
       "input": "http::b@www.example.com",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "http::b@www.example.com",
+      "protocol": ":"
     },
     {
       "input": "http:/:b@www.example.com",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "http:/:b@www.example.com",
+      "protocol": ":"
     },
     {
       "input": "http://:b@www.example.com",
@@ -1569,62 +1669,86 @@
     {
       "input": "http:/:@/www.example.com",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "http:/:@/www.example.com",
+      "protocol": ":"
     },
     {
       "input": "http://user@/www.example.com",
       "base": "about:blank",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://user@/www.example.com",
+      "protocol": ":"
     },
     {
       "input": "http:@/www.example.com",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "http:@/www.example.com",
+      "protocol": ":"
     },
     {
       "input": "http:/@/www.example.com",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "http:/@/www.example.com",
+      "protocol": ":"
     },
     {
       "input": "http://@/www.example.com",
       "base": "about:blank",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://@/www.example.com",
+      "protocol": ":"
     },
     {
       "input": "https:@/www.example.com",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "https:@/www.example.com",
+      "protocol": ":"
     },
     {
       "input": "http:a:b@/www.example.com",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "http:a:b@/www.example.com",
+      "protocol": ":"
     },
     {
       "input": "http:/a:b@/www.example.com",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "http:/a:b@/www.example.com",
+      "protocol": ":"
     },
     {
       "input": "http://a:b@/www.example.com",
       "base": "about:blank",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://a:b@/www.example.com",
+      "protocol": ":"
     },
     {
       "input": "http::@/www.example.com",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "http::@/www.example.com",
+      "protocol": ":"
     },
     {
       "input": "http:a:@www.example.com",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "http:a:@www.example.com",
+      "protocol": ":"
     },
     {
       "input": "http:/a:@www.example.com",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "http:/a:@www.example.com",
+      "protocol": ":"
     },
     {
       "input": "http://a:@www.example.com",
@@ -1648,17 +1772,23 @@
     {
       "input": "http:@:www.example.com",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "http:@:www.example.com",
+      "protocol": ":"
     },
     {
       "input": "http:/@:www.example.com",
       "base": "about:blank",
-      "exception": "Invalid URI: The Authority/Host could not be parsed."
+      "exception": "Invalid URI: The Authority/Host could not be parsed.",
+      "href": "http:/@:www.example.com",
+      "protocol": ":"
     },
     {
       "input": "http://@:www.example.com",
       "base": "about:blank",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://@:www.example.com",
+      "protocol": ":"
     },
     {
       "input": "http://:@www.example.com",
@@ -1777,12 +1907,16 @@
     {
       "input": "http://example example.com",
       "base": "http://other.com/",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://example example.com",
+      "protocol": ":"
     },
     {
       "input": "http://Goo%20 goo%7C|.com",
       "base": "http://other.com/",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://Goo%20 goo%7C|.com",
+      "protocol": ":"
     },
     {
       "input": "http://GOO 　goo.com",
@@ -1819,7 +1953,9 @@
     {
       "input": "http://%ef%b7%90zyx.com",
       "base": "http://other.com/",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://%ef%b7%90zyx.com",
+      "protocol": ":"
     },
     {
       "input": "http://Ｇｏ.com",
@@ -1840,7 +1976,9 @@
     {
       "input": "http://%ef%bc%85%ef%bc%94%ef%bc%91.com",
       "base": "http://other.com/",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://%ef%bc%85%ef%bc%94%ef%bc%91.com",
+      "protocol": ":"
     },
     {
       "input": "http://％００.com",
@@ -1853,7 +1991,9 @@
     {
       "input": "http://%ef%bc%85%ef%bc%90%ef%bc%90.com",
       "base": "http://other.com/",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://%ef%bc%85%ef%bc%90%ef%bc%90.com",
+      "protocol": ":"
     },
     {
       "input": "http://你好你好",
@@ -1866,27 +2006,37 @@
     {
       "input": "http://%zz%66%a.com",
       "base": "http://other.com/",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://%zz%66%a.com",
+      "protocol": ":"
     },
     {
       "input": "http://%25",
       "base": "http://other.com/",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://%25",
+      "protocol": ":"
     },
     {
       "input": "http://hello%00",
       "base": "http://other.com/",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://hello%00",
+      "protocol": ":"
     },
     {
       "input": "http://%30%78%63%30%2e%30%32%35%30.01",
       "base": "http://other.com/",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://%30%78%63%30%2e%30%32%35%30.01",
+      "protocol": ":"
     },
     {
       "input": "http://%30%78%63%30%2e%30%32%35%30.01%2e",
       "base": "http://other.com/",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://%30%78%63%30%2e%30%32%35%30.01%2e",
+      "protocol": ":"
     },
     {
       "input": "http://192.168.0.257",
@@ -1899,12 +2049,16 @@
     {
       "input": "http://%3g%78%63%30%2e%30%32%35%30%2E.01",
       "base": "http://other.com/",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://%3g%78%63%30%2e%30%32%35%30%2E.01",
+      "protocol": ":"
     },
     {
       "input": "http://192.168.0.1 hello",
       "base": "http://other.com/",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://192.168.0.1 hello",
+      "protocol": ":"
     },
     {
       "input": "http://０Ｘｃ０．０２５０．０１",
@@ -1917,7 +2071,9 @@
     {
       "input": "http://[google.com]",
       "base": "http://other.com/",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "exception": "Invalid URI: The hostname could not be parsed.",
+      "href": "http://[google.com]",
+      "protocol": ":"
     },
     {
       "input": "http://foo:💩@example.com/bar",
