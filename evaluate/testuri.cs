@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
 using Newtonsoft.Json;
 
 public class Output {
@@ -10,7 +11,7 @@ public class Output {
 
 class testuri {
   static void Main(string[] args) {
-    var text = System.IO.File.ReadAllText(args[0]);
+    var text = System.IO.File.ReadAllText(args[0], Encoding.UTF8);
     List<Dictionary<string, string>> tests =
       JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(text);
     var constructors = new List<Dictionary<string, string>>();
@@ -66,6 +67,7 @@ class testuri {
 
     output.constructor = constructors;
 
-    Console.WriteLine(JsonConvert.SerializeObject(output, Formatting.Indented));
+    var json = JsonConvert.SerializeObject(output, Formatting.Indented);
+    System.IO.File.WriteAllText(args[1],  json, new UTF8Encoding(false));
   }
 }

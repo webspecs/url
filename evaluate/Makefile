@@ -34,13 +34,13 @@ clean:
 	rfc9866.js \
 	useragent-results/index \
 	useragent-results/addressable \
-	useragent-results/csharp \
 	useragent-results/galimatias \
 	useragent-results/nodejs \
 	useragent-results/perl \
 	useragent-results/python \
 	useragent-results/rusturl \
 	useragent-results/refimpl
+#       useragent-results/csharp \
 
 clobber: clean
 	rm -f *.jar
@@ -66,10 +66,10 @@ useragent-results/addressable: testaddressable.rb urltestdata.json
 	ruby testaddressable.rb > $@
 
 testuri.exe: testuri.cs
-	mcs testuri.cs /reference:/reference:/usr/lib/cli/Newtonsoft.Json-5.0/Newtonsoft.Json.dll
+	mcs testuri.cs /reference:/usr/lib/cli/Newtonsoft.Json-5.0/Newtonsoft.Json.dll
 
-useragent-results/csharp: testuri.exe urltestdata.json
-	./testuri.exe urltestdata.json > $@
+# useragent-results/csharp: testuri.exe urltestdata.json
+#	./testuri.exe urltestdata.json > $@
 
 testgalimatias.class: testgalimatias.java \
 	icu4j-54.1.1.jar galimatias-0.2.0.jar json-20140107.jar

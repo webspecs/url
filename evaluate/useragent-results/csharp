@@ -4,10 +4,7 @@
     {
       "input": "http://example\t.\norg",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/http://example\t.\norg",
-      "protocol": "http:",
-      "hostname": "example.org",
-      "pathname": "/foo/http://example%09.%0Aorg"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http://user:pass@foo:21/bar;par?b#c",
@@ -33,23 +30,23 @@
     {
       "input": "\t   :foo.com   \n",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/\t   :foo.com   \n",
+      "href": "http://example.org/foo/:foo.com",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/foo/%09%20%20%20:foo.com%20%20%20%0A"
+      "pathname": "/foo/:foo.com"
     },
     {
       "input": " foo.com  ",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/ foo.com  ",
+      "href": "http://example.org/foo/foo.com",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/foo/%20foo.com%20%20"
+      "pathname": "/foo/foo.com"
     },
     {
       "input": "a:\t foo.com",
       "base": "http://example.org/foo/bar",
-      "exception": "Relative file path is not allowed."
+      "exception": "Invalid URI: A Dos path must be rooted, for example, 'c:\\'."
     },
     {
       "input": "http://f:21/ b ? d # e ",
@@ -99,52 +96,32 @@
     {
       "input": "http://f:b/c",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/http://f:b/c",
-      "protocol": "http:",
-      "hostname": "example.org",
-      "pathname": "/foo/http://f:b/c"
+      "exception": "Invalid URI: Invalid port specified."
     },
     {
       "input": "http://f: /c",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/http://f: /c",
-      "protocol": "http:",
-      "hostname": "example.org",
-      "pathname": "/foo/http://f:%20/c"
+      "exception": "Invalid URI: Invalid port specified."
     },
     {
       "input": "http://f:\n/c",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/http://f:\n/c",
-      "protocol": "http:",
-      "hostname": "example.org",
-      "pathname": "/foo/http://f:%0A/c"
+      "exception": "Invalid URI: Invalid port specified."
     },
     {
       "input": "http://f:fifty-two/c",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/http://f:fifty-two/c",
-      "protocol": "http:",
-      "hostname": "example.org",
-      "pathname": "/foo/http://f:fifty-two/c"
+      "exception": "Invalid URI: Invalid port specified."
     },
     {
       "input": "http://f:999999/c",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/http://f:999999/c",
-      "protocol": "http:",
-      "hostname": "example.org",
-      "pathname": "/foo/http://f:999999/c"
+      "exception": "Invalid URI: Invalid port specified."
     },
     {
       "input": "http://f: 21 / b ? d # e ",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/http://f: 21 / b ? d # e ",
-      "protocol": "http:",
-      "hostname": "example.org",
-      "pathname": "/foo/http://f:%2021%20/%20b%20",
-      "search": "?%20d%20",
-      "hash": "#%20e%20"
+      "exception": "Invalid URI: Invalid port specified."
     },
     {
       "input": "",
@@ -157,42 +134,42 @@
     {
       "input": "  \t",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/  \t",
-      "protocol": "http:",
-      "hostname": "example.org",
-      "pathname": "/foo/%20%20%09"
-    },
-    {
-      "input": ":foo.com/",
-      "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/foo.com/",
-      "protocol": "http:",
-      "hostname": "example.org",
-      "pathname": "/foo/foo.com/"
-    },
-    {
-      "input": ":foo.com\\",
-      "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/foo.com/",
-      "protocol": "http:",
-      "hostname": "example.org",
-      "pathname": "/foo/foo.com%5C"
-    },
-    {
-      "input": ":",
-      "base": "http://example.org/foo/bar",
       "href": "http://example.org/foo/bar",
       "protocol": "http:",
       "hostname": "example.org",
       "pathname": "/foo/bar"
     },
     {
-      "input": ":a",
+      "input": ":foo.com/",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/a",
+      "href": "http://example.org/foo/:foo.com/",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/foo/a"
+      "pathname": "/foo/:foo.com/"
+    },
+    {
+      "input": ":foo.com\\",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/:foo.com/",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/:foo.com/"
+    },
+    {
+      "input": ":",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/:",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/:"
+    },
+    {
+      "input": ":a",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/:a",
+      "protocol": "http:",
+      "hostname": "example.org",
+      "pathname": "/foo/:a"
     },
     {
       "input": ":/",
@@ -205,18 +182,18 @@
     {
       "input": ":\\",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo//",
+      "href": "http://example.org/foo/:/",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/foo/%5C"
+      "pathname": "/foo/:/"
     },
     {
       "input": ":#",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/bar#",
+      "href": "http://example.org/foo/:#",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/foo/bar",
+      "pathname": "/foo/:",
       "hash": "#"
     },
     {
@@ -275,10 +252,10 @@
     {
       "input": ":23",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/23",
+      "href": "http://example.org/foo/:23",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/foo/23"
+      "pathname": "/foo/:23"
     },
     {
       "input": "/:23",
@@ -291,18 +268,18 @@
     {
       "input": "::",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/:",
+      "href": "http://example.org/foo/::",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/foo/:"
+      "pathname": "/foo/::"
     },
     {
       "input": "::23",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/:23",
+      "href": "http://example.org/foo/::23",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/foo/:23"
+      "pathname": "/foo/::23"
     },
     {
       "input": "foo://",
@@ -337,7 +314,7 @@
       "href": "http://&a:foo(b]c@d:2/",
       "protocol": "http:",
       "username": "&a",
-      "password": "foo(b]c",
+      "password": "foo(b%5Dc",
       "hostname": "d",
       "port": "2",
       "pathname": "/"
@@ -345,10 +322,7 @@
     {
       "input": "http://::@c@d:2",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/http://::@c@d:2",
-      "protocol": "http:",
-      "hostname": "example.org",
-      "pathname": "/foo/http://::@c@d:2"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http://foo.com:b@d/",
@@ -371,18 +345,12 @@
     {
       "input": "http:\\\\foo.com\\",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo///foo.com/",
-      "protocol": "http:",
-      "hostname": "example.org",
-      "pathname": "/foo/%5C%5Cfoo.com%5C"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http:\\\\a\\b:c\\d@foo.com\\",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo///a/b:c/d@foo.com/",
-      "protocol": "http:",
-      "hostname": "example.org",
-      "pathname": "/foo/%5C%5Ca%5Cb:c%5Cd@foo.com%5C"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "foo:/",
@@ -443,7 +411,7 @@
     {
       "input": "http://foo/path;a??e#f#g",
       "base": "http://example.org/foo/bar",
-      "href": "http://foo/path;a??e#f%23g",
+      "href": "http://foo/path;a??e#f#g",
       "protocol": "http:",
       "hostname": "foo",
       "pathname": "/path;a",
@@ -487,34 +455,22 @@
     {
       "input": "http://[1::2]:3:4",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/http://[1::2]:3:4",
-      "protocol": "http:",
-      "hostname": "example.org",
-      "pathname": "/foo/http://%5B1::2%5D:3:4"
+      "exception": "Invalid URI: Invalid port specified."
     },
     {
       "input": "http://2001::1",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/http://2001::1",
-      "protocol": "http:",
-      "hostname": "example.org",
-      "pathname": "/foo/http://2001::1"
+      "exception": "Invalid URI: Invalid port specified."
     },
     {
       "input": "http://2001::1]",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/http://2001::1]",
-      "protocol": "http:",
-      "hostname": "example.org",
-      "pathname": "/foo/http://2001::1%5D"
+      "exception": "Invalid URI: Invalid port specified."
     },
     {
       "input": "http://2001::1]:80",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/http://2001::1]:80",
-      "protocol": "http:",
-      "hostname": "example.org",
-      "pathname": "/foo/http://2001::1%5D:80"
+      "exception": "Invalid URI: Invalid port specified."
     },
     {
       "input": "http://[2001::1]",
@@ -535,26 +491,20 @@
     {
       "input": "http:/example.com/",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/http:/example.com/",
+      "href": "http://example.org/example.com/",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/foo/http:/example.com/"
+      "pathname": "/example.com/"
     },
     {
       "input": "ftp:/example.com/",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/ftp:/example.com/",
-      "protocol": "http:",
-      "hostname": "example.org",
-      "pathname": "/foo/ftp:/example.com/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "https:/example.com/",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/https:/example.com/",
-      "protocol": "http:",
-      "hostname": "example.org",
-      "pathname": "/foo/https:/example.com/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "madeupscheme:/example.com/",
@@ -567,10 +517,7 @@
     {
       "input": "file:/example.com/",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/file:/example.com/",
-      "protocol": "http:",
-      "hostname": "example.org",
-      "pathname": "/foo/file:/example.com/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "ftps:/example.com/",
@@ -583,26 +530,17 @@
     {
       "input": "gopher:/example.com/",
       "base": "http://example.org/foo/bar",
-      "href": "http://example.org/foo/gopher:/example.com/",
-      "protocol": "http:",
-      "hostname": "example.org",
-      "pathname": "/foo/gopher:/example.com/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "ws:/example.com/",
       "base": "http://example.org/foo/bar",
-      "href": "ws:/example.com/",
-      "protocol": "ws:",
-      "hostname": "",
-      "pathname": "/example.com/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "wss:/example.com/",
       "base": "http://example.org/foo/bar",
-      "href": "wss:/example.com/",
-      "protocol": "wss:",
-      "hostname": "",
-      "pathname": "/example.com/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "data:/example.com/",
@@ -639,18 +577,12 @@
     {
       "input": "ftp:example.com/",
       "base": "http://example.org/foo/bar",
-      "href": "ftp://example.com/",
-      "protocol": "ftp:",
-      "hostname": "example.com",
-      "pathname": "/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "https:example.com/",
       "base": "http://example.org/foo/bar",
-      "href": "https://example.com/",
-      "protocol": "https:",
-      "hostname": "example.com",
-      "pathname": "/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "madeupscheme:example.com/",
@@ -671,26 +603,17 @@
     {
       "input": "gopher:example.com/",
       "base": "http://example.org/foo/bar",
-      "href": "gopher://example.com/",
-      "protocol": "gopher:",
-      "hostname": "example.com",
-      "pathname": "/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "ws:example.com/",
       "base": "http://example.org/foo/bar",
-      "href": "ws:example.com/",
-      "protocol": "ws:",
-      "hostname": "",
-      "pathname": "example.com/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "wss:example.com/",
       "base": "http://example.org/foo/bar",
-      "href": "wss:example.com/",
-      "protocol": "wss:",
-      "hostname": "",
-      "pathname": "example.com/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "data:example.com/",
@@ -738,7 +661,7 @@
       "href": "http://example.org/a/c",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/a%2fc"
+      "pathname": "/a/c"
     },
     {
       "input": "/a/%2f/c",
@@ -746,7 +669,7 @@
       "href": "http://example.org/a///c",
       "protocol": "http:",
       "hostname": "example.org",
-      "pathname": "/a/%2f/c"
+      "pathname": "/a///c"
     },
     {
       "input": "#β",
@@ -769,39 +692,42 @@
     {
       "input": "file:c:\\foo\\bar.html",
       "base": "file:///tmp/mock/path",
-      "href": "file:///tmp/mock/c:/foo/bar.html",
+      "href": "file:///c:/foo/bar.html",
       "protocol": "file:",
       "hostname": "",
-      "pathname": "/tmp/mock/c:%5Cfoo%5Cbar.html"
+      "pathname": "/c:/foo/bar.html"
     },
     {
       "input": "  File:c|////foo\\bar.html",
       "base": "file:///tmp/mock/path",
-      "href": "file:///tmp/mock/  File:c|////foo/bar.html",
+      "href": "file:///c:////foo/bar.html",
       "protocol": "file:",
       "hostname": "",
-      "pathname": "/tmp/mock/%20%20File:c%7C////foo%5Cbar.html"
+      "pathname": "/c:////foo/bar.html"
     },
     {
       "input": "C|/foo/bar",
       "base": "file:///tmp/mock/path",
-      "href": "file:///tmp/mock/C|/foo/bar",
+      "href": "file:///C:/foo/bar",
       "protocol": "file:",
       "hostname": "",
-      "pathname": "/tmp/mock/C%7C/foo/bar"
+      "pathname": "/C:/foo/bar"
     },
     {
       "input": "/C|\\foo\\bar",
       "base": "file:///tmp/mock/path",
-      "href": "file:///C|/foo/bar",
+      "href": "file:///C:/foo/bar",
       "protocol": "file:",
       "hostname": "",
-      "pathname": "/C%7C%5Cfoo%5Cbar"
+      "pathname": "/C:/foo/bar"
     },
     {
       "input": "//C|/foo/bar",
       "base": "file:///tmp/mock/path",
-      "exception": "Invalid URI: The hostname could not be parsed."
+      "href": "file:///C:/foo/bar",
+      "protocol": "file:",
+      "hostname": "",
+      "pathname": "/C:/foo/bar"
     },
     {
       "input": "//server/file",
@@ -822,10 +748,10 @@
     {
       "input": "/\\server/file",
       "base": "file:///tmp/mock/path",
-      "href": "file:////server/file",
+      "href": "file://server/file",
       "protocol": "file:",
-      "hostname": "",
-      "pathname": "/%5Cserver/file"
+      "hostname": "server",
+      "pathname": "/file"
     },
     {
       "input": "file:///foo/bar.txt",
@@ -934,10 +860,10 @@
     {
       "input": "http://example.com/foo/.",
       "base": "about:blank",
-      "href": "http://example.com/foo",
+      "href": "http://example.com/foo/",
       "protocol": "http:",
       "hostname": "example.com",
-      "pathname": "/foo"
+      "pathname": "/foo/"
     },
     {
       "input": "http://example.com/foo/./",
@@ -950,10 +876,10 @@
     {
       "input": "http://example.com/foo/bar/..",
       "base": "about:blank",
-      "href": "http://example.com/foo",
+      "href": "http://example.com/foo/",
       "protocol": "http:",
       "hostname": "example.com",
-      "pathname": "/foo"
+      "pathname": "/foo/"
     },
     {
       "input": "http://example.com/foo/bar/../",
@@ -1006,10 +932,10 @@
     {
       "input": "http://example.com/foo/%2e",
       "base": "about:blank",
-      "href": "http://example.com/foo",
+      "href": "http://example.com/foo/",
       "protocol": "http:",
       "hostname": "example.com",
-      "pathname": "/foo"
+      "pathname": "/foo/"
     },
     {
       "input": "http://example.com/foo/%2e%2",
@@ -1030,26 +956,26 @@
     {
       "input": "http://example.com////../..",
       "base": "about:blank",
-      "href": "http://example.com/",
+      "href": "http://example.com//",
       "protocol": "http:",
       "hostname": "example.com",
-      "pathname": "/"
+      "pathname": "//"
     },
     {
       "input": "http://example.com/foo/bar//../..",
       "base": "about:blank",
-      "href": "http://example.com/foo",
+      "href": "http://example.com/foo/",
       "protocol": "http:",
       "hostname": "example.com",
-      "pathname": "/foo"
+      "pathname": "/foo/"
     },
     {
       "input": "http://example.com/foo/bar//..",
       "base": "about:blank",
-      "href": "http://example.com/foo/bar",
+      "href": "http://example.com/foo/bar/",
       "protocol": "http:",
       "hostname": "example.com",
-      "pathname": "/foo/bar"
+      "pathname": "/foo/bar/"
     },
     {
       "input": "http://example.com/foo",
@@ -1110,7 +1036,7 @@
     {
       "input": "http://example.com/foo\t%91",
       "base": "about:blank",
-      "href": "http://example.com/foo\t",
+      "href": "http://example.com/foo\t%91",
       "protocol": "http:",
       "hostname": "example.com",
       "pathname": "/foo%09%C2%91%91"
@@ -1150,10 +1076,7 @@
     {
       "input": "http://example.com\\\\foo\\\\bar",
       "base": "about:blank",
-      "href": "about:blankhttp://example.com%5C%5Cfoo%5C%5Cbar",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp://example.com%5C%5Cfoo%5C%5Cbar"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http://example.com/%7Ffp3%3Eju%3Dduvgw%3Dd",
@@ -1224,21 +1147,9 @@
       "hash": "#%20%C2%BB"
     },
     {
-      "input": "data:test# »",
-      "base": "about:blank",
-      "href": "data:test# »",
-      "protocol": "data:",
-      "hostname": "",
-      "pathname": "test",
-      "hash": "#%20%C2%BB"
-    },
-    {
       "input": "http://[www.google.com]/",
       "base": "about:blank",
-      "href": "about:blankhttp://[www.google.com]/",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp://%5Bwww.google.com%5D/"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http://www.google.com",
@@ -1251,9 +1162,9 @@
     {
       "input": "http://192.0x00A80001",
       "base": "about:blank",
-      "href": "http://192.0x00a80001/",
+      "href": "http://192.168.0.1/",
       "protocol": "http:",
-      "hostname": "192.0x00a80001",
+      "hostname": "192.168.0.1",
       "pathname": "/"
     },
     {
@@ -1275,10 +1186,7 @@
     {
       "input": "http://user:pass@/",
       "base": "about:blank",
-      "href": "about:blankhttp://user:pass@/",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp://user:pass@/"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http://%25DOMAIN:foobar@foodomain.com/",
@@ -1293,10 +1201,7 @@
     {
       "input": "http:\\\\www.google.com\\foo",
       "base": "about:blank",
-      "href": "about:blankhttp:%5C%5Cwww.google.com%5Cfoo",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp:%5C%5Cwww.google.com%5Cfoo"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http://foo:80/",
@@ -1327,10 +1232,7 @@
     {
       "input": "http://foo:-80/",
       "base": "about:blank",
-      "href": "about:blankhttp://foo:-80/",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp://foo:-80/"
+      "exception": "Invalid URI: Invalid port specified."
     },
     {
       "input": "https://foo:443/",
@@ -1386,10 +1288,9 @@
     {
       "input": "ws://foo:80/",
       "base": "about:blank",
-      "href": "ws://foo:80/",
+      "href": "ws://foo/",
       "protocol": "ws:",
       "hostname": "foo",
-      "port": "80",
       "pathname": "/"
     },
     {
@@ -1440,10 +1341,9 @@
     {
       "input": "wss://foo:443/",
       "base": "about:blank",
-      "href": "wss://foo:443/",
+      "href": "wss://foo/",
       "protocol": "wss:",
       "hostname": "foo",
-      "port": "443",
       "pathname": "/"
     },
     {
@@ -1458,26 +1358,17 @@
     {
       "input": "http:/example.com/",
       "base": "about:blank",
-      "href": "about:blankhttp:/example.com/",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp:/example.com/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "ftp:/example.com/",
       "base": "about:blank",
-      "href": "about:blankftp:/example.com/",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankftp:/example.com/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "https:/example.com/",
       "base": "about:blank",
-      "href": "about:blankhttps:/example.com/",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttps:/example.com/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "madeupscheme:/example.com/",
@@ -1490,10 +1381,7 @@
     {
       "input": "file:/example.com/",
       "base": "about:blank",
-      "href": "about:blankfile:/example.com/",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankfile:/example.com/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "ftps:/example.com/",
@@ -1506,26 +1394,17 @@
     {
       "input": "gopher:/example.com/",
       "base": "about:blank",
-      "href": "about:blankgopher:/example.com/",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankgopher:/example.com/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "ws:/example.com/",
       "base": "about:blank",
-      "href": "ws:/example.com/",
-      "protocol": "ws:",
-      "hostname": "",
-      "pathname": "/example.com/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "wss:/example.com/",
       "base": "about:blank",
-      "href": "wss:/example.com/",
-      "protocol": "wss:",
-      "hostname": "",
-      "pathname": "/example.com/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "data:/example.com/",
@@ -1554,26 +1433,17 @@
     {
       "input": "http:example.com/",
       "base": "about:blank",
-      "href": "http://example.com/",
-      "protocol": "http:",
-      "hostname": "example.com",
-      "pathname": "/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "ftp:example.com/",
       "base": "about:blank",
-      "href": "ftp://example.com/",
-      "protocol": "ftp:",
-      "hostname": "example.com",
-      "pathname": "/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "https:example.com/",
       "base": "about:blank",
-      "href": "https://example.com/",
-      "protocol": "https:",
-      "hostname": "example.com",
-      "pathname": "/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "madeupscheme:example.com/",
@@ -1594,26 +1464,17 @@
     {
       "input": "gopher:example.com/",
       "base": "about:blank",
-      "href": "gopher://example.com/",
-      "protocol": "gopher:",
-      "hostname": "example.com",
-      "pathname": "/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "ws:example.com/",
       "base": "about:blank",
-      "href": "ws:example.com/",
-      "protocol": "ws:",
-      "hostname": "",
-      "pathname": "example.com/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "wss:example.com/",
       "base": "about:blank",
-      "href": "wss:example.com/",
-      "protocol": "wss:",
-      "hostname": "",
-      "pathname": "example.com/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "data:example.com/",
@@ -1642,18 +1503,12 @@
     {
       "input": "http:@www.example.com",
       "base": "about:blank",
-      "href": "http://@www.example.com/",
-      "protocol": "http:",
-      "hostname": "www.example.com",
-      "pathname": "/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "http:/@www.example.com",
       "base": "about:blank",
-      "href": "about:blankhttp:/@www.example.com",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp:/@www.example.com"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "http://@www.example.com",
@@ -1666,20 +1521,12 @@
     {
       "input": "http:a:b@www.example.com",
       "base": "about:blank",
-      "href": "http://a:b@www.example.com/",
-      "protocol": "http:",
-      "username": "a",
-      "password": "b",
-      "hostname": "www.example.com",
-      "pathname": "/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "http:/a:b@www.example.com",
       "base": "about:blank",
-      "href": "about:blankhttp:/a:b@www.example.com",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp:/a:b@www.example.com"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "http://a:b@www.example.com",
@@ -1702,20 +1549,12 @@
     {
       "input": "http::b@www.example.com",
       "base": "about:blank",
-      "href": "http://:b@www.example.com/",
-      "protocol": "http:",
-      "username": "",
-      "password": "b",
-      "hostname": "www.example.com",
-      "pathname": "/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "http:/:b@www.example.com",
       "base": "about:blank",
-      "href": "about:blankhttp:/:b@www.example.com",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp:/:b@www.example.com"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "http://:b@www.example.com",
@@ -1730,100 +1569,62 @@
     {
       "input": "http:/:@/www.example.com",
       "base": "about:blank",
-      "href": "about:blankhttp:/:@/www.example.com",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp:/:@/www.example.com"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "http://user@/www.example.com",
       "base": "about:blank",
-      "href": "about:blankhttp://user@/www.example.com",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp://user@/www.example.com"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http:@/www.example.com",
       "base": "about:blank",
-      "href": "about:blankhttp:@/www.example.com",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp:@/www.example.com"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "http:/@/www.example.com",
       "base": "about:blank",
-      "href": "about:blankhttp:/@/www.example.com",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp:/@/www.example.com"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "http://@/www.example.com",
       "base": "about:blank",
-      "href": "about:blankhttp://@/www.example.com",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp://@/www.example.com"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "https:@/www.example.com",
       "base": "about:blank",
-      "href": "about:blankhttps:@/www.example.com",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttps:@/www.example.com"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "http:a:b@/www.example.com",
       "base": "about:blank",
-      "href": "about:blankhttp:a:b@/www.example.com",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp:a:b@/www.example.com"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "http:/a:b@/www.example.com",
       "base": "about:blank",
-      "href": "about:blankhttp:/a:b@/www.example.com",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp:/a:b@/www.example.com"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "http://a:b@/www.example.com",
       "base": "about:blank",
-      "href": "about:blankhttp://a:b@/www.example.com",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp://a:b@/www.example.com"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http::@/www.example.com",
       "base": "about:blank",
-      "href": "about:blankhttp::@/www.example.com",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp::@/www.example.com"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "http:a:@www.example.com",
       "base": "about:blank",
-      "href": "http://a:@www.example.com/",
-      "protocol": "http:",
-      "username": "a",
-      "password": "",
-      "hostname": "www.example.com",
-      "pathname": "/"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "http:/a:@www.example.com",
       "base": "about:blank",
-      "href": "about:blankhttp:/a:@www.example.com",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp:/a:@www.example.com"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "http://a:@www.example.com",
@@ -1847,26 +1648,17 @@
     {
       "input": "http:@:www.example.com",
       "base": "about:blank",
-      "href": "about:blankhttp:@:www.example.com",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp:@:www.example.com"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "http:/@:www.example.com",
       "base": "about:blank",
-      "href": "about:blankhttp:/@:www.example.com",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp:/@:www.example.com"
+      "exception": "Invalid URI: The Authority/Host could not be parsed."
     },
     {
       "input": "http://@:www.example.com",
       "base": "about:blank",
-      "href": "about:blankhttp://@:www.example.com",
-      "protocol": "about:",
-      "hostname": "",
-      "pathname": "blankhttp://@:www.example.com"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http://:@www.example.com",
@@ -1908,7 +1700,7 @@
       "href": "http://www.example.com/",
       "protocol": "http:",
       "hostname": "www.example.com",
-      "pathname": "/.."
+      "pathname": "/"
     },
     {
       "input": "test.txt",
@@ -1985,98 +1777,83 @@
     {
       "input": "http://example example.com",
       "base": "http://other.com/",
-      "href": "http://other.com/http://example example.com",
-      "protocol": "http:",
-      "hostname": "other.com",
-      "pathname": "/http://example%20example.com"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http://Goo%20 goo%7C|.com",
       "base": "http://other.com/",
-      "href": "http://other.com/http://Goo  goo||.com",
-      "protocol": "http:",
-      "hostname": "other.com",
-      "pathname": "/http://Goo%20%20goo%7C%7C.com"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http://GOO 　goo.com",
       "base": "http://other.com/",
-      "href": "http://other.com/http://GOO 　goo.com",
+      "href": "http://goo 　goo.com/",
       "protocol": "http:",
-      "hostname": "other.com",
-      "pathname": "/http://GOO%C2%A0%E3%80%80goo.com"
+      "hostname": "goo 　goo.com",
+      "pathname": "/"
     },
     {
       "input": "http://GOO​⁠﻿goo.com",
       "base": "http://other.com/",
-      "href": "http://other.com/http://GOO​⁠﻿goo.com",
+      "href": "http://goo​⁠﻿goo.com/",
       "protocol": "http:",
-      "hostname": "other.com",
-      "pathname": "/http://GOO%E2%80%8B%E2%81%A0%EF%BB%BFgoo.com"
+      "hostname": "goo​⁠﻿goo.com",
+      "pathname": "/"
     },
     {
       "input": "http://www.foo。bar.com",
       "base": "http://other.com/",
-      "href": "http://other.com/http://www.foo。bar.com",
+      "href": "http://www.foo。bar.com/",
       "protocol": "http:",
-      "hostname": "other.com",
-      "pathname": "/http://www.foo%E3%80%82bar.com"
+      "hostname": "www.foo。bar.com",
+      "pathname": "/"
     },
     {
       "input": "http://﷐zyx.com",
       "base": "http://other.com/",
-      "href": "http://other.com/http://﷐zyx.com",
+      "href": "http://﷐zyx.com/",
       "protocol": "http:",
-      "hostname": "other.com",
-      "pathname": "/http://%EF%B7%90zyx.com"
+      "hostname": "﷐zyx.com",
+      "pathname": "/"
     },
     {
       "input": "http://%ef%b7%90zyx.com",
       "base": "http://other.com/",
-      "href": "http://other.com/http://﷐zyx.com",
-      "protocol": "http:",
-      "hostname": "other.com",
-      "pathname": "/http://%ef%b7%90zyx.com"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http://Ｇｏ.com",
       "base": "http://other.com/",
-      "href": "http://ｇｏ.com/",
+      "href": "http://Ｇｏ.com/",
       "protocol": "http:",
-      "hostname": "ｇｏ.com",
+      "hostname": "Ｇｏ.com",
       "pathname": "/"
     },
     {
       "input": "http://％４１.com",
       "base": "http://other.com/",
-      "href": "http://other.com/http://％４１.com",
+      "href": "http://％４１.com/",
       "protocol": "http:",
-      "hostname": "other.com",
-      "pathname": "/http://%EF%BC%85%EF%BC%94%EF%BC%91.com"
+      "hostname": "％４１.com",
+      "pathname": "/"
     },
     {
       "input": "http://%ef%bc%85%ef%bc%94%ef%bc%91.com",
       "base": "http://other.com/",
-      "href": "http://other.com/http://％４１.com",
-      "protocol": "http:",
-      "hostname": "other.com",
-      "pathname": "/http://%ef%bc%85%ef%bc%94%ef%bc%91.com"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http://％００.com",
       "base": "http://other.com/",
-      "href": "http://other.com/http://％００.com",
+      "href": "http://％００.com/",
       "protocol": "http:",
-      "hostname": "other.com",
-      "pathname": "/http://%EF%BC%85%EF%BC%90%EF%BC%90.com"
+      "hostname": "％００.com",
+      "pathname": "/"
     },
     {
       "input": "http://%ef%bc%85%ef%bc%90%ef%bc%90.com",
       "base": "http://other.com/",
-      "href": "http://other.com/http://％００.com",
-      "protocol": "http:",
-      "hostname": "other.com",
-      "pathname": "/http://%ef%bc%85%ef%bc%90%ef%bc%90.com"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http://你好你好",
@@ -2089,42 +1866,27 @@
     {
       "input": "http://%zz%66%a.com",
       "base": "http://other.com/",
-      "href": "http://other.com/http://%25zzf%25a.com",
-      "protocol": "http:",
-      "hostname": "other.com",
-      "pathname": "/http://%25zz%66%25a.com"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http://%25",
       "base": "http://other.com/",
-      "href": "http://other.com/http://%25",
-      "protocol": "http:",
-      "hostname": "other.com",
-      "pathname": "/http://%25"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http://hello%00",
       "base": "http://other.com/",
-      "href": "http://other.com/http://hello\u0000",
-      "protocol": "http:",
-      "hostname": "other.com",
-      "pathname": "/http://hello%00"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http://%30%78%63%30%2e%30%32%35%30.01",
       "base": "http://other.com/",
-      "href": "http://other.com/http://0xc0.0250.01",
-      "protocol": "http:",
-      "hostname": "other.com",
-      "pathname": "/http://%30%78%63%30%2e%30%32%35%30.01"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http://%30%78%63%30%2e%30%32%35%30.01%2e",
       "base": "http://other.com/",
-      "href": "http://other.com/http://0xc0.0250.01.",
-      "protocol": "http:",
-      "hostname": "other.com",
-      "pathname": "/http://%30%78%63%30%2e%30%32%35%30.01%2e"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http://192.168.0.257",
@@ -2137,34 +1899,25 @@
     {
       "input": "http://%3g%78%63%30%2e%30%32%35%30%2E.01",
       "base": "http://other.com/",
-      "href": "http://other.com/http://%253gxc0.0250..01",
-      "protocol": "http:",
-      "hostname": "other.com",
-      "pathname": "/http://%253g%78%63%30%2e%30%32%35%30%2E.01"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http://192.168.0.1 hello",
       "base": "http://other.com/",
-      "href": "http://other.com/http://192.168.0.1 hello",
-      "protocol": "http:",
-      "hostname": "other.com",
-      "pathname": "/http://192.168.0.1%20hello"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http://０Ｘｃ０．０２５０．０１",
       "base": "http://other.com/",
-      "href": "http://other.com/http://０Ｘｃ０．０２５０．０１",
+      "href": "http://０Ｘｃ０．０２５０．０１/",
       "protocol": "http:",
-      "hostname": "other.com",
-      "pathname": "/http://%EF%BC%90%EF%BC%B8%EF%BD%83%EF%BC%90%EF%BC%8E%EF%BC%90%EF%BC%92%EF%BC%95%EF%BC%90%EF%BC%8E%EF%BC%90%EF%BC%91"
+      "hostname": "０Ｘｃ０．０２５０．０１",
+      "pathname": "/"
     },
     {
       "input": "http://[google.com]",
       "base": "http://other.com/",
-      "href": "http://other.com/http://[google.com]",
-      "protocol": "http:",
-      "hostname": "other.com",
-      "pathname": "/http://%5Bgoogle.com%5D"
+      "exception": "Invalid URI: The hostname could not be parsed."
     },
     {
       "input": "http://foo:💩@example.com/bar",
@@ -2172,17 +1925,17 @@
       "href": "http://foo:💩@example.com/bar",
       "protocol": "http:",
       "username": "foo",
-      "password": "💩",
+      "password": "%F0%9F%92%A9",
       "hostname": "example.com",
       "pathname": "/bar"
     },
     {
       "input": "x",
       "base": "test:test",
-      "href": "test:testx",
+      "href": "test:x",
       "protocol": "test:",
       "hostname": "",
-      "pathname": "testx"
+      "pathname": "x"
     }
   ]
 }
