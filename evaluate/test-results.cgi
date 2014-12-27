@@ -12,12 +12,12 @@ _html do
   _script src: '../rfc3986.js'
   _style %{
     th, td {padding-left: 1em}
-    td.fail, .fail td, legend .fail {background-color: #FFFF00}
+    td.fail, .fail td, .legend .fail {background-color: #FFFF00}
     #status {font-size: medium}
     #index tr:hover {color: #428bca; cursor: pointer; text-decoration: underline}
     .navlink:hover {text-decoration: none; cursor: pointer}
     .exception {background-color: HotPink}
-    legend {font-size: medium; margin-top: 1em}
+    .legend {font-size: medium; margin: 1em 0}
     table {margin-top: 1.5em}
   }
 
@@ -46,6 +46,16 @@ _html do
       end
     end
 
+    _p_!.legend do
+      _span.fail 'Highlighted'
+      _ ' rows indicate '
+      _span.highlight! 'less than two passes'
+      _ '.  Click on any row to see detailed results. '
+      _a 'Evaluation programs and results', href:
+        'https://github.com/webspecs/url/tree/develop/evaluate#evaluation-programs-and-results'
+      _ ' are available on GitHub.'
+    end
+
     _table_ do
       _thead do
         _tr do
@@ -61,16 +71,6 @@ _html do
           _td 'Loading...'
         end
       end
-    end
-
-    _legend_! do
-      _span.fail 'Highlighted'
-      _ ' rows indicate '
-      _span.highlight! 'less than two passes'
-      _ '.  Click on any row to see detailed results. '
-      _a 'Evaluation programs and results', href:
-        'https://github.com/webspecs/url/tree/develop/evaluate#evaluation-programs-and-results'
-      _ ' are available on GitHub.'
     end
   end
 
@@ -98,6 +98,18 @@ _html do
       _a
     end
 
+    _p_!.legend do
+      _span.fail 'Highlighted'
+      _ ' cells indicate differences.  Exceptions are shown in '
+      _span.exception 'hot pink'
+      _ '.  Click on '
+      _b 'input'
+      _ ' or '
+      _b 'base'
+      _ ' above to explore this test results with the '
+      _ 'Live DOM URL Viewer.'
+    end
+
     _h2_ 'Results'
     _table_.results! do
       _thead do
@@ -118,14 +130,6 @@ _html do
         end
       end
       _tbody
-    end
-
-    _legend_! do
-      _span.fail 'Highlighted'
-      _ ' cells indicate differences.  Exceptions are shown in '
-      _span.exception 'hot pink'
-      _ '.  Click on input or base to explore this test results with the '
-      _ 'Live DOM URL Viewer.'
     end
   end
 
