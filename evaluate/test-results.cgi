@@ -19,6 +19,7 @@ _html do
     .exception {background-color: HotPink}
     .legend {font-size: medium; margin: 1em 0}
     table {margin-top: 1.5em}
+    #legend-baseline {font-weight: bold; color: white; background-color: #4a89dc}
   }
 
   _div.index! do
@@ -100,13 +101,15 @@ _html do
 
     _p_!.legend do
       _span.fail 'Highlighted'
-      _ ' cells indicate differences.  Exceptions are shown in '
+      _ ' cells indicate differences from '
+      _span.legend_baseline!
+      _ ' values.  Exceptions are shown in '
       _span.exception 'hot pink'
       _ '.  Click on '
       _b 'input'
       _ ' or '
       _b 'base'
-      _ ' above to explore this test results with the '
+      _ ' links above to explore this test results with the '
       _ 'Live DOM URL Viewer.'
     end
 
@@ -491,6 +494,7 @@ _html do
 
       selectBaseline.addEventListener('change') do |event|
         baseline = event.target.value
+        document.getElementById('legend-baseline').textContent = baseline
         navigate()
         showDiffs()
       end
