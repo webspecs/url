@@ -36,6 +36,9 @@ for test in tests:
   result['search'] = '?' + url.query if url.query else ''
   result['hash'] = '#' + url.fragment if url.fragment else ''
 
+  # http://bugs.python.org/issue23150
+  if url.params: result['pathname'] += ';' + url.params
+
   constructor_results.append(result)
 
 useragent = 'python ' + sys.version.replace(" \n", " ")
