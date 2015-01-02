@@ -29,6 +29,8 @@ for test in tests:
   except:
     result['port_exception'] = str(sys.exc_info()[1])
 
+  result['username'] = url.username
+  result['password'] = url.password
   result['hostname'] = url.hostname
   result['pathname'] = url.path
   result['search'] = '?' + url.query if url.query else ''
