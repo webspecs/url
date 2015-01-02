@@ -275,8 +275,9 @@
         <t><xref target="UTS-46"/> defines parameterized functions for mapping
         domain names.  <xref target="URL-LS"/> builds upon this work, specifying
         particular values to be used for these parameters.  The Unicode
-        Consortium plans to adapt UTS-46 as registries (e.g. DENIC) move from
-        IDNA2003 to IDNA2008.</t>
+        Consortium plans to adapt <xref target="UTS-46"/> as registries (e.g.
+        DENIC) move from <xref target="RFC3490"/> to 
+        <xref target="RFC5895"/>.</t>
       </section>
     </section>
 
@@ -406,8 +407,8 @@
 	</t>
 	<t>More controversial is whether this can be done on a
 	strictly "need-to" basis, or whether the merger of URI from
-	RFC3986 and IRI from RFC3987 would result in clearer
-	specifications for implementors. </t>
+        <xref target="RFC3986"/> and IRI from <xref target="RFC3987"/> would
+        result in clearer specifications for implementors.</t>
       </section>
 
       <section title="Obsolete RFC 3987 (IRI)"> 
