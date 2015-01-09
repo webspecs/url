@@ -1,5 +1,5 @@
 {
-  "useragent": "Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko",
+  "useragent": "Mozilla/5.0 (Windows NT 6.4; WOW64; Trident/7.0; rv:11.0) like Gecko",
   "constructor": [
     {
       "input": "http://example\t.\norg",
@@ -3125,9 +3125,17 @@
         }
       },
       {
-        "testname": "return",
+        "testname": "carriageReturn",
         "url": "http://user:pass@host:99/path?search#hash",
         "value": "5\n5",
+        "tests": {
+          "exception": "A security problem occurred.\r\n"
+        }
+      },
+      {
+        "testname": "default",
+        "url": "http://user:pass@host:99/path?search#hash",
+        "value": 80,
         "tests": {
           "exception": "A security problem occurred.\r\n"
         }
