@@ -237,18 +237,20 @@
 
       <section title="W3C">
         <t>The <eref target="http://www.w3.org/2014/06/webapps-charter.html">Web 
-        Applications Working Group</eref>
+        Applications Working Group</eref>, in conjunction with the 
+        <eref target="http://www.w3.org/2001/tag/">TAG</eref>,
         sporadically have been republishing the WHATWG work with no
         technical content differences as <xref target="W3C-URL"/>.  There is a
         <xref target="url-workmode"/> proposal to formalize this
         relationship.</t>
 
-	<t>The W3C TAG developed
+	<t>The W3C <eref target="http://www.w3.org/2001/tag/">TAG</eref>
+        developed
 	<eref target="http://www.w3.org/TR/fragid-best-practices/">
 	  Best Practices for Fragment Identifiers and Media Type Definitions
 	</eref>, which points out several problems with the definitions
 	for the 'fragment' part of URLs.  The TAG is working to
-	insure liaison exchange happens.</t>
+	ensure liaison exchange happens.</t>
 	
 	<t>Note also the interim solution for <eref
 	target="http://www.w3.org/TR/2014/REC-html5-20141028/references.html#refsURL">the
@@ -355,8 +357,16 @@
       did we get wrong?</t>
 
       <section title="Working Groups and Discussion Venues">
-	<t>It is possibly necessary for some organizational assignment
-	of responsibility in IETF and W3C to working groups in each
+        <t>The <eref target="http://www.w3.org/Signature/">XML Signature
+        WG</eref> is an example of a joint IETF/W3C Working Group.  Perhaps a
+        joint working group covering the topics of URL and URI could be
+        formed.  Elements of the <xref target="url-workmode"/> proposal could
+        be incorporated into the charter of this new WG, and thereby
+        establishing the WHATWG as a third joint participant in this
+        activity.</t>
+
+        <t>Failing that, it may be desirable to have some organizational
+        assignment of responsibility in IETF and W3C to working groups in each
 	organization.</t>
 	
 	<t>There has been discussion of IETF/W3C liaison getting
@@ -374,12 +384,14 @@
 	group is chartered (perhaps using this document as the Problem
 	Statement / scope), discussion is occuring in the IETF apps area.
         Previous venues for
-	related topics (public-iri@w3.org, uri@w3.org) are old 
-	enough that there is likely poor representation of
+	related topics (
+        <eref target="https://lists.w3.org/Archives/Public/public-iri/">public-iri@w3.org</eref>,
+        <eref target="https://lists.w3.org/Archives/Public/uri/">uri@w3.org</eref>)
+        are old enough that there is likely poor representation of
 	important communities, unless a concerted effort is made
 	to revive them.</t>
 
-	<t>In W3C, either W3C webapps, TAG, HTML or some new activity
+	<t>In W3C, either W3C WebApps, TAG, HTML or some new activity
 	might be necessary to manage changes, but the nature of the
 	group necessary to review depends on the extent of changes
 	needed. </t>
@@ -420,7 +432,7 @@
         URLs and references for browser and operating-system handling
 	of both.</t>
 
-	<t>After insuring that topics covered in <xref
+	<t>After ensuring that topics covered in <xref
 	target="RFC3987"/> are also covered by a W3C URL
 	recommendation, mark <xref target="RFC3987"/> as obsolete
 	with a short RFC noting the conditions laid out in this
