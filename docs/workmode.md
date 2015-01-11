@@ -21,8 +21,10 @@ Key elements of the proposal described below:
     [URL Technical Report](http://www.w3.org/TR/url/) published on the
     [W3C site](http://www.w3.org/TR/).
 
-As an alternative to doing this work inside the WebApps WG, a new Working Group could be chartered.  This
-working group could even be a [joint WG with the IETF](http://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc.cgi?url=https%3A%2F%2Fraw.githubusercontent.com%2Fwebspecs%2Furl%2Fdevelop%2Fdocs%2Furl-problem-statement.xml&modeAsFormat=html%2Fascii#rfc.section.5.1).
+As an alternative to doing this work inside the WebApps WG, a new Working Group could be chartered.  A [draft charter](http://rawgit.com/webspecs/url/develop/docs/url-charter.html) is available for discussion.  If such
+a charter were adopted, this workmode would need to be updated to change the name of the sponsoring Working Group.
+
+This working group could even be a [joint WG with the IETF](http://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc.cgi?url=https%3A%2F%2Fraw.githubusercontent.com%2Fwebspecs%2Furl%2Fdevelop%2Fdocs%2Furl-problem-statement.xml&modeAsFormat=html%2Fascii#rfc.section.5.1).
 
 For reference purposes only, here are some related links:
 
