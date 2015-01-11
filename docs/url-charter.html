@@ -1,0 +1,508 @@
+﻿<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8"/>
+    <title>URL Working Group Charter</title>
+    <link media="screen" type="text/css"
+      href="http://www.w3.org/2005/10/w3cdoc.css" rel="stylesheet"/>
+    <link href="http://www.w3.org/Guide/pubrules-style.css" type="text/css"
+      rel="stylesheet"/>
+    <link href="http://www.w3.org/2006/02/charter-style.css" type="text/css"
+      rel="stylesheet"/>
+
+    <style type="text/css">
+      .comment 
+      { 
+         width: 90%; 
+         border: 3px solid red; 
+         padding: 6px;
+         clear: both;
+      }
+      
+      .helpneeded 
+      {
+         color: red;
+      }
+
+      #navbar
+      {
+         font-size: small;
+      }
+      
+      .complete
+      {
+         font-weight: bold;
+      }
+
+      .draft
+      {
+         color: red;
+         font-style: italic;
+      }
+
+      .status-label
+      {
+         font-size: x-large;
+         font: sans-serif;
+         top: 177px;
+         left: -180px;
+         width: 381px;
+         height: 26px;
+         background: red;
+         color: white;
+         position: absolute;
+         transform: rotate(270deg);
+         text-align: center;
+      }
+
+      a
+      {
+         color: #00e;
+         text-decoration: underline;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="status-label">Draft - Proposal</div>
+
+    <div id="template">
+      <ul id="navbar">
+        <li><a href="#scope">Scope</a></li>
+        <li><a href="#deliverables">Deliverables</a></li>
+        <li><a href="#coordination">Dependencies and Liaisons</a></li>
+        <li><a href="#participation">Participation</a></li>
+        <li><a href="#communication">Communication</a></li>
+        <li><a href="#decisions">Decision Policy</a></li>
+        <li><a href="#patentpolicy">Patent Policy </a></li>
+        <li><a href="#about">About this Charter</a></li>
+      </ul>
+
+      <p>
+        <a href="http://www.w3.org/">
+          <img width="72" height="48" src="http://www.w3.org/Icons/w3c_home"
+            alt="W3C"/>
+        </a>
+        <a class="domainlogo" href="http://www.w3.org/Interaction/">
+          <img alt="Interaction Domain"
+            src="http://www.w3.org/Icons/interaction"/>
+        </a>
+      </p>
+
+      <h1 id="title">
+        <span class="draft">Draft</span> URL Working Group Charter
+      </h1>
+
+      <p class="mission">The mission of the
+        <a>URL Working Group</a>, part of the
+        <a href="http://www.w3.org/2006/rwc/">Rich Web Client Activity</a>, is
+        to provide one or more specifications that define
+        <em>Uniform Resource Locators (URLs), domains, IP addresses, the
+        application/x-www-form-urlencoded format, and associated
+        application programming interfaces (APIs)</em>. </p>
+
+      <div class="noprint">
+        <p class="join"><a>Join the URL Working Group</a>.</p>
+      </div>
+
+      <table class="summary-table">
+        <tbody>
+          <tr id="Duration">
+            <th colspan="1" rowspan="1">End date</th>
+
+            <td colspan="1" rowspan="1">
+              31 December 2016
+            </td>
+          </tr>
+
+          <tr>
+            <th colspan="1" rowspan="1">Confidentiality</th>
+
+            <td colspan="1" rowspan="1">
+              Proceedings are
+              <a href="http://www.w3.org/2014/Process-20140801/#confidentiality-levels">Public</a>
+            </td>
+          </tr>
+
+          <tr>
+            <th colspan="1" rowspan="1">Chairs</th>
+
+            <td colspan="1" rowspan="1">
+              <em>TBD</em>
+            </td>
+          </tr>
+
+          <tr>
+            <th colspan="1" rowspan="1">
+              Team Contacts
+              <br/>
+              (FTE %: 30)
+            </th>
+
+            <td colspan="1" rowspan="1">
+              <em>TBD</em>
+            </td>
+          </tr>
+
+          <tr>
+            <th colspan="1" rowspan="1">Usual Meeting Schedule</th>
+
+            <td colspan="1" rowspan="1">
+              Teleconferences: topic-specific calls may be held up to once per
+              week
+              <br/>
+              Face-to-face: we will meet during the W3C's annual Technical
+              Plenary week; other additional F2F meetings may be scheduled (up
+              to 2 per year)
+              <br/>
+              IRC: active participants, particularly editors, regularly use the
+              #whatwg freenode IRC channel
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="scope">
+        <h2 id="scope">Scope</h2>
+
+        <p>
+          The URL Working Group will take over responsibility for the
+          <a href="http://www.w3.org/TR/url/">URL Technical Report</a>
+          from the
+          <a href="http://www.w3.org/2012/webapps/charter/Overview.html">Web
+            Applications Working Group</a>.
+        </p>
+
+        <p>The scope of the URL Working Group covers the
+          <em>Uniform Resource Locators (URLs), domains, IP addresses, the
+          application/x-www-form-urlencoded format, and associated
+          application programming interfaces (APIs)</em>. </p>
+      </div>
+
+      <div class="deliverables">
+        <h2 id="deliverables">Deliverables</h2>
+
+        <p>The working group will deliver at least the following:</p>
+
+        <dl>
+          <dt id="url">
+            <a href="http://dvcs.w3.org/hg/url/raw-file/default/Overview.html">URL</a>
+          </dt>
+
+          <dd>This specification defines the syntax, process and error handling
+            for resolving URL, a sequence of characters from the Universal
+            Character Set, along with guidelines and security considerations for
+            the use of URL on the Web. It also defines an API to work with the
+            components of a URL. This specification is a candidate for the Dual
+            License as specified in
+            <a href="http://www.w3.org/2013/09/html-charter.html#documentlicense">section
+            8 of the HTML Working Group charter</a>.</dd>
+        </dl>
+
+        <p>Each specification should contain a section detailing any known
+          security implications for implementers, Web authors, and end users.
+          The WebApps WG will actively seek security, privacy,
+          internationalisation and accessibility review on all its
+          specifications.</p>
+
+        <p>After a specification reaches Recommendation status the working group
+          may begin work on, and deliver an updated version of the specification
+          under this charter. Specifications may be moved to Recommendation and
+          a subsequent version begun in order to facilitate the progress of
+          other work which depends on a stable reference.</p>
+
+        <h3 id="other-deliverables">Other Deliverables</h3>
+        <p>Other non-normative documents may be created such as:</p>
+
+        <div id="ig-other-deliverables">
+          <ul>
+            <li>Test suites for each specification</li>
+            <li>Reference Implementations for each specification</li>
+            <li>Primers for each specification</li>
+            <li>Non-normative group notes</li>
+          </ul>
+
+          <p>A comprehensive test suite for all features of a specification is
+            necessary to ensure the specification's robustness, consistency,
+            and implementability, and to promote interoperability between User
+            Agents. Therefore, each specification must have a companion test
+            suite, which should be completed by the end of the Candidate
+            Recommendation phase, and must be completed, with an
+            implementation report, before transition to Proposed
+            Recommendation.  Additional tests may be added to the test suite
+            at any stage of the Recommendation track, and the maintenance of a
+            implementation report is encouraged.</p>
+        </div>
+
+        <h3 id="milestones">Milestones</h3>
+
+        <p>
+          The group's
+          <a>Specification Status</a>
+          document provides current data about all of the group's
+          specifications, including Technical Report publication plans and
+          testing status. Although group expects to progress all of its
+          specifications during this charter period, the charter does not
+          include detailed
+          <em>milestone</em>
+          data for each specification because such data is speculative and
+          easily becomes out of date. Nevertheless, a Candidate Recommendation
+          of the URL Specification is expected in 2015.
+        </p>
+      </div>
+
+      <div class="dependencies">
+        <h2 id="coordination">Dependencies and Liaisons</h2>
+        <h3>Dependencies</h3>
+
+        <p>The URL specification depends on the 
+          <a href="http://www.w3.org/TR/dom/">DOM</a>, 
+          <a href="http://www.w3.org/TR/encoding/">Encoding</a>, 
+          <a href="http://www.w3.org/TR/html/">HTML</a>, and
+          <a href="http://www.w3.org/TR/WebIDL/">Web IDL</a> specifications.</p>
+
+        <p>The <a href="http://www.w3.org/TR/dom/">DOM</a> and 
+          <a href="http://www.w3.org/TR/html/">HTML</a> specifications in the
+          <a href="http://www.w3.org/html/wg/">HTML</a>
+          Working Group depend upon the URL Specification.</p>
+
+        <h3 id="liaisons">Liaisons</h3>
+        <p>The URL Working Group expects to maintain contacts with at least
+          the following groups and Activities within W3C (in alphabetical
+          order):</p>
+
+        <dl>
+          <dt>
+            <a id="html" href="http://www.w3.org/html/wg/">HTML (HyperText
+              Markup Language) Working Group</a>
+          </dt>
+
+          <dd>
+            To monitor the development of the HTML WG specifications (including
+            DOM and HTML) as they complement the URL WG's specifications.
+          </dd>
+
+          <dt>
+            <a href="http://www.w3.org/International/core/">Internationalization
+              Core Working Group</a>
+          </dt>
+          <dd>This group may provide advice or review to ensure that URL WG
+            deliverables meet the needs of an international Web.</dd>
+
+          <dt>
+            <a href="http://www.w3.org/2001/tag/">Technical Architecture
+              Group</a>
+          </dt>
+          <dd>The WebApps WG will ask the Technical Architecture Group to review
+            its set of specifications.</dd>
+        </dl>
+
+        <div id="conformance">
+          <p>Furthermore, the URL Working Group expects to follow the
+            following W3C Recommendations, Guidelines and Notes and, if
+            necessary, to liaise with the communities behind the following
+            documents:</p>
+
+          <ul>
+            <li>
+              <a href="http://www.w3.org/TR/webarch/">Architecture of the World
+                Wide Web, Volume I</a>
+            </li>
+            <li>
+              <a href="http://www.w3.org/International/publications/">Internationalization Technical Reports and Notes</a>
+            </li>
+            <li>
+              <a href="http://www.w3.org/TR/qaframe-spec/">QA Framework:
+                Specification Guidelines</a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 id="external-groups">External Groups</h3>
+          <p>The following is a tentative list of external bodies the Working
+            Group should collaborate with:</p>
+
+          <dl>
+            <dt>
+              <a id="ietf" title="IETF Home Page"
+                href="http://www.ietf.org/">Internet Engineering Task Force</a>
+            </dt>
+
+            <dd>
+              The IETF is responsible for defining
+              <a href="https://tools.ietf.org/html/rfc3986">RFC 3986</a> and
+              <a href="https://tools.ietf.org/html/rfc3987">RFC 3987</a>,
+              which define the concepts of URI and IRI respectively.
+            </dd>
+
+            <dt>
+              <a id="whatwg" title="WHATWG Home Page"
+                href="https://whatwg.org/">Web Hypertext Application
+                Technology Working Group</a>
+            </dt>
+
+            <dd>
+              The WHATWG is where the 
+              <a href="https://url.spec.whatwg.org/">URL Standard</a>
+              has been, and continues to be, developed.
+            </dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="participation">
+        <h2 id="participation">Participation</h2>
+        <p>To be successful, the URL Working Group is expected to have 5 or
+          more active participants for its duration, and to have the
+          participation of industry leaders in fields relevant to the
+          specifications it produces.</p>
+        <p>For each specification the Working Group will name at least one Test
+          Facilitator whose responsibility is to ensure that a Test Suite is
+          made available.</p>
+        <p>The Chairs, specification Editors and test Facilitators are expected
+          to contribute one to two days per week towards the Working Group.
+          There is no minimum requirement for other Participants.</p>
+        <p>The URL Working Group welcomes participation, with agreement from
+          each participant to the provisions of the W3C Patent Policy.
+          No participant will be asked to enter into any agreement which
+          limits their ability to reuse their work in the IETF, the WHATWG,
+          or any other venue.  The
+          <a href="http://www.w3.org/Consortium/Legal/2014/08-invited-expert.html">Invited
+            Expert and Collaborator Agreement</a>
+          is an example of such an agreement.</p>
+      </div>
+
+      <div class="communication">
+        <h2 id="communication">Communication</h2>
+
+        <p>
+          The
+          <a href="https://github.com/webspecs/url/blob/develop/docs/workmode.md#preface">working
+            mode</a>
+          of the group is described in detail. In general the group
+          does not hold teleconferences, and may meets face to face at the
+          TP/AC.  It may hold more meetings.  Note the
+          <a href="#decisions">Decision Policy</a>
+          below with regards to synchronous meetings.
+        </p>
+
+        <p>Most of the technical work of the group will be using the
+          following venues:</p>
+
+        <ul>
+          <li>
+            The <a href="mailto:whatwg@whatwg.org" 
+              id="whatwg.org">whatwg@whatwg.org</a>
+            (<a href="http://lists.w3.org/Archives/Public/public-whatwg-archive/">archive</a>)
+            mailing list is used for general discussions of specifications
+            developed by the WHATWG.
+          </li>
+
+          <li>
+            An <a href="https://github.com/webspecs/url/issues">issues</a>
+            list is maintained at
+            <a href="http://www.webplatform.org/">WebPlatform.org</a>.
+          </li>
+
+          <li>
+            A <a href="http://discourse.specifiction.org/c/url">discourse</a>
+            category is made available on an experimental basis.
+          </li>
+        </ul>
+
+        <p>Editors within the group will use
+          <a href="https://github.com/">Github</a> to maintain Editor's Draft of
+          specifications. The group's <i>action</i> and <i>issue</i>
+          <a href="http://www.w3.org/2008/webapps/track/">tracking data</a> will
+          also be public, as will the Member-approved <i>minutes</i> from all
+          teleconferences.</p>
+
+        <p>There is also a Team-confidential mailing list for coordination
+          between the Team and Chairs. </p>
+
+        <p>
+          Up-to-date information about the group (for example, details about
+          deliverables, issues, actions, status, participants) is available
+          from the
+          <a>URL Working Group home page.</a>
+        </p>
+      </div>
+
+      <div class="decisions">
+        <h2 id="decisions">Decision Policy</h2>
+
+        <p>As explained in the W3C Process Document
+          (<a href="http://www.w3.org/Consortium/Process/policies#Consensus">section
+          3.3</a>), this group will seek to make decisions when there is
+          consensus and with due process. The expectation is that typically, an
+          editor or other participant makes an initial proposal, which is then
+          refined in discussion with members of the group and other reviewers,
+          and consensus emerges with little formal voting being required.</p>
+
+        <p>The only Calls for Consensus expected by the URL working group
+          will be for process related items: e.g., decisions related to exit
+          criteria and transition requests.</p>
+
+        <p>Any resolution taken in a face-to-face meeting or teleconference is
+          to be considered provisional until 10 working days after the
+          publication of the resolution in draft minutes sent to the working
+          groups mailing list. If no objections are raised on the mailing list
+          within that time, the resolution will be considered to have consensus
+          as a resolution of the Working Group.</p>
+
+        <p>
+          This charter is written in accordance with
+          <a href="http://www.w3.org/Consortium/Process/policies#Votes">Section
+            3.4, Votes</a>
+          of the W3C Process Document and includes no voting procedures beyond
+            what the Process Document requires.
+        </p>
+      </div>
+
+      <div class="patent">
+        <h2 id="patentpolicy">Patent Policy</h2>
+
+        <p>
+          This Working Group operates under the
+          <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/">W3C
+            Patent Policy</a>
+          (5 February 2004 Version). To promote the widest adoption of Web
+            standards, W3C seeks to issue Recommendations that can be
+            implemented, according to this policy, on a Royalty-Free basis.
+        </p>
+
+        <p>For more information about disclosure obligations for this group,
+          please see the <a href="http://www.w3.org/2004/01/pp-impl/">W3C Patent
+          Policy Implementation</a>. </p>
+      </div>
+
+      <div class="patent">
+        <h2 id="about">About this Charter</h2>
+
+        <p>This charter for the URL Working Group has been created according to
+          <a href="http://www.w3.org/Consortium/Process/groups#GAGeneral">section
+          6.2</a> of the <a href="http://www.w3.org/Consortium/Process">Process
+          Document</a>. In the event of a conflict between this document or the
+          provisions of any charter and the W3C Process, the W3C Process shall
+          take precedence. </p>
+      </div>
+
+      <hr/>
+
+      <address>
+        Sam Ruby, Editor
+      </address>
+
+      <p class="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright" rel="Copyright">Copyright</a>©
+        2015
+        <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup>
+        (<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>,
+        <a href="http://www.ercim.org/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>,
+        <a href="http://www.keio.ac.jp/">Keio</a>,
+        <a href="http://ev.buaa.edu.cn/">Beihang</a>), All Rights Reserved.</p>
+
+      <p>Date: 2015-January</p>
+    </div>
+  </body>
+</html>
