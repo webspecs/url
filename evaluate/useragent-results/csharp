@@ -61,7 +61,7 @@
       "port": "21",
       "pathname": "/%20b%20",
       "search": "?%20d%20",
-      "hash": "#%20e"
+      "hash": "# e"
     },
     {
       "input": "http://f:/c",
@@ -237,7 +237,7 @@
       "protocol": "http:",
       "hostname": "example.org",
       "pathname": "/foo/bar",
-      "hash": "#%5C"
+      "hash": "#\\"
     },
     {
       "input": "#;?",
@@ -438,7 +438,7 @@
       "hostname": "foo",
       "pathname": "/path;a",
       "search": "??e",
-      "hash": "#f%23g"
+      "hash": "#f#g"
     },
     {
       "input": "http://foo/abcd?efgh?ijkl",
@@ -730,7 +730,7 @@
       "protocol": "http:",
       "hostname": "example.org",
       "pathname": "/foo/bar",
-      "hash": "#%CE%B2"
+      "hash": "#β"
     },
     {
       "input": "data:text/html,test#test",
@@ -1198,7 +1198,7 @@
       "hostname": "www.google.com",
       "pathname": "/foo",
       "search": "?bar=baz",
-      "hash": "#%20%C2%BB"
+      "hash": "# »"
     },
     {
       "input": "http://[www.google.com]/",
