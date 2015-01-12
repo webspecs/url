@@ -801,13 +801,13 @@ IPv6Addr
 
   <li>Let $n be the last @Number.
 
-  <li>If the first @Number <a>is present</a>, add it's 
+  <li>If the first @Number <a>is present</a>, add its 
   <a title='value of'>value</a> times 256<sup>3</sup> to $n.
 
-  <li>If the second @Number <a>is present</a>, add it's 
+  <li>If the second @Number <a>is present</a>, add its 
   <a title='value of'>value</a> times 256<sup>2</sup> to $n.
 
-  <li>If the third @Number <a>is present</a>, add it's <a title='value
+  <li>If the third @Number <a>is present</a>, add its <a title='value
   of'>value</a> times 256 to $n.
 
   <li>Let $result be an empty array.
