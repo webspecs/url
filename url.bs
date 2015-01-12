@@ -1102,10 +1102,10 @@ with a <a>parse exception</a>.
 <li>Let <code>n</code> be the last <code class=grammar-rule><a href=#rule-number>number</a></code>.
 
 <li>If the first <code class=grammar-rule><a href=#rule-number>number</a></code> <a>is present</a>, add it's 
-<a title='value of'>value</a> times <code>256</code>**<code>3</code> to <code>n</code>.
+<a title='value of'>value</a> times <code>256</code><sup><code>3</code></sup> to <code>n</code>.
 
 <li>If the second <code class=grammar-rule><a href=#rule-number>number</a></code> <a>is present</a>, add it's 
-<a title='value of'>value</a> times <code>256</code>**<code>2</code> to <code>n</code>.
+<a title='value of'>value</a> times <code>256</code><sup><code>2</code></sup> to <code>n</code>.
 
 <li>If the third <code class=grammar-rule><a href=#rule-number>number</a></code> <a>is present</a>, add it's <a title='value
 of'>value</a> times <code>256</code> to <code>n</code>.
