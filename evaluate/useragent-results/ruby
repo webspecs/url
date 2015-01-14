@@ -1,0 +1,2482 @@
+{
+  "useragent": "ruby 2.3.0dev (2015-01-14 trunk 49254) [x86_64-linux]",
+  "constructor": [
+    {
+      "exception": "bad URI(is not URI?): http://example\t.\norg",
+      "input": "http://example\t.\norg",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http://user:pass@foo:21/bar;par?b#c",
+      "base": "http://example.org/foo/bar",
+      "href": "http://user:pass@foo:21/bar;par?b#c",
+      "protocol": "http:",
+      "port": "21",
+      "hostname": "foo",
+      "pathname": "/bar;par",
+      "search": "?b",
+      "hash": "#c"
+    },
+    {
+      "input": "http:foo.com",
+      "base": "http://example.org/foo/bar",
+      "href": "http:foo.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "exception": "bad URI(is not URI?): \t   :foo.com   \n",
+      "input": "\t   :foo.com   \n",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?):  foo.com  ",
+      "input": " foo.com  ",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): a:\t foo.com",
+      "input": "a:\t foo.com",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http://f:21/ b ? d # e ",
+      "input": "http://f:21/ b ? d # e ",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http://f:/c",
+      "base": "http://example.org/foo/bar",
+      "href": "http://f/c",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "f",
+      "pathname": "/c"
+    },
+    {
+      "input": "http://f:0/c",
+      "base": "http://example.org/foo/bar",
+      "href": "http://f:0/c",
+      "protocol": "http:",
+      "port": "0",
+      "hostname": "f",
+      "pathname": "/c"
+    },
+    {
+      "input": "http://f:00000000000000/c",
+      "base": "http://example.org/foo/bar",
+      "href": "http://f:0/c",
+      "protocol": "http:",
+      "port": "0",
+      "hostname": "f",
+      "pathname": "/c"
+    },
+    {
+      "input": "http://f:00000000000000000000080/c",
+      "base": "http://example.org/foo/bar",
+      "href": "http://f/c",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "f",
+      "pathname": "/c"
+    },
+    {
+      "exception": "bad URI(is not URI?): http://f:b/c",
+      "input": "http://f:b/c",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http://f: /c",
+      "input": "http://f: /c",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http://f:\n/c",
+      "input": "http://f:\n/c",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http://f:fifty-two/c",
+      "input": "http://f:fifty-two/c",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http://f:999999/c",
+      "base": "http://example.org/foo/bar",
+      "href": "http://f:999999/c",
+      "protocol": "http:",
+      "port": "999999",
+      "hostname": "f",
+      "pathname": "/c"
+    },
+    {
+      "exception": "bad URI(is not URI?): http://f: 21 / b ? d # e ",
+      "input": "http://f: 21 / b ? d # e ",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/bar",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.org",
+      "pathname": "/foo/bar"
+    },
+    {
+      "exception": "bad URI(is not URI?):   \t",
+      "input": "  \t",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): :foo.com/",
+      "input": ":foo.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): :foo.com\\",
+      "input": ":foo.com\\",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): :",
+      "input": ":",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): :a",
+      "input": ":a",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): :/",
+      "input": ":/",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): :\\",
+      "input": ":\\",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): :#",
+      "input": ":#",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "#",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/bar#",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.org",
+      "pathname": "/foo/bar"
+    },
+    {
+      "input": "#/",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/bar#/",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.org",
+      "pathname": "/foo/bar",
+      "hash": "#/"
+    },
+    {
+      "exception": "bad URI(is not URI?): #\\",
+      "input": "#\\",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "#;?",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/bar#;?",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.org",
+      "pathname": "/foo/bar",
+      "hash": "#;?"
+    },
+    {
+      "input": "?",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/foo/bar?",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.org",
+      "pathname": "/foo/bar"
+    },
+    {
+      "input": "/",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.org",
+      "pathname": "/"
+    },
+    {
+      "exception": "bad URI(is not URI?): :23",
+      "input": ":23",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "/:23",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/:23",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.org",
+      "pathname": "/:23"
+    },
+    {
+      "exception": "bad URI(is not URI?): ::",
+      "input": "::",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): ::23",
+      "input": "::23",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "foo://",
+      "base": "http://example.org/foo/bar",
+      "href": "foo:",
+      "protocol": "foo:",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http://a:b@c:29/d",
+      "base": "http://example.org/foo/bar",
+      "href": "http://a:b@c:29/d",
+      "protocol": "http:",
+      "port": "29",
+      "hostname": "c",
+      "pathname": "/d"
+    },
+    {
+      "input": "http::@c:29",
+      "base": "http://example.org/foo/bar",
+      "href": "http::@c:29",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "exception": "bad URI(is not URI?): http://&a:foo(b]c@d:2/",
+      "input": "http://&a:foo(b]c@d:2/",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http://::@c@d:2",
+      "input": "http://::@c@d:2",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http://foo.com:b@d/",
+      "base": "http://example.org/foo/bar",
+      "href": "http://foo.com:b@d/",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "d",
+      "pathname": "/"
+    },
+    {
+      "exception": "bad URI(is not URI?): http://foo.com/\\@",
+      "input": "http://foo.com/\\@",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http:\\\\foo.com\\",
+      "input": "http:\\\\foo.com\\",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http:\\\\a\\b:c\\d@foo.com\\",
+      "input": "http:\\\\a\\b:c\\d@foo.com\\",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "foo:/",
+      "base": "http://example.org/foo/bar",
+      "href": "foo:/",
+      "protocol": "foo:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/"
+    },
+    {
+      "input": "foo:/bar.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "foo:/bar.com/",
+      "protocol": "foo:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/bar.com/"
+    },
+    {
+      "input": "foo://///////",
+      "base": "http://example.org/foo/bar",
+      "href": "foo:///////",
+      "protocol": "foo:",
+      "port": "",
+      "hostname": null,
+      "pathname": "///////"
+    },
+    {
+      "input": "foo://///////bar.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "foo:///////bar.com/",
+      "protocol": "foo:",
+      "port": "",
+      "hostname": null,
+      "pathname": "///////bar.com/"
+    },
+    {
+      "input": "foo:////://///",
+      "base": "http://example.org/foo/bar",
+      "href": "foo://://///",
+      "protocol": "foo:",
+      "port": "",
+      "hostname": null,
+      "pathname": "//://///"
+    },
+    {
+      "input": "c:/foo",
+      "base": "http://example.org/foo/bar",
+      "href": "c:/foo",
+      "protocol": "c:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/foo"
+    },
+    {
+      "input": "//foo/bar",
+      "base": "http://example.org/foo/bar",
+      "href": "http://foo/bar",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "foo",
+      "pathname": "/bar"
+    },
+    {
+      "exception": "bad URI(is not URI?): http://foo/path;a??e#f#g",
+      "input": "http://foo/path;a??e#f#g",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http://foo/abcd?efgh?ijkl",
+      "base": "http://example.org/foo/bar",
+      "href": "http://foo/abcd?efgh?ijkl",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "foo",
+      "pathname": "/abcd",
+      "search": "?efgh?ijkl"
+    },
+    {
+      "input": "http://foo/abcd#foo?bar",
+      "base": "http://example.org/foo/bar",
+      "href": "http://foo/abcd#foo?bar",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "foo",
+      "pathname": "/abcd",
+      "hash": "#foo?bar"
+    },
+    {
+      "exception": "bad URI(is not URI?): [61:24:74]:98",
+      "input": "[61:24:74]:98",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http:[61:27]/:foo",
+      "input": "http:[61:27]/:foo",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http://[1::2]:3:4",
+      "input": "http://[1::2]:3:4",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http://2001::1",
+      "input": "http://2001::1",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http://2001::1]",
+      "input": "http://2001::1]",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http://2001::1]:80",
+      "input": "http://2001::1]:80",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http://[2001::1]",
+      "base": "http://example.org/foo/bar",
+      "href": "http://[2001::1]",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "[2001::1]",
+      "pathname": ""
+    },
+    {
+      "input": "http://[2001::1]:80",
+      "base": "http://example.org/foo/bar",
+      "href": "http://[2001::1]",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "[2001::1]",
+      "pathname": ""
+    },
+    {
+      "input": "http:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "http:/example.com/",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "ftp:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "ftp:/example.com/",
+      "protocol": "ftp:",
+      "port": "21",
+      "hostname": null,
+      "pathname": "example.com/"
+    },
+    {
+      "input": "https:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "https:/example.com/",
+      "protocol": "https:",
+      "port": "443",
+      "hostname": null,
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "madeupscheme:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "madeupscheme:/example.com/",
+      "protocol": "madeupscheme:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "file:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "file:/example.com/",
+      "protocol": "file:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "ftps:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "ftps:/example.com/",
+      "protocol": "ftps:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "gopher:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "gopher:/example.com/",
+      "protocol": "gopher:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "ws:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "ws:/example.com/",
+      "protocol": "ws:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "wss:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "wss:/example.com/",
+      "protocol": "wss:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "data:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "data:/example.com/",
+      "protocol": "data:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "javascript:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "javascript:/example.com/",
+      "protocol": "javascript:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/example.com/"
+    },
+    {
+      "exception": "missing opaque part for mailto URL",
+      "input": "mailto:/example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "http:example.com/",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "exception": "URI::InvalidURIError",
+      "input": "ftp:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "https:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "https:example.com/",
+      "protocol": "https:",
+      "port": "443",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "madeupscheme:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "madeupscheme:example.com/",
+      "protocol": "madeupscheme:",
+      "port": "",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "ftps:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "ftps:example.com/",
+      "protocol": "ftps:",
+      "port": "",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "gopher:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "gopher:example.com/",
+      "protocol": "gopher:",
+      "port": "",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "ws:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "ws:example.com/",
+      "protocol": "ws:",
+      "port": "",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "wss:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "wss:example.com/",
+      "protocol": "wss:",
+      "port": "",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "data:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "data:example.com/",
+      "protocol": "data:",
+      "port": "",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "javascript:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "javascript:example.com/",
+      "protocol": "javascript:",
+      "port": "",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "exception": "unrecognised opaque part for mailtoURL: example.com/",
+      "input": "mailto:example.com/",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "/a/b/c",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/a/b/c",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.org",
+      "pathname": "/a/b/c"
+    },
+    {
+      "exception": "bad URI(is not URI?): /a/ /c",
+      "input": "/a/ /c",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "/a%2fc",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/a%2fc",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.org",
+      "pathname": "/a%2fc"
+    },
+    {
+      "input": "/a/%2f/c",
+      "base": "http://example.org/foo/bar",
+      "href": "http://example.org/a/%2f/c",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.org",
+      "pathname": "/a/%2f/c"
+    },
+    {
+      "exception": "URI must be ascii only \"#\\u{3b2}\"",
+      "input": "#β",
+      "base": "http://example.org/foo/bar",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "data:text/html,test#test",
+      "base": "http://example.org/foo/bar",
+      "href": "data:text/html,test#test",
+      "protocol": "data:",
+      "port": "",
+      "hostname": null,
+      "pathname": null,
+      "hash": "#test"
+    },
+    {
+      "exception": "bad URI(is not URI?): file:c:\\foo\\bar.html",
+      "input": "file:c:\\foo\\bar.html",
+      "base": "file:///tmp/mock/path",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?):   File:c|////foo\\bar.html",
+      "input": "  File:c|////foo\\bar.html",
+      "base": "file:///tmp/mock/path",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): C|/foo/bar",
+      "input": "C|/foo/bar",
+      "base": "file:///tmp/mock/path",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): /C|\\foo\\bar",
+      "input": "/C|\\foo\\bar",
+      "base": "file:///tmp/mock/path",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): //C|/foo/bar",
+      "input": "//C|/foo/bar",
+      "base": "file:///tmp/mock/path",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "//server/file",
+      "base": "file:///tmp/mock/path",
+      "href": "file://server/file",
+      "protocol": "file:",
+      "port": "",
+      "hostname": "server",
+      "pathname": "/file"
+    },
+    {
+      "exception": "bad URI(is not URI?): \\\\server\\file",
+      "input": "\\\\server\\file",
+      "base": "file:///tmp/mock/path",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): /\\server/file",
+      "input": "/\\server/file",
+      "base": "file:///tmp/mock/path",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "file:///foo/bar.txt",
+      "base": "file:///tmp/mock/path",
+      "href": "file:/foo/bar.txt",
+      "protocol": "file:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/foo/bar.txt"
+    },
+    {
+      "input": "file:///home/me",
+      "base": "file:///tmp/mock/path",
+      "href": "file:/home/me",
+      "protocol": "file:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/home/me"
+    },
+    {
+      "input": "//",
+      "base": "file:///tmp/mock/path",
+      "href": "file:/tmp/mock/path",
+      "protocol": "file:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/tmp/mock/path"
+    },
+    {
+      "input": "///",
+      "base": "file:///tmp/mock/path",
+      "href": "file:/",
+      "protocol": "file:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/"
+    },
+    {
+      "input": "///test",
+      "base": "file:///tmp/mock/path",
+      "href": "file:/test",
+      "protocol": "file:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/test"
+    },
+    {
+      "input": "file://test",
+      "base": "file:///tmp/mock/path",
+      "href": "file://test",
+      "protocol": "file:",
+      "port": "",
+      "hostname": "test",
+      "pathname": ""
+    },
+    {
+      "input": "file://localhost",
+      "base": "file:///tmp/mock/path",
+      "href": "file://localhost",
+      "protocol": "file:",
+      "port": "",
+      "hostname": "localhost",
+      "pathname": ""
+    },
+    {
+      "input": "file://localhost/",
+      "base": "file:///tmp/mock/path",
+      "href": "file://localhost/",
+      "protocol": "file:",
+      "port": "",
+      "hostname": "localhost",
+      "pathname": "/"
+    },
+    {
+      "input": "file://localhost/test",
+      "base": "file:///tmp/mock/path",
+      "href": "file://localhost/test",
+      "protocol": "file:",
+      "port": "",
+      "hostname": "localhost",
+      "pathname": "/test"
+    },
+    {
+      "input": "test",
+      "base": "file:///tmp/mock/path",
+      "href": "file:/tmp/mock/test",
+      "protocol": "file:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/tmp/mock/test"
+    },
+    {
+      "input": "file:test",
+      "base": "file:///tmp/mock/path",
+      "href": "file:test",
+      "protocol": "file:",
+      "port": "",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "http://example.com/././foo",
+      "base": "about:blank",
+      "href": "http://example.com/././foo",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/././foo"
+    },
+    {
+      "input": "http://example.com/./.foo",
+      "base": "about:blank",
+      "href": "http://example.com/./.foo",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/./.foo"
+    },
+    {
+      "input": "http://example.com/foo/.",
+      "base": "about:blank",
+      "href": "http://example.com/foo/.",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/foo/."
+    },
+    {
+      "input": "http://example.com/foo/./",
+      "base": "about:blank",
+      "href": "http://example.com/foo/./",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/foo/./"
+    },
+    {
+      "input": "http://example.com/foo/bar/..",
+      "base": "about:blank",
+      "href": "http://example.com/foo/bar/..",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/foo/bar/.."
+    },
+    {
+      "input": "http://example.com/foo/bar/../",
+      "base": "about:blank",
+      "href": "http://example.com/foo/bar/../",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/foo/bar/../"
+    },
+    {
+      "input": "http://example.com/foo/..bar",
+      "base": "about:blank",
+      "href": "http://example.com/foo/..bar",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/foo/..bar"
+    },
+    {
+      "input": "http://example.com/foo/bar/../ton",
+      "base": "about:blank",
+      "href": "http://example.com/foo/bar/../ton",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/foo/bar/../ton"
+    },
+    {
+      "input": "http://example.com/foo/bar/../ton/../../a",
+      "base": "about:blank",
+      "href": "http://example.com/foo/bar/../ton/../../a",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/foo/bar/../ton/../../a"
+    },
+    {
+      "input": "http://example.com/foo/../../..",
+      "base": "about:blank",
+      "href": "http://example.com/foo/../../..",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/foo/../../.."
+    },
+    {
+      "input": "http://example.com/foo/../../../ton",
+      "base": "about:blank",
+      "href": "http://example.com/foo/../../../ton",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/foo/../../../ton"
+    },
+    {
+      "input": "http://example.com/foo/%2e",
+      "base": "about:blank",
+      "href": "http://example.com/foo/%2e",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/foo/%2e"
+    },
+    {
+      "exception": "bad URI(is not URI?): http://example.com/foo/%2e%2",
+      "input": "http://example.com/foo/%2e%2",
+      "base": "about:blank",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http://example.com/foo/%2e./%2e%2e/.%2e/%2e.bar",
+      "base": "about:blank",
+      "href": "http://example.com/foo/%2e./%2e%2e/.%2e/%2e.bar",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/foo/%2e./%2e%2e/.%2e/%2e.bar"
+    },
+    {
+      "input": "http://example.com////../..",
+      "base": "about:blank",
+      "href": "http://example.com////../..",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "////../.."
+    },
+    {
+      "input": "http://example.com/foo/bar//../..",
+      "base": "about:blank",
+      "href": "http://example.com/foo/bar//../..",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/foo/bar//../.."
+    },
+    {
+      "input": "http://example.com/foo/bar//..",
+      "base": "about:blank",
+      "href": "http://example.com/foo/bar//..",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/foo/bar//.."
+    },
+    {
+      "input": "http://example.com/foo",
+      "base": "about:blank",
+      "href": "http://example.com/foo",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/foo"
+    },
+    {
+      "input": "http://example.com/%20foo",
+      "base": "about:blank",
+      "href": "http://example.com/%20foo",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/%20foo"
+    },
+    {
+      "exception": "bad URI(is not URI?): http://example.com/foo%",
+      "input": "http://example.com/foo%",
+      "base": "about:blank",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http://example.com/foo%2",
+      "input": "http://example.com/foo%2",
+      "base": "about:blank",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http://example.com/foo%2zbar",
+      "input": "http://example.com/foo%2zbar",
+      "base": "about:blank",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "URI must be ascii only \"http://example.com/foo%2\\u{c2}\\u{a9}zbar\"",
+      "input": "http://example.com/foo%2Â©zbar",
+      "base": "about:blank",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http://example.com/foo%41%7a",
+      "base": "about:blank",
+      "href": "http://example.com/foo%41%7a",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/foo%41%7a"
+    },
+    {
+      "exception": "URI must be ascii only \"http://example.com/foo\\t\\u{91}%91\"",
+      "input": "http://example.com/foo\t%91",
+      "base": "about:blank",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http://example.com/foo%00%51",
+      "base": "about:blank",
+      "href": "http://example.com/foo%00%51",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/foo%00%51"
+    },
+    {
+      "input": "http://example.com/(%28:%3A%29)",
+      "base": "about:blank",
+      "href": "http://example.com/(%28:%3A%29)",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/(%28:%3A%29)"
+    },
+    {
+      "input": "http://example.com/%3A%3a%3C%3c",
+      "base": "about:blank",
+      "href": "http://example.com/%3A%3a%3C%3c",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/%3A%3a%3C%3c"
+    },
+    {
+      "exception": "bad URI(is not URI?): http://example.com/foo\tbar",
+      "input": "http://example.com/foo\tbar",
+      "base": "about:blank",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http://example.com\\\\foo\\\\bar",
+      "input": "http://example.com\\\\foo\\\\bar",
+      "base": "about:blank",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http://example.com/%7Ffp3%3Eju%3Dduvgw%3Dd",
+      "base": "about:blank",
+      "href": "http://example.com/%7Ffp3%3Eju%3Dduvgw%3Dd",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/%7Ffp3%3Eju%3Dduvgw%3Dd"
+    },
+    {
+      "input": "http://example.com/@asdf%40",
+      "base": "about:blank",
+      "href": "http://example.com/@asdf%40",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "example.com",
+      "pathname": "/@asdf%40"
+    },
+    {
+      "exception": "URI must be ascii only \"http://example.com/\\u{4f60}\\u{597d}\\u{4f60}\\u{597d}\"",
+      "input": "http://example.com/你好你好",
+      "base": "about:blank",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "URI must be ascii only \"http://example.com/\\u{2025}/foo\"",
+      "input": "http://example.com/‥/foo",
+      "base": "about:blank",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "URI must be ascii only \"http://example.com/\\u{feff}/foo\"",
+      "input": "http://example.com/﻿/foo",
+      "base": "about:blank",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "URI must be ascii only \"http://example.com/\\u{202e}/foo/\\u{202d}/bar\"",
+      "input": "http://example.com/‮/foo/‭/bar",
+      "base": "about:blank",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http://www.google.com/foo?bar=baz#",
+      "base": "about:blank",
+      "href": "http://www.google.com/foo?bar=baz#",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "www.google.com",
+      "pathname": "/foo",
+      "search": "?bar=baz"
+    },
+    {
+      "exception": "URI must be ascii only \"http://www.google.com/foo?bar=baz# \\u{bb}\"",
+      "input": "http://www.google.com/foo?bar=baz# »",
+      "base": "about:blank",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "URI must be ascii only \"data:test# \\u{bb}\"",
+      "input": "data:test# »",
+      "base": "about:blank",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http://[www.google.com]/",
+      "input": "http://[www.google.com]/",
+      "base": "about:blank",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http://www.google.com",
+      "base": "about:blank",
+      "href": "http://www.google.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "www.google.com",
+      "pathname": ""
+    },
+    {
+      "input": "http://192.0x00A80001",
+      "base": "about:blank",
+      "href": "http://192.0x00A80001",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "192.0x00A80001",
+      "pathname": ""
+    },
+    {
+      "input": "http://www/foo%2Ehtml",
+      "base": "about:blank",
+      "href": "http://www/foo%2Ehtml",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "www",
+      "pathname": "/foo%2Ehtml"
+    },
+    {
+      "input": "http://www/foo/%2E/html",
+      "base": "about:blank",
+      "href": "http://www/foo/%2E/html",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "www",
+      "pathname": "/foo/%2E/html"
+    },
+    {
+      "input": "http://user:pass@/",
+      "base": "about:blank",
+      "href": "http:user:pass@/",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": "/"
+    },
+    {
+      "input": "http://%25DOMAIN:foobar@foodomain.com/",
+      "base": "about:blank",
+      "href": "http://%25DOMAIN:foobar@foodomain.com/",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "foodomain.com",
+      "pathname": "/"
+    },
+    {
+      "exception": "bad URI(is not URI?): http:\\\\www.google.com\\foo",
+      "input": "http:\\\\www.google.com\\foo",
+      "base": "about:blank",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http://foo:80/",
+      "base": "about:blank",
+      "href": "http://foo/",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "foo",
+      "pathname": "/"
+    },
+    {
+      "input": "http://foo:81/",
+      "base": "about:blank",
+      "href": "http://foo:81/",
+      "protocol": "http:",
+      "port": "81",
+      "hostname": "foo",
+      "pathname": "/"
+    },
+    {
+      "input": "httpa://foo:80/",
+      "base": "about:blank",
+      "href": "httpa://foo:80/",
+      "protocol": "httpa:",
+      "port": "80",
+      "hostname": "foo",
+      "pathname": "/"
+    },
+    {
+      "exception": "bad URI(is not URI?): http://foo:-80/",
+      "input": "http://foo:-80/",
+      "base": "about:blank",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "https://foo:443/",
+      "base": "about:blank",
+      "href": "https://foo/",
+      "protocol": "https:",
+      "port": "443",
+      "hostname": "foo",
+      "pathname": "/"
+    },
+    {
+      "input": "https://foo:80/",
+      "base": "about:blank",
+      "href": "https://foo:80/",
+      "protocol": "https:",
+      "port": "80",
+      "hostname": "foo",
+      "pathname": "/"
+    },
+    {
+      "input": "ftp://foo:21/",
+      "base": "about:blank",
+      "href": "ftp://foo/",
+      "protocol": "ftp:",
+      "port": "21",
+      "hostname": "foo",
+      "pathname": ""
+    },
+    {
+      "input": "ftp://foo:80/",
+      "base": "about:blank",
+      "href": "ftp://foo:80/",
+      "protocol": "ftp:",
+      "port": "80",
+      "hostname": "foo",
+      "pathname": ""
+    },
+    {
+      "input": "gopher://foo:70/",
+      "base": "about:blank",
+      "href": "gopher://foo:70/",
+      "protocol": "gopher:",
+      "port": "70",
+      "hostname": "foo",
+      "pathname": "/"
+    },
+    {
+      "input": "gopher://foo:443/",
+      "base": "about:blank",
+      "href": "gopher://foo:443/",
+      "protocol": "gopher:",
+      "port": "443",
+      "hostname": "foo",
+      "pathname": "/"
+    },
+    {
+      "input": "ws://foo:80/",
+      "base": "about:blank",
+      "href": "ws://foo:80/",
+      "protocol": "ws:",
+      "port": "80",
+      "hostname": "foo",
+      "pathname": "/"
+    },
+    {
+      "input": "ws://foo:81/",
+      "base": "about:blank",
+      "href": "ws://foo:81/",
+      "protocol": "ws:",
+      "port": "81",
+      "hostname": "foo",
+      "pathname": "/"
+    },
+    {
+      "input": "ws://foo:443/",
+      "base": "about:blank",
+      "href": "ws://foo:443/",
+      "protocol": "ws:",
+      "port": "443",
+      "hostname": "foo",
+      "pathname": "/"
+    },
+    {
+      "input": "ws://foo:815/",
+      "base": "about:blank",
+      "href": "ws://foo:815/",
+      "protocol": "ws:",
+      "port": "815",
+      "hostname": "foo",
+      "pathname": "/"
+    },
+    {
+      "input": "wss://foo:80/",
+      "base": "about:blank",
+      "href": "wss://foo:80/",
+      "protocol": "wss:",
+      "port": "80",
+      "hostname": "foo",
+      "pathname": "/"
+    },
+    {
+      "input": "wss://foo:81/",
+      "base": "about:blank",
+      "href": "wss://foo:81/",
+      "protocol": "wss:",
+      "port": "81",
+      "hostname": "foo",
+      "pathname": "/"
+    },
+    {
+      "input": "wss://foo:443/",
+      "base": "about:blank",
+      "href": "wss://foo:443/",
+      "protocol": "wss:",
+      "port": "443",
+      "hostname": "foo",
+      "pathname": "/"
+    },
+    {
+      "input": "wss://foo:815/",
+      "base": "about:blank",
+      "href": "wss://foo:815/",
+      "protocol": "wss:",
+      "port": "815",
+      "hostname": "foo",
+      "pathname": "/"
+    },
+    {
+      "input": "http:/example.com/",
+      "base": "about:blank",
+      "href": "http:/example.com/",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "ftp:/example.com/",
+      "base": "about:blank",
+      "href": "ftp:/example.com/",
+      "protocol": "ftp:",
+      "port": "21",
+      "hostname": null,
+      "pathname": "example.com/"
+    },
+    {
+      "input": "https:/example.com/",
+      "base": "about:blank",
+      "href": "https:/example.com/",
+      "protocol": "https:",
+      "port": "443",
+      "hostname": null,
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "madeupscheme:/example.com/",
+      "base": "about:blank",
+      "href": "madeupscheme:/example.com/",
+      "protocol": "madeupscheme:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "file:/example.com/",
+      "base": "about:blank",
+      "href": "file:/example.com/",
+      "protocol": "file:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "ftps:/example.com/",
+      "base": "about:blank",
+      "href": "ftps:/example.com/",
+      "protocol": "ftps:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "gopher:/example.com/",
+      "base": "about:blank",
+      "href": "gopher:/example.com/",
+      "protocol": "gopher:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "ws:/example.com/",
+      "base": "about:blank",
+      "href": "ws:/example.com/",
+      "protocol": "ws:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "wss:/example.com/",
+      "base": "about:blank",
+      "href": "wss:/example.com/",
+      "protocol": "wss:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "data:/example.com/",
+      "base": "about:blank",
+      "href": "data:/example.com/",
+      "protocol": "data:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/example.com/"
+    },
+    {
+      "input": "javascript:/example.com/",
+      "base": "about:blank",
+      "href": "javascript:/example.com/",
+      "protocol": "javascript:",
+      "port": "",
+      "hostname": null,
+      "pathname": "/example.com/"
+    },
+    {
+      "exception": "missing opaque part for mailto URL",
+      "input": "mailto:/example.com/",
+      "base": "about:blank",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http:example.com/",
+      "base": "about:blank",
+      "href": "http:example.com/",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "exception": "URI::InvalidURIError",
+      "input": "ftp:example.com/",
+      "base": "about:blank",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "https:example.com/",
+      "base": "about:blank",
+      "href": "https:example.com/",
+      "protocol": "https:",
+      "port": "443",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "madeupscheme:example.com/",
+      "base": "about:blank",
+      "href": "madeupscheme:example.com/",
+      "protocol": "madeupscheme:",
+      "port": "",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "ftps:example.com/",
+      "base": "about:blank",
+      "href": "ftps:example.com/",
+      "protocol": "ftps:",
+      "port": "",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "gopher:example.com/",
+      "base": "about:blank",
+      "href": "gopher:example.com/",
+      "protocol": "gopher:",
+      "port": "",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "ws:example.com/",
+      "base": "about:blank",
+      "href": "ws:example.com/",
+      "protocol": "ws:",
+      "port": "",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "wss:example.com/",
+      "base": "about:blank",
+      "href": "wss:example.com/",
+      "protocol": "wss:",
+      "port": "",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "data:example.com/",
+      "base": "about:blank",
+      "href": "data:example.com/",
+      "protocol": "data:",
+      "port": "",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "javascript:example.com/",
+      "base": "about:blank",
+      "href": "javascript:example.com/",
+      "protocol": "javascript:",
+      "port": "",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "exception": "unrecognised opaque part for mailtoURL: example.com/",
+      "input": "mailto:example.com/",
+      "base": "about:blank",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http:@www.example.com",
+      "base": "about:blank",
+      "href": "http:@www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "http:/@www.example.com",
+      "base": "about:blank",
+      "href": "http:/@www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": "/@www.example.com"
+    },
+    {
+      "input": "http://@www.example.com",
+      "base": "about:blank",
+      "href": "http://www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "www.example.com",
+      "pathname": ""
+    },
+    {
+      "input": "http:a:b@www.example.com",
+      "base": "about:blank",
+      "href": "http:a:b@www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "http:/a:b@www.example.com",
+      "base": "about:blank",
+      "href": "http:/a:b@www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": "/a:b@www.example.com"
+    },
+    {
+      "input": "http://a:b@www.example.com",
+      "base": "about:blank",
+      "href": "http://a:b@www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "www.example.com",
+      "pathname": ""
+    },
+    {
+      "input": "http://@pple.com",
+      "base": "about:blank",
+      "href": "http://pple.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "pple.com",
+      "pathname": ""
+    },
+    {
+      "input": "http::b@www.example.com",
+      "base": "about:blank",
+      "href": "http::b@www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "http:/:b@www.example.com",
+      "base": "about:blank",
+      "href": "http:/:b@www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": "/:b@www.example.com"
+    },
+    {
+      "input": "http://:b@www.example.com",
+      "base": "about:blank",
+      "href": "http://:b@www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "www.example.com",
+      "pathname": ""
+    },
+    {
+      "input": "http:/:@/www.example.com",
+      "base": "about:blank",
+      "href": "http:/:@/www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": "/:@/www.example.com"
+    },
+    {
+      "input": "http://user@/www.example.com",
+      "base": "about:blank",
+      "href": "http:user@/www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": "/www.example.com"
+    },
+    {
+      "input": "http:@/www.example.com",
+      "base": "about:blank",
+      "href": "http:@/www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "http:/@/www.example.com",
+      "base": "about:blank",
+      "href": "http:/@/www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": "/@/www.example.com"
+    },
+    {
+      "input": "http://@/www.example.com",
+      "base": "about:blank",
+      "href": "http:/www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": "/www.example.com"
+    },
+    {
+      "input": "https:@/www.example.com",
+      "base": "about:blank",
+      "href": "https:@/www.example.com",
+      "protocol": "https:",
+      "port": "443",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "http:a:b@/www.example.com",
+      "base": "about:blank",
+      "href": "http:a:b@/www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "http:/a:b@/www.example.com",
+      "base": "about:blank",
+      "href": "http:/a:b@/www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": "/a:b@/www.example.com"
+    },
+    {
+      "input": "http://a:b@/www.example.com",
+      "base": "about:blank",
+      "href": "http:a:b@/www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": "/www.example.com"
+    },
+    {
+      "input": "http::@/www.example.com",
+      "base": "about:blank",
+      "href": "http::@/www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "http:a:@www.example.com",
+      "base": "about:blank",
+      "href": "http:a:@www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "http:/a:@www.example.com",
+      "base": "about:blank",
+      "href": "http:/a:@www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": "/a:@www.example.com"
+    },
+    {
+      "input": "http://a:@www.example.com",
+      "base": "about:blank",
+      "href": "http://a:@www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "www.example.com",
+      "pathname": ""
+    },
+    {
+      "input": "http://www.@pple.com",
+      "base": "about:blank",
+      "href": "http://www.@pple.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "pple.com",
+      "pathname": ""
+    },
+    {
+      "input": "http:@:www.example.com",
+      "base": "about:blank",
+      "href": "http:@:www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": null
+    },
+    {
+      "input": "http:/@:www.example.com",
+      "base": "about:blank",
+      "href": "http:/@:www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": null,
+      "pathname": "/@:www.example.com"
+    },
+    {
+      "exception": "bad URI(is not URI?): http://@:www.example.com",
+      "input": "http://@:www.example.com",
+      "base": "about:blank",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http://:@www.example.com",
+      "base": "about:blank",
+      "href": "http://:@www.example.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "www.example.com",
+      "pathname": ""
+    },
+    {
+      "input": "/",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example.com/",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "www.example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "/test.txt",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example.com/test.txt",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "www.example.com",
+      "pathname": "/test.txt"
+    },
+    {
+      "input": ".",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example.com/",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "www.example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "..",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example.com/",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "www.example.com",
+      "pathname": "/"
+    },
+    {
+      "input": "test.txt",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example.com/test.txt",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "www.example.com",
+      "pathname": "/test.txt"
+    },
+    {
+      "input": "./test.txt",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example.com/test.txt",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "www.example.com",
+      "pathname": "/test.txt"
+    },
+    {
+      "input": "../test.txt",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example.com/test.txt",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "www.example.com",
+      "pathname": "/test.txt"
+    },
+    {
+      "input": "../aaa/test.txt",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example.com/aaa/test.txt",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "www.example.com",
+      "pathname": "/aaa/test.txt"
+    },
+    {
+      "input": "../../test.txt",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example.com/test.txt",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "www.example.com",
+      "pathname": "/test.txt"
+    },
+    {
+      "exception": "URI must be ascii only \"\\u{4e2d}/test.txt\"",
+      "input": "中/test.txt",
+      "base": "http://www.example.com/test",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http://www.example2.com",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example2.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "www.example2.com",
+      "pathname": ""
+    },
+    {
+      "input": "//www.example2.com",
+      "base": "http://www.example.com/test",
+      "href": "http://www.example2.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "www.example2.com",
+      "pathname": ""
+    },
+    {
+      "input": "http://ExAmPlE.CoM",
+      "base": "http://other.com/",
+      "href": "http://ExAmPlE.CoM",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "ExAmPlE.CoM",
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http://example example.com",
+      "input": "http://example example.com",
+      "base": "http://other.com/",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http://Goo%20 goo%7C|.com",
+      "input": "http://Goo%20 goo%7C|.com",
+      "base": "http://other.com/",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "URI must be ascii only \"http://GOO\\u{a0}\\u{3000}goo.com\"",
+      "input": "http://GOO 　goo.com",
+      "base": "http://other.com/",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "URI must be ascii only \"http://GOO\\u{200b}\\u{2060}\\u{feff}goo.com\"",
+      "input": "http://GOO​⁠﻿goo.com",
+      "base": "http://other.com/",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "URI must be ascii only \"http://www.foo\\u{3002}bar.com\"",
+      "input": "http://www.foo。bar.com",
+      "base": "http://other.com/",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "URI must be ascii only \"http://\\u{fdd0}zyx.com\"",
+      "input": "http://﷐zyx.com",
+      "base": "http://other.com/",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http://%ef%b7%90zyx.com",
+      "base": "http://other.com/",
+      "href": "http://%ef%b7%90zyx.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "%ef%b7%90zyx.com",
+      "pathname": ""
+    },
+    {
+      "exception": "URI must be ascii only \"http://\\u{ff27}\\u{ff4f}.com\"",
+      "input": "http://Ｇｏ.com",
+      "base": "http://other.com/",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "URI must be ascii only \"http://\\u{ff05}\\u{ff14}\\u{ff11}.com\"",
+      "input": "http://％４１.com",
+      "base": "http://other.com/",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http://%ef%bc%85%ef%bc%94%ef%bc%91.com",
+      "base": "http://other.com/",
+      "href": "http://%ef%bc%85%ef%bc%94%ef%bc%91.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "%ef%bc%85%ef%bc%94%ef%bc%91.com",
+      "pathname": ""
+    },
+    {
+      "exception": "URI must be ascii only \"http://\\u{ff05}\\u{ff10}\\u{ff10}.com\"",
+      "input": "http://％００.com",
+      "base": "http://other.com/",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http://%ef%bc%85%ef%bc%90%ef%bc%90.com",
+      "base": "http://other.com/",
+      "href": "http://%ef%bc%85%ef%bc%90%ef%bc%90.com",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "%ef%bc%85%ef%bc%90%ef%bc%90.com",
+      "pathname": ""
+    },
+    {
+      "exception": "URI must be ascii only \"http://\\u{4f60}\\u{597d}\\u{4f60}\\u{597d}\"",
+      "input": "http://你好你好",
+      "base": "http://other.com/",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http://%zz%66%a.com",
+      "input": "http://%zz%66%a.com",
+      "base": "http://other.com/",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "http://%25",
+      "base": "http://other.com/",
+      "href": "http://%25",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "%25",
+      "pathname": ""
+    },
+    {
+      "input": "http://hello%00",
+      "base": "http://other.com/",
+      "href": "http://hello%00",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "hello%00",
+      "pathname": ""
+    },
+    {
+      "input": "http://%30%78%63%30%2e%30%32%35%30.01",
+      "base": "http://other.com/",
+      "href": "http://%30%78%63%30%2e%30%32%35%30.01",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "%30%78%63%30%2e%30%32%35%30.01",
+      "pathname": ""
+    },
+    {
+      "input": "http://%30%78%63%30%2e%30%32%35%30.01%2e",
+      "base": "http://other.com/",
+      "href": "http://%30%78%63%30%2e%30%32%35%30.01%2e",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "%30%78%63%30%2e%30%32%35%30.01%2e",
+      "pathname": ""
+    },
+    {
+      "input": "http://192.168.0.257",
+      "base": "http://other.com/",
+      "href": "http://192.168.0.257",
+      "protocol": "http:",
+      "port": "80",
+      "hostname": "192.168.0.257",
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http://%3g%78%63%30%2e%30%32%35%30%2E.01",
+      "input": "http://%3g%78%63%30%2e%30%32%35%30%2E.01",
+      "base": "http://other.com/",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http://192.168.0.1 hello",
+      "input": "http://192.168.0.1 hello",
+      "base": "http://other.com/",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "URI must be ascii only \"http://\\u{ff10}\\u{ff38}\\u{ff43}\\u{ff10}\\u{ff0e}\\u{ff10}\\u{ff12}\\u{ff15}\\u{ff10}\\u{ff0e}\\u{ff10}\\u{ff11}\"",
+      "input": "http://０Ｘｃ０．０２５０．０１",
+      "base": "http://other.com/",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "bad URI(is not URI?): http://[google.com]",
+      "input": "http://[google.com]",
+      "base": "http://other.com/",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "exception": "URI must be ascii only \"http://foo:\\u{1f4a9}@example.com/bar\"",
+      "input": "http://foo:💩@example.com/bar",
+      "base": "http://other.com/",
+      "href": "",
+      "protocol": ":",
+      "port": "",
+      "hostname": null,
+      "pathname": ""
+    },
+    {
+      "input": "x",
+      "base": "test:test",
+      "href": "test:test",
+      "protocol": "test:",
+      "port": "",
+      "hostname": null,
+      "pathname": null
+    }
+  ]
+}

@@ -20,6 +20,7 @@ useragent-results/index: resultindex.rb \
 	useragent-results/nodejs \
 	useragent-results/perl \
 	useragent-results/python \
+	useragent-results/ruby \
 	useragent-results/rusturl \
 	useragent-results/refimpl
 	ruby resultindex.rb > $@
