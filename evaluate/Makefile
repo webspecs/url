@@ -62,6 +62,9 @@ useragent-results/perl: testuri.pl urltestdata.json
 useragent-results/python: testurllib.py urltestdata.json
 	python3 testurllib.py > $@
 
+useragent-results/ruby: testuri.rb urltestdata.json
+	ruby testuri.rb > $@
+
 useragent-results/addressable: testaddressable.rb urltestdata.json
 	ruby testaddressable.rb > $@
 
