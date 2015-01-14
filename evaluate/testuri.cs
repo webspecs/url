@@ -47,7 +47,10 @@ class testuri {
         }
 
         if (uri.Fragment != "") {
-          result["hash"] = uri.Fragment;
+//        See http://www.ietf.org/mail-archive/web/apps-discuss/current/msg13721.html
+//        result["hash"] = uri.Fragment;
+          result["hash"] = '#' + uri.GetComponents(UriComponents.Fragment,
+            UriFormat.Unescaped);
         }
       } catch(System.UriFormatException e) {
         result["exception"] = e.Message;
