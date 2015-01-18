@@ -64,11 +64,7 @@ class testuri {
     var output = new Output();
 
     var assembly = Assembly.GetExecutingAssembly();
-    foreach (var name in assembly.GetReferencedAssemblies()) {
-      if (name.Name == "System") {
-        output.useragent = name.ToString();
-      }
-    }
+    output.useragent = assembly.GetCustomAttributes(typeof(TargetFrameworkAttribute)).Cast<TargetFrameworkAttribute>().First().FrameworkName;
 
     output.constructor = constructors;
 
