@@ -13,6 +13,8 @@ evaluate/*.class
 evaluate/*.exe
 evaluate/urlsettest.json
 evaluate/urltestdata.json
+evaluate/uri_validate.js
+evaluate/uri_validate.py
 
 parser.pegjs
 

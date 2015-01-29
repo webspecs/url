@@ -9,7 +9,7 @@ _html do
   _title 'URL test results'
   _link rel: 'stylesheet', href: '../bootstrap.min.css'
   _link rel: 'stylesheet', href: '../analysis.css'
-  _script src: '../rfc3986.js'
+  _script src: '../uri_validate.js'
   _style %{
     th, td {padding-left: 1em}
     td.fail, .fail td, .legend .fail {background-color: #FFFF00}
@@ -447,8 +447,6 @@ _html do
           fetchAgents(list, index)
         end
       else
-        rfc3986 = RFC3986.new()
-
         tests.each do |test|
           if test.results.refimpl
             if test.results.refimpl.exception
@@ -458,7 +456,7 @@ _html do
             end
           end
 
-          if rfc3986.isURIReference(test.input)
+          if uri_validate(test.input)
             test.valid = true
           else
             test.invalid = true
