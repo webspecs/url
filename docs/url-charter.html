@@ -34,10 +34,11 @@
          font-weight: bold;
       }
 
-      .draft
+      .draft, .draft:link, .draft:visited
       {
          color: red;
          font-style: italic;
+         text-decoration: none;
       }
 
       .status-label
@@ -396,7 +397,7 @@
         <p>
           The
           <a href="https://github.com/webspecs/url/blob/develop/docs/workmode.md#preface">working
-            mode</a>
+            mode</a> <sup><a class="draft" href="#footnote">*</a></sup>
           of the group is described in detail. In general the group
           does not hold teleconferences, and may meets face to face at the
           TP/AC.  It may hold more meetings.  Note the
@@ -409,11 +410,9 @@
 
         <ul>
           <li>
-            The <a href="mailto:whatwg@whatwg.org" 
-              id="whatwg.org">whatwg@whatwg.org</a>
-            (<a href="http://lists.w3.org/Archives/Public/public-whatwg-archive/">archive</a>)
-            mailing list is used for general discussions of specifications
-            developed by the WHATWG.
+            The <a href="mailto:public-url@w3.org">public-url@w3.org</a>
+            mailing list will created for general discussions of specifications
+            developed by the URL WG.
           </li>
 
           <li>
@@ -431,7 +430,8 @@
         <p>Editors within the group will use
           <a href="https://github.com/">Github</a> to maintain Editor's Draft of
           specifications. The group's <i>action</i> and <i>issue</i>
-          <a href="http://www.w3.org/2008/webapps/track/">tracking data</a> will
+          <a href="http://www.w3.org/2008/webapps/track/">tracking data</a>
+          <sup><a href="#footnote" class="draft">*</a></sup> will
           also be public, as will the participant-approved <i>minutes</i> from
           all teleconferences.</p>
 
@@ -519,7 +519,14 @@
         <a href="http://www.keio.ac.jp/">Keio</a>,
         <a href="http://ev.buaa.edu.cn/">Beihang</a>), All Rights Reserved.</p>
 
-      <p>Date: 2015-January</p>
+      <p>Date: 2015-February</p>
     </div>
+
+    <footer id="footnote">
+      <p><strong class="draft">Note:</strong> Items noted with a 
+         <sup><span class="draft">*</span></sup>
+         need to be cloned or updated to reflect a separate WG
+         for this effort.</p>
+    </footer>
   </body>
 </html>
