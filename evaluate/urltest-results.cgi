@@ -11,12 +11,12 @@ agents = {
   chrome: {hash: 'chrome'},
   firefox: {hash: 'firefox'},
   galimatias: {hash: 'galimatias'},
-  ie: {hash: 'ie'},
   nodejs: {hash: 'nodejs'},
   opera: {hash: 'opera'},
   perl: {hash: 'perl'},
   rust: {hash: 'rusturl'},
   safari: {hash: 'safari'},
+  spartan: {hash: 'spartan'},
 }
 
 results = {}
@@ -65,7 +65,7 @@ _html do
     if browser_only
       value = value.dup
       value.keys.each do |key|
-        unless %(refimpl chrome firefox ie safari).include? key.to_s
+        unless %(refimpl chrome firefox safari spartan).include? key.to_s
           value.delete key 
         end
       end

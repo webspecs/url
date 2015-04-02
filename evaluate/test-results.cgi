@@ -258,14 +258,11 @@ _html do
 
       test = tests[index]
       expected = test.results[baseline]
-      document.querySelector('#input a').textContent =
-        JSON.stringify(test.input)
-      document.querySelector('#base a').textContent =
-        JSON.stringify(test.base)
-      document.querySelector('#inspect a').textContent =
-        test.inspect
+      document.querySelector('#input a').textContent = test.input.inspect
+      document.querySelector('#base a').textContent = test.base.inspect
+      document.querySelector('#inspect a').textContent = test['inspect']
       document.querySelector('#inspect').style.display =
-        (JSON.stringify(test.input) == test.inspect ? 'none' : 'inline')
+        (test.input.inspect == test['inspect'] ? 'none' : 'inline')
 
 
       liveview2 = '../../reference-implementation/liveview2.html#' +
@@ -339,7 +336,7 @@ _html do
       for i in 0...tests.length
         tr = document.createElement('tr')
         addCol tr, 'th', i
-        addCol tr, 'td', JSON.stringify(tests[i].input)
+        addCol tr, 'td', tests[i].input.inspect
         addCol tr, 'td', tests[i].base
         addCol tr, 'td', ''
         tr.setAttribute('data-index', tests[i].index[0..9]);
@@ -502,9 +499,9 @@ _html do
         when 'all'
           domain = agents
         when 'browsers'
-          domain = %w(chrome ie firefox opera safari)
+          domain = %w(chrome firefox opera safari spartan)
         when 'current'
-          domain = %w(chrome ie firefox safari)
+          domain = %w(chrome firefox safari spartan)
         else
           domain = [event.target.value]
         end

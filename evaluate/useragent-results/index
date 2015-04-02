@@ -5,7 +5,6 @@
     "csharp",
     "firefox",
     "galimatias",
-    "ie",
     "nodejs",
     "opera",
     "perl",
@@ -13,7 +12,8 @@
     "refimpl",
     "ruby",
     "rusturl",
-    "safari"
+    "safari",
+    "spartan"
   ],
   "tests": [
     {
@@ -1605,6 +1605,12 @@
       "base": "test:test",
       "inspect": "\"x\"",
       "index": "f332d9850a06d2c8cfbee40b7348696e"
+    },
+    {
+      "input": "http://�zyx.com",
+      "base": "http://other.com/",
+      "inspect": "\"http://\\uFFFDzyx.com\"",
+      "index": "38f41cc976d750cceaf643e8d6a0bbc8"
     }
   ]
 }
