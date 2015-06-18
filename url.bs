@@ -1224,6 +1224,7 @@ ZeroOrMore:
 a solidus (<code>U+002F</code>),
 a reverse solidus (<code>U+005C</code>),
 a question mark (<code>U+003F</code>),
+a number sign (<code>U+<code>0023</code></code>),
 or the end of string is encountered.
 
 <li>Let <code>result</code> be the <a title=cleanse>cleansed</a> set of code points using

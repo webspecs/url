@@ -945,6 +945,7 @@ DecimalByte
   a solidus (U+002F),
   a reverse solidus (U+005C),
   a question mark (U+003F),
+  a number sign (U+0023),
   or the end of string is encountered.
 
   <li>Let $result be the <a title=cleanse>cleansed</a> set of code points using
