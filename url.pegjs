@@ -479,7 +479,7 @@ NonFileRelativeScheme
   A scheme consists of an <a>ASCII alpha</a>,
   followed by zero or more <a>ASCII alpha</a> or any of the following
   code points: hyphen-minus (U+002D), plus sign (U+002B) or full stop
-  (U+002D).
+  (U+002E).
   Return the results as a lowercased string.
 */
 Scheme
@@ -916,7 +916,7 @@ H16
   returns: String
 
   Return four decimal <a title='IPv4 piece'>8-bit pieces</a> separated by full
-  stop code points as a string.
+  stop (U+002E) code points as a string.
 */
 LS32
   = a:DecimalByte '.' b:DecimalByte '.' d:DecimalByte '.' d:DecimalByte
@@ -945,6 +945,7 @@ DecimalByte
   a solidus (U+002F),
   a reverse solidus (U+005C),
   a question mark (U+003F),
+  a number sign (U+0023),
   or the end of string is encountered.
 
   <li>Let $result be the <a title=cleanse>cleansed</a> set of code points using

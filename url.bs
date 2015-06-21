@@ -864,7 +864,7 @@ Sequence:
 A scheme consists of an <a>ASCII alpha</a>,
 followed by zero or more <a>ASCII alpha</a> or any of the following
 code points: hyphen-minus (<code>U+002D</code>), plus sign (<code>U+002B</code>) or full stop
-(<code>U+002D</code>).
+(<code>U+002E</code>).
 Return the results as a lowercased string.
 
 <h4 id=rule-authority class=no-toc>authority(input)</h4>
@@ -1189,7 +1189,7 @@ Sequence:
 </pre>
 
 Return four decimal <a title='IPv4 piece'><code>8</code>-bit pieces</a> separated by full
-stop code points as a string.
+stop (U+002E) code points as a string.
 
 <h4 id=rule-decimal-byte class=no-toc>decimal-byte(input)</h4>
 
@@ -1224,6 +1224,7 @@ ZeroOrMore:
 a solidus (<code>U+002F</code>),
 a reverse solidus (<code>U+005C</code>),
 a question mark (<code>U+003F</code>),
+a number sign (<code>U+<code>0023</code></code>),
 or the end of string is encountered.
 
 <li>Let <code>result</code> be the <a title=cleanse>cleansed</a> set of code points using
