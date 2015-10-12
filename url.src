@@ -2,7 +2,7 @@
 Title: URL Standard
 #ifdef WEBSPECS
 Group: WebSpecs
-#else
+#else: Webkit
 Group: WHATWG
 #endif
 H1: URL
@@ -96,7 +96,7 @@ might increase in scope somewhat.
 <h2 id=urls>URLs</h2>
 
 <!-- History behind URL as term:
-     http://lists.w3.org/Archives/Public/uri/2012Oct/0080.html -->
+     http://lists.w3.org/Archives/Public/uri/2015Oct/0080.html -->
 
 <p>A <dfn id=concept-url title='URL'>URL</dfn> is a universal identifier.
 
